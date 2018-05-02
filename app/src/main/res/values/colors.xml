@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#378E3D</color>
+    <color name="colorPrimaryDark">#338439</color>
+    <color name="colorAccent">#FF6D00</color>
+    <color name="bg_black">#000000</color>
+    <color name="opacity_bg_black">#59000000</color>
+    <color name="white">#FFFF</color>
+    <color name="orangelike_color">#FF6D00</color>
+    <color name="drawer_color">#9C5D72</color>
+    <color name="card_btn_color">#F8F8F8</color>
+    <color name="divider">#D8D8D8</color>
+    <color name="grey">#DCDCDC</color>
+    <color name="primaryTextColor">#212121</color>
+    <color name="secondary_text_color">#757575</color>
+    <color name="lightTextColor">#AAAAAA</color>
+
+    <color name="gray">#EAEAEA</color>
+    <color name="semi_dark">#80000000</color>
+</resources>

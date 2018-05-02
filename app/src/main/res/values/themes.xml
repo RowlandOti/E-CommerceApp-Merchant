@@ -1,0 +1,13 @@
+<resources>
+
+<style name="TextLabel" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Hint color and label color in FALSE state -->
+    <item name="android:textColorHint">@color/white</item>
+    <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="colorControlNormal">@color/white</item>
+    <item name="colorControlActivated">@color/colorAccent</item>
+    <item name="colorControlHighlight">@color/colorAccent</item>
+
+</style>
+</resources>
