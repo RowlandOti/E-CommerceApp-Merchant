@@ -24,4 +24,6 @@ public class Group {
 
     @GroupName
     public String name;
+
+
 }

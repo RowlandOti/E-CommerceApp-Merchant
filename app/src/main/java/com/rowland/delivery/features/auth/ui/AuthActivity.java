@@ -8,18 +8,18 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.rowland.delivery.features.auth.di.components.AuthComponent;
 import com.rowland.delivery.features.auth.di.components.DaggerAuthComponent;
+import com.rowland.delivery.features.dash.presentation.activities.DashActivity;
 import com.rowland.delivery.merchant.R;
 import com.rowland.delivery.merchant.application.di.modules.ContextModule;
 import com.rowland.delivery.services.auth.Auth;
 import com.rowland.delivery.services.auth.AuthException;
-import com.rowland.delivery.services.auth.EmailAuth;
-import com.rowland.delivery.services.auth.GoogleAuth;
 import com.rowland.delivery.services.auth.di.modules.AuthModule;
 
 import java.util.HashMap;
@@ -96,12 +96,13 @@ public class AuthActivity extends AppCompatActivity implements Auth.AuthLoginCal
 
     @Override
     public void onLoginSuccess() {
-
+        Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+        DashActivity.startActivity(this);
     }
 
     @Override
     public void onLoginFailure(AuthException e) {
-
+        Toast.makeText(this, "Login Unsuccessful", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -122,6 +123,7 @@ public class AuthActivity extends AppCompatActivity implements Auth.AuthLoginCal
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, AuthActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         context.startActivity(intent);
     }
 
@@ -143,5 +145,10 @@ public class AuthActivity extends AppCompatActivity implements Auth.AuthLoginCal
     @OnClick(R.id.btn_register)
     public void onRegister() {
         mEmailAuth.register();
+    }
+
+    @OnClick(R.id.txt_reset_password)
+    public void onPasswordReset() {
+        mEmailAuth.login();
     }
 }

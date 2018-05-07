@@ -17,6 +17,7 @@ public abstract class Auth {
     public abstract void login();
     public abstract boolean logout(Context context);
     public abstract void register();
+    public abstract void passwordReset();
     public abstract void onActivityResult(int requestCode, int resultCode, Intent data);
 
     public interface AuthLoginCallbacks {

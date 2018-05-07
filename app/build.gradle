@@ -19,10 +19,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
@@ -30,19 +34,15 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-
     // Firebase and Google services
     implementation 'com.google.firebase:firebase-firestore:15.0.0'
     implementation 'com.google.firebase:firebase-auth:15.0.0'
     implementation 'com.google.android.gms:play-services-auth:15.0.0'
     implementation 'com.google.firebase:firebase-storage:15.0.0'
     implementation 'com.firebaseui:firebase-ui-auth:3.3.0'
-
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
     implementation 'com.github.bumptech.glide:glide:3.7.0'
-
     implementation 'com.google.dagger:dagger-android:2.15'
     implementation 'com.google.dagger:dagger-android-support:2.15'
     // if you use the support libraries
@@ -50,7 +50,9 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.15'
 
     //If you are using Firestore in your project
-    implementation 'com.github.frangsierra:rx2firebase:1.4.0'
+    implementation 'com.github.frangsierra:rx2firebase:1.4.1'
+    implementation 'com.github.vlonjatg:progress-activity:v2.0.3'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

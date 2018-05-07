@@ -3,17 +3,13 @@ package com.rowland.delivery.services.auth;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -29,6 +25,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+
+import durdinapps.rxfirebase2.RxFirebaseAuth;
+import durdinapps.rxfirebase2.RxFirestore;
 
 /**
  * Created by Rowland on 5/1/2018.
@@ -77,6 +76,11 @@ public class GoogleAuth extends Auth {
     }
 
     @Override
+    public void passwordReset() {
+
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RC_SIGN_IN && resultCode == Activity.RESULT_OK) {
             GoogleSignInResult result = com.google.android.gms.auth.api.Auth.GoogleSignInApi.getSignInResultFromIntent(data);
@@ -90,17 +94,12 @@ public class GoogleAuth extends Auth {
 
     private void firebaseAuthWithGoogle(final GoogleUser user, Activity activity) {
         AuthCredential credential = GoogleAuthProvider.getCredential(user.getIdToken(), null);
-        mFirebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser firebaseUser = mFirebaseAuth.getCurrentUser();
-                            user.setUserId(firebaseUser.getUid());
-                            configureUserAccount(user);
-                        }
-                    }
-                });
+
+        RxFirebaseAuth.signInWithCredential(mFirebaseAuth, credential).subscribe(authResult -> {
+            FirebaseUser firebaseUser = mFirebaseAuth.getCurrentUser();
+            user.setUserId(firebaseUser.getUid());
+            configureUserAccount(user);
+        });
     }
 
     private void configureUserAccount(final GoogleUser user) {
@@ -110,21 +109,18 @@ public class GoogleAuth extends Auth {
         batch.set(usersCollectionRef.document(user.getUserId()), user);
 
         CollectionReference groupUsersCollectionRef = mFirebaseFirestone.collection("groups");
-        Map<String, Object> groupUsers = new HashMap<>();
-        groupUsers.put(user.getUserId(), true);
-        batch.set(groupUsersCollectionRef.document(Group.MERCHANT)
-                .collection("members")
-                .document(user.getUserId()), groupUsers);
+        Map<String, Object> members = new HashMap<>();
+        members.put(String.format("members.%s", user.getUserId()), true);
+        batch.update(groupUsersCollectionRef.document(Group.MERCHANT), members);
 
-        batch.commit().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    mSessionManager.setLogin(user.getIdToken());
-                    mAuthConfig.getCallback().onLoginSuccess();
-                    Toast.makeText(mAuthConfig.getActivity(), "Account Setup Successful", Toast.LENGTH_SHORT).show();
-                }
-            }
+        RxFirestore.atomicOperation(batch).subscribe(() -> {
+            mSessionManager.setLogin(user.getIdToken());
+            mAuthConfig.getCallback().onLoginSuccess();
+            Toast.makeText(mAuthConfig.getActivity(), "Account Setup Successful", Toast.LENGTH_SHORT).show();
+
+        }, throwable -> {
+            mAuthConfig.getCallback().onLoginFailure(new AuthException(throwable.getMessage(), throwable));
+            Toast.makeText(mAuthConfig.getActivity(), "Account Setup Unsuccessful", Toast.LENGTH_SHORT).show();
         });
     }
 }

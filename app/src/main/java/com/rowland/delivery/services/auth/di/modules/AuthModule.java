@@ -14,6 +14,7 @@ import com.rowland.delivery.services.auth.AuthConfig;
 import com.rowland.delivery.services.auth.EmailAuth;
 import com.rowland.delivery.services.auth.GoogleAuth;
 import com.rowland.delivery.services.auth.Auth;
+import com.rowland.delivery.services.firebase.modules.FirebaseModule;
 import com.rowland.delivery.services.session.SessionManager;
 import com.rowland.delivery.services.session.di.modules.SessionModule;
 
@@ -27,7 +28,7 @@ import dagger.Provides;
  * Created by Rowland on 5/1/2018.
  */
 
-@Module(includes = {ContextModule.class, SessionModule.class})
+@Module(includes = {ContextModule.class, SessionModule.class, FirebaseModule.class})
 public class AuthModule {
 
     @Provides
@@ -70,17 +71,4 @@ public class AuthModule {
                 .requestProfile()
                 .build();
     }
-
-    @Provides
-    @Singleton
-    public FirebaseAuth providesFirebaseAuth() {
-        return FirebaseAuth.getInstance();
-    }
-
-    @Provides
-    @Singleton
-    public FirebaseFirestore providesFirebaseFirestore() {
-        return FirebaseFirestore.getInstance();
-    }
-
 }

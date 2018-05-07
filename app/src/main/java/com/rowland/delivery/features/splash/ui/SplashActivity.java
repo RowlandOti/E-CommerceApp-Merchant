@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.rowland.delivery.features.auth.ui.AuthActivity;
+import com.rowland.delivery.features.dash.presentation.activities.DashActivity;
 import com.rowland.delivery.features.splash.di.components.DaggerSplashComponent;
 import com.rowland.delivery.features.splash.di.components.SplashComponent;
 import com.rowland.delivery.merchant.R;
@@ -55,19 +56,15 @@ public class SplashActivity extends AppCompatActivity {
                 .into(splash);
 
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (!sessionManager.isLoggedIn()) {
-                    AuthActivity.startActivity(SplashActivity.this);
-                    finish();
-                } else {
-
-                }
-
-
-                overridePendingTransition(0, 0);
+        handler.postDelayed(() -> {
+            if (!sessionManager.isLoggedIn()) {
+                AuthActivity.startActivity(SplashActivity.this);
+                finish();
+            } else {
+                DashActivity.startActivity(SplashActivity.this);
+                finish();
             }
+            overridePendingTransition(0, 0);
         }, SPLASH_DISPLAY_LENGTH);
     }
 
