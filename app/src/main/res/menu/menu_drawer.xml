@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.doea.app.kitchen.ui.activities_demo.Main">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_meals"
+            android:icon="@drawable/campass_outline_vector"
+            android:title="@string/action_meal_string"
+            />
+
+        <item
+            android:id="@+id/action_orders"
+            android:icon="@drawable/shopping_vector"
+            android:title="@string/action_orders_string"
+            />
+
+        <item
+            android:id="@+id/action_sales"
+            android:icon="@drawable/sale_vector"
+            android:title="@string/action_sales_string" />
+
+        <item
+            android:id="@+id/navigation_subheader"
+            android:title="@string/navigation_setting_subheader">
+
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/action_settings"
+                        android:icon="@drawable/gear_vector"
+                        android:title="@string/action_settings" />
+
+                    <item
+                        android:id="@+id/action_logout"
+                        android:icon="@drawable/logout_vector"
+                        android:title="@string/action_logout_string" />
+                </group>
+            </menu>
+        </item>
+
+    </group>
+
+</menu>
