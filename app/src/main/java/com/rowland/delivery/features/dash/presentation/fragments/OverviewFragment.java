@@ -65,7 +65,7 @@ public class OverviewFragment extends Fragment {
 
         unbinder = ButterKnife.bind(this, view);
 
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new CategoryFragment(), getResources().getString(R.string.tab_mymeal));
         adapter.addFragment(new OrdersFragment(), getResources().getString(R.string.tab_orders));
         viewPager.setAdapter(adapter);

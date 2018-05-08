@@ -27,7 +27,7 @@ import dagger.Provides;
 public class CategoryModule {
 
     @Provides
-    //@Category
+    @Category
     CategoryAdapter providesCategoryAdapter() {
         return new CategoryAdapter();
     }

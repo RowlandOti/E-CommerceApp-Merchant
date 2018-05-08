@@ -18,7 +18,6 @@ import com.rowland.delivery.features.dash.di.components.DashComponent;
 import com.rowland.delivery.features.dash.di.modules.DashModule;
 import com.rowland.delivery.features.dash.presentation.fragments.OverviewFragment;
 import com.rowland.delivery.merchant.R;
-import com.rowland.delivery.merchant.application.di.modules.ContextModule;
 import com.rowland.delivery.services.session.SessionManager;
 
 import javax.inject.Inject;
@@ -64,15 +63,15 @@ public class DashActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        dashComponent = DaggerDashComponent.builder()
+                .dashModule(new DashModule())
+                .build();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash);
 
         ButterKnife.bind(this);
-
-        dashComponent = DaggerDashComponent.builder()
-                //.dashModule(new DashModule())
-                .build();
-
+        
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
