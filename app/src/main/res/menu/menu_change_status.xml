@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/main_option"
+        android:icon="@drawable/ic_add_drawable"
+        android:title="" />
+
+    <item
+        android:id="@+id/action_pending"
+        android:icon="@drawable/ic_clock_white"
+        android:title="Pending" />
+
+    <item
+        android:id="@+id/action_in_progress"
+        android:icon="@drawable/ic_clock_white"
+        android:title="In Progress" />
+
+    <item
+        android:id="@+id/action_complete"
+        android:icon="@drawable/ic_clock_white"
+        android:title="Completed" />
+
+    <item
+        android:id="@+id/action_canceled"
+        android:icon="@drawable/ic_clock_white"
+        android:title="Canceled" />
+
+</menu>
