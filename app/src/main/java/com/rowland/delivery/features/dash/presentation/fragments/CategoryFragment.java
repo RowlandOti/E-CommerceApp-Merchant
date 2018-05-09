@@ -76,7 +76,7 @@ public class CategoryFragment extends Fragment {
         super.onAttach(context);
         ((DashActivity) getActivity()).getDashComponent()
                 .getCategoryComponent(new CategoryModule())
-                .injectCategoryFragment(this);
+                .inject(this);
     }
 
     @Override
@@ -90,9 +90,7 @@ public class CategoryFragment extends Fragment {
         recyclerView.setAdapter(categoryAdapter);
 
         categoryViewModel.getCategoryList()
-                .observe(this, categories -> {
-                    categoryAdapter.setList(categories);
-                });
+                .observe(this, categories -> categoryAdapter.setList(categories));
     }
 
     @Override

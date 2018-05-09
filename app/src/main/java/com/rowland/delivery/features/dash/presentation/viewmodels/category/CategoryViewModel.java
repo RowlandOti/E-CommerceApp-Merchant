@@ -44,9 +44,6 @@ public class CategoryViewModel extends ViewModel {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(categories -> {
-                    for (Category category: categories) {
-                        Log.d(CategoryViewModel.class.getSimpleName(), category.getName());
-                    }
                     categoryList.setValue(categories);
                 },throwable -> {
                     Log.d(CategoryViewModel.class.getSimpleName(), "Error Retrieving List: "+throwable);

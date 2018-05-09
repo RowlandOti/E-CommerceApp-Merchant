@@ -1,5 +1,8 @@
 package com.rowland.delivery.features.dash.presentation.activities;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,11 +19,15 @@ import android.view.MenuItem;
 import com.rowland.delivery.features.dash.di.components.DaggerDashComponent;
 import com.rowland.delivery.features.dash.di.components.DashComponent;
 import com.rowland.delivery.features.dash.di.modules.DashModule;
+import com.rowland.delivery.features.dash.domain.models.order.OrderData;
+import com.rowland.delivery.features.dash.presentation.fragments.OrderItemFragment;
 import com.rowland.delivery.features.dash.presentation.fragments.OverviewFragment;
+import com.rowland.delivery.features.dash.presentation.viewmodels.order.OrderViewModel;
 import com.rowland.delivery.merchant.R;
 import com.rowland.delivery.services.session.SessionManager;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,11 +55,7 @@ public class DashActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.main_content)
     CoordinatorLayout main_content_layout;
 
-    @Inject
-    SessionManager sessionManager;
-
     private ActionBarDrawerToggle drawerToggle;
-
     private int mSelectedId;
 
     public DashComponent getDashComponent() {
@@ -71,7 +74,7 @@ public class DashActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_dash);
 
         ButterKnife.bind(this);
-        
+
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);

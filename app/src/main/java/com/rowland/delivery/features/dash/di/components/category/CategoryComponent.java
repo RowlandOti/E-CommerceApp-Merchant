@@ -15,5 +15,5 @@ import dagger.Subcomponent;
 @Category
 @Subcomponent(modules = CategoryModule.class)
 public interface CategoryComponent {
-    void injectCategoryFragment(CategoryFragment categoryFragment);
+    void inject(CategoryFragment categoryFragment);
 }

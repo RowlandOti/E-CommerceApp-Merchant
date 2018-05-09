@@ -35,6 +35,7 @@
         <item name="tabPaddingEnd">6dp</item>
         <item name="tabGravity">fill</item>
         <item name="tabMode">fixed</item>
+        <item name="tabMaxWidth">0dp</item>
         <item name="tabBackground">?attr/colorPrimary</item>
         <item name="tabTextAppearance">@style/AppTabTextAppearance</item>
         <item name="tabSelectedTextColor">@android:color/white</item>
@@ -64,6 +65,14 @@
         <item name="errorTitleTextColor">?attr/colorAccent</item>
         <item name="loadingBackgroundColor">@android:color/white</item>
         <item name="loadingProgressBarColor">?attr/colorAccent</item>
+    </style>
+
+
+    <style name="OneMoreFabMenu">
+        <item name="color_main_button">?attr/colorAccent</item>
+        <item name="color_secondary_buttons">?attr/colorAccent</item>
+        <item name="content_options">@menu/menu_change_status</item>
+        <item name="expanded_background_color">@color/omfm_expanded_background_sample</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

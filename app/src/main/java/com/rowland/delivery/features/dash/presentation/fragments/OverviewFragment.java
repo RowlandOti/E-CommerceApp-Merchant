@@ -67,7 +67,7 @@ public class OverviewFragment extends Fragment {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new CategoryFragment(), getResources().getString(R.string.tab_mymeal));
-        adapter.addFragment(new OrdersFragment(), getResources().getString(R.string.tab_orders));
+        adapter.addFragment(new OrderFragment(), getResources().getString(R.string.tab_orders));
         viewPager.setAdapter(adapter);
 
         viewPager.setCurrentItem(movePosition);
