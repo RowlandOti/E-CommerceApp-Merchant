@@ -6,10 +6,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.rowland.delivery.features.dash.presentation.activities.DashActivity;
 import com.rowland.delivery.merchant.R;
 
 import java.util.ArrayList;
@@ -25,6 +30,9 @@ public class OverviewFragment extends Fragment {
     private static final String TAB_POSITION = "tabposition";
     private int movePosition;
     private Unbinder unbinder;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @BindView(R.id.tabs)
     TabLayout tabLayout;
@@ -65,8 +73,19 @@ public class OverviewFragment extends Fragment {
 
         unbinder = ButterKnife.bind(this, view);
 
+        AppCompatActivity activity = ((AppCompatActivity) getActivity());
+        DrawerLayout drawerLayout =  ((DashActivity) activity).getDrawerLayout();
+
+        if (toolbar != null) {
+            activity.setSupportActionBar(toolbar);
+            ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(activity, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+            drawerLayout.addDrawerListener(drawerToggle);
+            drawerToggle.syncState();
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
+
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new CategoryFragment(), getResources().getString(R.string.tab_mymeal));
+        adapter.addFragment(new CategoryFragment(), getResources().getString(R.string.tab_categories));
         adapter.addFragment(new OrderFragment(), getResources().getString(R.string.tab_orders));
         viewPager.setAdapter(adapter);
 

@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProvider;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.rowland.delivery.features.dash.data.model.order.OrderRepository;
+import com.rowland.delivery.features.dash.di.modules.DashModule;
 import com.rowland.delivery.features.dash.di.scope.order.Order;
 import com.rowland.delivery.features.dash.domain.usecases.order.LoadOrdersUseCase;
 import com.rowland.delivery.features.dash.presentation.adapters.OrderDataAdapter;
@@ -19,7 +20,7 @@ import dagger.Provides;
  * Created by Rowland on 5/9/2018.
  */
 
-@Module(includes = {FirebaseModule.class})
+@Module(includes = {FirebaseModule.class, DashModule.class})
 public class OrderModule {
 
     @Provides
@@ -28,7 +29,7 @@ public class OrderModule {
         return new OrderDataAdapter();
     }
 
-    @Provides
+/*    @Provides
     @Order
     @Named("order")
     ViewModelProvider.Factory providesViewModelFactory(LoadOrdersUseCase loadOrdersUseCase) {
@@ -45,5 +46,5 @@ public class OrderModule {
     @Order
     OrderRepository providesOrderRepository(FirebaseFirestore firebaseFirestone) {
         return new OrderRepository(firebaseFirestone);
-    }
+        }*/
 }

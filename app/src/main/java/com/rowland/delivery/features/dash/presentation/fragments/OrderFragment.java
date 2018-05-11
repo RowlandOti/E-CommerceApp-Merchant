@@ -12,14 +12,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.rowland.delivery.features.dash.di.modules.order.OrderModule;
 import com.rowland.delivery.features.dash.presentation.activities.DashActivity;
 import com.rowland.delivery.features.dash.presentation.adapters.OrderDataAdapter;
 import com.rowland.delivery.features.dash.presentation.tools.recylerview.RecyclerItemClickListener;
 import com.rowland.delivery.features.dash.presentation.viewmodels.order.OrderViewModel;
 import com.rowland.delivery.merchant.R;
+import com.rowland.delivery.utilities.DumyDataUtility;
 import com.vlonjatg.progressactivity.ProgressFrameLayout;
 
 import javax.inject.Inject;
@@ -97,7 +102,7 @@ public class OrderFragment extends Fragment {
         orderViewModel.getOrderDataList()
                 .observe(this, orders -> orderAdapter.setList(orders));
 
-       /* FirebaseFirestore.getInstance()
+       /*FirebaseFirestore.getInstance()
                 .collection("orderdata")
                 .add(DumyDataUtility.createOrderData()).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
             @Override

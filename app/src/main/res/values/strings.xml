@@ -17,7 +17,7 @@
     <string name="action_logout_string">Logout</string>
     <string name="drawer_open" translatable="false">Open</string>
     <string name="drawer_close" translatable="false">Close</string>
-    <string name="tab_mymeal">MY MEALS</string>
+    <string name="tab_categories">CATEGORIES</string>
     <string name="tab_orders">ORDERS</string>
 
     <!-- TODO: Remove dummy description -->

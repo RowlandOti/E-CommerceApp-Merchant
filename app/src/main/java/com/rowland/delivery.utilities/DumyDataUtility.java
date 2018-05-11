@@ -43,7 +43,22 @@ public class DumyDataUtility {
         item.setPrice(1200);
         item.setTitle("McFries Delicacies");
 
+        items.add(item);
+
+        OrderItem item2 = new OrderItem();
+        item2.setForeign(false);
+        item2.setImageUrl("https://image.tmdb.org/t/p/w500/jjPJ4s3DWZZvI4vw8Xfi4Vqa1Q8.jpg");
+        item2.setItemCode("rWd");
+        item2.setItemQuantity(3);
+        item2.setItemTotal(5);
+        item2.setPrice(200);
+        item2.setTitle("Brown Cake");
+
+        items.add(item2);
+
         data.setItems(items);
+
+
 
         return data;
     }

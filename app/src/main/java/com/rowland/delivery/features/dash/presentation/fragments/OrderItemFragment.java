@@ -45,6 +45,8 @@ public class OrderItemFragment extends Fragment {
 
     private Unbinder unbinder;
     private OrderViewModel orderViewModel;
+    private OrderData orderData;
+    private OrderItemAdapter adapter;
     private static final int CALL_PERMISSION = 100;
 
     @BindView(R.id.fab)
@@ -90,9 +92,6 @@ public class OrderItemFragment extends Fragment {
     @Inject
     @Named("order")
     ViewModelProvider.Factory orderFactory;
-    private OrderData orderData;
-    private OrderItemAdapter adapter;
-
 
     public OrderItemFragment() {
         // Required empty public constructor
@@ -129,10 +128,6 @@ public class OrderItemFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
 
-        orderViewModel.getSelectedOrderData()
-                .observe(this, orderData -> {
-                    this.orderData = orderData;
-                });
 
         adapter = new OrderItemAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -156,7 +151,12 @@ public class OrderItemFragment extends Fragment {
         // ToDo: take care of popping stack
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setupData();
+        orderViewModel.getSelectedOrderData()
+                .observe(this, orderData -> {
+                    this.orderData = orderData;
+                    setupData();
+                });
+
     }
 
     @Override
