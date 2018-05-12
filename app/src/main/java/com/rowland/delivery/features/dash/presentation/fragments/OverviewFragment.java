@@ -10,9 +10,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.rowland.delivery.features.dash.presentation.activities.DashActivity;
 import com.rowland.delivery.merchant.R;
@@ -74,14 +77,56 @@ public class OverviewFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         AppCompatActivity activity = ((AppCompatActivity) getActivity());
-        DrawerLayout drawerLayout =  ((DashActivity) activity).getDrawerLayout();
+        DrawerLayout drawerLayout = ((DashActivity) activity).getDrawerLayout();
 
         if (toolbar != null) {
             activity.setSupportActionBar(toolbar);
-            ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(activity, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+            ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(activity, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
+                @Override
+                public void onDrawerSlide(View drawerView, float slideOffset) {
+                    super.onDrawerSlide(drawerView, slideOffset);
+                    this.syncState();
+                    try {
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                            Window window = getActivity().getWindow();
+                            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                            window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDarkTransparent));
+                        }
+                    } catch (Exception e) {
+                        Log.e(OverviewFragment.class.getSimpleName(), ":" + e.fillInStackTrace().toString());
+                    }
+                }
+
+                @Override
+                public void onDrawerStateChanged(int newState) {
+                    super.onDrawerStateChanged(newState);
+                    this.syncState();
+                }
+
+                public void onDrawerClosed(View view) {
+                    super.onDrawerClosed(view);
+                    this.syncState();
+
+                    try {
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                            Window window = getActivity().getWindow();
+                            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                            window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+                        }
+                    } catch (Exception e) {
+                        Log.e(OverviewFragment.class.getSimpleName(), ":" + e.fillInStackTrace().toString());
+                    }
+                }
+
+                public void onDrawerOpened(View drawerView) {
+                    super.onDrawerOpened(drawerView);
+                    this.syncState();
+                }
+            };
             drawerLayout.addDrawerListener(drawerToggle);
             drawerToggle.syncState();
-            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());

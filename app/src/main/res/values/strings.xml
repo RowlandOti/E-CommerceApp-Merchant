@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DeliveryApp - Merchant</string>
+    <string name="app_name">Merchant</string>
 
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_auth">AuthActivity</string>
@@ -10,7 +10,7 @@
     <string name="register">register</string>
 
     <string name="action_settings">Settings</string>
-    <string name="action_meal_string">My meals</string>
+    <string name="action_business_string">My Business</string>
     <string name="action_orders_string">Orders</string>
     <string name="action_sales_string">Sales</string>
     <string name="navigation_setting_subheader">Preferences</string>
@@ -23,6 +23,4 @@
     <!-- TODO: Remove dummy description -->
     <string name="description_dummy"><![CDATA[<string name=\"description_dummy\">          Donec odio magna, blandit vitae dolor tempus, mollis euismod nisi         Etiam blandit vitae turpis hendrerit consequat. Nam mollis quis ligula eget ullamcorper.         Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.         Fusce dignissim gravida ex eu pretium. Quisque eget est in sapien maximus dapibus.         Donec augue ipsum, commodo in leo a, facilisis malesuada sapien.         Pellentesque hendrerit sem purus, vel sodales sem lacinia quis.         Ut at rhoncus purus. Aenean ligula libero, mattis eleifend consequat vulputate, ullamcorper sed est.         Morbi dignissim elementum semper. Nunc suscipit massa finibus leo tincidunt, eget facilisis quam faucibus.         In sollicitudin varius tortor at dictum. Etiam quis leo rutrum, mattis orci ac, dapibus tellus.         Nam eleifend, odio eu pretium porttitor, ligula mi congue massa, suscipit rhoncus turpis felis at ligula.      </string>]]></string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

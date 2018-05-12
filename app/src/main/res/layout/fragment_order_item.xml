@@ -11,15 +11,15 @@
         android:id="@+id/main.appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:visibility="gone">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/main.toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_collapseMode="pin"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            android:elevation="6dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -135,11 +135,11 @@
                             android:padding="10dp">
 
                             <TextView
-                                android:textColor="@color/lightTextColor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-condensed"
                                 android:text="Phone"
+                                android:textColor="@color/lightTextColor"
                                 android:textSize="14dp" />
 
                             <TextView
@@ -190,11 +190,11 @@
                             android:padding="10dp">
 
                             <TextView
-                                android:textColor="@color/lightTextColor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-condensed"
                                 android:text="Email"
+                                android:textColor="@color/lightTextColor"
                                 android:textSize="14dp" />
 
                             <TextView
@@ -282,11 +282,11 @@
                             android:padding="10dp">
 
                             <TextView
-                                android:textColor="@color/lightTextColor"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-condensed"
                                 android:text="Address"
+                                android:textColor="@color/lightTextColor"
                                 android:textSize="14dp" />
 
                             <TextView
@@ -388,13 +388,13 @@
                                 android:orientation="horizontal">
 
                                 <TextView
-                                    android:textColor="@color/lightTextColor"
                                     android:id="@+id/all_items"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingBottom="10dp"
                                     android:paddingTop="10dp"
-                                    android:text="items (3)" />
+                                    android:text="items (3)"
+                                    android:textColor="@color/lightTextColor" />
 
                                 <View
                                     android:layout_width="1dp"
@@ -402,13 +402,13 @@
                                     android:layout_weight="1" />
 
                                 <TextView
-                                    android:textColor="@color/lightTextColor"
                                     android:id="@+id/total_item_price"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingBottom="10dp"
                                     android:paddingTop="10dp"
-                                    android:text="KSH 800" />
+                                    android:text="KSH 800"
+                                    android:textColor="@color/lightTextColor" />
                             </LinearLayout>
 
                             <!--Delivery-->
@@ -419,12 +419,12 @@
                                 android:orientation="horizontal">
 
                                 <TextView
-                                    android:textColor="@color/lightTextColor"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingBottom="10dp"
                                     android:paddingTop="10dp"
-                                    android:text="Delivery" />
+                                    android:text="Delivery"
+                                    android:textColor="@color/lightTextColor" />
 
                                 <View
                                     android:layout_width="1dp"
@@ -432,13 +432,13 @@
                                     android:layout_weight="1" />
 
                                 <TextView
-                                    android:textColor="@color/lightTextColor"
                                     android:id="@+id/delivery_fee"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingBottom="10dp"
                                     android:paddingTop="10dp"
-                                    android:text="KSH 50" />
+                                    android:text="KSH 50"
+                                    android:textColor="@color/lightTextColor" />
                             </LinearLayout>
 
                             <View

@@ -5,9 +5,9 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/action_meals"
+            android:id="@+id/action_business"
             android:icon="@drawable/campass_outline_vector"
-            android:title="@string/action_meal_string"
+            android:title="@string/action_business_string"
             />
 
         <item

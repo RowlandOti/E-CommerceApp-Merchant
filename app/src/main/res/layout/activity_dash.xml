@@ -6,50 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:fitsSystemWindows="true"
     tools:context="com.rowland.delivery.features.dash.presentation.activities.DashActivity">
 
-    <!--&lt;!&ndash;Main content&ndash;&gt;
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/main_content"
+    <FrameLayout
+        android:id="@+id/container_body"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
-
-            <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:layout_collapseMode="pin"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-        </android.support.design.widget.AppBarLayout>
-
-
-        <FrameLayout
-            android:id="@+id/container_body"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-
-    </android.support.design.widget.CoordinatorLayout>-->
-
-
-        <FrameLayout
-            android:id="@+id/container_body"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-
+        android:layout_height="match_parent" />
 
 
     <android.support.design.widget.NavigationView
@@ -58,6 +21,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/drawer_color"
+        android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_drawer_header"
         app:itemTextColor="@color/white"
         app:menu="@menu/menu_drawer" />

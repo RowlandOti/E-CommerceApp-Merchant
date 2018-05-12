@@ -127,8 +127,8 @@ public class OrderItemAdapter extends HFRecyclerView<OrderItem> {
             Glide.with(food_image.getContext()).load(orderItem.getImageUrl()).into(food_image);
             items_count.setText(String.valueOf(orderItem.getItemQuantity()));
             item_name.setText(orderItem.getTitle());
-            item_price.setText("Price: KSH " + orderItem.getPrice() + " each");
-            item_total_price.setText("Total price: KSH " + orderItem.getItemTotal());
+            item_price.setText("Price: Ksh " + orderItem.getPrice() + " each");
+            item_total_price.setText("Total price: Ksh " + orderItem.getItemTotal());
         }
     }
 

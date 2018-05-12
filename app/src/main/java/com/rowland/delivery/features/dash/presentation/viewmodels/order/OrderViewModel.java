@@ -9,6 +9,7 @@ import com.rowland.delivery.features.dash.domain.usecases.order.LoadOrdersUseCas
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -64,4 +65,7 @@ public class OrderViewModel extends ViewModel {
         return orderDataList;
     }
 
+    public Completable updateOrderStatus(String status) {
+        return loadOrdersUseCase.updateOrderStatus(status, selectedOrderData.getValue().getFirestoreUid());
+    }
 }

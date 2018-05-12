@@ -70,7 +70,7 @@
                 android:id="@+id/item_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Flied Tilapia"
+                android:text="Fried Tilapia"
                 android:textColor="@color/primary_text_color"
                 android:textSize="16dp" />
 
@@ -78,7 +78,7 @@
                 android:id="@+id/item_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Price: KSH 200 each"
+                android:text="Price: Ksh 200 each"
                 android:textSize="14dp"
                 android:textColor="@color/lightTextColor"/>
 
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:paddingBottom="5dp"
-                android:text="Total price: KSH 400"
+                android:text="Total price: Ksh 400"
                 android:textColor="@color/primary_text_color" />
 
         </LinearLayout>

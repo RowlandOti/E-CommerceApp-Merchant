@@ -26,7 +26,7 @@ import javax.inject.Named;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DashActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class DashActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
 
     public final static String ACTION_SHOW_LOADING_ITEM = "loading";
 
@@ -70,13 +70,12 @@ public class DashActivity extends AppCompatActivity implements NavigationView.On
         ButterKnife.bind(this);
 
         mDrawer.setNavigationItemSelectedListener(this);
-
-        //default it set first item as selected
-        mSelectedId = savedInstanceState == null ? R.id.action_meals : savedInstanceState.getInt("SELECTED_ID");
+        mSelectedId = savedInstanceState == null ? R.id.action_business : savedInstanceState.getInt("SELECTED_ID");
         itemSelection(mSelectedId);
 
-        orderViewModel = ViewModelProviders.of(this, orderFactory).get(OrderViewModel.class);
+        getSupportFragmentManager().addOnBackStackChangedListener(this);
 
+        orderViewModel = ViewModelProviders.of(this, orderFactory).get(OrderViewModel.class);
         orderViewModel.getSelectedOrderData()
                 .observe(this, orderData -> {
                     getSupportFragmentManager().beginTransaction()
@@ -102,7 +101,7 @@ public class DashActivity extends AppCompatActivity implements NavigationView.On
     private void itemSelection(int mSelectedId) {
         FragmentManager manager = getSupportFragmentManager();
         switch (mSelectedId) {
-            case R.id.action_meals:
+            case R.id.action_business:
                 manager.beginTransaction().replace(R.id.container_body, OverviewFragment.newInstance(0)).commit();
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 break;
@@ -117,5 +116,28 @@ public class DashActivity extends AppCompatActivity implements NavigationView.On
 
     public DrawerLayout getDrawerLayout() {
         return mDrawerLayout;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        shouldDisplayHomeUp();
+    }
+
+    @Override
+    public void onBackStackChanged() {
+        shouldDisplayHomeUp();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        super.onSupportNavigateUp();
+        getSupportFragmentManager().popBackStack();
+        return true;
+    }
+
+    public void shouldDisplayHomeUp() {
+        boolean canback = getSupportFragmentManager().getBackStackEntryCount() > 0;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(canback);
     }
 }

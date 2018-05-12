@@ -6,6 +6,7 @@ import com.rowland.delivery.features.dash.domain.models.order.OrderItem;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Rowland on 5/9/2018.
@@ -22,14 +23,14 @@ public class DumyDataUtility {
         data.setLng("34.5");
         data.setId(23);
         data.setItemIds("TeUbdhD");
-        data.setName("Oliptiga");
+        data.setName(randomCustomerName());
         data.setDeliveryFee(250);
-        data.setOrderItemsQuantity(5);
+        data.setOrderItemsQuantity(new Random().nextInt(40));
         data.setOrderRef("Tydsgeb");
         data.setOrderSubTotal("34");
         data.setOrderTotal(245);
         data.setUpdatedAt(new Date().toString());
-        data.setStatus("pending");
+        data.setStatus(randomStatus());
         data.setOrderDescription("Hot and Sliced Hamper");
         data.setPhone("0712847884");
 
@@ -38,7 +39,7 @@ public class DumyDataUtility {
         item.setForeign(false);
         item.setImageUrl("https://image.tmdb.org/t/p/w500/jjPJ4s3DWZZvI4vw8Xfi4Vqa1Q8.jpg");
         item.setItemCode("rTs");
-        item.setItemQuantity(34);
+        item.setItemQuantity(15);
         item.setItemTotal(40);
         item.setPrice(1200);
         item.setTitle("McFries Delicacies");
@@ -58,9 +59,16 @@ public class DumyDataUtility {
 
         data.setItems(items);
 
-
-
         return data;
     }
 
+    public static String randomStatus() {
+        String[] status = {"pending", "completed", "in_progress", "cancelled", "active", "failed", "delivered", "missed"};
+        return status[new Random().nextInt(status.length - 1)];
+    }
+
+    public static String randomCustomerName() {
+        String[] names = {"Rowland", "Pete", "Antony", "Mary", "Cleo", "Faith", "Ron", "Tim"};
+        return names[new Random().nextInt(names.length - 1)];
+    }
 }

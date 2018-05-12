@@ -69,6 +69,7 @@
 
 
     <style name="OneMoreFabMenu">
+        <item name="label_text_color">?attr/colorPrimary</item>
         <item name="color_main_button">?attr/colorAccent</item>
         <item name="color_secondary_buttons">?attr/colorAccent</item>
         <item name="content_options">@menu/menu_change_status</item>

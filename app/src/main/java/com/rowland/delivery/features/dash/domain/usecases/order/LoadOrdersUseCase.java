@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
 /**
@@ -25,5 +26,9 @@ public class LoadOrdersUseCase {
 
     public Flowable<List<OrderData>> loadOrders(String userUID) {
         return this.orderRepository.getOrders(userUID);
+    }
+
+    public Completable updateOrderStatus(String status, String firestoreUid) {
+        return this.orderRepository.updateOrderStatus(status, firestoreUid);
     }
 }

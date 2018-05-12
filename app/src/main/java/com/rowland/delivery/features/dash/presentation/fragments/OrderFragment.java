@@ -94,9 +94,7 @@ public class OrderFragment extends Fragment {
             }
 
             @Override
-            public void onItemLongClick(View view, int position) {
-
-            }
+            public void onItemLongClick(View view, int position) {}
         }));
 
         orderViewModel.getOrderDataList()
@@ -110,8 +108,8 @@ public class OrderFragment extends Fragment {
                 Toast.makeText(getActivity(), "OrderData saved", Toast.LENGTH_SHORT)
                         .show();
             }
-        });*/
-
+        });
+*/
     }
 
     @Override

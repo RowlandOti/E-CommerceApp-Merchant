@@ -1,17 +1,19 @@
 package com.rowland.delivery.features.dash.data.model.order;
 
-import android.util.Log;
-
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.rowland.delivery.features.dash.domain.models.order.OrderData;
+import com.rowland.delivery.features.dash.presentation.tools.snapshots.DocumentWithIdSnapshotMapper;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
+import durdinapps.rxfirebase2.RxFirestore;
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
 /**
@@ -35,16 +37,13 @@ public class OrderRepository {
 
     public Flowable<List<OrderData>> getOrders(String userUID) {
         CollectionReference orderCollectionRef = mFirebaseFirestone.collection("orderdata");
-        //return RxFirestore.observeQueryRef(orderCollectionRef, OrderData.class);
+        return RxFirestore.observeQueryRef(orderCollectionRef, (io.reactivex.functions.Function) DocumentWithIdSnapshotMapper.listOf(OrderData.class));
+    }
 
-        List<OrderData> dataList = new ArrayList<>();
-        orderCollectionRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
-            for (DocumentSnapshot doc : queryDocumentSnapshots.getDocuments()) {
-                OrderData data = doc.toObject(OrderData.class);
-                Log.d(OrderRepository.class.getSimpleName(), "OrderData: " + data.toString());
-                dataList.add(data);
-            }
-        });
-        return Flowable.just(dataList);
+    public Completable updateOrderStatus(String status, String firestoreUid) {
+        DocumentReference orderDocumentRef = mFirebaseFirestone.collection("orderdata").document(firestoreUid);
+        Map<String, Object> orderUpdate = new HashMap<>();
+        orderUpdate.put("status", status);
+        return RxFirestore.updateDocument(orderDocumentRef, orderUpdate);
     }
 }

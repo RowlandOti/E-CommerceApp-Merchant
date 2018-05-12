@@ -1,12 +1,17 @@
 package com.rowland.delivery.features.dash.domain.models.order;
 
+import android.support.annotation.NonNull;
+
+import com.google.firebase.firestore.Exclude;
+import com.rowland.delivery.features.dash.domain.models.FirestoreModel;
+
 import java.util.List;
 
 /**
  * Created by Rowland on 5/9/2018.
  */
 
-public class OrderData {
+public class OrderData implements FirestoreModel {
 
     private Integer id;
     private String orderRef;
@@ -25,6 +30,19 @@ public class OrderData {
     private Integer orderItemsQuantity;
     private String orderSubTotal;
     private Integer orderTotal;
+
+    @Exclude
+    private String firestoreUid;
+
+    @Override
+    public <T extends FirestoreModel> T withFirestoreId(@NonNull String firestoreUid) {
+        this.firestoreUid = firestoreUid;
+        return (T) this;
+    }
+
+    public String getFirestoreUid() {
+        return firestoreUid;
+    }
 
 
     public Integer getId() {
@@ -183,6 +201,7 @@ public class OrderData {
                 ", orderItemsQuantity=" + orderItemsQuantity +
                 ", orderSubTotal='" + orderSubTotal + '\'' +
                 ", orderTotal=" + orderTotal +
+                ", firestoreUid='" + firestoreUid + '\'' +
                 '}';
     }
 }

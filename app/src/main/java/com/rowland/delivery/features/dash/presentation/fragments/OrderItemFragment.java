@@ -128,6 +128,9 @@ public class OrderItemFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
 
+        if (toolbar != null) {
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        }
 
         adapter = new OrderItemAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -145,18 +148,16 @@ public class OrderItemFragment extends Fragment {
                     changeStatus("in_progress");
                     break;
                 case R.id.action_canceled:
-                    changeStatus("canceled");
+                    changeStatus("cancelled");
             }
+            fab.performClick();
         });
-        // ToDo: take care of popping stack
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         orderViewModel.getSelectedOrderData()
                 .observe(this, orderData -> {
                     this.orderData = orderData;
                     setupData();
                 });
-
     }
 
     @Override
@@ -211,7 +212,9 @@ public class OrderItemFragment extends Fragment {
     }
 
     private final void changeStatus(String status) {
-        fab.performClick();
+        orderViewModel.updateOrderStatus(status)
+                .subscribe(() -> Toast.makeText(getActivity(), "Order Status Updated Successfull", Toast.LENGTH_SHORT).show()
+                        , throwable -> Toast.makeText(getActivity(), "Update Failed", Toast.LENGTH_SHORT).show());
     }
 
 
@@ -230,9 +233,9 @@ public class OrderItemFragment extends Fragment {
 
         order_ref.setText(orderData.getOrderRef());
         all_items.setText("items (" + orderData.getOrderItemsQuantity() + ")");
-        total_item_price.setText("KSH " + orderData.getOrderSubTotal());
-        delivery_fee.setText("KSH " + orderData.getDeliveryFee());
-        total_price.setText("KSH " + orderData.getOrderTotal());
+        total_item_price.setText("Ksh " + orderData.getOrderSubTotal());
+        delivery_fee.setText("Ksh " + orderData.getDeliveryFee());
+        total_price.setText("Ksh " + orderData.getOrderTotal());
 
         adapter.setList(orderData.getItems());
         adapter.notifyDataSetChanged();
