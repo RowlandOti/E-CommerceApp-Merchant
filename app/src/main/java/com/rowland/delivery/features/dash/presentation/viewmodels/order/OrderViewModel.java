@@ -1,11 +1,14 @@
 package com.rowland.delivery.features.dash.presentation.viewmodels.order;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.util.Log;
 
+import com.rowland.delivery.features.dash.domain.models.order.Order;
 import com.rowland.delivery.features.dash.domain.models.order.OrderData;
 import com.rowland.delivery.features.dash.domain.usecases.order.LoadOrdersUseCase;
+import com.rowland.delivery.features.dash.presentation.viewmodels.SharedViewModel;
 
 import java.util.List;
 
@@ -17,12 +20,9 @@ import io.reactivex.schedulers.Schedulers;
  * Created by Rowland on 5/8/2018.
  */
 
-public class OrderViewModel extends ViewModel {
+public class OrderViewModel extends SharedViewModel<OrderData> {
 
     private final MutableLiveData<String> firebaseUserUid = new MutableLiveData<>();
-    private final MutableLiveData<List<OrderData>> orderDataList = new MutableLiveData<>();
-    private final MutableLiveData<OrderData> selectedOrderData = new MutableLiveData<>();
-
     private final LoadOrdersUseCase loadOrdersUseCase;
 
     public OrderViewModel(LoadOrdersUseCase loadOrdersUseCase) {
@@ -35,37 +35,35 @@ public class OrderViewModel extends ViewModel {
         // ToDo: clean subscriptions
     }
 
-    public MutableLiveData<OrderData> getSelectedOrderData() {
-        return selectedOrderData;
+    public LiveData<OrderData> getSelectedOrderData() {
+        return selectedListItem;
     }
 
-    public void select(int selectedPosition) {
-        selectedOrderData.setValue(orderDataList.getValue().get(selectedPosition));
+    public void setSelectedListItem(int selectedPosition) {
+       selectedListItem.setValue(dataList.getValue().get(selectedPosition));
     }
+
 
     public void setFirebaseUserUid(String userUid) {
         firebaseUserUid.setValue(userUid);
     }
 
-    public MutableLiveData<String> getFirebaseUserUid() {
-        return firebaseUserUid;
-    }
-
-    public MutableLiveData<List<OrderData>> getOrderDataList() {
+    @Override
+    public LiveData<List<OrderData>> getDataList() {
         loadOrdersUseCase.loadOrders(firebaseUserUid.getValue())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(ordersData -> {
-                    orderDataList.setValue(ordersData);
+                    dataList.setValue(ordersData);
                 }, throwable -> {
                     Log.d(OrderViewModel.class.getSimpleName(), "Error Retrieving List: " + throwable.getMessage());
                 }, () -> {
                     Log.d(OrderViewModel.class.getSimpleName(), "Done Retrieving");
                 });
-        return orderDataList;
+        return dataList;
     }
 
     public Completable updateOrderStatus(String status) {
-        return loadOrdersUseCase.updateOrderStatus(status, selectedOrderData.getValue().getFirestoreUid());
+        return loadOrdersUseCase.updateOrderStatus(status, selectedListItem.getValue().getFirestoreUid());
     }
 }

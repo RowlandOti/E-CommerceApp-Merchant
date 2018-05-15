@@ -1,6 +1,6 @@
 package com.rowland.delivery.merchant.application;
 
-import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.rowland.delivery.merchant.application.di.components.ApplicationComponent;
 import com.rowland.delivery.merchant.application.di.components.DaggerApplicationComponent;
@@ -11,7 +11,7 @@ import com.rowland.delivery.merchant.application.di.modules.ContextModule;
  * Created by Rowland on 4/30/2018.
  */
 
-public class MerchantApplication extends Application {
+public class MerchantApplication extends MultiDexApplication {
 
     private ApplicationComponent applicationComponent;
 

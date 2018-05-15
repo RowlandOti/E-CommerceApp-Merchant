@@ -1,5 +1,6 @@
 package com.rowland.delivery.features.dash.domain.models.order;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,8 +12,8 @@ public class Order {
     private Integer id;
     private String orderRef;
     private String status;
-    private String createdAt;
-    private String updatedAt;
+    private Date createdAt;
+    private Date updatedAt;
     private String itemIds;
     private String phone;
     private String name;
@@ -38,11 +39,11 @@ public class Order {
         return status;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public String getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 

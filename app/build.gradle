@@ -9,6 +9,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
+        multiDexEnabled true
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -27,9 +28,11 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':rxgallery')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
+    implementation 'com.android.support:multidex:1.0.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -48,14 +51,15 @@ dependencies {
     // if you use the support libraries
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.15'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.15'
-
     //If you are using Firestore in your project
     implementation 'com.github.frangsierra:rx2firebase:1.4.1'
     implementation 'com.github.vlonjatg:progress-activity:v2.0.3'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
-    implementation 'com.github.ajalt:flexadapter:2.2.0'
-
     implementation 'com.github.dekoservidoni:omfm:1.1.1'
+    implementation 'com.flipboard:bottomsheet-core:1.5.3'
+    implementation 'com.flipboard:bottomsheet-commons:1.5.3'
+
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3'
 }
 
 apply plugin: 'com.google.gms.google-services'

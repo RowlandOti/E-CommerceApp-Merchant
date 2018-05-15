@@ -4,8 +4,6 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 
-import com.rowland.delivery.features.dash.domain.models.order.OrderData;
-
 import java.util.List;
 
 /**
@@ -14,28 +12,16 @@ import java.util.List;
 
 public abstract class SharedViewModel<T> extends ViewModel {
 
-    private final MutableLiveData<List<T>> dataList = new MutableLiveData<>();
+    protected final MutableLiveData<List<T>> dataList = new MutableLiveData<>();
+    protected final MutableLiveData<T> selectedListItem = new MutableLiveData<>();
 
-    private final MutableLiveData<T> selected = new MutableLiveData<>();
-    private OnSelectListener<T> listener;
-
-    public interface OnSelectListener<T> {
-        void selected(T item);
+    public void setSelectedListItem(int position) {
+        selectedListItem.setValue(dataList.getValue().get(position));
     }
 
-
-    public void setListener(OnSelectListener<T> listener) {
-        this.listener = listener;
+    public LiveData<T> getSelectedListItem() {
+        return selectedListItem;
     }
 
-    public void setSelected(T item) {
-        selected.setValue(item);
-        listener.selected(item);
-    }
-
-    public LiveData<T> getSelected() {
-        return selected;
-    }
-
-    public abstract MutableLiveData<List<OrderData>> getDataList();
+    public abstract LiveData<List<T>> getDataList();
 }

@@ -76,6 +76,14 @@
         <item name="expanded_background_color">@color/omfm_expanded_background_sample</item>
     </style>
 
+    <style name="DashNavigationDrawerTheme">
+        <item name="android:background">@color/drawer_color</item>
+        <item name="headerLayout">@layout/nav_drawer_header</item>
+        <item name="itemTextColor">@color/drawer_icon_color_state</item>
+        <item name="itemIconTint">@color/drawer_icon_color_state</item>
+        <item name="menu">@menu/menu_drawer</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

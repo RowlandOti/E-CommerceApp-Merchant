@@ -31,7 +31,7 @@ public class OrderRepository {
 
     /*public Flowable<List<OrderData>> getOrders(String userUID) {
         CollectionReference categoryCollectionRef = mFirebaseFirestone.collection("orders");
-        Query query = categoryCollectionRef.whereEqualTo(String.format("members.%s", userUID), true);
+        Query query = categoryCollectionRef.whereEqualTo(String.format("merchants.%s", userUID), true);
         return RxFirestore.observeQueryRef(query, OrderData.class);
     }*/
 

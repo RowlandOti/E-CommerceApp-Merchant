@@ -2,6 +2,7 @@ package com.rowland.delivery.utilities;
 
 import com.rowland.delivery.features.dash.domain.models.order.OrderData;
 import com.rowland.delivery.features.dash.domain.models.order.OrderItem;
+import com.rowland.delivery.features.dash.domain.models.product.Product;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,6 +14,25 @@ import java.util.Random;
  */
 
 public class DumyDataUtility {
+
+    public static Product createProduct() {
+        Product product = new Product();
+        product.setCreatedAt(new Date());
+        product.setDeletedAt(new Date());
+        product.setUpdatedAt(new Date());
+        product.setDescription("Brown cake simmered in mayoinase");
+        product.setId(new Random().nextInt(100));
+        product.setImageUrl("https://image.tmdb.org/t/p/w500/jjPJ4s3DWZZvI4vw8Xfi4Vqa1Q8.jpg");
+        product.setItemCode("tWd");
+        product.setItemQuantity(new Random().nextInt(25));
+        product.setMerchantCode("34dsdfEd");
+        product.setName("Brown Cake");
+        product.setSaleQuantity(3);
+        product.setUnitsOfMeasure(4);
+        product.setPrice(new Random().nextInt(2000));
+
+        return product;
+    }
 
     public static OrderData createOrderData() {
 

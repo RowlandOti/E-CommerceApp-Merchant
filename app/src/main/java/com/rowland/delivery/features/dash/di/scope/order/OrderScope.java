@@ -15,4 +15,4 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Scope
 @Documented
 @Retention(RUNTIME)
-public @interface Order {}
+public @interface OrderScope {}

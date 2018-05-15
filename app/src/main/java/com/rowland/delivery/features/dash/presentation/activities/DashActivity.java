@@ -17,8 +17,11 @@ import com.rowland.delivery.features.dash.di.components.DashComponent;
 import com.rowland.delivery.features.dash.di.modules.DashModule;
 import com.rowland.delivery.features.dash.presentation.fragments.OrderItemFragment;
 import com.rowland.delivery.features.dash.presentation.fragments.OverviewFragment;
+import com.rowland.delivery.features.dash.presentation.fragments.ProductFragment;
+import com.rowland.delivery.features.dash.presentation.viewmodels.category.CategoryViewModel;
 import com.rowland.delivery.features.dash.presentation.viewmodels.order.OrderViewModel;
 import com.rowland.delivery.merchant.R;
+import com.rowland.delivery.merchant.application.di.modules.ContextModule;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -47,8 +50,13 @@ public class DashActivity extends AppCompatActivity implements NavigationView.On
     @Named("order")
     ViewModelProvider.Factory orderFactory;
 
+    @Inject
+    @Named("category")
+    ViewModelProvider.Factory categoryFactory;
+
     private OrderViewModel orderViewModel;
-    private int mSelectedId;
+    private CategoryViewModel categoryViewModel;
+    private int mSelectedMenuId;
 
     public DashComponent getDashComponent() {
         return dashComponent;
@@ -60,6 +68,7 @@ public class DashActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         dashComponent = DaggerDashComponent.builder()
                 .dashModule(new DashModule())
+                .contextModule(new ContextModule(this))
                 .build();
 
         dashComponent.inject(this);
@@ -70,17 +79,26 @@ public class DashActivity extends AppCompatActivity implements NavigationView.On
         ButterKnife.bind(this);
 
         mDrawer.setNavigationItemSelectedListener(this);
-        mSelectedId = savedInstanceState == null ? R.id.action_business : savedInstanceState.getInt("SELECTED_ID");
-        itemSelection(mSelectedId);
+        mSelectedMenuId = savedInstanceState == null ? R.id.action_business : savedInstanceState.getInt("SELECTED_ID");
+        itemSelection(mSelectedMenuId);
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
 
         orderViewModel = ViewModelProviders.of(this, orderFactory).get(OrderViewModel.class);
-        orderViewModel.getSelectedOrderData()
+        orderViewModel.getSelectedListItem()
                 .observe(this, orderData -> {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container_body, OrderItemFragment.newInstance(null))
                             .addToBackStack(OrderItemFragment.class.getSimpleName())
+                            .commit();
+                });
+
+        categoryViewModel = ViewModelProviders.of(this, categoryFactory).get(CategoryViewModel.class);
+        categoryViewModel.getSelectedListItem()
+                .observe(this, category -> {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container_body, ProductFragment.newInstance(null))
+                            .addToBackStack(ProductFragment.class.getSimpleName())
                             .commit();
                 });
     }
@@ -93,8 +111,8 @@ public class DashActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         item.setChecked(true);
-        mSelectedId = item.getItemId();
-        itemSelection(mSelectedId);
+        mSelectedMenuId = item.getItemId();
+        itemSelection(mSelectedMenuId);
         return true;
     }
 
@@ -137,7 +155,7 @@ public class DashActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void shouldDisplayHomeUp() {
-        boolean canback = getSupportFragmentManager().getBackStackEntryCount() > 0;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(canback);
+        boolean canGoBack = getSupportFragmentManager().getBackStackEntryCount() > 0;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(canGoBack);
     }
 }

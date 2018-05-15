@@ -18,10 +18,11 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.rowland.delivery.features.dash.di.modules.category.CategoryModule;
-import com.rowland.delivery.features.dash.domain.models.Category;
+import com.rowland.delivery.features.dash.domain.models.category.Category;
 import com.rowland.delivery.features.dash.presentation.activities.DashActivity;
 import com.rowland.delivery.features.dash.presentation.adapters.CategoryAdapter;
 import com.rowland.delivery.features.dash.presentation.tools.recylerview.GridSpacingItemDecoration;
+import com.rowland.delivery.features.dash.presentation.tools.recylerview.RecyclerItemClickListener;
 import com.rowland.delivery.features.dash.presentation.viewmodels.category.CategoryViewModel;
 import com.rowland.delivery.merchant.R;
 import com.rowland.delivery.utilities.ScreenUtils;
@@ -62,7 +63,7 @@ public class CategoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        categoryViewModel = ViewModelProviders.of(this, categoryFactory).get(CategoryViewModel.class);
+        categoryViewModel = ViewModelProviders.of(getActivity(), categoryFactory).get(CategoryViewModel.class);
         categoryViewModel.setFirebaseUserUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
@@ -89,7 +90,19 @@ public class CategoryFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(categoryAdapter);
 
-        categoryViewModel.getCategoryList()
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                categoryViewModel.setSelectedListItem(position);
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+            }
+        }));
+
+
+        categoryViewModel.getDataList()
                 .observe(this, categories -> categoryAdapter.setList(categories));
     }
 
@@ -103,7 +116,7 @@ public class CategoryFragment extends Fragment {
     public void createCategory() {
         new MaterialDialog.Builder(getActivity())
                 .backgroundColorRes(android.R.color.white)
-                .title("Create Category")
+                .title("Create CategoryScope")
                 .inputRangeRes(3, 12, android.R.color.holo_red_dark)
                 .input("e.g Fruits", null, (dialog, input) -> saveCategory(input.toString()))
                 .show();

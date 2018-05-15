@@ -1,11 +1,11 @@
-package com.rowland.delivery.features.dash.data.model;
+package com.rowland.delivery.features.dash.data.model.category;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.SetOptions;
-import com.rowland.delivery.features.dash.domain.models.Category;
+import com.rowland.delivery.features.dash.domain.models.category.Category;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,18 +30,18 @@ public class CategoryRepository {
         this.mFirebaseFirestone = firebaseFirestone;
     }
 
-    public Flowable<List<Category>> getCategories(String userUID) {
+    public Flowable<List<Category>> getCategories(String userUid) {
         CollectionReference categoryCollectionRef = mFirebaseFirestone.collection("categories");
-        Query query = categoryCollectionRef.whereEqualTo(String.format("members.%s", userUID), true);
+        Query query = categoryCollectionRef.whereEqualTo(String.format("merchants.%s", userUid), true);
         return RxFirestore.observeQueryRef(query, Category.class);
     }
 
 
-    public Single<Category> createCategory(Category category, String userUID) {
+    public Single<Category> createCategory(Category category, String userUid) {
         DocumentReference documentReference = mFirebaseFirestone.collection("categories").document(category.getName());
         documentReference.set(category, SetOptions.merge()).addOnSuccessListener(aVoid -> {
             Map<String, Object> members = new HashMap<>();
-            members.put(String.format("members.%s", userUID), true);
+            members.put(String.format("merchants.%s", userUid), true);
             documentReference.update(members);
         });
 

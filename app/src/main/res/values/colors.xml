@@ -16,6 +16,8 @@
     <color name="secondary_text_color">#757575</color>
     <color name="lightTextColor">#AAAAAA</color>
 
+    <color name="expanded_bottom_sheet_background">#CCE9E9E9</color>
+
     <color name="gray">#EAEAEA</color>
     <color name="semi_dark">#80000000</color>
 </resources>

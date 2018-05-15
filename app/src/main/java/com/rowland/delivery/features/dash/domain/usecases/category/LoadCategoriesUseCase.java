@@ -1,15 +1,13 @@
-package com.rowland.delivery.features.dash.domain.usecases;
+package com.rowland.delivery.features.dash.domain.usecases.category;
 
-import com.google.firebase.firestore.QuerySnapshot;
-import com.rowland.delivery.features.dash.data.model.CategoryRepository;
-import com.rowland.delivery.features.dash.domain.models.Category;
+import com.rowland.delivery.features.dash.data.model.category.CategoryRepository;
+import com.rowland.delivery.features.dash.domain.models.category.Category;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.Flowable;
-import io.reactivex.Maybe;
 
 /**
  * Created by Rowland on 5/4/2018.

@@ -2,8 +2,8 @@ package com.rowland.delivery.features.dash.presentation.viewmodels.category;
 
 import android.arch.lifecycle.ViewModelProvider;
 
-import com.rowland.delivery.features.dash.domain.usecases.CreateCategoryUseCase;
-import com.rowland.delivery.features.dash.domain.usecases.LoadCategoriesUseCase;
+import com.rowland.delivery.features.dash.domain.usecases.category.CreateCategoryUseCase;
+import com.rowland.delivery.features.dash.domain.usecases.category.LoadCategoriesUseCase;
 
 import javax.inject.Inject;
 

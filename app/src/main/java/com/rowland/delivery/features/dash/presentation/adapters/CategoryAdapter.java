@@ -7,11 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.gms.flags.impl.DataUtils;
-import com.rowland.delivery.features.dash.domain.models.Category;
+import com.rowland.delivery.features.dash.domain.models.category.Category;
 import com.rowland.delivery.merchant.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;

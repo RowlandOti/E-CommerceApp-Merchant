@@ -1,7 +1,7 @@
-package com.rowland.delivery.features.dash.domain.usecases;
+package com.rowland.delivery.features.dash.domain.usecases.category;
 
-import com.rowland.delivery.features.dash.data.model.CategoryRepository;
-import com.rowland.delivery.features.dash.domain.models.Category;
+import com.rowland.delivery.features.dash.data.model.category.CategoryRepository;
+import com.rowland.delivery.features.dash.domain.models.category.Category;
 
 import javax.inject.Inject;
 

@@ -1,4 +1,4 @@
-package com.rowland.delivery.features.dash.domain.models;
+package com.rowland.delivery.features.dash.domain.models.category;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +28,7 @@ public class Category {
 
     @Override
     public String toString() {
-        return "Category{" +
+        return "CategoryScope{" +
                 "name='" + name + '\'' +
                 '}';
     }

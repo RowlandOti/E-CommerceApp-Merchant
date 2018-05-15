@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -52,7 +53,7 @@ public class OrderItemFragment extends Fragment {
     @BindView(R.id.fab)
     OneMoreFabMenu fab;
 
-    @BindView(R.id.main_toolbar)
+    @BindView(R.id.main_toolbar_orders)
     Toolbar toolbar;
 
     @BindView(R.id.customer_name)
@@ -98,9 +99,9 @@ public class OrderItemFragment extends Fragment {
     }
 
     public static OrderItemFragment newInstance(Bundle args) {
-        OrderItemFragment meals = new OrderItemFragment();
-        meals.setArguments(args);
-        return meals;
+        OrderItemFragment frag = new OrderItemFragment();
+        frag.setArguments(args);
+        return frag;
     }
 
     @Override
@@ -134,6 +135,7 @@ public class OrderItemFragment extends Fragment {
 
         adapter = new OrderItemAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
         fab.setOptionsClick(id -> {
