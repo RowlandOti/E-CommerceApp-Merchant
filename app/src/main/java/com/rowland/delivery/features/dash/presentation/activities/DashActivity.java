@@ -96,8 +96,10 @@ public class DashActivity extends AppCompatActivity implements NavigationView.On
         categoryViewModel = ViewModelProviders.of(this, categoryFactory).get(CategoryViewModel.class);
         categoryViewModel.getSelectedListItem()
                 .observe(this, category -> {
+                    Bundle args = new Bundle();
+                    args.putString("selected_category", category.getName());
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.container_body, ProductFragment.newInstance(null))
+                            .replace(R.id.container_body, ProductFragment.newInstance(args))
                             .addToBackStack(ProductFragment.class.getSimpleName())
                             .commit();
                 });

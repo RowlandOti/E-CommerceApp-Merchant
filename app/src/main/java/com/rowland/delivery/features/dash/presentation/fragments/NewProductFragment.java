@@ -90,6 +90,11 @@ public class NewProductFragment extends Fragment {
         super.onCreate(savedInstanceState);
         newProductViewModel = ViewModelProviders.of(this, newProductFactory).get(NewProductViewModel.class);
         newProductViewModel.setFirebaseUserUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        if (getArguments() != null) {
+            String category = getArguments().getString("selected_category");
+            newProductViewModel.setCategory(category);
+        }
     }
 
     @Override
@@ -163,7 +168,6 @@ public class NewProductFragment extends Fragment {
     public void cancell() {
         getActivity().getSupportFragmentManager().popBackStack(NewProductFragment.class.getSimpleName(), POP_BACK_STACK_INCLUSIVE);
     }
-
 
     @Override
     public void onDetach() {

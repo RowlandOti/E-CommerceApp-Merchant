@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.rowland.delivery.features.dash.di.modules.product.ProductModule;
@@ -43,6 +44,9 @@ public class ProductFragment extends Fragment {
     @BindView(R.id.main_toolbar_product)
     Toolbar toolbar;
 
+    @BindView(R.id.product_category)
+    TextView tvProductCategory;
+
     @Inject
     @Named("product")
     ViewModelProvider.Factory productFactory;
@@ -62,8 +66,13 @@ public class ProductFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        productViewModel = ViewModelProviders.of(getActivity(), productFactory).get(ProductViewModel.class);
+        productViewModel = ViewModelProviders.of(this, productFactory).get(ProductViewModel.class);
         productViewModel.setFirebaseUserUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        if (getArguments() != null) {
+            String category = getArguments().getString("selected_category");
+            productViewModel.setCategory(category);
+        }
     }
 
     @Override
@@ -88,6 +97,11 @@ public class ProductFragment extends Fragment {
             ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         }
 
+        if (getArguments() != null) {
+            String category = getArguments().getString("selected_category");
+            tvProductCategory.setText(category);
+        }
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         productRecyclerview.setLayoutManager(linearLayoutManager);
         productRecyclerview.setItemAnimator(new DefaultItemAnimator());
@@ -106,14 +120,6 @@ public class ProductFragment extends Fragment {
 
         productViewModel.getDataList()
                 .observe(this, products -> productAdapter.setList(products));
-/*
-        FirebaseFirestore.getInstance()
-                .collection("products")
-                .add(DumyDataUtility.createProduct())
-                .addOnSuccessListener(documentReference -> {
-                    Toast.makeText(getActivity(), "Product saved", Toast.LENGTH_SHORT)
-                            .show();
-                });*/
     }
 
     @Override
@@ -124,8 +130,13 @@ public class ProductFragment extends Fragment {
 
     @OnClick(R.id.fab)
     public void fabClick() {
+        Bundle args = null;
+        if (getArguments() != null) {
+            args = new Bundle();
+            args.putString("selected_category", getArguments().getString("selected_category"));
+        }
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container_body, NewProductFragment.newInstance(null))
+                .replace(R.id.container_body, NewProductFragment.newInstance(args))
                 .addToBackStack(NewProductFragment.class.getSimpleName())
                 .commit();
     }

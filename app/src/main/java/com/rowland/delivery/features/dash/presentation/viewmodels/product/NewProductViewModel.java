@@ -27,6 +27,7 @@ import io.reactivex.schedulers.Schedulers;
 public class NewProductViewModel extends ViewModel {
 
     private final MutableLiveData<String> firebaseUserUid = new MutableLiveData<>();
+    private final MutableLiveData<String> productCategory = new MutableLiveData<>();
     private final MutableLiveData<List<Uri>> selectedImageUri = new MutableLiveData<>();
     private final CreateProductUseCase createProductUseCase;
     private final Context context;
@@ -58,15 +59,14 @@ public class NewProductViewModel extends ViewModel {
     public Single<Product> saveProduct(Product product) {
         StorageReference photoRef = FirebaseStorage.getInstance()
                 .getReference()
-                .child("photos")
-                .child("products")
-                .child(firebaseUserUid.getValue())
+                .child("photos").child("products").child(firebaseUserUid.getValue())
                 .child(selectedImageUri.getValue().get(0).getLastPathSegment());
 
         return RxFirebaseStorage.putFile(photoRef, selectedImageUri.getValue().get(0))
                 .flatMap(taskSnapshot -> {
                     product.setImageUrl(taskSnapshot.getDownloadUrl().toString());
-                    return createProductUseCase.createProduct(product, firebaseUserUid.getValue());
+                    product.setMerchantCode(firebaseUserUid.getValue());
+                    return createProductUseCase.createProduct(product, firebaseUserUid.getValue(), productCategory.getValue());
                 });
     }
 
@@ -74,5 +74,9 @@ public class NewProductViewModel extends ViewModel {
     protected void onCleared() {
         super.onCleared();
         // ToDo: clean subscriptions
+    }
+
+    public void setCategory(String category) {
+       productCategory.setValue(category);
     }
 }

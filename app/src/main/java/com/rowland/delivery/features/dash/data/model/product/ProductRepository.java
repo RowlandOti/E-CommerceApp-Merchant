@@ -3,9 +3,9 @@ package com.rowland.delivery.features.dash.data.model.product;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.SetOptions;
 import com.rowland.delivery.features.dash.domain.models.product.Product;
-import com.rowland.delivery.features.dash.presentation.tools.snapshots.DocumentWithIdSnapshotMapper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,16 +30,27 @@ public class ProductRepository {
         this.mFirebaseFirestone = firebaseFirestone;
     }
 
-    public Flowable<List<Product>> getProducts(String userUID) {
+/*
+    public Flowable<List<Product>> getProducts(String userUID, String productCategory) {
         CollectionReference productCollectionRef = mFirebaseFirestone.collection("products");
         return RxFirestore.observeQueryRef(productCollectionRef, (io.reactivex.functions.Function) DocumentWithIdSnapshotMapper.listOf(Product.class));
     }
+*/
 
-    public Single<Product> createPoduct(Product product, String userUid) {
+    public Flowable<List<Product>> getProducts(String userUid, String productCategory) {
+        CollectionReference categoryCollectionRef = mFirebaseFirestone.collection("products");
+        Query query = categoryCollectionRef
+                .whereEqualTo(String.format("merchants.%s", userUid), true)
+                .whereEqualTo(String.format("categories.%s", productCategory), true);
+        return RxFirestore.observeQueryRef(query, Product.class);
+    }
+
+    public Single<Product> createProduct(Product product, String productCategory, String userUid) {
         DocumentReference documentReference = mFirebaseFirestone.collection("products").document();
         documentReference.set(product, SetOptions.merge()).addOnSuccessListener(aVoid -> {
             Map<String, Object> members = new HashMap<>();
             members.put(String.format("merchants.%s", userUid), true);
+            members.put(String.format("categories.%s", productCategory), true);
             documentReference.update(members);
         });
 

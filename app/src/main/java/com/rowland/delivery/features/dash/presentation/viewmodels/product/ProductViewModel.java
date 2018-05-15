@@ -5,13 +5,11 @@ import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
 import com.rowland.delivery.features.dash.domain.models.product.Product;
-import com.rowland.delivery.features.dash.domain.usecases.product.CreateProductUseCase;
 import com.rowland.delivery.features.dash.domain.usecases.product.LoadProductsUseCase;
 import com.rowland.delivery.features.dash.presentation.viewmodels.SharedViewModel;
 
 import java.util.List;
 
-import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -22,7 +20,7 @@ import io.reactivex.schedulers.Schedulers;
 public class ProductViewModel extends SharedViewModel<Product> {
 
     private final MutableLiveData<String> firebaseUserUid = new MutableLiveData<>();
-
+    private final MutableLiveData<String> productCategory = new MutableLiveData<>();
 
     private final LoadProductsUseCase loadProductsUseCase;
 
@@ -30,14 +28,9 @@ public class ProductViewModel extends SharedViewModel<Product> {
         this.loadProductsUseCase = loadProductsUseCase;
     }
 
-
-    public void setFirebaseUserUid(String userUid) {
-        firebaseUserUid.setValue(userUid);
-    }
-
     @Override
     public LiveData<List<Product>> getDataList() {
-        this.loadProductsUseCase.loadProducts(this.firebaseUserUid.getValue())
+        this.loadProductsUseCase.loadProducts(firebaseUserUid.getValue(), productCategory.getValue())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(products -> {
@@ -48,5 +41,13 @@ public class ProductViewModel extends SharedViewModel<Product> {
                     Log.d(ProductViewModel.class.getSimpleName(), "Done Retrieving");
                 });
         return dataList;
+    }
+
+    public void setFirebaseUserUid(String userUid) {
+        firebaseUserUid.setValue(userUid);
+    }
+
+    public void setCategory(String category) {
+        productCategory.setValue(category);
     }
 }

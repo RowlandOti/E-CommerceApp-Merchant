@@ -22,7 +22,7 @@ public class LoadProductsUseCase {
         this.productRepository = productRepository;
     }
 
-    public Flowable<List<Product>> loadProducts(String userUID) {
-        return this.productRepository.getProducts(userUID);
+    public Flowable<List<Product>> loadProducts(String userUID, String productCategory) {
+        return this.productRepository.getProducts(userUID, productCategory);
     }
 }
