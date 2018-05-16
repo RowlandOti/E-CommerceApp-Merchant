@@ -18,6 +18,7 @@ import com.rowland.delivery.features.dash.presentation.viewmodels.product.NewPro
 import com.rowland.delivery.features.dash.presentation.viewmodels.product.ProductViewModelFactory;
 import com.rowland.delivery.merchant.application.di.modules.ContextModule;
 import com.rowland.delivery.services.firebase.modules.FirebaseModule;
+import com.rowland.delivery.services.session.di.modules.SessionModule;
 
 import javax.inject.Named;
 
@@ -28,7 +29,7 @@ import dagger.Provides;
  * Created by Rowland on 5/6/2018.
  */
 
-@Module(includes = {FirebaseModule.class, ContextModule.class})
+@Module(includes = {FirebaseModule.class, ContextModule.class, SessionModule.class})
 public class DashModule {
 
     @Provides

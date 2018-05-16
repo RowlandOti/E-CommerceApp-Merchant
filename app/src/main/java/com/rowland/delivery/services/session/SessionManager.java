@@ -43,7 +43,6 @@ public class SessionManager {
     }
 
     public boolean shouldLogout() {
-
         long diffMSec = new Date().getTime() - preferencesManager.getLong(AppConstants.KEY_TIME);
         int diffHours = (int) (diffMSec / (1000 * 60 * 60));
 

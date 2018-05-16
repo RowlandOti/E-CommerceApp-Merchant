@@ -22,6 +22,7 @@ import com.rowland.delivery.features.dash.presentation.viewmodels.category.Categ
 import com.rowland.delivery.features.dash.presentation.viewmodels.order.OrderViewModel;
 import com.rowland.delivery.merchant.R;
 import com.rowland.delivery.merchant.application.di.modules.ContextModule;
+import com.rowland.delivery.services.session.SessionManager;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -32,13 +33,6 @@ import butterknife.ButterKnife;
 public class DashActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
 
     public final static String ACTION_SHOW_LOADING_ITEM = "loading";
-
-    //tags to allow switching of fragment instead of recreating them
-    private static final String MEALS_TAG = "categories";
-    private static final String ORDERS_TAG = "orders";
-    private static final String SALES_TAG = "sales";
-    private static final String SETTINGS_TAG = "settings";
-    private static final String LOGOUT_TAG = "logout";
 
     @BindView(R.id.main_drawer)
     NavigationView mDrawer;
@@ -53,6 +47,9 @@ public class DashActivity extends AppCompatActivity implements NavigationView.On
     @Inject
     @Named("category")
     ViewModelProvider.Factory categoryFactory;
+
+    @Inject
+    SessionManager sessionManager;
 
     private OrderViewModel orderViewModel;
     private CategoryViewModel categoryViewModel;
@@ -127,6 +124,10 @@ public class DashActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.action_orders:
                 manager.beginTransaction().replace(R.id.container_body, OverviewFragment.newInstance(1)).commit();
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                break;
+            case R.id.action_logout:
+                sessionManager.logout();
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 break;
             default:
