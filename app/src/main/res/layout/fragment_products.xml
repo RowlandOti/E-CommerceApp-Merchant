@@ -10,16 +10,14 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/main.appbar.product"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/main.toolbar.product"
+            style="@style/Widget.Toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:elevation="6dp"
-            app:layout_collapseMode="pin"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -30,14 +28,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Products"
-                    android:textColor="@color/white"
-                    android:textSize="21sp" />
+                    android:textAppearance="@style/Widget.Toolbar.TextAppearance" />
 
                 <TextView
                     android:id="@+id/product_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Fruits" />
+                    android:textAppearance="@style/Widget.TextAppearance.Subtitle2"
+                    android:textColor="@android:color/white"
+                    tools:text="Fruits" />
             </LinearLayout>
         </android.support.v7.widget.Toolbar>
 
@@ -47,9 +46,6 @@
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.FloatingActionButton

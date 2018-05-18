@@ -16,7 +16,7 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/main_drawer"
-        style="@style/DashNavigationDrawerTheme"
+        style="@style/Widget.NavigationDrawer.Dash"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"

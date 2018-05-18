@@ -16,6 +16,9 @@
     <color name="secondary_text_color">#757575</color>
     <color name="lightTextColor">#AAAAAA</color>
 
+
+    <color name="mtrl_textinput_default_box_stroke_color">@color/grey</color>
+
     <color name="expanded_bottom_sheet_background">#CCE9E9E9</color>
 
     <color name="gray">#EAEAEA</color>

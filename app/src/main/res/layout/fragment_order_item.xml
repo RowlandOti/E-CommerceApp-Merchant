@@ -10,16 +10,14 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/main.appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/main.toolbar.orders"
+            style="@style/Widget.Toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_collapseMode="pin"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:elevation="6dp">
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -30,13 +28,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Order"
-                    android:textColor="@color/white"
-                    android:textSize="21sp" />
+                    android:textAppearance="@style/Widget.Toolbar.TextAppearance" />
 
                 <TextView
                     android:id="@+id/order_ref"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/Widget.TextAppearance.Subtitle2"
+                    android:textColor="@android:color/white"
+                    tools:text="XtYUa" />
             </LinearLayout>
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
@@ -53,7 +53,7 @@
             android:layout_marginTop="11dp"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView
+            <android.support.design.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -78,11 +78,10 @@
                             android:id="@+id/customer_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-condensed"
                             android:padding="10dp"
-                            android:text="John Doe"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                            android:textColor="@color/colorPrimary" />
+                            android:textAppearance="@style/Widget.TextAppearance.Subtitle1"
+                            android:textColor="@color/colorPrimary"
+                            tools:text="John Doe" />
 
                         <View
                             android:layout_width="1dp"
@@ -97,8 +96,7 @@
                             android:drawablePadding="5dp"
                             android:paddingRight="5dp"
                             android:text="status :"
-                            android:textColor="@color/lightTextColor"
-                            android:textSize="12dp" />
+                            android:textAppearance="@style/Widget.TextAppearance.Caption" />
 
                         <TextView
                             android:id="@+id/status"
@@ -108,8 +106,7 @@
                             android:drawablePadding="5dp"
                             android:paddingRight="5dp"
                             android:text="delivery"
-                            android:textColor="@color/lightTextColor"
-                            android:textSize="12dp" />
+                            android:textAppearance="@style/Widget.TextAppearance.Caption" />
 
                     </LinearLayout>
 
@@ -137,19 +134,15 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-condensed"
                                 android:text="Phone"
-                                android:textColor="@color/lightTextColor"
-                                android:textSize="14dp" />
+                                android:textAppearance="@style/Widget.TextAppearance.Caption" />
 
                             <TextView
                                 android:id="@+id/phone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-condensed"
-                                android:text="0711111111111"
-                                android:textColor="@android:color/black"
-                                android:textSize="16dp" />
+                                android:textAppearance="@style/Widget.TextAppearance.Body1"
+                                tools:text="0714113725" />
 
                         </LinearLayout>
 
@@ -192,19 +185,16 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-condensed"
                                 android:text="Email"
-                                android:textColor="@color/lightTextColor"
-                                android:textSize="14dp" />
+                                android:textAppearance="@style/Widget.TextAppearance.Caption" />
 
                             <TextView
                                 android:id="@+id/email"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-condensed"
-                                android:text="johndoe@gmail.com"
-                                android:textColor="@android:color/black"
-                                android:textSize="16dp" />
+                                android:textAppearance="@style/Widget.TextAppearance.Body1"
+                                android:textSize="16dp"
+                                tools:text="johndoe@gmail.com" />
 
                         </LinearLayout>
 
@@ -227,9 +217,9 @@
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </android.support.design.card.MaterialCardView>
 
-            <android.support.v7.widget.CardView
+            <android.support.design.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -253,10 +243,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-condensed"
                             android:padding="10dp"
                             android:text="Delivery Address"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textAppearance="@style/Widget.TextAppearance.Subtitle1"
                             android:textColor="@color/colorPrimary" />
 
                     </LinearLayout>
@@ -284,19 +273,16 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-condensed"
                                 android:text="Address"
-                                android:textColor="@color/lightTextColor"
-                                android:textSize="14dp" />
+                                android:textAppearance="@style/Widget.TextAppearance.Caption" />
 
                             <TextView
                                 android:id="@+id/address"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-condensed"
-                                android:text="State House"
-                                android:textColor="@android:color/black"
-                                android:textSize="16dp" />
+                                android:textAppearance="@style/Widget.TextAppearance.Body1"
+                                android:textSize="16dp"
+                                tools:text="State House" />
 
                         </LinearLayout>
 
@@ -318,9 +304,9 @@
 
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+            </android.support.design.card.MaterialCardView>
             <!--product-->
-            <android.support.v7.widget.CardView
+            <android.support.design.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -348,7 +334,7 @@
                             android:fontFamily="sans-serif-condensed"
                             android:padding="10dp"
                             android:text="Product Name"
-                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                            android:textAppearance="@style/Widget.TextAppearance.Subtitle1"
                             android:textColor="@color/colorPrimary" />
 
                     </LinearLayout>
@@ -367,11 +353,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -393,8 +374,8 @@
                                     android:layout_height="wrap_content"
                                     android:paddingBottom="10dp"
                                     android:paddingTop="10dp"
-                                    android:text="items (3)"
-                                    android:textColor="@color/lightTextColor" />
+                                    android:textAppearance="@style/Widget.TextAppearance.Caption"
+                                    tools:text="items(3)" />
 
                                 <View
                                     android:layout_width="1dp"
@@ -407,8 +388,8 @@
                                     android:layout_height="wrap_content"
                                     android:paddingBottom="10dp"
                                     android:paddingTop="10dp"
-                                    android:text="KSH 800"
-                                    android:textColor="@color/lightTextColor" />
+                                    android:textAppearance="@style/Widget.TextAppearance.Caption"
+                                    tools:text="Ksh 800" />
                             </LinearLayout>
 
                             <!--Delivery-->
@@ -424,7 +405,7 @@
                                     android:paddingBottom="10dp"
                                     android:paddingTop="10dp"
                                     android:text="Delivery"
-                                    android:textColor="@color/lightTextColor" />
+                                    android:textAppearance="@style/Widget.TextAppearance.Caption" />
 
                                 <View
                                     android:layout_width="1dp"
@@ -437,8 +418,8 @@
                                     android:layout_height="wrap_content"
                                     android:paddingBottom="10dp"
                                     android:paddingTop="10dp"
-                                    android:text="KSH 50"
-                                    android:textColor="@color/lightTextColor" />
+                                    android:text="Ksh 50"
+                                    android:textAppearance="@style/Widget.TextAppearance.Caption" />
                             </LinearLayout>
 
                             <View
@@ -446,7 +427,7 @@
                                 android:layout_height="1dp"
                                 android:background="@color/gray" />
 
-                            <!--Delivery-->
+                            <!--Total-->
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -456,11 +437,10 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="sans-serif-condensed"
                                     android:paddingBottom="10dp"
                                     android:paddingTop="10dp"
                                     android:text="Total"
-                                    android:textColor="@color/primary_text_color" />
+                                    android:textAppearance="@style/Widget.TextAppearance.Body1" />
 
                                 <View
                                     android:layout_width="1dp"
@@ -471,19 +451,23 @@
                                     android:id="@+id/total_price"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="sans-serif-condensed"
                                     android:paddingBottom="10dp"
                                     android:paddingTop="10dp"
-                                    android:text="KSH 500"
-                                    android:textColor="@color/primary_text_color" />
+                                    android:text="Ksh 500"
+                                    android:textAppearance="@style/Widget.TextAppearance.Body1" />
                             </LinearLayout>
 
                         </LinearLayout>
 
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
                     </LinearLayout>
 
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </android.support.design.card.MaterialCardView>
 
             <View
                 android:layout_width="match_parent"

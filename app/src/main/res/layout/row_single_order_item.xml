@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/custom_bg_selector"
@@ -41,18 +42,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="sans-serif-condensed"
-                    android:text="2"
+                    android:textAppearance="@style/Widget.TextAppearance.Subtitle1"
                     android:textColor="@color/white"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:text="2" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="sans-serif-condensed"
                     android:text="Items"
+                    android:textAppearance="@style/Widget.TextAppearance.Subtitle1"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -71,16 +72,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Fried Tilapia"
-                android:textColor="@color/primary_text_color"
-                android:textSize="16dp" />
+                android:textAppearance="@style/Widget.TextAppearance.Subtitle2" />
 
             <TextView
                 android:id="@+id/item_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Price: Ksh 200 each"
-                android:textSize="14dp"
-                android:textColor="@color/lightTextColor"/>
+                android:textAppearance="@style/Widget.TextAppearance.Caption"
+                tools:text="Price: Ksh 200 each" />
 
             <View
                 android:layout_width="1dp"
@@ -93,8 +92,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:paddingBottom="5dp"
-                android:text="Total price: Ksh 400"
-                android:textColor="@color/primary_text_color" />
+                android:textAppearance="@style/Widget.TextAppearance.Body1"
+                tools:text="Total price: Ksh 400" />
 
         </LinearLayout>
 

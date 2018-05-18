@@ -1,8 +1,8 @@
 package com.rowland.delivery.features.dash.presentation.adapters;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.chauthai.swipereveallayout.SwipeRevealLayout;
+import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.rowland.delivery.features.dash.domain.models.product.Product;
 import com.rowland.delivery.features.dash.presentation.tools.recylerview.HFRecyclerView;
 import com.rowland.delivery.merchant.R;
@@ -26,8 +28,12 @@ import butterknife.ButterKnife;
 
 public class ProductAdapter extends HFRecyclerView<Product> {
 
+    ViewBinderHelper viewBinderHelper;
+
     public ProductAdapter() {
         this(false, false);
+        viewBinderHelper = new ViewBinderHelper();
+        viewBinderHelper.setOpenOnlyOne(true);
     }
 
     public ProductAdapter(boolean withHeader, boolean withFooter) {
@@ -40,6 +46,7 @@ public class ProductAdapter extends HFRecyclerView<Product> {
 
     @Override
     protected RecyclerView.ViewHolder getItemView(LayoutInflater inflater, ViewGroup parent) {
+        ProductViewHolder x = new ProductViewHolder(inflater.inflate(R.layout.row_single_product, parent, false));
         return new ProductViewHolder(inflater.inflate(R.layout.row_single_product, parent, false));
     }
 
@@ -59,6 +66,7 @@ public class ProductAdapter extends HFRecyclerView<Product> {
             ProductViewHolder itemHolder = (ProductViewHolder) holder;
             Product data = getItem(position);
             itemHolder.bind(data);
+
         } else if (holder instanceof HeaderViewHolder) {
 
         } else if (holder instanceof FooterViewHolder) {
@@ -101,7 +109,19 @@ public class ProductAdapter extends HFRecyclerView<Product> {
         }
     }
 
-    public static class ProductViewHolder extends RecyclerView.ViewHolder {
+    public void saveStates(Bundle outState) {
+        viewBinderHelper.saveStates(outState);
+    }
+
+    public void restoreStates(Bundle inState) {
+        viewBinderHelper.restoreStates(inState);
+    }
+
+    public class ProductViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.swipe_layout)
+        SwipeRevealLayout swpRevealLayout;
+
         @BindView(R.id.product_imageview)
         ImageView productImage;
 
@@ -114,8 +134,11 @@ public class ProductAdapter extends HFRecyclerView<Product> {
         @BindView(R.id.product_price)
         TextView productPrice;
 
-        @BindView(R.id.btn_unpublish)
-        AppCompatButton btnUnpublish;
+        @BindView(R.id.txt_unpublish)
+        TextView txtUnpublish;
+
+        @BindView(R.id.txt_edit)
+        TextView txtEdit;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
@@ -123,13 +146,20 @@ public class ProductAdapter extends HFRecyclerView<Product> {
         }
 
         public void bind(Product product) {
-            Glide.with(productImage.getContext()).load(product.getImageUrl()).crossFade().into(productImage);
+            Glide.with(productImage.getContext()).load(product.getImageUrl()).centerCrop().crossFade().into(productImage);
             productName.setText(product.getName());
             productDescription.setText(product.getDescription());
             productPrice.setText("Ksh " + product.getPrice());
 
-            btnUnpublish.setOnClickListener(v -> {
+            viewBinderHelper.bind(swpRevealLayout, product.getFirestoreUid());
+            txtUnpublish.setOnClickListener(v -> {
                 //
+                viewBinderHelper.closeLayout(product.getFirestoreUid());
+            });
+
+            txtEdit.setOnClickListener(v -> {
+                //
+                viewBinderHelper.closeLayout(product.getFirestoreUid());
             });
         }
     }

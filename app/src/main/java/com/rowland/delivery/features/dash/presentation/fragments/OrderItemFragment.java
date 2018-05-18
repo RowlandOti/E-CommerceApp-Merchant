@@ -197,7 +197,7 @@ public class OrderItemFragment extends Fragment {
                 status.setTextColor(Color.parseColor("#378E3D"));
                 break;
             case "delivered":
-                status.setTextColor(Color.parseColor("#378E3D"));
+                status.setTextColor(Color.parseColor("#FF6D00"));
                 break;
             case "failed":
                 status.setTextColor(Color.parseColor("#B94464"));
@@ -205,7 +205,16 @@ public class OrderItemFragment extends Fragment {
             case "missed":
                 status.setTextColor(Color.parseColor("#B94464"));
                 break;
-            case "canceled":
+            case "completed":
+                status.setTextColor(Color.parseColor("#AAAAAA"));
+                break;
+            case "cancelled":
+                status.setTextColor(Color.parseColor("#B94464"));
+                break;
+            case "in_progress":
+                status.setTextColor(Color.parseColor("#378E3D"));
+                break;
+            case "pending":
                 status.setTextColor(Color.parseColor("#B94464"));
                 break;
             default:

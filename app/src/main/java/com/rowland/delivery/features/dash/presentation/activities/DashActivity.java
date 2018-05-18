@@ -122,8 +122,8 @@ public class DashActivity extends AppCompatActivity implements NavigationView.On
                 manager.beginTransaction().replace(R.id.container_body, OverviewFragment.newInstance(0)).commit();
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 break;
-            case R.id.action_orders:
-                manager.beginTransaction().replace(R.id.container_body, OverviewFragment.newInstance(1)).commit();
+            case R.id.action_ratings:
+                //
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 break;
             case R.id.action_logout:

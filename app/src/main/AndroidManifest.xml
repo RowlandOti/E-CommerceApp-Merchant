@@ -27,6 +27,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:name="com.rowland.delivery.features.auth.ui.AuthActivity"
             android:label="@string/title_activity_auth"
             android:theme="@style/FullscreenTheme" />

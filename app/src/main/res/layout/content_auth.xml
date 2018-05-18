@@ -15,6 +15,8 @@
         layout="@layout/content_logo" />
 
     <LinearLayout
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="80dp"
         android:id="@+id/login_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,15 +28,15 @@
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/email_textinput_layout"
+            style="@style/Widget.TextInputLayout.Auth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/logo_layout">
 
-            <EditText
+            <android.support.design.widget.TextInputEditText
                 android:id="@+id/input_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
                 android:hint="@string/hint_email"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/white" />
@@ -42,15 +44,15 @@
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/passord_textinput_layout"
+            style="@style/Widget.TextInputLayout.Auth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
-            <EditText
+            <android.support.design.widget.TextInputEditText
                 android:id="@+id/input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
                 android:hint="@string/hint_password"
                 android:inputType="textPassword"
                 android:textColor="@color/white" />
@@ -64,40 +66,35 @@
             android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
-            <android.support.v7.widget.AppCompatButton
+            <android.support.design.button.MaterialButton
                 android:id="@+id/btn_login"
+                style="@style/Widget.Button.Inverse"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/btn_prefered_height"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:fontFamily="sans-serif"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
-                android:text="@string/login"
-                android:textColor="@color/orangelike_color"
-                app:backgroundTint="@color/white" />
+                android:text="@string/login" />
 
-            <android.support.v7.widget.AppCompatButton
+            <android.support.design.button.MaterialButton
                 android:id="@+id/btn_register"
+                style="@style/Widget.Button"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/btn_prefered_height"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
-                android:clickable="true"
-                android:fontFamily="sans-serif"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
-                android:text="@string/register"
-                android:textColor="@color/white"
-                app:backgroundTint="@color/orangelike_color" />
+                android:text="@string/register" />
         </LinearLayout>
 
         <LinearLayout
-            android:gravity="center"
             android:id="@+id/reset_section"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
@@ -136,10 +133,16 @@
                 android:id="@+id/or_layout"
                 layout="@layout/content_auth_footer" />
 
-            <com.google.android.gms.common.SignInButton
+            <android.support.design.button.MaterialButton
                 android:id="@+id/btn_google_login"
+                style="@style/Widget.Button.Inverse"
                 android:layout_width="match_parent"
-                android:layout_height="60dp" />
+                android:layout_height="@dimen/btn_prefered_height"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="Sign in with Google" />
         </LinearLayout>
     </LinearLayout>
 

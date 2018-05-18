@@ -7,13 +7,13 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -53,22 +53,22 @@ public class NewProductFragment extends Fragment {
     ImageView productImage;
 
     @BindView(R.id.input_meal_title)
-    EditText edtTitle;
+    TextInputEditText edtTitle;
 
     @BindView(R.id.input_meal_description)
-    EditText edtDescription;
+    TextInputEditText edtDescription;
 
     @BindView(R.id.input_meal_quantity)
-    EditText edtQuantity;
+    TextInputEditText edtQuantity;
 
     @BindView(R.id.input_meal_unit)
     Spinner edtUnit;
 
     @BindView(R.id.input_meal_price)
-    EditText edtPrice;
+    TextInputEditText edtPrice;
 
     @BindView(R.id.input_meal_stock)
-    EditText edtStock;
+    TextInputEditText edtStock;
 
     @Inject
     @Named("newproduct")

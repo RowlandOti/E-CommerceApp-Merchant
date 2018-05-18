@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="backgroundTint">?android:attr/colorAccent</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="Widget.Button.Inverse" parent="Widget.Button">
+        <item name="android:textColor">?android:attr/colorAccent</item>
+        <item name="backgroundTint">@android:color/white</item>
+    </style>
+
+    <style name="Widget.Button.Primary" parent="Widget.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="backgroundTint">?android:attr/colorPrimary</item>
+    </style>
+
+</resources>

@@ -105,7 +105,7 @@ public class OrderDataAdapter extends HFRecyclerView<OrderData> {
     }
 
     public static class OrderDataViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.container_layout)
+        @BindView(R.id.container_layout_customer)
         LinearLayout container_layout;
 
         @BindView(R.id.order_date)
@@ -147,15 +147,27 @@ public class OrderDataAdapter extends HFRecyclerView<OrderData> {
                     status.setTextColor(Color.parseColor("#378E3D"));
                     break;
                 case "delivered":
-                    status.setTextColor(Color.parseColor("#378E3D"));
+                    status.setTextColor(Color.parseColor("#FF6D00"));
                     break;
                 case "failed":
                     status.setTextColor(Color.parseColor("#B94464"));
+                    container_layout.setBackgroundColor(Color.parseColor("#F0F0F0"));
+                    break;
+                case "completed":
+                    status.setTextColor(Color.parseColor("#AAAAAA"));
+                    container_layout.setBackgroundColor(Color.parseColor("#F0F0F0"));
                     break;
                 case "missed":
                     status.setTextColor(Color.parseColor("#B94464"));
+                    container_layout.setBackgroundColor(Color.parseColor("#F0F0F0"));
                     break;
-                case "canceled":
+                case "in_progress":
+                    status.setTextColor(Color.parseColor("#378E3D"));
+                    break;
+                case "pending":
+                    status.setTextColor(Color.parseColor("#B94464"));
+                    break;
+                case "cancelled":
                     status.setTextColor(Color.parseColor("#B94464"));
                     container_layout.setBackgroundColor(Color.parseColor("#F0F0F0"));
                     break;

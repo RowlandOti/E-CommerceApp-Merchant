@@ -13,6 +13,8 @@
     <string name="action_business_string">My Business</string>
     <string name="action_orders_string">Orders</string>
     <string name="action_sales_string">Sales</string>
+    <string name="action_ratings_string">Ratings</string>
+    <string name="action_profile_string">Profile</string>
     <string name="navigation_setting_subheader">Preferences</string>
     <string name="action_logout_string">Logout</string>
     <string name="drawer_open" translatable="false">Open</string>

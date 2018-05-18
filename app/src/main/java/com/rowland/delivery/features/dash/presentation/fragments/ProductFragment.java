@@ -107,6 +107,12 @@ public class ProductFragment extends Fragment {
         productRecyclerview.setItemAnimator(new DefaultItemAnimator());
         productRecyclerview.setAdapter(productAdapter);
 
+        if (savedInstanceState != null) {
+            if (productAdapter != null) {
+                productAdapter.restoreStates(savedInstanceState);
+            }
+        }
+
         productRecyclerview.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), productRecyclerview, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -126,6 +132,14 @@ public class ProductFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (productAdapter != null) {
+            productAdapter.saveStates(outState);
+        }
     }
 
     @OnClick(R.id.fab)
