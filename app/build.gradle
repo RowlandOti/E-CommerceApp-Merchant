@@ -66,6 +66,7 @@ dependencies {
 
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
     implementation 'com.github.ybq:Android-SpinKit:1.1.0'
+    implementation 'com.jude:easyrecyclerview:4.4.2'
 }
 
 apply plugin: 'com.google.gms.google-services'
