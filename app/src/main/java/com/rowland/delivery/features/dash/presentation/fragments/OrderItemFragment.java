@@ -15,7 +15,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dekoservidoni.omfm.OneMoreFabMenu;
+import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.rowland.delivery.features.dash.di.modules.order.OrderModule;
 import com.rowland.delivery.features.dash.domain.models.order.OrderData;
 import com.rowland.delivery.features.dash.presentation.activities.DashActivity;
@@ -66,7 +66,7 @@ public class OrderItemFragment extends Fragment {
     TextView phone;
 
     @BindView(R.id.ordered_items)
-    RecyclerView recyclerView;
+    EasyRecyclerView recyclerViewManager;
 
     @BindView(R.id.email)
     TextView email;
@@ -134,9 +134,9 @@ public class OrderItemFragment extends Fragment {
         }
 
         adapter = new OrderItemAdapter();
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
+        recyclerViewManager.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerViewManager.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewManager.setAdapterWithProgress(adapter);
 
         fab.setOptionsClick(id -> {
             switch (id) {

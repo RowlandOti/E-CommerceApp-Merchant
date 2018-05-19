@@ -8,12 +8,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.rowland.delivery.features.dash.di.modules.order.OrderModule;
 import com.rowland.delivery.features.dash.presentation.activities.DashActivity;
 import com.rowland.delivery.features.dash.presentation.adapters.OrderDataAdapter;
@@ -38,7 +38,7 @@ public class OrderFragment extends Fragment {
     private OrderViewModel orderViewModel;
 
     @BindView(R.id.orders_recyclerview)
-    RecyclerView orderRecyclerview;
+    EasyRecyclerView orderRecyclerManager;
     @BindView(R.id.progressActivity)
     ProgressFrameLayout progressActivity;
 
@@ -78,11 +78,11 @@ public class OrderFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        orderRecyclerview.setLayoutManager(linearLayoutManager);
-        orderRecyclerview.setItemAnimator(new DefaultItemAnimator());
-        orderRecyclerview.setAdapter(orderAdapter);
+        orderRecyclerManager.setLayoutManager(linearLayoutManager);
+        orderRecyclerManager.setItemAnimator(new DefaultItemAnimator());
+        orderRecyclerManager.setAdapterWithProgress(orderAdapter);
 
-        orderRecyclerview.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), orderRecyclerview, new RecyclerItemClickListener.OnItemClickListener() {
+        orderRecyclerManager.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), orderRecyclerManager.getRecyclerView(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 orderViewModel.setSelectedListItem(position);

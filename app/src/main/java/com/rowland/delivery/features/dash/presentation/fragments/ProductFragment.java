@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.rowland.delivery.features.dash.di.modules.product.ProductModule;
 import com.rowland.delivery.features.dash.presentation.activities.DashActivity;
 import com.rowland.delivery.features.dash.presentation.adapters.ProductAdapter;
@@ -38,7 +38,9 @@ public class ProductFragment extends Fragment {
     private ProductViewModel productViewModel;
 
     @BindView(R.id.recyclerview)
-    RecyclerView productRecyclerview;
+    EasyRecyclerView productRecyclerManager;
+    /*@BindView(R.id.recyclerview)
+    RecyclerView productRecyclerview;*/
     @BindView(R.id.fab)
     FloatingActionButton fab;
     @BindView(R.id.main_toolbar_product)
@@ -103,9 +105,9 @@ public class ProductFragment extends Fragment {
         }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        productRecyclerview.setLayoutManager(linearLayoutManager);
-        productRecyclerview.setItemAnimator(new DefaultItemAnimator());
-        productRecyclerview.setAdapter(productAdapter);
+        productRecyclerManager.setLayoutManager(linearLayoutManager);
+        productRecyclerManager.setItemAnimator(new DefaultItemAnimator());
+        productRecyclerManager.setAdapterWithProgress(productAdapter);
 
         if (savedInstanceState != null) {
             if (productAdapter != null) {
@@ -113,7 +115,7 @@ public class ProductFragment extends Fragment {
             }
         }
 
-        productRecyclerview.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), productRecyclerview, new RecyclerItemClickListener.OnItemClickListener() {
+        productRecyclerManager.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), productRecyclerManager.getRecyclerView(), new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 productViewModel.setSelectedListItem(position);
