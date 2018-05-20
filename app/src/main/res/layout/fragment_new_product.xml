@@ -7,13 +7,13 @@
     tools:context="com.rowland.delivery.features.dash.presentation.fragments.NewProductFragment">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/main.appbar.newproduct"
+        android:id="@+id/newproduct_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/main.toolbar.newproduct"
+            android:id="@+id/newproduct_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_collapseMode="pin"
@@ -35,13 +35,13 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
-        android:id="@+id/nc.view.newproduct"
+        android:id="@+id/newproduct_ncview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
-            android:id="@+id/container.newproduct"
+            android:id="@+id/newproduct_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -54,7 +54,7 @@
                 app:cardBackgroundColor="@android:color/white">
 
                 <ImageView
-                    android:id="@+id/imageview"
+                    android:id="@+id/input_product_imageview"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:scaleType="centerCrop"
@@ -84,7 +84,7 @@
                         android:layout_height="wrap_content">
 
                         <android.support.design.widget.TextInputEditText
-                            android:id="@+id/input_meal_title"
+                            android:id="@+id/input_product_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Title" />
@@ -97,7 +97,7 @@
                         android:layout_height="wrap_content">
 
                         <android.support.design.widget.TextInputEditText
-                            android:id="@+id/input_meal_description"
+                            android:id="@+id/input_product_description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Description" />
@@ -115,7 +115,7 @@
                             android:layout_weight="1">
 
                             <android.support.design.widget.TextInputEditText
-                                android:id="@+id/input_meal_quantity"
+                                android:id="@+id/input_product_quantity"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Quantity"
@@ -124,7 +124,7 @@
 
 
                         <Spinner
-                            android:id="@+id/input_meal_unit"
+                            android:id="@+id/input_product_unit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
@@ -142,7 +142,7 @@
                             android:layout_weight="1">
 
                             <android.support.design.widget.TextInputEditText
-                                android:id="@+id/input_meal_price"
+                                android:id="@+id/input_product_pricing"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Price"
@@ -158,7 +158,7 @@
                         android:layout_height="wrap_content">
 
                         <android.support.design.widget.TextInputEditText
-                            android:id="@+id/input_meal_stock"
+                            android:id="@+id/input_product_stock"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Number of items in stock"
@@ -213,7 +213,7 @@
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab.addimage"
+        android:id="@+id/fab_addimage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="25dp"

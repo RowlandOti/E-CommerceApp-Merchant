@@ -28,20 +28,15 @@
 
         </LinearLayout>
 
-        <com.vlonjatg.progressactivity.ProgressFrameLayout
-            android:id="@+id/progressActivity"
+        <com.jude.easyrecyclerview.EasyRecyclerView
+            android:id="@+id/cat_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            style="@style/ProgressActivity">
+            app:layout_empty="@layout/view_empty"
+            app:layout_error="@layout/view_error"
+            app:layout_progress="@layout/view_progress" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/cat_recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </com.vlonjatg.progressactivity.ProgressFrameLayout>
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

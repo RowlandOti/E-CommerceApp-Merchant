@@ -94,7 +94,7 @@ public class OrderDataAdapter extends HFRecyclerView<OrderData> {
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
                     OrderData newItem = orders.get(newItemPosition);
-                    OrderData oldItem = orders.get(oldItemPosition);
+                    OrderData oldItem = OrderDataAdapter.this.data.get(oldItemPosition);
                     return newItem.getId() == oldItem.getId()
                             && newItem.equals(oldItem);
                 }

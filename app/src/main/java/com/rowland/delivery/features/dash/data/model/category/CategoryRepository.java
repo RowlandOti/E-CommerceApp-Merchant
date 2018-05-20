@@ -6,6 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.SetOptions;
 import com.rowland.delivery.features.dash.domain.models.category.Category;
+import com.rowland.delivery.features.dash.presentation.tools.snapshots.DocumentWithIdSnapshotMapper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,9 +34,9 @@ public class CategoryRepository {
     public Flowable<List<Category>> getCategories(String userUid) {
         CollectionReference categoryCollectionRef = mFirebaseFirestone.collection("categories");
         Query query = categoryCollectionRef.whereEqualTo(String.format("merchants.%s", userUid), true);
-        return RxFirestore.observeQueryRef(query, Category.class);
+        //return RxFirestore.observeQueryRef(query, Category.class);
+        return RxFirestore.observeQueryRef(query, (io.reactivex.functions.Function) DocumentWithIdSnapshotMapper.listOf(Category.class));
     }
-
 
     public Single<Category> createCategory(Category category, String userUid) {
         DocumentReference documentReference = mFirebaseFirestone.collection("categories").document(category.getName());

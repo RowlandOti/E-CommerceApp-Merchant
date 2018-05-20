@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 'android-P'
     defaultConfig {
         applicationId "com.rowland.delivery.merchant"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         multiDexEnabled true
@@ -24,6 +25,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    kapt {
+        generateStubs = true
+    }
+
 }
 
 dependencies {
@@ -31,7 +37,7 @@ dependencies {
     implementation project(':rxgallery')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
-    api 'com.android.support:design:28.0.0-alpha1'
+    implementation 'com.android.support:design:28.0.0-alpha1'
     implementation 'com.android.support:support-v4:28.0.0-alpha1'
 
 
@@ -47,16 +53,18 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:15.0.0'
     implementation 'com.firebaseui:firebase-ui-auth:3.3.0'
     implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
+
+
+    implementation 'com.google.dagger:dagger:2.15'
     implementation 'com.google.dagger:dagger-android:2.15'
     implementation 'com.google.dagger:dagger-android-support:2.15'
     // if you use the support libraries
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.15'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.15'
+    kapt 'com.google.dagger:dagger-android-processor:2.15'
+    kapt 'com.google.dagger:dagger-compiler:2.15'
     //If you are using Firestore in your project
     implementation 'com.github.frangsierra:rx2firebase:1.4.1'
-    implementation 'com.github.vlonjatg:progress-activity:v2.0.3'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.github.dekoservidoni:omfm:1.1.1'
     implementation 'com.flipboard:bottomsheet-core:1.5.3'
@@ -67,6 +75,10 @@ dependencies {
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
     implementation 'com.github.ybq:Android-SpinKit:1.1.0'
     implementation 'com.jude:easyrecyclerview:4.4.2'
+
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    implementation 'com.github.etiennelenhart:eiffel:3.0.0'
+    implementation 'com.alexfacciorusso:daggerviewmodel:0.1.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

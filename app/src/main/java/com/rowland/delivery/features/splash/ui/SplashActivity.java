@@ -1,5 +1,7 @@
 package com.rowland.delivery.features.splash.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -28,11 +30,16 @@ public class SplashActivity extends AppCompatActivity {
     private static final int SPLASH_DISPLAY_LENGTH = 500;
     private Unbinder unbinder;
 
-    @BindView(R.id.splash_imageview)
+    @BindView(R.id.splash_splash_imageview)
     ImageView splash;
 
     @Inject
     SessionManager sessionManager;
+
+    public static void startActivity(Context context) {
+        Intent intent = new Intent(context, SplashActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,8 +55,8 @@ public class SplashActivity extends AppCompatActivity {
 
         splashComponent.injectSplashActivity(this);
 
-        ScreenUtils.makeFullScreen(this);
-        ScreenUtils.changeStatusBarColor(this);
+        ScreenUtils.INSTANCE.makeFullScreen(this);
+        ScreenUtils.INSTANCE.changeStatusBarColor(this);
 
         Glide.with(this)
                 .load(R.drawable.flash)
@@ -61,7 +68,7 @@ public class SplashActivity extends AppCompatActivity {
                 AuthActivity.startActivity(SplashActivity.this);
                 finish();
             } else {
-                DashActivity.startActivity(SplashActivity.this);
+                DashActivity.Companion.startActivity(SplashActivity.this);
                 finish();
             }
             overridePendingTransition(0, 0);

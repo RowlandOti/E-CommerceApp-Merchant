@@ -71,7 +71,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 @Override
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
                     Category newItem = categories.get(newItemPosition);
-                    Category oldItem = categories.get(oldItemPosition);
+                    Category oldItem = CategoryAdapter.this.categoryList.get(oldItemPosition);
                     return newItem.getName() == oldItem.getName()
                             && newItem.equals(oldItem);
                 }

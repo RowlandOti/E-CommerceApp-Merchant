@@ -75,32 +75,19 @@
     </style>
 
 
-    <style name="ProgressActivity">
-        <item name="emptyBackgroundColor">@android:color/white</item>
-        <item name="emptyContentTextColor">?attr/colorAccent</item>
-        <item name="emptyImageHeight">56dp</item>
-        <item name="emptyImageWidth">56dp</item>
-
-        <item name="emptyTitleTextColor">?attr/colorAccent</item>
-        <item name="errorBackgroundColor">@android:color/white</item>
-        <item name="errorButtonBackgroundColor">?attr/colorAccent</item>
-        <item name="errorButtonTextColor">@android:color/white</item>
-        <item name="errorContentTextColor">?attr/colorAccent</item>
-
-        <item name="errorImageHeight">56dp</item>
-        <item name="errorImageWidth">56dp</item>
-        <item name="errorTitleTextColor">?attr/colorAccent</item>
-        <item name="loadingBackgroundColor">@android:color/white</item>
-        <item name="loadingProgressBarColor">?attr/colorAccent</item>
-    </style>
-
-
     <style name="OneMoreFabMenu">
         <item name="label_text_color">?attr/colorPrimary</item>
         <item name="color_main_button">?attr/colorAccent</item>
         <item name="color_secondary_buttons">?attr/colorAccent</item>
         <item name="content_options">@menu/menu_change_status</item>
         <item name="expanded_background_color">@color/omfm_expanded_background_sample</item>
+    </style>
+
+    <style name="Widget.SpinKitView" parent="SpinKitView">
+        <item name="SpinKit_Style">MultiplePulse</item>
+        <item name="SpinKit_Color">?attr/colorAccent</item>
+        <item name="android:maxWidth">60dip</item>
+        <item name="android:maxHeight">60dip</item>
     </style>
 
 

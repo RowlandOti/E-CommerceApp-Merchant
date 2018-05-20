@@ -97,7 +97,7 @@ public class AuthActivity extends AppCompatActivity implements Auth.AuthLoginCal
     @Override
     public void onLoginSuccess() {
         Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
-        DashActivity.startActivity(this);
+        DashActivity.Companion.startActivity(this);
     }
 
     @Override

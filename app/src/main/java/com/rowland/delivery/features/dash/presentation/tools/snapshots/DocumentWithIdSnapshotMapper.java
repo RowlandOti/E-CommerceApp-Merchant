@@ -67,7 +67,7 @@ public abstract class DocumentWithIdSnapshotMapper<T, U> implements Function<T, 
         private final Function<DocumentSnapshot, U> mapper;
 
         TypedListQuerySnapshotMapper(Class<U> clazz) {
-            this(clazz, (Function) null);
+            this(clazz, null);
         }
 
         TypedListQuerySnapshotMapper(Class<U> clazz, Function<DocumentSnapshot, U> mapper) {
@@ -96,7 +96,7 @@ public abstract class DocumentWithIdSnapshotMapper<T, U> implements Function<T, 
         }
 
         @Override
-        public U apply(DocumentSnapshot documentSnapshot) throws Exception {
+        public U apply(DocumentSnapshot documentSnapshot) {
             return documentSnapshot.toObject(this.clazz).withFirestoreId(documentSnapshot.getId());
         }
     }
