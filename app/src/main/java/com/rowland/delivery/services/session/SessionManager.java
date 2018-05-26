@@ -8,7 +8,7 @@ import java.util.Date;
 import javax.inject.Inject;
 
 /**
- * Created by invictus on 9/11/17.
+ * Created by Rowland on 9/11/17.
  */
 
 public class SessionManager {

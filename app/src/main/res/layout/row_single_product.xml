@@ -18,33 +18,18 @@
         app:dragEdge="right"
         app:mode="same_level">
 
-
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/reveal_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txt_edit"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:background="@android:color/holo_green_dark"
-                android:gravity="center"
-                android:text="Edit"
-                android:textAppearance="@style/Widget.TextAppearance.Subtitle2"
-                android:textColor="@android:color/white" />
+            <include
+                layout="@layout/content_single_product_reveal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-            <TextView
-                android:id="@+id/txt_unpublish"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:background="@android:color/holo_blue_light"
-                android:gravity="center"
-                android:text="Unpublish"
-                android:textAppearance="@style/Widget.TextAppearance.Subtitle2"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
+        </FrameLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -55,7 +40,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </FrameLayout>
-
 
     </com.chauthai.swipereveallayout.SwipeRevealLayout>
 

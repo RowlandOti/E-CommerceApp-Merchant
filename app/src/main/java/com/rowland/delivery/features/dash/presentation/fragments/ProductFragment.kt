@@ -12,10 +12,12 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.rowland.delivery.features.dash.di.modules.product.ProductModule
 import com.rowland.delivery.features.dash.presentation.activities.DashActivity
 import com.rowland.delivery.features.dash.presentation.adapters.ProductAdapter
 import com.rowland.delivery.features.dash.presentation.tools.recylerview.RecyclerItemClickListener
+import com.rowland.delivery.features.dash.presentation.viewmodels.product.ProductEvent
 import com.rowland.delivery.features.dash.presentation.viewmodels.product.ProductViewModel
 import com.rowland.delivery.merchant.R
 import kotlinx.android.synthetic.main.fragment_products.*
@@ -77,6 +79,25 @@ class ProductFragment : Fragment() {
             productAdapter.restoreStates(savedInstanceState)
         }
 
+        productAdapter.setActionListener(object : ProductAdapter.ProductActionListener {
+            override fun onProductActionListener(event: ProductEvent, fn: () -> Unit) {
+                when (event) {
+                    is ProductEvent.Edit -> {
+                        fn()
+                    }
+                    is ProductEvent.Unpublish -> {
+                        productViewModel.deleteProduct().subscribe({
+                            fn()
+                            Toast.makeText(activity, "Product successfully deleted", Toast.LENGTH_SHORT).show()
+                        }) {
+                            Toast.makeText(activity, "Product Could not be deleted", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+
+        })
+
         product_recyclerview.addOnItemTouchListener(RecyclerItemClickListener(activity, product_recyclerview.recyclerView, object : RecyclerItemClickListener.OnItemClickListener {
             override fun onItemClick(view: View, position: Int) {
                 productViewModel.setSelectedListItem(position)
@@ -98,7 +119,7 @@ class ProductFragment : Fragment() {
         })
 
         productViewModel.getDataList()
-                .observe(this, Observer { products -> productAdapter.setList(products) })
+                .observe(this, Observer { products -> productAdapter.setList(products!!) })
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

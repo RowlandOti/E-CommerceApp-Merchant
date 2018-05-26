@@ -1,9 +1,12 @@
 package com.rowland.delivery.features.dash.data.model.product
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.SetOptions
 import com.rowland.delivery.features.dash.domain.models.product.Product
+import com.rowland.delivery.features.dash.presentation.tools.snapshots.DocumentWithIdSnapshotMapper
 import durdinapps.rxfirebase2.RxFirestore
+import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
 import java.util.*
@@ -21,7 +24,8 @@ constructor(private val mFirebaseFirestone: FirebaseFirestore) {
         val query = categoryCollectionRef
                 .whereEqualTo(String.format("merchants.%s", userUid), true)
                 .whereEqualTo(String.format("categories.%s", productCategory), true)
-        return RxFirestore.observeQueryRef(query, Product::class.java)
+        return RxFirestore.observeQueryRef(query, DocumentWithIdSnapshotMapper.listOf(Product::class.java) as io.reactivex.functions.Function<QuerySnapshot, List<Product>>)
+
     }
 
     fun createProduct(product: Product, productCategory: String, userUid: String): Single<Product> {
@@ -36,5 +40,8 @@ constructor(private val mFirebaseFirestone: FirebaseFirestore) {
         return RxFirestore.getDocument(documentReference, Product::class.java).toSingle()
     }
 
-
+    fun deleteProduct(productUid: String): Completable {
+        val documentReference = mFirebaseFirestone.collection("products").document(productUid)
+        return RxFirestore.deleteDocument(documentReference)
+    }
 }

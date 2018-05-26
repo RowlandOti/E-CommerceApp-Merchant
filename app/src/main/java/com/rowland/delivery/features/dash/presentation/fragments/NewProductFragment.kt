@@ -23,7 +23,6 @@ import com.rowland.delivery.features.dash.presentation.activities.DashActivity
 import com.rowland.delivery.features.dash.presentation.viewmodels.product.NewProductViewModel
 import com.rowland.delivery.merchant.R
 import com.tbruyelle.rxpermissions2.RxPermissions
-import kotlinx.android.synthetic.main.content_single_product.*
 import kotlinx.android.synthetic.main.fragment_new_product.*
 import java.util.*
 import javax.inject.Inject
@@ -109,7 +108,7 @@ class NewProductFragment : Fragment() {
                     .fitCenter()
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(true)
-                    .into(product_imageview)
+                    .into(input_product_imageview)
         })
     }
 }

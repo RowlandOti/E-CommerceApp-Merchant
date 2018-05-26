@@ -17,4 +17,26 @@
         <item name="backgroundTint">?android:attr/colorPrimary</item>
     </style>
 
+    <style name="Widget.Button.Progress" parent="">
+        <item name="finishBackgroundDrawable">@drawable/bg_button_progress</item>
+        <item name="finishIconDrawable">@drawable/ic_done_black_24dp</item>
+        <item name="idleBackgroundDrawable">@drawable/bg_button_progress</item>
+        <item name="cancelIconDrawable">@drawable/ic_cancel_black_24dp</item>
+        <item name="progressIndeterminateSweepAngle">70</item>
+        <item name="state">IDLE</item>
+        <item name="determinateBackgroundDrawable">@drawable/bg_button_progress</item>
+        <item name="indeterminateBackgroundDrawable">@drawable/bg_button_progress</item>
+        <item name="progressDeterminateColor">?android:attr/colorAccent</item>
+        <item name="progressIndeterminateColor">?android:attr/colorAccent</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+
+    <style name="Widget.Button.Progress.Edit" parent="Widget.Button.Progress">
+        <item name="idleIconDrawable">@drawable/ic_edit_black_24dp</item>
+    </style>
+
+    <style name="Widget.Button.Progress.Delete" parent="Widget.Button.Progress">
+        <item name="idleIconDrawable">@drawable/ic_delete_forever_black_24dp</item>
+    </style>
+
 </resources>
