@@ -30,6 +30,6 @@ constructor(private val loadProductsUseCase: LoadProductsUseCase, private val de
     }
 
     fun deleteProduct(): Completable {
-        return this.deleteProductsUseCase.deleteProduct(this.getSelectedListItem().value!!.firestoreUid)
+        return this.deleteProductsUseCase.deleteProduct(this.getSelectedListItem().value!!.firestoreUid!!)
     }
 }

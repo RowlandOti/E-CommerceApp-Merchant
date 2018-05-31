@@ -25,7 +25,7 @@ constructor(private val mFirebaseFirestone: FirebaseFirestore) {
     }
 
     fun createCategory(category: Category, userUid: String): Single<Category> {
-        val documentReference = mFirebaseFirestone.collection("categories").document(category.name)
+        val documentReference = mFirebaseFirestone.collection("categories").document(category.name!!)
         documentReference.set(category, SetOptions.merge()).addOnSuccessListener { _ ->
             val members = HashMap<String, Any>()
             members[String.format("merchants.%s", userUid)] = true

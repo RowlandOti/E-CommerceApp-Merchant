@@ -143,12 +143,12 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
 
     fun setupData() {
         customer_name.text = orderData!!.name
-        changeTextStatus(orderData!!.status)
+        changeTextStatus(orderData!!.status!!)
 
         phone.text = orderData!!.phone
         email.text = "Email not provided"
 
-        if (orderData!!.address.isEmpty()) {
+        if (orderData!!.address!!.isEmpty()) {
             address.text = "Address not provided"
         } else {
             address.text = orderData!!.address
