@@ -110,8 +110,7 @@ class ProductAdapter(data: List<Product>?, withHeader: Boolean, withFooter: Bool
         }
 
         fun bind(product: Product) {
-
-            FirebaseStorage.getInstance().reference.child(product.imageUrl).downloadUrl
+            FirebaseStorage.getInstance().reference.child(product.imageUrl!!).downloadUrl
                     .addOnSuccessListener { uri ->
                         Glide.with(itemView.product_imageview!!.context).load(uri.toString()).centerCrop().crossFade().into(itemView.product_imageview!!)
                     }
