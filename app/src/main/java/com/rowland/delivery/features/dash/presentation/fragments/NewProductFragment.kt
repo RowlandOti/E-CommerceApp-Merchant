@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.rowland.delivery.features.dash.di.modules.product.ProductModule
 import com.rowland.delivery.features.dash.domain.models.product.Product
 import com.rowland.delivery.features.dash.presentation.activities.DashActivity
@@ -102,12 +103,11 @@ class NewProductFragment : Fragment() {
         })
 
         newProductViewModel.images.observe(this, Observer { uris ->
+            val options = RequestOptions()
+            options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
             Glide.with(this)
                     .load(uris!!.get(0))
-                    .crossFade()
-                    .fitCenter()
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .skipMemoryCache(true)
+                    .apply(options)
                     .into(input_product_imageview)
         })
     }

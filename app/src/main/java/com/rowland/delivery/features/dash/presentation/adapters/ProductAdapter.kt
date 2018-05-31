@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import butterknife.ButterKnife
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.chauthai.swipereveallayout.ViewBinderHelper
 import com.google.firebase.storage.FirebaseStorage
 import com.rowland.delivery.features.dash.domain.models.product.Product
@@ -17,6 +19,7 @@ import com.rowland.delivery.merchant.R
 import kotlinx.android.synthetic.main.content_single_product.view.*
 import kotlinx.android.synthetic.main.content_single_product_reveal.view.*
 import kotlinx.android.synthetic.main.row_single_product.view.*
+
 
 /**
  * Created by Rowland on 5/13/2018.
@@ -112,7 +115,12 @@ class ProductAdapter(data: List<Product>?, withHeader: Boolean, withFooter: Bool
         fun bind(product: Product) {
             FirebaseStorage.getInstance().reference.child(product.imageUrl!!).downloadUrl
                     .addOnSuccessListener { uri ->
-                        Glide.with(itemView.product_imageview!!.context).load(uri.toString()).centerCrop().crossFade().into(itemView.product_imageview!!)
+                        val options = RequestOptions()
+                        options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
+                        Glide.with(itemView.product_imageview!!.context)
+                                .load(uri.toString())
+                                .apply(options)
+                                .into(itemView.product_imageview!!)
                     }
 
             itemView.product_name_textview!!.text = product.name
