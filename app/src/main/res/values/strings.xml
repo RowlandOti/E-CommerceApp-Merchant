@@ -41,4 +41,6 @@
         <item>Half</item>
     </string-array>
 
+    <string name="update">Update</string>
+
 </resources>

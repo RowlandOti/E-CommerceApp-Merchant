@@ -84,6 +84,10 @@ class ProductFragment : Fragment() {
                 when (event) {
                     is ProductEvent.Edit -> {
                         fn()
+                        activity!!.supportFragmentManager.beginTransaction()
+                                .replace(R.id.dash_container_body, EditProductFragment.Companion.newInstance(null))
+                                .addToBackStack(EditProductFragment::class.java.simpleName)
+                                .commit()
                     }
                     is ProductEvent.Unpublish -> {
                         productViewModel.deleteProduct().subscribe({

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import butterknife.ButterKnife
 import com.bumptech.glide.Glide
 import com.chauthai.swipereveallayout.ViewBinderHelper
+import com.google.firebase.storage.FirebaseStorage
 import com.rowland.delivery.features.dash.domain.models.product.Product
 import com.rowland.delivery.features.dash.presentation.tools.recylerview.HFRecyclerView
 import com.rowland.delivery.features.dash.presentation.viewmodels.product.ProductEvent
@@ -27,7 +28,6 @@ class ProductAdapter(data: List<Product>?, withHeader: Boolean, withFooter: Bool
     private lateinit var actionListener: ProductActionListener
 
     interface ProductActionListener {
-        //fun onProductActionListener(position: Int, event: ProductEvent, fn: Function<Unit>)
         fun onProductActionListener(event: ProductEvent, fn: () -> Unit)
     }
 
@@ -110,7 +110,12 @@ class ProductAdapter(data: List<Product>?, withHeader: Boolean, withFooter: Bool
         }
 
         fun bind(product: Product) {
-            Glide.with(itemView.product_imageview!!.context).load(product.imageUrl).centerCrop().crossFade().into(itemView.product_imageview!!)
+
+            FirebaseStorage.getInstance().reference.child(product.imageUrl).downloadUrl
+                    .addOnSuccessListener { uri ->
+                        Glide.with(itemView.product_imageview!!.context).load(uri.toString()).centerCrop().crossFade().into(itemView.product_imageview!!)
+                    }
+
             itemView.product_name_textview!!.text = product.name
             itemView.product_description!!.text = product.description
             itemView.product_price!!.text = "Ksh " + product.price!!

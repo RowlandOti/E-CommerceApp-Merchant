@@ -53,4 +53,16 @@
         <item name="android:textColor">@color/lightTextColor</item>
     </style>
 
+
+    <style name="Widget.TextView.Edit" parent="">
+        <item name="android:textAppearance">@style/TextAppearance.Text.Edit</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="TextAppearance.Text.Edit" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textColor">@color/lightTextColor</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>

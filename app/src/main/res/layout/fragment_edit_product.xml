@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.rowland.delivery.features.dash.presentation.fragments.NewProductFragment">
+    tools:context="com.rowland.delivery.features.dash.presentation.fragments.EditProductFragment">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/newproduct_appbar"
+        android:id="@+id/editproduct_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/newproduct_toolbar"
+            android:id="@+id/editproduct_toolbar"
             style="@style/Widget.Toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add New Product"
+                    android:text="Edit Product"
                     android:textAppearance="@style/Widget.Toolbar.TextAppearance"
                     android:textColor="@color/white" />
             </LinearLayout>
@@ -35,13 +35,13 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
-        android:id="@+id/newproduct_ncview"
+        android:id="@+id/editproduct_ncview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
-            android:id="@+id/newproduct_container"
+            android:id="@+id/editproduct_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -54,7 +54,7 @@
                 app:cardBackgroundColor="@android:color/white">
 
                 <ImageView
-                    android:id="@+id/input_product_imageview"
+                    android:id="@+id/edit_input_product_imageview"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:scaleType="centerCrop"
@@ -84,7 +84,7 @@
                         android:layout_height="wrap_content">
 
                         <android.support.design.widget.TextInputEditText
-                            android:id="@+id/input_product_name"
+                            android:id="@+id/edit_input_product_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Title" />
@@ -97,7 +97,7 @@
                         android:layout_height="wrap_content">
 
                         <android.support.design.widget.TextInputEditText
-                            android:id="@+id/input_product_description"
+                            android:id="@+id/edit_input_product_description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Description" />
@@ -108,23 +108,9 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <android.support.design.widget.TextInputLayout
-                            style="@style/Widget.TextInputLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
-
-                            <android.support.design.widget.TextInputEditText
-                                android:id="@+id/input_product_quantity"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="Quantity"
-                                android:inputType="number" />
-                        </android.support.design.widget.TextInputLayout>
-
-
                         <Spinner
-                            android:id="@+id/input_product_unit"
+                            android:id="@+id/input_edit_product_unit"
+                            style="@style/AppTheme.PopupOverlay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
@@ -135,35 +121,80 @@
                             android:textColor="@color/white" />
 
 
-                        <android.support.design.widget.TextInputLayout
-                            style="@style/Widget.TextInputLayout"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1">
-
-                            <android.support.design.widget.TextInputEditText
-                                android:id="@+id/input_product_pricing"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="Price"
-                                android:inputType="number" />
-
-                        </android.support.design.widget.TextInputLayout>
-
                     </LinearLayout>
 
-                    <android.support.design.widget.TextInputLayout
-                        style="@style/Widget.TextInputLayout"
+                    <android.support.constraint.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp">
 
-                        <android.support.design.widget.TextInputEditText
-                            android:id="@+id/input_product_stock"
-                            android:layout_width="match_parent"
+                        <LinearLayout
+                            android:id="@+id/linearLayout1"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:hint="Number of items in stock"
-                            android:inputType="number" />
-                    </android.support.design.widget.TextInputLayout>
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/linearLayout2"
+                            app:layout_constraintVertical_chainStyle="spread_inside">
+
+                            <TextView
+                                android:id="@+id/input_edit_tv_price"
+                                style="@style/Widget.TextView.Edit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="Price"
+                                tools:text="$30" />
+
+                            <me.himanshusoni.quantityview.QuantityView
+                                android:id="@+id/PriceView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                app:qv_addButtonBackground="@color/colorAccent"
+                                app:qv_addButtonTextColor="@color/white"
+                                app:qv_quantity="20"
+                                app:qv_removeButtonBackground="@color/colorPrimary"
+                                app:qv_removeButtonTextColor="@color/white" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/linearLayout1"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_chainStyle="spread_inside">
+
+                            <TextView
+                                android:id="@+id/input_edit_tv_stock"
+                                style="@style/Widget.TextView.Edit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="Items in Stock"
+                                tools:text="20" />
+
+                            <me.himanshusoni.quantityview.QuantityView
+                                android:id="@+id/StockView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                app:qv_addButtonBackground="@color/colorAccent"
+                                app:qv_addButtonTextColor="@color/white"
+                                app:qv_quantity="20"
+                                app:qv_removeButtonBackground="@color/colorPrimary"
+                                app:qv_removeButtonTextColor="@color/white" />
+
+                        </LinearLayout>
+
+                    </android.support.constraint.ConstraintLayout>
 
                 </LinearLayout>
             </android.support.design.card.MaterialCardView>
@@ -185,7 +216,7 @@
                     android:paddingTop="10dp">
 
                     <android.support.design.button.MaterialButton
-                        android:id="@+id/btn_cancell"
+                        android:id="@+id/edit_btn_cancell"
                         style="@style/Widget.Button.Primary"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/btn_prefered_height"
@@ -196,7 +227,7 @@
                         android:text="@string/cancel" />
 
                     <android.support.design.button.MaterialButton
-                        android:id="@+id/btn_save"
+                        android:id="@+id/edit_btn_update"
                         style="@style/Widget.Button"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/btn_prefered_height"
@@ -204,7 +235,7 @@
                         android:layout_weight="1"
                         android:paddingBottom="5dp"
                         android:paddingTop="5dp"
-                        android:text="@string/save" />
+                        android:text="@string/update" />
 
                 </LinearLayout>
             </android.support.design.card.MaterialCardView>
@@ -213,7 +244,7 @@
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_addimage"
+        android:id="@+id/edit_fab_addimage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
@@ -224,4 +255,3 @@
         app:srcCompat="@drawable/camera_vector" />
 
 </android.support.design.widget.CoordinatorLayout>
-
