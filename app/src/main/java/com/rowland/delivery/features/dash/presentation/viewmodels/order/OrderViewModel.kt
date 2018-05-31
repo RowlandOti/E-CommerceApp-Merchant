@@ -33,6 +33,6 @@ class OrderViewModel @Inject constructor(private val loadOrdersUseCase: LoadOrde
 
 
     fun updateOrderStatus(status: String): Completable {
-        return loadOrdersUseCase.updateOrderStatus(status, selectedListItem.value!!.firestoreUid)
+        return loadOrdersUseCase.updateOrderStatus(status, selectedListItem.value!!.firestoreUid!!)
     }
 }
