@@ -43,14 +43,15 @@ class NewProductViewModel @Inject constructor(private val context: Context, priv
     fun saveProduct(product: Product): Single<Product> {
         val photoRef = FirebaseStorage.getInstance()
                 .reference
-                .child("photos").child("products").child(FirebaseAuth.getInstance().currentUser!!.uid)
+                .child("photos").child("products").child(productCategory.value!!).child(FirebaseAuth.getInstance().currentUser!!.uid)
                 .child(selectedImageUri.value!![0].lastPathSegment)
 
         return RxFirebaseStorage.putFile(photoRef, selectedImageUri.value!![0])
                 .flatMap { taskSnapshot ->
-                    product.imageUrl = taskSnapshot.downloadUrl!!.toString()
+                    product.imageUrl = taskSnapshot.metadata!!.path
                     product.merchantCode = FirebaseAuth.getInstance().currentUser!!.uid
                     createProductUseCase.createProduct(product, FirebaseAuth.getInstance().currentUser!!.uid, productCategory.value!!)
                 }
+
     }
 }
