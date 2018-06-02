@@ -11,6 +11,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.chauthai.swipereveallayout.ViewBinderHelper
+import com.github.florent37.glidepalette.BitmapPalette
+import com.github.florent37.glidepalette.GlidePalette
 import com.google.firebase.storage.FirebaseStorage
 import com.rowland.delivery.features.dash.domain.models.product.Product
 import com.rowland.delivery.features.dash.presentation.tools.recylerview.HFRecyclerView
@@ -117,9 +119,18 @@ class ProductAdapter(data: List<Product>?, withHeader: Boolean, withFooter: Bool
                     .addOnSuccessListener { uri ->
                         val options = RequestOptions()
                         options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
+
                         Glide.with(itemView.product_imageview!!.context)
                                 .load(uri.toString())
                                 .apply(options)
+                                .listener(GlidePalette.with(uri.toString())
+                                        .use(BitmapPalette.Profile.MUTED_DARK)
+                                        .intoBackground(itemView.card_main_content)
+                                        //.intoTextColor(textView)
+                                        .use(BitmapPalette.Profile.VIBRANT)
+                                        //.intoBackground(titleView, GlidePalette.Swatch.RGB)
+                                        .intoTextColor(itemView.product_description, BitmapPalette.Swatch.BODY_TEXT_COLOR)
+                                        .crossfade(true))
                                 .into(itemView.product_imageview!!)
                     }
 

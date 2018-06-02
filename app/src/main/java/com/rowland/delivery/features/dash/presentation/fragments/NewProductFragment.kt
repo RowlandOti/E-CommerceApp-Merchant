@@ -6,6 +6,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -18,12 +19,15 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.meetic.shuffle.Shuffle
+import com.meetic.shuffle.ShuffleViewAnimatorOnSecondCard
 import com.rowland.delivery.features.dash.di.modules.product.ProductModule
 import com.rowland.delivery.features.dash.domain.models.product.Product
 import com.rowland.delivery.features.dash.presentation.activities.DashActivity
 import com.rowland.delivery.features.dash.presentation.viewmodels.product.NewProductViewModel
 import com.rowland.delivery.merchant.R
 import com.tbruyelle.rxpermissions2.RxPermissions
+import kotlinx.android.synthetic.main.content_product_images_shuffle.view.*
 import kotlinx.android.synthetic.main.fragment_new_product.*
 import java.util.*
 import javax.inject.Inject
@@ -103,12 +107,38 @@ class NewProductFragment : Fragment() {
         })
 
         newProductViewModel.images.observe(this, Observer { uris ->
+
+            new_product_shuffle.viewAnimator = ShuffleViewAnimatorOnSecondCard()
+            new_product_shuffle.shuffleAdapter = ImageShuffleAdapter(uris)
+        })
+
+    }
+
+    class ImageShuffleViewHolder(itemView: View) : Shuffle.ViewHolder(itemView) {
+        fun bind(uri: Uri, position: Int) {
+            itemView!!.product_images_count!!.text = position.toString()
             val options = RequestOptions()
             options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
-            Glide.with(this)
-                    .load(uris!!.get(0))
+            Glide.with(itemView!!.product_image.context)
+                    .load(uri)
                     .apply(options)
-                    .into(input_product_imageview)
-        })
+                    .into(itemView!!.product_image)
+        }
+    }
+
+    class ImageShuffleAdapter constructor(private val uris: List<Uri>?) : Shuffle.Adapter<ImageShuffleViewHolder>() {
+
+        override fun onCreateViewHolder(viewGroup: ViewGroup?, type: Int): ImageShuffleViewHolder {
+            val view = LayoutInflater.from(viewGroup!!.context).inflate(R.layout.content_product_images_shuffle, viewGroup, false)
+            return ImageShuffleViewHolder(view)
+        }
+
+        override fun onBindViewHolder(viewHolder: ImageShuffleViewHolder?, position: Int) {
+            viewHolder!!.bind(uris!!.get(position), position)
+        }
+
+        override fun getItemCount(): Int {
+            return uris!!.size
+        }
     }
 }

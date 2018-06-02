@@ -34,7 +34,7 @@ class NewProductViewModel @Inject constructor(private val context: Context, priv
     }
 
     fun selectImages() {
-        RxGallery.gallery(context, false, RxGallery.MimeType.IMAGE)
+        RxGallery.gallery(context, true, RxGallery.MimeType.IMAGE)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ uris -> selectedImageUri.setValue(uris) }, { throwable -> Log.d(NewProductViewModel::class.java.simpleName, "Error Selecting Images: $throwable") }) { Log.d(NewProductViewModel::class.java.simpleName, "Done Selecting Images") }
