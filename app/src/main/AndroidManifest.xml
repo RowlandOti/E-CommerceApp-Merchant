@@ -35,6 +35,12 @@
             android:name="com.rowland.delivery.features.dash.presentation.activities.DashActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar" />
+
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
     </application>
 
 </manifest>

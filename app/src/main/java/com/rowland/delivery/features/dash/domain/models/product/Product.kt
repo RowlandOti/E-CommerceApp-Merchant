@@ -20,6 +20,7 @@ class Product : FirestoreModel {
     var unitsOfMeasure: Int? = null
     var saleQuantity: Int? = null
     var imageUrl: String? = null
+    var imageUrls = ArrayList<String>()
     var createdAt: Date? = null
     var updatedAt: Date? = null
     var deletedAt: Date? = null
