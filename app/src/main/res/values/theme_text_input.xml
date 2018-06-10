@@ -57,6 +57,7 @@
     <style name="Widget.TextAppearance.Caption" parent="TextAppearance.AppCompat.Caption">
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/lightTextColor</item>
+        <item name="fontFamily">@font/dosis_medium</item>
     </style>
 
 

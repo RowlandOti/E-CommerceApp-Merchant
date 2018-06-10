@@ -22,7 +22,7 @@
                 style="@style/Widget.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorAccent"
+                app:backgroundTint="@color/colorAccent"
                 android:text="create category"
                 android:textColor="@color/white" />
 
