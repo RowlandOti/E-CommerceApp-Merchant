@@ -57,8 +57,7 @@
                     android:id="@+id/new_product_shuffle"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
-                    app:shuffle_infinite="true"
-                    app:shuffle_rotationEnabled="false" />
+                    app:shuffle_infinite="true" />
 
             </android.support.design.card.MaterialCardView>
 

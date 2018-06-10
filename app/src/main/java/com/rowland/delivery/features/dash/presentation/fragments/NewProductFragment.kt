@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.meetic.shuffle.Shuffle
+import com.meetic.shuffle.ShuffleViewAnimatorOnSecondCard
 import com.rowland.delivery.features.dash.di.modules.product.ProductModule
 import com.rowland.delivery.features.dash.domain.models.product.Product
 import com.rowland.delivery.features.dash.presentation.activities.DashActivity
@@ -104,11 +105,10 @@ class NewProductFragment : Fragment() {
         btn_cancell.setOnClickListener({ view ->
             activity!!.supportFragmentManager.popBackStack(NewProductFragment::class.java.simpleName, POP_BACK_STACK_INCLUSIVE)
         })
-        new_product_shuffle.shuffleAdapter = ImageShuffleAdapter()
-        //new_product_shuffle.viewAnimator = ShuffleViewAnimatorOnSecondCard()
 
         newProductViewModel.images.observe(this, Observer { uris ->
-            (new_product_shuffle.shuffleAdapter as ImageShuffleAdapter).addAll(uris!!)
+            new_product_shuffle.shuffleAdapter = ImageShuffleAdapter(uris!!)
+            new_product_shuffle.viewAnimator = ShuffleViewAnimatorOnSecondCard()
         })
 
     }
@@ -125,26 +125,24 @@ class NewProductFragment : Fragment() {
         }
     }
 
-    class ImageShuffleAdapter : Shuffle.Adapter<ImageShuffleViewHolder>() {
+    class ImageShuffleAdapter(_uris: List<Uri>) : Shuffle.Adapter<ImageShuffleViewHolder>() {
+        var uris: List<Uri>
 
-        private var uris: List<Uri> = emptyList()
+        init {
+            uris = _uris
+        }
 
-        override fun onCreateViewHolder(parent: ViewGroup?, type: Int): ImageShuffleViewHolder {
-            val view = LayoutInflater.from(parent!!.context).inflate(R.layout.content_product_images_shuffle, parent, false)
+        override fun onCreateViewHolder(parent: ViewGroup, type: Int): ImageShuffleViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.content_product_images_shuffle, parent, false)
             return ImageShuffleViewHolder(view)
         }
 
-        override fun onBindViewHolder(viewHolder: ImageShuffleViewHolder?, position: Int) {
-            viewHolder!!.bind(this.uris.get(position), position)
+        override fun onBindViewHolder(viewHolder: ImageShuffleViewHolder, position: Int) {
+            viewHolder.bind(this.uris.get(position), position)
         }
 
         override fun getItemCount(): Int {
-            return this.uris.size
-        }
-
-        fun addAll(newUris: List<Uri>) {
-            this.uris = newUris
-            notifyDataSetChanged()
+            return uris.size
         }
     }
 }

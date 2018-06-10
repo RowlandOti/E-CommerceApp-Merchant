@@ -12,9 +12,11 @@ import com.rowland.delivery.features.dash.domain.models.product.Product
 import com.rowland.delivery.features.dash.domain.usecases.product.CreateProductUseCase
 import com.rowland.rxgallery.RxGallery
 import durdinapps.rxfirebase2.RxFirebaseStorage
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import java.util.*
 import javax.inject.Inject
 
 /**
@@ -40,35 +42,28 @@ class NewProductViewModel @Inject constructor(private val context: Context, priv
                 .subscribe({ uris -> selectedImageUri.setValue(uris) }, { throwable -> Log.d(NewProductViewModel::class.java.simpleName, "Error Selecting Images: $throwable") }) { Log.d(NewProductViewModel::class.java.simpleName, "Done Selecting Images") }
     }
 
-    fun saveProduct(product: Product): Single<Product> {
-        for (uri in selectedImageUri.value!!) {
-            val photoRef = FirebaseStorage.getInstance()
-                    .reference
-                    .child("photos").child("products").child(productCategory.value!!).child(FirebaseAuth.getInstance().currentUser!!.uid)
-                    .child(uri.lastPathSegment)
-
-            RxFirebaseStorage.putFile(photoRef, uri)
-                    .map { taskSnapshot ->
-                        product.imageUrls.add(taskSnapshot.metadata!!.path)
-                    }
-        }
-
-        product.merchantCode = FirebaseAuth.getInstance().currentUser!!.uid
-        return createProductUseCase.createProduct(product, FirebaseAuth.getInstance().currentUser!!.uid, productCategory.value!!)
-
-
-        /*val photoRef = FirebaseStorage.getInstance()
+    fun getPhotoUrl(uri: Uri): Single<String>? {
+        val photoRef = FirebaseStorage.getInstance()
                 .reference
                 .child("photos").child("products").child(productCategory.value!!).child(FirebaseAuth.getInstance().currentUser!!.uid)
-                .child(selectedImageUri.value!![0].lastPathSegment)
+                .child(uri.lastPathSegment)
+
+        return RxFirebaseStorage.putFile(photoRef, uri)
+                .map { taskSnapshot -> taskSnapshot.metadata!!.path }
+    }
 
 
-        return RxFirebaseStorage.putFile(photoRef, selectedImageUri.value!![0])
-                .flatMap { taskSnapshot ->
-                    product.imageUrl = taskSnapshot.metadata!!.path
+    fun saveProduct(product: Product): Single<Product> {
+        return Observable.fromArray(selectedImageUri.value!!)
+                .flatMapIterable({ uris -> uris })
+                .flatMap({ uri -> getPhotoUrl(uri)!!.subscribeOn(Schedulers.io()).toObservable() })
+                .toList()
+                .map { t ->
                     product.merchantCode = FirebaseAuth.getInstance().currentUser!!.uid
-                    createProductUseCase.createProduct(product, FirebaseAuth.getInstance().currentUser!!.uid, productCategory.value!!)
-                }*/
+                    product.imageUrls = t as ArrayList<String>
+                    product
+                }
+                .flatMap { t -> createProductUseCase.createProduct(product, FirebaseAuth.getInstance().currentUser!!.uid, productCategory.value!!) }
 
     }
 }

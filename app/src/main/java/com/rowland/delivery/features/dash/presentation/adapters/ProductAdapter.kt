@@ -115,7 +115,7 @@ class ProductAdapter(data: List<Product>?, withHeader: Boolean, withFooter: Bool
         }
 
         fun bind(product: Product) {
-            FirebaseStorage.getInstance().reference.child(product.imageUrl!!).downloadUrl
+            FirebaseStorage.getInstance().reference.child(product.imageUrls.get(0)).downloadUrl
                     .addOnSuccessListener { uri ->
                         val options = RequestOptions()
                         options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
