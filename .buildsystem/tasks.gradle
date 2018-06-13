@@ -1,0 +1,24 @@
+// https://www.oreilly.com/library/view/gradle-recipes-for/9781491947272/ch04.html
+task copyApks(type: Copy, dependsOn: assembleDebug) { 1
+    from("$buildDir/outputs/apk") {
+        exclude '**/*unsigned.apk', '**/*unaligned.apk'
+    }
+    into '../apks'
+}
+
+task printVariantNames() {
+    doLast {
+        android.applicationVariants.all { variant ->
+            println variant.name
+        }
+    }
+}
+
+task installDebugFlavors() {
+    android.applicationVariants.all { v ->
+        if (v.name.endsWith('Debug')) {
+            String name = v.name.capitalize()
+            dependsOn "install$name"
+        }
+    }
+}
