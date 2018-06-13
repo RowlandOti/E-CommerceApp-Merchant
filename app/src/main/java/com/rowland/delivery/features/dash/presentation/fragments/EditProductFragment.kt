@@ -35,7 +35,6 @@ class EditProductFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         productViewModel = ViewModelProviders.of(activity!!, productFactory).get(ProductViewModel::class.java)
 
     }
@@ -51,14 +50,12 @@ class EditProductFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         (activity as AppCompatActivity).setSupportActionBar(editproduct_toolbar)
-
 
         productViewModel.getSelectedListItem()
                 .observe(this, Observer { product ->
-                    input_edit_tv_price.text = product!!.price.toString()
-                    input_edit_tv_stock.text = product.itemQuantity.toString()
+                    input_edit_price_view.quantity = product!!.price!!
+                    input_edit_stock_view.quantity = product.itemQuantity!!
                 })
     }
 }

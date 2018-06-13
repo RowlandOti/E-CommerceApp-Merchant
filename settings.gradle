@@ -1,1 +1,1 @@
-include ':app', ':rxgallery'
+include ':app', ':rxgallery', 'shuffle'

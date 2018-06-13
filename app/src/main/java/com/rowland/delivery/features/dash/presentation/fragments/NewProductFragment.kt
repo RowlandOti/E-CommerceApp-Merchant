@@ -107,7 +107,8 @@ class NewProductFragment : Fragment() {
         })
 
         newProductViewModel.images.observe(this, Observer { uris ->
-            new_product_shuffle.shuffleAdapter = ImageShuffleAdapter(uris!!)
+            new_product_shuffle.shuffleSettings.numberOfDisplayedCards = uris!!.size
+            new_product_shuffle.shuffleAdapter = ImageShuffleAdapter(uris)
             new_product_shuffle.viewAnimator = ShuffleViewAnimatorOnSecondCard()
         })
 

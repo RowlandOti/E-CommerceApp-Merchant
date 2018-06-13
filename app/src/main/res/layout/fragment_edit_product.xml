@@ -144,17 +144,15 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:text="Price"
-                                tools:text="$30" />
+                                android:text="Price" />
 
                             <me.himanshusoni.quantityview.QuantityView
-                                android:id="@+id/PriceView"
+                                android:id="@+id/input_edit_price_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 app:qv_addButtonBackground="@color/colorAccent"
                                 app:qv_addButtonTextColor="@color/white"
-                                app:qv_quantity="20"
                                 app:qv_removeButtonBackground="@color/colorPrimary"
                                 app:qv_removeButtonTextColor="@color/white" />
 
@@ -178,17 +176,15 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
-                                android:text="Items in Stock"
-                                tools:text="20" />
+                                android:text="Items in Stock" />
 
                             <me.himanshusoni.quantityview.QuantityView
-                                android:id="@+id/StockView"
+                                android:id="@+id/input_edit_stock_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 app:qv_addButtonBackground="@color/colorAccent"
                                 app:qv_addButtonTextColor="@color/white"
-                                app:qv_quantity="20"
                                 app:qv_removeButtonBackground="@color/colorPrimary"
                                 app:qv_removeButtonTextColor="@color/white" />
 

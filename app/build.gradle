@@ -35,6 +35,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(path: ':rxgallery', configuration: 'default')
+    implementation project(path: ':shuffle', configuration: 'default')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
@@ -86,7 +87,7 @@ dependencies {
     implementation 'com.github.abdularis:androidbuttonprogress:v0.1-alpha5'
     implementation 'me.himanshusoni.quantityview:quantity-view:1.2.0'
 
-    implementation 'com.meetic.shuffle:shuffle:1.0.8'
+    //implementation 'com.meetic.shuffle:shuffle:1.0.8'
     implementation 'com.meetic.dragueur:dragueur:1.0.3'
 }
 
