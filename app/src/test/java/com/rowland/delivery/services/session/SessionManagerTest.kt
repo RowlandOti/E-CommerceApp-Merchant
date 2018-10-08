@@ -36,11 +36,7 @@ class SessionManagerTest {
 
     @Before
     fun setUp() {
-
-        Mockito.`when`(context.getString(anyInt())).thenReturn("test-string")
-        Mockito.`when`(context.getSharedPreferences(anyString(), anyInt())).thenReturn(sharedPref)
         Mockito.`when`(sharedPref.edit()).thenReturn(editor)
-        Mockito.`when`(editor.commit()).thenReturn(true)
 
         sharedPrefManager = SharedPreferencesManager(sharedPref)
         sessionManager = SessionManager(sharedPrefManager)
@@ -65,7 +61,7 @@ class SessionManagerTest {
         sessionManager.setLogin(VALUE)
 
 //        Assert.assertFalse(sessionManager.shouldLogout())
-//        Assert.assertTrue(sessionManager.isLoggedIn())
+        //       Assert.assertTrue(sessionManager.isLoggedIn())
     }
 
     @Test
