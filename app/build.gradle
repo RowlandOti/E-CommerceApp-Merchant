@@ -29,7 +29,9 @@ android {
     kapt {
         generateStubs = true
     }
-
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
