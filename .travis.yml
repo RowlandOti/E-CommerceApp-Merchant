@@ -2,25 +2,39 @@ language: android
 notifications:
   email:
     recipients:
-    - rowlandotienoo@gmail.com
+      - rowlandotienoo@gmail.com
     on_success: always
     on_failure: always
 env:
   global:
-  - secure: a0ntodqya0a8584T2gTX06eLFGwxo/cBQ2lMowzHB5ELa9VwcvBrIROUDrLWwJu9HPk3EDHQDKnGPTkP9Cb7p3QjHY3oL0zvEJCfjGTszUQVEQBuVfK3uxKMeQhWzWexoOcCaHpbcBvQYRUBNwDBy+IrW6FOT6lFqS+7/eZiT9RvO59nxJxZ3q/HypIiYfQnoYl6dGEZeMpBrxJHQg2U+ZBSRf/yFFSrHQXRi5y/wK8zjrWpDjXVOYtzPv0DOdhCRVVx5M8LIWhq6LsZkWvdpAVJ4gCPEMM98rLQex32N+ZGp9gN9rymWJkdjuzKm3I72DOj059ALzSUuM5ySC4eYe/cHyTexfuQNb5JOMmCOZqccql6Id0s1xODC0sSL9IKxfXcQBNqvAA3/UUEu3bH+VB76m18Gkfv2XPfcHXMTiv6XyCiRPR3WdTvYAeCUkn4/YPKBXTovHr/xCqHIlRpor0CYj0f6ETa7fmf3UyK3KAj8ogK9G0vDgFJAWkFQ5OyDue+Yk2Prfv2U+pfkVFk+7hWWuVnHYBqDEwqdIGBpKUWxLLQOZuez3hUBLa/sDqZLBFWFyV/s026OfE+OXB+e/pNIxOKAwGuVCY9CuFSnGFnwZTi9pxFnI+mr4k91kc9fh9WHUGUqSEl5sXxDZ5iNozoIZbCSWdQDcRXC/qLLmU=
-  - secure: T4Grbm3hASYRIUogx2eo+aNbMA3cK2eL0qhNpQKLlVwtm2C4kOVsr5J6FAWKgtLIRIaTGfL6cJqWDrnxv/MuLbuYGCXSmHBualN1xkktKVlzM23EkucChJeJ1AKLULyYSCTZet8rg9aHo5qvoDa4dw5hnZsyBijljqIzncO18tNL/+QucIjfQbR7GKUjb8J5LyR/nAj2afp0xshjsem6LnMgwUej/YhrAATi71pCbUXVflk6C65hcQmLR/TNZ9ZxTvJkTtQyVp2+3EWkoUFo/rD/uljLzy9NKKijeHqjjIwHzoi74NBoL02p5r5LoDdBsujF965HivB/p1kHT10eaxA6OoPw/TzxvwimD5tfmCvqKNiKX0zb965Z57G2XsgR4jv9duecCnOaa8NfIYt8f0pzGfTd652t2bnoeGktuW4DbNW/CBTIuJiRGqgHmjIF9ga5pNWXaFdqefeZa3yAw/KTz7/DgFSCaDTUPMXzSss1SbwMf8Nf8t+ddxpTrjT38C5h4zCgLa350a73Wc5o7qC4hxs+3EDs2b00NC6yORaayjS7DcBROLXK4IAqr/bgEkV5XAjea7RsKzg80ZkO1eYoK+fM+A4yNFZnRSy0uZIcYcwQWebIwLmqRKHa3Za4aFUzIswCDpKerl5pSs9CfkUHBRZ8PtsYzXRyMMgMbqk=
+    - secure: a0ntodqya0a8584T2gTX06eLFGwxo/cBQ2lMowzHB5ELa9VwcvBrIROUDrLWwJu9HPk3EDHQDKnGPTkP9Cb7p3QjHY3oL0zvEJCfjGTszUQVEQBuVfK3uxKMeQhWzWexoOcCaHpbcBvQYRUBNwDBy+IrW6FOT6lFqS+7/eZiT9RvO59nxJxZ3q/HypIiYfQnoYl6dGEZeMpBrxJHQg2U+ZBSRf/yFFSrHQXRi5y/wK8zjrWpDjXVOYtzPv0DOdhCRVVx5M8LIWhq6LsZkWvdpAVJ4gCPEMM98rLQex32N+ZGp9gN9rymWJkdjuzKm3I72DOj059ALzSUuM5ySC4eYe/cHyTexfuQNb5JOMmCOZqccql6Id0s1xODC0sSL9IKxfXcQBNqvAA3/UUEu3bH+VB76m18Gkfv2XPfcHXMTiv6XyCiRPR3WdTvYAeCUkn4/YPKBXTovHr/xCqHIlRpor0CYj0f6ETa7fmf3UyK3KAj8ogK9G0vDgFJAWkFQ5OyDue+Yk2Prfv2U+pfkVFk+7hWWuVnHYBqDEwqdIGBpKUWxLLQOZuez3hUBLa/sDqZLBFWFyV/s026OfE+OXB+e/pNIxOKAwGuVCY9CuFSnGFnwZTi9pxFnI+mr4k91kc9fh9WHUGUqSEl5sXxDZ5iNozoIZbCSWdQDcRXC/qLLmU=
+    - secure: T4Grbm3hASYRIUogx2eo+aNbMA3cK2eL0qhNpQKLlVwtm2C4kOVsr5J6FAWKgtLIRIaTGfL6cJqWDrnxv/MuLbuYGCXSmHBualN1xkktKVlzM23EkucChJeJ1AKLULyYSCTZet8rg9aHo5qvoDa4dw5hnZsyBijljqIzncO18tNL/+QucIjfQbR7GKUjb8J5LyR/nAj2afp0xshjsem6LnMgwUej/YhrAATi71pCbUXVflk6C65hcQmLR/TNZ9ZxTvJkTtQyVp2+3EWkoUFo/rD/uljLzy9NKKijeHqjjIwHzoi74NBoL02p5r5LoDdBsujF965HivB/p1kHT10eaxA6OoPw/TzxvwimD5tfmCvqKNiKX0zb965Z57G2XsgR4jv9duecCnOaa8NfIYt8f0pzGfTd652t2bnoeGktuW4DbNW/CBTIuJiRGqgHmjIF9ga5pNWXaFdqefeZa3yAw/KTz7/DgFSCaDTUPMXzSss1SbwMf8Nf8t+ddxpTrjT38C5h4zCgLa350a73Wc5o7qC4hxs+3EDs2b00NC6yORaayjS7DcBROLXK4IAqr/bgEkV5XAjea7RsKzg80ZkO1eYoK+fM+A4yNFZnRSy0uZIcYcwQWebIwLmqRKHa3Za4aFUzIswCDpKerl5pSs9CfkUHBRZ8PtsYzXRyMMgMbqk=
 
 jdk:
 - oraclejdk8
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
 android:
   components:
-  - tools
-  - extra-android-support
-  - extra-google-google_play_services
-  - extra-android-m2repository
-  - extra-google-m2repository
-  - build-tools-28.0.2
-  - android-28
+    - tools
+    - platform-tools
+    - tools
+    - extra-android-support
+    - extra-google-google_play_services
+    - extra-android-m2repository
+    - extra-google-m2repository
+    - build-tools-28.0.2
+    - android-28
+  licenses:
+    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
 deploy:
   provider: releases
   # The api-key is encrypted like described here: http://docs.travis-ci.com/user/encryption-keys/  (only travis can decrypt the key)
