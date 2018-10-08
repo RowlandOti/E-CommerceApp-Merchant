@@ -4,7 +4,13 @@
     <style name="Widget.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@android:color/white</item>
         <item name="backgroundTint">?android:attr/colorAccent</item>
-        <item name="android:fontFamily">@font/dosis</item>
+        <item name="android:textAppearance">@style/Widget.TextAppearance.Button</item>
+    </style>
+
+
+    <style name="Widget.TextAppearance.Button" parent="TextAppearance.MaterialComponents.Button">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="fontFamily">@font/dosis</item>
     </style>
 
     <style name="Widget.Button.Inverse" parent="Widget.Button">

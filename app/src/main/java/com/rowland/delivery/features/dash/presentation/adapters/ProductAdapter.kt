@@ -124,7 +124,7 @@ class ProductAdapter(data: List<Product>?, withHeader: Boolean, withFooter: Bool
                                 .load(uri.toString())
                                 .apply(options)
                                 .listener(GlidePalette.with(uri.toString())
-                                        .use(BitmapPalette.Profile.MUTED_LIGHT)
+                                        .use(BitmapPalette.Profile.VIBRANT_LIGHT)
                                         .intoBackground(itemView.card_main_content)
                                         .use(BitmapPalette.Profile.VIBRANT_DARK)
                                         .intoTextColor(itemView.product_description, BitmapPalette.Swatch.BODY_TEXT_COLOR)

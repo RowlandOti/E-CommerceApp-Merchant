@@ -12,6 +12,7 @@ import io.reactivex.Single
 import java.util.*
 import javax.inject.Inject
 
+
 /**
  * Created by Rowland on 5/13/2018.
  */
@@ -20,6 +21,7 @@ class ProductRepository @Inject
 constructor(private val mFirebaseFirestone: FirebaseFirestore) {
 
     fun getProducts(userUid: String, productCategory: String): Flowable<List<Product>> {
+        // Get all products published by given merchant
         val categoryCollectionRef = mFirebaseFirestone.collection("products")
         val query = categoryCollectionRef
                 .whereEqualTo(String.format("merchants.%s", userUid), true)
