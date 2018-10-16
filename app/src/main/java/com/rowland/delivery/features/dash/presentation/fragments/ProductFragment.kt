@@ -43,7 +43,7 @@ class ProductFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        productViewModel = ViewModelProviders.of(this, productFactory).get(ProductViewModel::class.java)
+        productViewModel = ViewModelProviders.of(activity!!, productFactory).get(ProductViewModel::class.java)
 
         if (arguments != null) {
             val category = arguments!!.getString("selected_category")
