@@ -84,7 +84,7 @@
                         android:layout_height="wrap_content">
 
                         <android.support.design.widget.TextInputEditText
-                            android:id="@+id/edit_input_product_name"
+                            android:id="@+id/input_edit_product_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Title" />
@@ -97,7 +97,7 @@
                         android:layout_height="wrap_content">
 
                         <android.support.design.widget.TextInputEditText
-                            android:id="@+id/edit_input_product_description"
+                            android:id="@+id/input_edit_product_description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Description" />
