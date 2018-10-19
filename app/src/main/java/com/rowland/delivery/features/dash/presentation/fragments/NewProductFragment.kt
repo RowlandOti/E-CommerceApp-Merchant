@@ -72,7 +72,7 @@ class NewProductFragment : Fragment() {
 
         (activity as AppCompatActivity).setSupportActionBar(newproduct_toolbar)
 
-        fab_addimage.setOnClickListener({ view ->
+        fab_addimage.setOnClickListener { view ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 RxPermissions(activity!!).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         .subscribe { granted ->
@@ -83,9 +83,9 @@ class NewProductFragment : Fragment() {
                             }
                         }
             }
-        })
+        }
 
-        btn_save.setOnClickListener({ view ->
+        btn_save.setOnClickListener { view ->
             val product = Product()
             product.price = Integer.valueOf(input_product_pricing.text!!.toString())
             product.name = input_product_name.text!!.toString()
@@ -100,11 +100,11 @@ class NewProductFragment : Fragment() {
                         activity!!.supportFragmentManager.popBackStack(NewProductFragment::class.java.simpleName, POP_BACK_STACK_INCLUSIVE)
                     }) { throwable -> Toast.makeText(activity, "Product not added", Toast.LENGTH_SHORT).show() }
 
-        })
+        }
 
-        btn_cancell.setOnClickListener({ view ->
+        btn_cancell.setOnClickListener { view ->
             activity!!.supportFragmentManager.popBackStack(NewProductFragment::class.java.simpleName, POP_BACK_STACK_INCLUSIVE)
-        })
+        }
 
         newProductViewModel.images.observe(this, Observer { uris ->
             new_product_shuffle.shuffleSettings.numberOfDisplayedCards = uris!!.size
