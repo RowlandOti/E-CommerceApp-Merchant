@@ -1,5 +1,7 @@
 package com.rowland.delivery.features.dash.presentation.activities
 
+import android.app.Activity
+import android.app.ActivityOptions
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
@@ -7,10 +9,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.app.ActivityCompat
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.FragmentManager
+import android.support.v4.util.Pair
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import butterknife.ButterKnife
 import com.rowland.delivery.features.dash.di.components.DaggerDashComponent
 import com.rowland.delivery.features.dash.di.components.DashComponent
@@ -49,6 +56,12 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         fun startActivity(context: Context) {
             val intent = Intent(context, DashActivity::class.java)
             context.startActivity(intent)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                val bundle = ActivityOptions.makeSceneTransitionAnimation(context as Activity).toBundle()
+                context.startActivity(intent, bundle)
+            } else {
+                context.startActivity(intent)
+            }
         }
     }
 

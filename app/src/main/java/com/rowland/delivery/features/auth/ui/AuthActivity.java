@@ -1,5 +1,7 @@
 package com.rowland.delivery.features.auth.ui;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -125,6 +127,13 @@ public class AuthActivity extends AppCompatActivity implements Auth.AuthLoginCal
         Intent intent = new Intent(context, AuthActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         context.startActivity(intent);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            Bundle bundle = ActivityOptions.makeSceneTransitionAnimation((Activity) context).toBundle();
+            context.startActivity(intent, bundle);
+        } else {
+            context.startActivity(intent);
+        }
     }
 
     @Override
