@@ -19,7 +19,7 @@ import javax.inject.Inject
 class ProductViewModel @Inject
 constructor(private val loadProductsUseCase: LoadProductsUseCase, private val deleteProductsUseCase: DeleteProductsUseCase) : SharedViewModel<Product>() {
 
-    private val productCategory = MutableLiveData<String>()
+    internal val productCategory = MutableLiveData<String>()
 
     fun setCategory(category: String) {
         productCategory.value = category

@@ -42,6 +42,12 @@ constructor(private val mFirebaseFirestone: FirebaseFirestore) {
         return RxFirestore.getDocument(documentReference, Product::class.java).toSingle()
     }
 
+    fun updateProduct(productUpdateFields: HashMap<String, Any>, firestoreUid: String): Single<Product> {
+        val documentReference = mFirebaseFirestone.collection("products").document(firestoreUid!!)
+
+        return RxFirestore.updateDocument(documentReference, productUpdateFields).toSingle { Product() }
+    }
+
     fun deleteProduct(productUid: String): Completable {
         val documentReference = mFirebaseFirestone.collection("products").document(productUid)
         return RxFirestore.deleteDocument(documentReference)

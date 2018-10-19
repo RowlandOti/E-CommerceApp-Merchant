@@ -6,6 +6,7 @@ import com.alexfacciorusso.daggerviewmodel.ViewModelKey
 
 import com.rowland.delivery.features.dash.presentation.viewmodels.category.CategoryViewModel
 import com.rowland.delivery.features.dash.presentation.viewmodels.order.OrderViewModel
+import com.rowland.delivery.features.dash.presentation.viewmodels.product.EditProductViewModel
 import com.rowland.delivery.features.dash.presentation.viewmodels.product.NewProductViewModel
 import com.rowland.delivery.features.dash.presentation.viewmodels.product.ProductViewModel
 
@@ -36,4 +37,8 @@ abstract class ViewModelFactoryModule {
     @ViewModelKey(NewProductViewModel::class)
     internal abstract fun bindNewProductViewModel(viewModel: NewProductViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(EditProductViewModel::class)
+    internal abstract fun bindEditProductViewModel(viewModel: EditProductViewModel): ViewModel
 }
