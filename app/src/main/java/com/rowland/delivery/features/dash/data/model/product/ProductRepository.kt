@@ -1,5 +1,6 @@
 package com.rowland.delivery.features.dash.data.model.product
 
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.SetOptions
@@ -38,13 +39,19 @@ constructor(private val mFirebaseFirestone: FirebaseFirestore) {
             members[String.format("categories.%s", productCategory)] = true
             documentReference.update(members)
         }
-
         return RxFirestore.getDocument(documentReference, Product::class.java).toSingle()
     }
 
     fun updateProduct(productUpdateFields: HashMap<String, Any>, firestoreUid: String): Single<Product> {
         val documentReference = mFirebaseFirestone.collection("products").document(firestoreUid!!)
-
+        val imageUrls = productUpdateFields.remove("imageUrls")
+        if (imageUrls != null) {
+            return RxFirestore.updateDocument(documentReference, productUpdateFields).doOnComplete {
+                for(i in imageUrls as ArrayList<*>) {
+                    documentReference.update("imageUrls", FieldValue.arrayUnion(i))
+                }
+            }.toSingle { Product() }
+        }
         return RxFirestore.updateDocument(documentReference, productUpdateFields).toSingle { Product() }
     }
 
