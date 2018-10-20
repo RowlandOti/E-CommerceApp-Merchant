@@ -46,12 +46,11 @@ class NewProductViewModel @Inject constructor(private val context: Context, priv
         val photoRef = FirebaseStorage.getInstance()
                 .reference
                 .child("photos").child("products").child(productCategory.value!!).child(FirebaseAuth.getInstance().currentUser!!.uid)
-                .child(uri.lastPathSegment)
+                .child(uri.lastPathSegment!!)
 
         return RxFirebaseStorage.putFile(photoRef, uri)
                 .map { taskSnapshot -> taskSnapshot.metadata!!.path }
     }
-
 
     fun saveProduct(product: Product): Single<Product> {
         return Observable.fromArray(selectedImageUri.value!!)
@@ -61,9 +60,7 @@ class NewProductViewModel @Inject constructor(private val context: Context, priv
                 .map { t ->
                     product.merchantCode = FirebaseAuth.getInstance().currentUser!!.uid
                     product.imageUrls = t as ArrayList<String>
-                    product
                 }
                 .flatMap { t -> createProductUseCase.createProduct(product, FirebaseAuth.getInstance().currentUser!!.uid, productCategory.value!!) }
-
     }
 }
