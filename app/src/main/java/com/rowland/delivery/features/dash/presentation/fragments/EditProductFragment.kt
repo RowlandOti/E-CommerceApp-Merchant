@@ -85,6 +85,15 @@ class EditProductFragment : Fragment() {
                     editProductViewModel.setCategory(productViewModel.productCategory.value!!)
                 })
 
+        editProductViewModel.images.observe(this, Observer { uris ->
+            val options = RequestOptions()
+            options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
+            Glide.with(activity!!)
+                    .load(uris!!.get(uris.size -1))
+                    .apply(options)
+                    .into(edit_input_product_imageview)
+        })
+
         edit_fab_addimage.setOnClickListener { view ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 RxPermissions(activity!!).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
