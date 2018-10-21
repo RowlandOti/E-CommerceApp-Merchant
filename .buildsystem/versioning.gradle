@@ -7,7 +7,7 @@ ext.getVersionCode = { ->
             commandLine 'git', 'rev-list', '--first-parent', '--count', 'master'
             standardOutput = stdout
         }
-        return Integer.parseInt(stdout.toString().trim())
+        return Integer.parseInt(stdout.toString().trim())/1000
     }
     catch (ignored) {
         return -1;
@@ -31,4 +31,5 @@ ext.getVersionName = { ->
 task showVersion << {
     // Use inherited method
     println 'VersionName: ' + getVersionName()
+    println 'VersionCode: ' + getVersionCode()
 }
