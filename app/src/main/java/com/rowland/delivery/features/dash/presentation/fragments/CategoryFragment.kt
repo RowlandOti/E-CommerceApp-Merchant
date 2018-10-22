@@ -104,7 +104,7 @@ class CategoryFragment : Fragment() {
 
         categoryViewModel.getDataList()
                 .observe(this, Observer { categories ->
-                    categoryAdapter.setList(categories)
+                    categoryAdapter.setList(categories!!)
                 })
     }
 

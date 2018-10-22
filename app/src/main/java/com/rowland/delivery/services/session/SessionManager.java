@@ -23,33 +23,33 @@ public class SessionManager {
     public void setLogin(String token) {
         long time_log = new Date().getTime();
 
-        preferencesManager.putBoolean(AppConstants.KEY_IS_LOGGEDIN, true)
-                .putString(AppConstants.KEY_TOKEN, token)
-                .putLong(AppConstants.KEY_TIME, time_log);
+        preferencesManager.putBoolean(AppConstants.INSTANCE.getKEY_IS_LOGGEDIN(), true)
+                .putString(AppConstants.INSTANCE.getKEY_TOKEN(), token)
+                .putLong(AppConstants.INSTANCE.getKEY_TIME(), time_log);
     }
 
     public boolean isLoggedIn() {
-        return preferencesManager.getBoolean(AppConstants.KEY_IS_LOGGEDIN);
+        return preferencesManager.getBoolean(AppConstants.INSTANCE.getKEY_IS_LOGGEDIN());
     }
 
     public String getAuthToken() {
-        return preferencesManager.getString(AppConstants.KEY_TOKEN);
+        return preferencesManager.getString(AppConstants.INSTANCE.getKEY_TOKEN());
     }
 
     public void logout() {
-        preferencesManager.remove(AppConstants.KEY_IS_LOGGEDIN)
-                .remove(AppConstants.KEY_TOKEN)
-                .remove(AppConstants.KEY_TIME);
+        preferencesManager.remove(AppConstants.INSTANCE.getKEY_IS_LOGGEDIN())
+                .remove(AppConstants.INSTANCE.getKEY_TOKEN())
+                .remove(AppConstants.INSTANCE.getKEY_TIME());
     }
 
     public boolean shouldLogout() {
-        long diffMSec = new Date().getTime() - preferencesManager.getLong(AppConstants.KEY_TIME);
+        long diffMSec = new Date().getTime() - preferencesManager.getLong(AppConstants.INSTANCE.getKEY_TIME());
         int diffHours = (int) (diffMSec / (1000 * 60 * 60));
 
         if (diffHours >= 23) {
-            preferencesManager.putBoolean(AppConstants.KEY_IS_LOGGEDIN, false)
-                    .putString(AppConstants.KEY_TOKEN, "")
-                    .putLong(AppConstants.KEY_TIME, 0);
+            preferencesManager.putBoolean(AppConstants.INSTANCE.getKEY_IS_LOGGEDIN(), false)
+                    .putString(AppConstants.INSTANCE.getKEY_TOKEN(), "")
+                    .putLong(AppConstants.INSTANCE.getKEY_TIME(), 0);
 
             return true;
         } else {

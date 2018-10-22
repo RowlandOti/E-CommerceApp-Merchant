@@ -160,7 +160,7 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
         delivery_fee.text = "Ksh " + orderData!!.deliveryFee!!
         total_price.text = "Ksh " + orderData!!.orderTotal!!
 
-        adapter.setList(orderData!!.items)
+        adapter.setList(orderData!!.items!!)
         adapter.notifyDataSetChanged()
     }
 }

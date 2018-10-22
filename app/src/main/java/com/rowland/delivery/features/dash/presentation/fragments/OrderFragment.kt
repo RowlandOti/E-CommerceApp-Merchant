@@ -89,7 +89,7 @@ class OrderFragment : Fragment() {
 
 
         orderViewModel.getDataList()
-                .observe(this, Observer { orders -> orderAdapter.setList(orders) })
+                .observe(this, Observer { orders -> orderAdapter.setList(orders!!) })
 
 
 /*
