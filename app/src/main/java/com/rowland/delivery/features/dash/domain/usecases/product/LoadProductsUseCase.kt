@@ -1,6 +1,6 @@
 package com.rowland.delivery.features.dash.domain.usecases.product
 
-import com.rowland.delivery.features.dash.data.model.product.ProductRepository
+import com.rowland.delivery.features.dash.domain.contracts.IProductRepository
 import com.rowland.delivery.features.dash.domain.models.product.Product
 import io.reactivex.Flowable
 import javax.inject.Inject
@@ -10,9 +10,9 @@ import javax.inject.Inject
  */
 
 class LoadProductsUseCase @Inject
-constructor(private val productRepository: ProductRepository) {
+constructor(private val productRepository: IProductRepository) {
 
     fun loadProducts(userUID: String, productCategory: String): Flowable<List<Product>> {
-        return this.productRepository.getProducts(userUID, productCategory)
+        return this.productRepository.loadProducts(userUID, productCategory)
     }
 }

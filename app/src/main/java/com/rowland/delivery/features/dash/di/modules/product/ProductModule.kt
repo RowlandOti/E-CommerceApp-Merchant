@@ -3,7 +3,6 @@ package com.rowland.delivery.features.dash.di.modules.product
 import com.rowland.delivery.features.dash.di.scope.product.ProductScope
 import com.rowland.delivery.features.dash.presentation.adapters.ProductAdapter
 import com.rowland.delivery.services.firebase.modules.FirebaseModule
-
 import dagger.Module
 import dagger.Provides
 
@@ -20,5 +19,4 @@ class ProductModule {
     internal fun providesProductAdapter(): ProductAdapter {
         return ProductAdapter()
     }
-
 }

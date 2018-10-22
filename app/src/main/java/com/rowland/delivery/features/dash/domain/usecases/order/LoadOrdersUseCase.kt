@@ -1,6 +1,6 @@
 package com.rowland.delivery.features.dash.domain.usecases.order
 
-import com.rowland.delivery.features.dash.data.model.order.OrderRepository
+import com.rowland.delivery.features.dash.domain.contracts.IOrderRepository
 import com.rowland.delivery.features.dash.domain.models.order.OrderData
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -11,7 +11,7 @@ import javax.inject.Inject
  */
 
 class LoadOrdersUseCase @Inject
-constructor(private val orderRepository: OrderRepository) {
+constructor(private val orderRepository: IOrderRepository) {
 
     fun loadOrders(userUID: String): Flowable<List<OrderData>> {
         return this.orderRepository.getOrders(userUID)
