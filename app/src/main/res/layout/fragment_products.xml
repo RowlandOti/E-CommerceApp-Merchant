@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main.content.products"
+    android:id="@+id/main.content.productEntities"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.rowland.delivery.features.dash.presentation.fragments.ProductFragment">
+    tools:context="com.rowland.delivery.merchant.features.dash.fragments.ProductFragment">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/main.appbar.product"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/main.appbar.productEntity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_product"
             style="@style/Widget.Toolbar"
             android:layout_width="match_parent"
@@ -38,9 +38,9 @@
                     android:textColor="@android:color/white"
                     tools:text="Fruits" />
             </LinearLayout>
-        </android.support.v7.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <com.jude.easyrecyclerview.EasyRecyclerView
         android:id="@+id/product_recyclerview"
@@ -51,7 +51,7 @@
         app:layout_error="@layout/view_error"
         app:layout_progress="@layout/view_progress" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -60,4 +60,4 @@
         android:elevation="@dimen/floating_action_btn"
         app:borderWidth="0dp"
         app:srcCompat="@drawable/action_plus_vector" />
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view_reveal"
     android:layout_width="match_parent"
@@ -11,12 +11,11 @@
     app:cardCornerRadius="4dp">
 
     <com.chauthai.swipereveallayout.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/swipe_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:dragEdge="right"
-        app:mode="same_level">
+        app:revealMode="same_level">
 
         <FrameLayout
             android:id="@+id/reveal_view"
@@ -43,4 +42,4 @@
 
     </com.chauthai.swipereveallayout.SwipeRevealLayout>
 
-</android.support.design.card.MaterialCardView>
+</com.google.android.material.card.MaterialCardView>

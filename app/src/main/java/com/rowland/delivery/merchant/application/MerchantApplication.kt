@@ -1,6 +1,6 @@
 package com.rowland.delivery.merchant.application
 
-import android.support.multidex.MultiDexApplication
+import androidx.multidex.MultiDexApplication
 
 import com.rowland.delivery.merchant.application.di.components.ApplicationComponent
 import com.rowland.delivery.merchant.application.di.components.DaggerApplicationComponent

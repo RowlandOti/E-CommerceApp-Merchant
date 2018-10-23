@@ -1,14 +1,14 @@
 package com.rowland.delivery.features.dash.presentation.fragments
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +34,7 @@ class ProductFragment : Fragment() {
     lateinit var productAdapter: ProductAdapter
 
     companion object {
-        fun newInstance(args: Bundle?): Fragment {
+        fun newInstance(args: Bundle?): androidx.fragment.app.Fragment {
             val frag = ProductFragment()
             frag.arguments = args
             return frag
@@ -70,9 +70,9 @@ class ProductFragment : Fragment() {
             product_category.text = category
         }
 
-        val linearLayoutManager = LinearLayoutManager(activity)
+        val linearLayoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
         product_recyclerview.setLayoutManager(linearLayoutManager)
-        product_recyclerview.setItemAnimator(DefaultItemAnimator())
+        product_recyclerview.setItemAnimator(androidx.recyclerview.widget.DefaultItemAnimator())
         product_recyclerview.setAdapterWithProgress(productAdapter)
 
         if (savedInstanceState != null) {
@@ -92,9 +92,9 @@ class ProductFragment : Fragment() {
                     is ProductEvent.Unpublish -> {
                         productViewModel.deleteProduct().subscribe({
                             fn()
-                            Toast.makeText(activity, "Product successfully deleted", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(activity, "ProductEntity successfully deleted", Toast.LENGTH_SHORT).show()
                         }) {
-                            Toast.makeText(activity, "Product Could not be deleted", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(activity, "ProductEntity Could not be deleted", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -123,7 +123,7 @@ class ProductFragment : Fragment() {
         })
 
         productViewModel.getDataList()
-                .observe(this, Observer { products -> productAdapter.setList(products!!) })
+                .observe(this, Observer { it -> productAdapter.setList(it!!.data!!) })
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

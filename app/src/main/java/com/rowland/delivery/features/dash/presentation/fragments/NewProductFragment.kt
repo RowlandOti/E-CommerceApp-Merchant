@@ -2,16 +2,16 @@ package com.rowland.delivery.features.dash.presentation.fragments
 
 
 import android.Manifest
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
+import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +22,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.meetic.shuffle.Shuffle
 import com.meetic.shuffle.ShuffleViewAnimatorOnSecondCard
 import com.rowland.delivery.features.dash.di.modules.product.ProductModule
-import com.rowland.delivery.features.dash.domain.models.product.Product
+import com.rowland.delivery.features.dash.domain.models.product.ProductEntity
 import com.rowland.delivery.features.dash.presentation.activities.DashActivity
 import com.rowland.delivery.features.dash.presentation.viewmodels.product.NewProductViewModel
 import com.rowland.delivery.merchant.R
@@ -41,7 +41,7 @@ class NewProductFragment : Fragment() {
     lateinit var newProductFactory: ViewModelProvider.Factory
 
     companion object {
-        fun newInstance(args: Bundle?): Fragment {
+        fun newInstance(args: Bundle?): androidx.fragment.app.Fragment {
             val frag = NewProductFragment()
             frag.arguments = args
             return frag
@@ -86,7 +86,7 @@ class NewProductFragment : Fragment() {
         }
 
         btn_save.setOnClickListener { view ->
-            val product = Product()
+            val product = ProductEntity()
             product.price = Integer.valueOf(input_product_pricing.text!!.toString())
             product.name = input_product_name.text!!.toString()
             product.saleQuantity = Integer.valueOf(input_product_quantity.text!!.toString())
@@ -96,9 +96,9 @@ class NewProductFragment : Fragment() {
 
             newProductViewModel.saveProduct(product)
                     .subscribe({ newProduct ->
-                        Toast.makeText(activity, "Product added succesfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "ProductEntity added succesfully", Toast.LENGTH_SHORT).show()
                         activity!!.supportFragmentManager.popBackStack(NewProductFragment::class.java.simpleName, POP_BACK_STACK_INCLUSIVE)
-                    }) { throwable -> Toast.makeText(activity, "Product not added", Toast.LENGTH_SHORT).show() }
+                    }) { throwable -> Toast.makeText(activity, "ProductEntity not added", Toast.LENGTH_SHORT).show() }
 
         }
 

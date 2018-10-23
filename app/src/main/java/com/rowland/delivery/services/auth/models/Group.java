@@ -1,8 +1,6 @@
 package com.rowland.delivery.services.auth.models;
 
-import android.support.annotation.StringDef;
-
-import com.google.firebase.firestore.Exclude;
+import androidx.annotation.StringDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

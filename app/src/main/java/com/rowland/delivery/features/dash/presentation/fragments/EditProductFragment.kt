@@ -1,15 +1,15 @@
 package com.rowland.delivery.features.dash.presentation.fragments
 
 import android.Manifest
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +38,7 @@ class EditProductFragment : Fragment() {
 
 
     companion object {
-        fun newInstance(args: Bundle?): Fragment {
+        fun newInstance(args: Bundle?): androidx.fragment.app.Fragment {
             val frag = EditProductFragment()
             frag.arguments = args
             return frag
@@ -118,14 +118,14 @@ class EditProductFragment : Fragment() {
 
             editProductViewModel.updateProduct(productUpdateFields)
                     .subscribe({ newProduct ->
-                        Toast.makeText(activity, "Product updated succesfully", Toast.LENGTH_SHORT).show()
-                        activity!!.supportFragmentManager.popBackStack(EditProductFragment::class.java.simpleName, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                    }) { throwable -> Toast.makeText(activity, "Product not updated", Toast.LENGTH_SHORT).show() }
+                        Toast.makeText(activity, "ProductEntity updated succesfully", Toast.LENGTH_SHORT).show()
+                        activity!!.supportFragmentManager.popBackStack(EditProductFragment::class.java.simpleName, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                    }) { throwable -> Toast.makeText(activity, "ProductEntity not updated", Toast.LENGTH_SHORT).show() }
 
         }
 
         edit_btn_cancell.setOnClickListener { view ->
-            activity!!.supportFragmentManager.popBackStack(EditProductFragment::class.java.simpleName, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            activity!!.supportFragmentManager.popBackStack(EditProductFragment::class.java.simpleName, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
     }
 }

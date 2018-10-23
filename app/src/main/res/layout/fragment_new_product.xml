@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.rowland.delivery.features.dash.presentation.fragments.NewProductFragment">
+    tools:context="com.rowland.delivery.merchant.features.dash.fragments.NewProductFragment">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/newproduct_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/newproduct_toolbar"
             style="@style/Widget.Toolbar"
             android:layout_width="match_parent"
@@ -31,10 +31,10 @@
                     android:textAppearance="@style/Widget.Toolbar.TextAppearance"
                     android:textColor="@color/white" />
             </LinearLayout>
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/newproduct_ncview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -46,7 +46,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.design.card.MaterialCardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/viewA"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,9 +59,9 @@
                     android:layout_height="200dp"
                     app:shuffle_infinite="true" />
 
-            </android.support.design.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <android.support.design.card.MaterialCardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/viewB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -77,49 +77,49 @@
                     android:paddingRight="@dimen/activity_horizontal_margin"
                     android:paddingTop="10dp">
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.TextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <android.support.design.widget.TextInputEditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/input_product_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Title" />
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.TextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <android.support.design.widget.TextInputEditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/input_product_description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Description" />
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
                             style="@style/Widget.TextInputLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1">
 
-                            <android.support.design.widget.TextInputEditText
+                            <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/input_product_quantity"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Quantity"
                                 android:inputType="number" />
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
 
                         <Spinner
@@ -134,40 +134,40 @@
                             android:textColor="@color/white" />
 
 
-                        <android.support.design.widget.TextInputLayout
+                        <com.google.android.material.textfield.TextInputLayout
                             style="@style/Widget.TextInputLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1">
 
-                            <android.support.design.widget.TextInputEditText
+                            <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/input_product_pricing"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Price"
                                 android:inputType="number" />
 
-                        </android.support.design.widget.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.TextInputLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <android.support.design.widget.TextInputEditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/input_product_stock"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Number of items in stock"
                             android:inputType="number" />
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
-            </android.support.design.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <android.support.design.card.MaterialCardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/viewC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -183,7 +183,7 @@
                     android:paddingRight="@dimen/activity_horizontal_margin"
                     android:paddingTop="10dp">
 
-                    <android.support.design.button.MaterialButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_cancell"
                         style="@style/Widget.Button.Primary"
                         android:layout_width="wrap_content"
@@ -194,7 +194,7 @@
                         android:paddingTop="5dp"
                         android:text="@string/cancel" />
 
-                    <android.support.design.button.MaterialButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_save"
                         style="@style/Widget.Button"
                         android:layout_width="wrap_content"
@@ -206,12 +206,12 @@
                         android:text="@string/save" />
 
                 </LinearLayout>
-            </android.support.design.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_addimage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -222,5 +222,5 @@
         app:layout_anchorGravity="bottom|right|end"
         app:srcCompat="@drawable/camera_vector" />
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 

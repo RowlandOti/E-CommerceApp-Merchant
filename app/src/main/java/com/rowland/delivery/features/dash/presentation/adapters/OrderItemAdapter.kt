@@ -1,7 +1,7 @@
 package com.rowland.delivery.features.dash.presentation.adapters
 
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,19 +25,19 @@ class OrderItemAdapter : HFRecyclerView<OrderItem> {
 
     constructor(data: List<OrderItem>, withHeader: Boolean, withFooter: Boolean) : super(data, withHeader, withFooter) {}
 
-    override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder {
+    override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return OrderItemViewHolder(inflater.inflate(R.layout.row_single_order_item, parent, false))
     }
 
-    override fun getHeaderView(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder? {
+    override fun getHeaderView(inflater: LayoutInflater, parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder? {
         return null
     }
 
-    override fun getFooterView(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder? {
+    override fun getFooterView(inflater: LayoutInflater, parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder? {
         return null
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
         if (holder is OrderItemViewHolder) {
             val data = getItem(position)
             holder.bind(data)
@@ -77,7 +77,7 @@ class OrderItemAdapter : HFRecyclerView<OrderItem> {
         }
     }
 
-    class OrderItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class OrderItemViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         init {
             ButterKnife.bind(this, itemView)
@@ -92,7 +92,7 @@ class OrderItemAdapter : HFRecyclerView<OrderItem> {
         }
     }
 
-    class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class HeaderViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView)
 
-    class FooterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class FooterViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView)
 }
