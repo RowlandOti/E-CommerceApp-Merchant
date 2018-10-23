@@ -1,6 +1,6 @@
 package com.rowland.delivery.features.dash.presentation.viewmodels
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import com.etiennelenhart.eiffel.viewmodel.StateViewModel
 
 abstract class StateViewModel : StateViewModel<ViewState>() {

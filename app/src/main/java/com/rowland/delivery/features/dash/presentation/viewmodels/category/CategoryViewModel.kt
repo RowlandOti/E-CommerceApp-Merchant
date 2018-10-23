@@ -2,7 +2,7 @@ package com.rowland.delivery.features.dash.presentation.viewmodels.category
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
-import com.rowland.delivery.features.dash.domain.models.category.Category
+import com.rowland.delivery.features.dash.domain.models.category.CategoryEntity
 import com.rowland.delivery.features.dash.domain.usecases.category.CreateCategoryUseCase
 import com.rowland.delivery.features.dash.domain.usecases.category.LoadCategoriesUseCase
 import com.rowland.delivery.features.dash.presentation.viewmodels.SharedViewModel
@@ -16,7 +16,7 @@ import javax.inject.Inject
  * Created by Rowland on 5/14/2018.
  */
 
-class CategoryViewModel @Inject constructor(private val loadCategoriesUseCase: LoadCategoriesUseCase, private val createCategoryUseCase: CreateCategoryUseCase) : SharedViewModel<Category>() {
+class CategoryViewModel @Inject constructor(private val loadCategoriesUseCase: LoadCategoriesUseCase, private val createCategoryUseCase: CreateCategoryUseCase) : SharedViewModel<CategoryEntity>() {
 
     init {
         loadCategoriesUseCase.loadCategories(FirebaseAuth.getInstance().currentUser!!.uid)
@@ -33,7 +33,7 @@ class CategoryViewModel @Inject constructor(private val loadCategoriesUseCase: L
     }
 
 
-    fun saveCategory(category: Category): Single<Category> {
-        return createCategoryUseCase.createCategory(category, FirebaseAuth.getInstance().currentUser!!.uid)
+    fun saveCategory(categoryEntity: CategoryEntity): Single<CategoryEntity> {
+        return createCategoryUseCase.createCategory(categoryEntity, FirebaseAuth.getInstance().currentUser!!.uid)
     }
 }

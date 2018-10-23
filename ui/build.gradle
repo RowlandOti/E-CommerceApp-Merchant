@@ -1,0 +1,101 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply from: '../.buildsystem/versioning.gradle'
+
+android {
+    defaultConfig {
+        applicationId "com.rowland.delivery.merchant"
+        compileSdkVersion 28
+        minSdkVersion 19
+        targetSdkVersion 28
+        multiDexEnabled true
+        versionCode getVersionCode()
+        versionName getVersionName()
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kapt {
+        generateStubs = true
+    }
+    lintOptions {
+        abortOnError false
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(path: ':rxgallery', configuration: 'default')
+    implementation project(path: ':shuffle', configuration: 'default')
+
+    // Hexagonal modules
+    implementation project(':modules:domain')
+    implementation project(':modules:data')
+    implementation project(':modules:presentation')
+    implementation project(':modules:remote')
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.palette:palette:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.multidex:multidex:2.0.0'
+
+    // Android Architecture components
+    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
+    kapt "androidx.lifecycle:lifecycle-compiler:2.0.0"
+    // Firebase and Google services
+    implementation 'com.google.firebase:firebase-core:16.0.4'
+    implementation 'com.google.firebase:firebase-firestore:17.1.1'
+    implementation 'com.google.firebase:firebase-storage:16.0.3'
+    implementation 'com.google.firebase:firebase-auth:16.0.5'
+    implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    implementation 'com.firebaseui:firebase-ui-auth:4.2.0'
+    // Miscellaneous
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    kapt 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    kapt 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation 'com.github.florent37:glidepalette:2.1.2'
+    implementation 'com.alexfacciorusso:daggerviewmodel:0.1.2'
+    //implementation 'com.github.abdularis:androidbuttonprogress:v0.1-alpha5'
+    //implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
+    implementation project(':library')
+    implementation project(':swipe-reveal-layout')
+    implementation 'me.himanshusoni.quantityview:quantity-view:1.2.0'
+    //implementation 'com.meetic.shuffle:shuffle:1.0.8'
+    implementation 'com.meetic.dragueur:dragueur:1.0.3'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    implementation 'com.github.dekoservidoni:omfm:1.1.1'
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5'
+    implementation 'com.github.ybq:Android-SpinKit:1.1.0'
+    implementation 'com.github.etiennelenhart:eiffel:3.0.0'
+    // Dependency injection
+    implementation 'com.google.dagger:dagger:2.17'
+    implementation 'com.google.dagger:dagger-android:2.17'
+    implementation 'com.google.dagger:dagger-android-support:2.17'
+    /// if you use the support libraries
+    kapt 'com.google.dagger:dagger-android-processor:2.17'
+    kapt 'com.google.dagger:dagger-compiler:2.17'
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+}

@@ -1,7 +1,7 @@
 package com.rowland.delivery.features.dash.domain.usecases.product
 
 import com.rowland.delivery.features.dash.domain.contracts.IProductRepository
-import com.rowland.delivery.features.dash.domain.models.product.Product
+import com.rowland.delivery.features.dash.domain.models.product.ProductEntity
 import io.reactivex.Single
 import java.util.*
 import javax.inject.Inject
@@ -13,7 +13,7 @@ import javax.inject.Inject
 class UpdateProductUseCase @Inject
 constructor(private val productRepository: IProductRepository) {
 
-    fun updateProduct(productUpdateFields: HashMap<String, Any>, firestoreUid: String): Single<Product> {
+    fun updateProduct(productUpdateFields: HashMap<String, Any>, firestoreUid: String): Single<ProductEntity> {
         return this.productRepository.updateProduct(productUpdateFields, firestoreUid)
     }
 }

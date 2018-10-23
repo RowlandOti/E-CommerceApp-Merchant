@@ -2,19 +2,19 @@ package com.rowland.delivery.features.dash.presentation.activities
 
 import android.app.Activity
 import android.app.ActivityOptions
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.app.FragmentManager
-import android.support.v4.util.Pair
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.AppCompatActivity
+import com.google.android.material.navigation.NavigationView
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityOptionsCompat
+import androidx.fragment.app.FragmentManager
+import androidx.core.util.Pair
+import androidx.core.view.GravityCompat
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -34,7 +34,7 @@ import com.rowland.delivery.services.session.SessionManager
 import kotlinx.android.synthetic.main.activity_dash.*
 import javax.inject.Inject
 
-class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
+class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, androidx.fragment.app.FragmentManager.OnBackStackChangedListener {
 
     @Inject
     lateinit var orderFactory: ViewModelProvider.Factory

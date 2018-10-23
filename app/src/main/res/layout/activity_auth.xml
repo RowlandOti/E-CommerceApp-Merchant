@@ -19,12 +19,12 @@
         android:layout_height="match_parent"
         android:background="@color/opacity_bg_black" />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/nc_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <include layout="@layout/content_auth" />
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

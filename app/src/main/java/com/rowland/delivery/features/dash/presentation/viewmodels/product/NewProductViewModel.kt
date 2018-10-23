@@ -1,14 +1,14 @@
 package com.rowland.delivery.features.dash.presentation.viewmodels.product
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import android.content.Context
 import android.net.Uri
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
-import com.rowland.delivery.features.dash.domain.models.product.Product
+import com.rowland.delivery.features.dash.domain.models.product.ProductEntity
 import com.rowland.delivery.features.dash.domain.usecases.product.CreateProductUseCase
 import com.rowland.rxgallery.RxGallery
 import durdinapps.rxfirebase2.RxFirebaseStorage
@@ -52,15 +52,15 @@ class NewProductViewModel @Inject constructor(private val context: Context, priv
                 .map { taskSnapshot -> taskSnapshot.metadata!!.path }
     }
 
-    fun saveProduct(product: Product): Single<Product> {
+    fun saveProduct(productEntity: ProductEntity): Single<ProductEntity> {
         return Observable.fromArray(selectedImageUri.value!!)
-                .flatMapIterable({ uris -> uris })
-                .flatMap({ uri -> getPhotoUrl(uri)!!.subscribeOn(Schedulers.io()).toObservable() })
+                .flatMapIterable { uris -> uris }
+                .flatMap { uri -> getPhotoUrl(uri)!!.subscribeOn(Schedulers.io()).toObservable() }
                 .toList()
                 .map { t ->
-                    product.merchantCode = FirebaseAuth.getInstance().currentUser!!.uid
-                    product.imageUrls = t as ArrayList<String>
+                    productEntity.merchantCode = FirebaseAuth.getInstance().currentUser!!.uid
+                    productEntity.imageUrls = t as ArrayList<String>
                 }
-                .flatMap { t -> createProductUseCase.createProduct(product, FirebaseAuth.getInstance().currentUser!!.uid, productCategory.value!!) }
+                .flatMap { t -> createProductUseCase.createProduct(productEntity, FirebaseAuth.getInstance().currentUser!!.uid, productCategory.value!!) }
     }
 }

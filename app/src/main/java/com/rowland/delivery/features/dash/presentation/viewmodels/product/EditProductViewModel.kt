@@ -1,14 +1,14 @@
 package com.rowland.delivery.features.dash.presentation.viewmodels.product
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import android.content.Context
 import android.net.Uri
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
-import com.rowland.delivery.features.dash.domain.models.product.Product
+import com.rowland.delivery.features.dash.domain.models.product.ProductEntity
 import com.rowland.delivery.features.dash.domain.usecases.product.UpdateProductUseCase
 import com.rowland.rxgallery.RxGallery
 import durdinapps.rxfirebase2.RxFirebaseStorage
@@ -60,7 +60,7 @@ class EditProductViewModel @Inject constructor(private val context: Context, pri
     }
 
 
-    fun updateProduct(productUpdateFields: HashMap<String, Any>): Single<Product> {
+    fun updateProduct(productUpdateFields: HashMap<String, Any>): Single<ProductEntity> {
         if (isImageSelected.value == true) {
             return Observable.fromArray(selectedImageUri.value!!)
                     .flatMapIterable { uris -> uris }

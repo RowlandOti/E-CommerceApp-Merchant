@@ -1,6 +1,6 @@
 package com.rowland.delivery.features.dash.di.modules
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.alexfacciorusso.daggerviewmodel.DaggerViewModelInjectionModule
 import com.alexfacciorusso.daggerviewmodel.ViewModelKey
 

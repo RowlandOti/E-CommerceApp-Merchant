@@ -2,7 +2,7 @@ package com.rowland.delivery.utilities
 
 import com.rowland.delivery.features.dash.domain.models.order.OrderData
 import com.rowland.delivery.features.dash.domain.models.order.OrderItem
-import com.rowland.delivery.features.dash.domain.models.product.Product
+import com.rowland.delivery.features.dash.domain.models.product.ProductEntity
 import java.util.*
 
 /**
@@ -11,8 +11,8 @@ import java.util.*
 
 object DummyDataUtility {
 
-    fun createProduct(): Product {
-        val product = Product()
+    fun createProduct(): ProductEntity {
+        val product = ProductEntity()
         product.createdAt = Date()
         product.deletedAt = Date()
         product.updatedAt = Date()

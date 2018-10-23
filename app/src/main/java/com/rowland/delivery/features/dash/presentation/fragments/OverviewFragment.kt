@@ -1,11 +1,11 @@
 package com.rowland.delivery.features.dash.presentation.fragments
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -97,9 +97,9 @@ class OverviewFragment : Fragment() {
         overview_tabs.setupWithViewPager(overview_viewpager)
     }
 
-    private inner class ViewPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+    private inner class ViewPagerAdapter(fm: androidx.fragment.app.FragmentManager) : FragmentStatePagerAdapter(fm) {
 
-        private val mFragmentList: MutableList<Fragment>
+        private val mFragmentList: MutableList<androidx.fragment.app.Fragment>
         private val mFragmentTitleList: MutableList<String>
 
 
@@ -108,12 +108,12 @@ class OverviewFragment : Fragment() {
             mFragmentTitleList = ArrayList()
         }
 
-        fun addFragment(fragment: Fragment, title: String) {
+        fun addFragment(fragment: androidx.fragment.app.Fragment, title: String) {
             this.mFragmentList.add(fragment)
             this.mFragmentTitleList.add(title)
         }
 
-        override fun getItem(position: Int): Fragment {
+        override fun getItem(position: Int): androidx.fragment.app.Fragment {
             return mFragmentList[position]
         }
 
