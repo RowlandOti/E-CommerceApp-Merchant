@@ -1,0 +1,98 @@
+package com.rowland.delivery.features.dash.data.model.product
+
+import com.rowland.delivery.features.dash.domain.models.product.Product
+import io.reactivex.Completable
+import io.reactivex.Flowable
+import io.reactivex.Single
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito
+import org.mockito.runners.MockitoJUnitRunner
+import java.util.*
+
+@RunWith(MockitoJUnitRunner::class)
+class ProductRepositoryTest {
+
+    companion object {
+        private val FAKEUSERID = "fakeUserId"
+        private val FAKECATEGORY = "fakeategory"
+        private val FAKEPRODUCTNAME = "fakeproductname"
+        private val FAKEPRODUCTFIRESTOREUID = "fakefirestoreuiid"
+    }
+
+    @Mock
+    private lateinit var productRepository: ProductRepository
+
+    lateinit var mockProductList: ArrayList<Product>
+
+    @Before
+    fun setUp() {
+        mockProductList = ArrayList<Product>()
+        mockProductList.add(Product())
+        mockProductList.add(Product())
+        mockProductList.add(Product())
+    }
+
+    @Test
+    fun loadProducts() {
+        Mockito.doReturn(Flowable.fromArray(mockProductList)).`when`(productRepository).loadProducts(FAKEUSERID, FAKECATEGORY)
+
+        val testSubscriber = productRepository.loadProducts(FAKEUSERID, FAKECATEGORY).test()
+        testSubscriber.awaitTerminalEvent()
+        testSubscriber.assertComplete()
+        testSubscriber.assertNoErrors()
+        testSubscriber.assertValueCount(1)
+
+        Assert.assertTrue(testSubscriber.values().get(0).size.equals(mockProductList.size))
+        Assert.assertTrue(testSubscriber.values().get(0).containsAll(mockProductList))
+    }
+
+    @Test
+    fun createProduct() {
+        val mockProduct = Product()
+        mockProduct.firestoreUid = FAKEPRODUCTFIRESTOREUID
+        Mockito.doReturn(Single.just(mockProduct)).`when`(productRepository).createProduct(mockProduct, FAKEUSERID, FAKECATEGORY)
+
+        val testSubscriber = productRepository.createProduct(mockProduct, FAKEUSERID, FAKECATEGORY).test()
+        testSubscriber.awaitTerminalEvent()
+        testSubscriber.assertComplete()
+        testSubscriber.assertNoErrors()
+
+        Assert.assertTrue(testSubscriber.values().get(0).firestoreUid.equals(FAKEPRODUCTFIRESTOREUID))
+    }
+
+    @Test
+    fun updateProduct() {
+        val mockProduct = Product()
+        mockProduct.firestoreUid = FAKEPRODUCTFIRESTOREUID
+        mockProduct.name = FAKEPRODUCTNAME
+
+        val mockProductUpdateFields = HashMap<String, Any>()
+        mockProductUpdateFields.put("name", FAKEPRODUCTNAME)
+
+        Mockito.doReturn(Single.just(mockProduct)).`when`(productRepository).updateProduct(mockProductUpdateFields, FAKEPRODUCTFIRESTOREUID)
+
+        val testSubscriber = productRepository.updateProduct(mockProductUpdateFields, FAKEPRODUCTFIRESTOREUID).test()
+        testSubscriber.awaitTerminalEvent()
+        testSubscriber.assertComplete()
+        testSubscriber.assertNoErrors()
+
+        Assert.assertTrue(testSubscriber.values().get(0).name.equals(FAKEPRODUCTNAME))
+    }
+
+    @Test
+    fun deleteProduct() {
+        val mockProduct = Product()
+        mockProduct.firestoreUid = FAKEPRODUCTFIRESTOREUID
+
+        Mockito.doReturn(Completable.complete()).`when`(productRepository).deleteProduct(FAKEPRODUCTFIRESTOREUID)
+
+        val testSubscriber = productRepository.deleteProduct(FAKEPRODUCTFIRESTOREUID).test()
+        testSubscriber.awaitTerminalEvent()
+        testSubscriber.assertComplete()
+        testSubscriber.assertNoErrors()
+    }
+}
