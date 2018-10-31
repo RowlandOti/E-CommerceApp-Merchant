@@ -1,0 +1,26 @@
+apply plugin: 'kotlin'
+
+compileJava {
+    sourceCompatibility "$JavaVersion.VERSION_1_8"
+    targetCompatibility "$JavaVersion.VERSION_1_8"
+}
+
+configurations.all {
+    resolutionStrategy {
+        force "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':modules:domain', configuration: 'default')
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "io.reactivex.rxjava2:rxkotlin:2.3.0"
+    implementation "javax.annotation:jsr250-api:1.0"
+    implementation "javax.inject:javax.inject:1"
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.23.0'
+}
+

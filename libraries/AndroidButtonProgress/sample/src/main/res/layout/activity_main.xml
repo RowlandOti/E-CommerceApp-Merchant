@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="com.github.abdularis.sample.MainActivity">
+
+    <com.github.abdularis.buttonprogress.DownloadButtonProgress
+        android:id="@+id/button_progress_1"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:hideOnFinish="true" />
+
+    <TextView
+        android:id="@+id/subtitle_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Idle" />
+
+    <com.github.abdularis.buttonprogress.DownloadButtonProgress
+        android:id="@+id/button_progress_2"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="20dp"
+        app:cancelIconDrawable="@drawable/ic_cancel"
+        app:determinateBackgroundDrawable="@drawable/bg_button_progress"
+        app:finishBackgroundDrawable="@drawable/bg_button_progress"
+        app:finishIconDrawable="@drawable/ic_finish"
+        app:idleBackgroundDrawable="@drawable/bg_button_progress"
+        app:idleIconDrawable="@drawable/ic_download"
+        app:indeterminateBackgroundDrawable="@drawable/bg_button_progress"
+        app:progressDeterminateColor="#ef2241"
+        app:progressIndeterminateColor="#828282" />
+
+    <TextView
+        android:id="@+id/subtitle_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Idle"
+        android:textSize="18sp" />
+
+    <com.github.abdularis.buttonprogress.DownloadButtonProgress
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="20dp"
+        app:progressIndeterminateSweepAngle="1"
+        app:state="INDETERMINATE" />
+
+</LinearLayout>

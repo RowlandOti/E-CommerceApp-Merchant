@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.doea.app.kitchen.ui.activities_demo.Main">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_business"
+            android:icon="@drawable/campass_outline_vector"
+            android:title="@string/action_business_string" />
+
+        <item
+            android:id="@+id/action_ratings"
+            android:icon="@drawable/ic_rate_review_black_24dp"
+            android:title="@string/action_ratings_string" />
+
+        <item
+            android:id="@+id/action_sales"
+            android:icon="@drawable/shopping_vector"
+            android:title="@string/action_sales_string" />
+
+        <item
+            android:id="@+id/navigation_subheader"
+            android:title="@string/navigation_setting_subheader">
+
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/action_profile"
+                        android:icon="@drawable/ic_person_outline_black_24dp"
+                        android:title="@string/action_profile_string" />
+                    <item
+                        android:id="@+id/action_settings"
+                        android:icon="@drawable/gear_vector"
+                        android:title="@string/action_settings" />
+
+                    <item
+                        android:id="@+id/action_logout"
+                        android:icon="@drawable/logout_vector"
+                        android:title="@string/action_logout_string" />
+                </group>
+            </menu>
+        </item>
+
+    </group>
+
+</menu>
