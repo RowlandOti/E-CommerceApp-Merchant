@@ -1,0 +1,48 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    defaultConfig {
+        compileSdkVersion 28
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':modules:data', configuration: 'default')
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "io.reactivex.rxjava2:rxkotlin:2.3.0"
+    implementation "javax.annotation:jsr250-api:1.0"
+    implementation "javax.inject:javax.inject:1"
+
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+
+    // Firebase and Google services
+    implementation 'com.google.firebase:firebase-core:16.0.4'
+    implementation 'com.google.firebase:firebase-firestore:17.1.1'
+    implementation 'com.google.firebase:firebase-storage:16.0.3'
+    //If you are using Firestore in your project
+    implementation 'com.github.FrangSierra:RxFirebase:1.5.2'
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+}

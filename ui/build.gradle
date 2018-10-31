@@ -41,8 +41,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project(path: ':rxgallery', configuration: 'default')
-    implementation project(path: ':shuffle', configuration: 'default')
+    implementation project(':rxgallery')
+    implementation project(':shuffle')
 
     // Hexagonal modules
     implementation project(':modules:domain')

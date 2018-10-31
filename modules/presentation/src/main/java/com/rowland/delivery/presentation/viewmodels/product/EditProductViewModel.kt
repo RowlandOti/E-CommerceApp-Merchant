@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.rowland.delivery.domain.usecases.images.UploadImageUseCase
 import com.rowland.delivery.domain.usecases.product.UpdateProductUseCase
 import io.reactivex.Completable
+import java.util.*
 import javax.inject.Inject
 
 class EditProductViewModel @Inject constructor(private val updateProductUseCase: UpdateProductUseCase, private val uploadImageUseCase: UploadImageUseCase) : ViewModel() {
@@ -42,7 +43,7 @@ class EditProductViewModel @Inject constructor(private val updateProductUseCase:
 
     fun updateProduct(productUpdateFields: HashMap<String, Any>): Completable {
         if (isImageSelected.value == true) {
-            return uploadImageUseCase.uploadImages(null!!, productCategory.value!!, "")
+            return uploadImageUseCase.uploadImages(null!!, productCategory.value!!, currentUserUid.value!!)
                     .map { updateProduct(productUpdateFields, it) }
                     .switchMapCompletable { updateProductUseCase.updateProduct(it, productUid.value!!) }
         } else {
