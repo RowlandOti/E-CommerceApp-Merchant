@@ -1,12 +1,13 @@
 package com.rowland.delivery.merchant.features.dash.di.modules
 
 
-import com.rowland.delivery.features.dash.di.scope.category.CategoryScope
-import com.rowland.delivery.features.dash.di.scope.product.ProductScope
-import com.rowland.delivery.merchant.di.modules.ContextModule
-import com.rowland.delivery.merchant.di.modules.DataModule
-import com.rowland.delivery.merchant.di.modules.PresentationModule
-import com.rowland.delivery.merchant.di.scope.order.OrderScope
+import com.rowland.delivery.merchant.di.modules.*
+import com.rowland.delivery.merchant.features.dash.adapters.CategoryAdapter
+import com.rowland.delivery.merchant.features.dash.adapters.OrderDataAdapter
+import com.rowland.delivery.merchant.features.dash.adapters.OrderItemAdapter
+import com.rowland.delivery.merchant.features.dash.adapters.ProductAdapter
+import com.rowland.delivery.merchant.services.firebase.modules.FirebaseModule
+import com.rowland.delivery.merchant.services.session.di.modules.SessionModule
 import dagger.Module
 import dagger.Provides
 
@@ -14,29 +15,30 @@ import dagger.Provides
  * Created by Rowland on 5/6/2018.
  */
 
-@Module(includes = arrayOf(FirebaseModule::class, ContextModule::class, SessionModule::class, PresentationModule::class, DataModule::class))
+@Module(includes = arrayOf(FirebaseModule::class, ContextModule::class, SessionModule::class, PresentationModule::class, DataModule::class,
+        UiModule::class, DataModule::class, DomainModule::class, PresentationModule::class, RemoteModule::class, CacheModule::class,FirebaseModule::class))
 class DashModule {
 
     @Provides
-    @ProductScope
+    //@ProductScope
     internal fun providesProductAdapter(): ProductAdapter {
         return ProductAdapter()
     }
 
     @Provides
-    @CategoryScope
+    //@CategoryScope
     internal fun providesCategoryAdapter(): CategoryAdapter {
         return CategoryAdapter()
     }
 
     @Provides
-    @OrderScope
+    //@OrderScope
     internal fun providesOrderDataAdapter(): OrderDataAdapter {
         return OrderDataAdapter()
     }
 
     @Provides
-    @OrderScope
+    //@OrderScope
     internal fun providesOrderItemAdapter(): OrderItemAdapter {
         return OrderItemAdapter()
     }

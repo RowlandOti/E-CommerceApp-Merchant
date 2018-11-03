@@ -82,7 +82,7 @@ class CategoryFragment : Fragment() {
         create_cat_btn.setOnClickListener({ view ->
             MaterialDialog.Builder(activity!!)
                     .backgroundColorRes(android.R.color.white)
-                    .title("Create CategoryEntity")
+                    .title("Create Category")
                     .inputRangeRes(3, 12, android.R.color.holo_red_dark)
                     .input("e.g Fruits", null) { dialog, input -> saveCategory(input.toString()) }
                     .show()

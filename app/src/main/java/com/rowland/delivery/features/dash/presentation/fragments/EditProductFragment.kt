@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.appcompat.app.AppCompatActivity
@@ -22,8 +23,12 @@ import com.rowland.delivery.features.dash.di.modules.product.ProductModule
 import com.rowland.delivery.features.dash.presentation.activities.DashActivity
 import com.rowland.delivery.features.dash.presentation.viewmodels.product.EditProductViewModel
 import com.rowland.delivery.features.dash.presentation.viewmodels.product.ProductViewModel
+
 import com.rowland.delivery.merchant.R
+import com.rowland.rxgallery.RxGallery
 import com.tbruyelle.rxpermissions2.RxPermissions
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_edit_product.*
 import java.util.*
 import javax.inject.Inject

@@ -2,35 +2,28 @@ package com.rowland.delivery.merchant.features.dash.activities
 
 import android.app.Activity
 import android.app.ActivityOptions
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.navigation.NavigationView
-import androidx.fragment.app.FragmentManager
-import androidx.core.view.GravityCompat
-import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
-import butterknife.ButterKnife
-import com.rowland.delivery.features.dash.di.components.DaggerDashComponent
-import com.rowland.delivery.features.dash.di.components.DashComponent
-import com.rowland.delivery.features.dash.di.modules.DashModule
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.navigation.NavigationView
+import com.rowland.delivery.merchant.R
+import com.rowland.delivery.merchant.di.modules.ContextModule
+import com.rowland.delivery.merchant.features.dash.di.components.DaggerDashComponent
+import com.rowland.delivery.merchant.features.dash.di.components.DashComponent
+import com.rowland.delivery.merchant.features.dash.di.modules.DashModule
 import com.rowland.delivery.merchant.features.dash.fragments.OrderItemFragment
 import com.rowland.delivery.merchant.features.dash.fragments.OverviewFragment
 import com.rowland.delivery.merchant.features.dash.fragments.ProductFragment
-import com.rowland.delivery.features.dash.presentation.viewmodels.category.CategoryViewModel
-import com.rowland.delivery.features.dash.presentation.viewmodels.order.OrderViewModel
-import com.rowland.delivery.features.splash.ui.SplashActivity
-import com.rowland.delivery.merchant.R
-import com.rowland.delivery.merchant.application.di.modules.ContextModule
-import com.rowland.delivery.merchant.di.modules.ContextModule
-import com.rowland.delivery.merchant.features.dash.di.components.DashComponent
-import com.rowland.delivery.merchant.features.dash.di.modules.DashModule
+import com.rowland.delivery.merchant.features.splash.ui.SplashActivity
+import com.rowland.delivery.merchant.services.session.SessionManager
 import com.rowland.delivery.presentation.viewmodels.category.CategoryViewModel
 import com.rowland.delivery.presentation.viewmodels.order.OrderViewModel
-import com.rowland.delivery.services.session.SessionManager
 import kotlinx.android.synthetic.main.activity_dash.*
 import javax.inject.Inject
 
@@ -76,7 +69,6 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dash)
 
-        ButterKnife.bind(this)
 
         dash_drawer.setNavigationItemSelectedListener(this)
         mSelectedMenuId = savedInstanceState?.getInt("SELECTED_ID") ?: R.id.action_business

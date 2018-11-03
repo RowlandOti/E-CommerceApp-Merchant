@@ -19,7 +19,7 @@ class CategoryCacheDataStore @Inject constructor(private val dataSource: ICatego
         return dataSource.isCached()
     }
 
-    override fun createCategory(category: CategoryPojo): Single<CategoryPojo> {
+    override fun createCategory(category: CategoryPojo, userUid: String): Single<CategoryPojo> {
         return dataSource.createCategory(category)
     }
 

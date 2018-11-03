@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:backgroundTint="@color/colorAccent"
-                android:text="create categoryEntity"
+                android:text="create category"
                 android:textColor="@color/white" />
 
         </LinearLayout>

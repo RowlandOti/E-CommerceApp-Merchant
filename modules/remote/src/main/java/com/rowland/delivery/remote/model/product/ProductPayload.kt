@@ -1,6 +1,7 @@
 package com.rowland.delivery.remote.model.product
 
 
+import com.google.firebase.firestore.Exclude
 import com.rowland.delivery.remote.model.FirestoreModel
 import java.util.*
 
@@ -20,7 +21,10 @@ class ProductPayload : FirestoreModel {
     var createdAt: Date? = null
     var updatedAt: Date? = null
     var deletedAt: Date? = null
+
+    @Exclude
     var firestoreUid: String? = null
+
 
     override fun <T : FirestoreModel> withFirestoreId(firestoreUid: String): T {
         this.firestoreUid = firestoreUid

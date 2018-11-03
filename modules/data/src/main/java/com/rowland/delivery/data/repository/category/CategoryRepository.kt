@@ -42,7 +42,7 @@ class CategoryRepository @Inject constructor(private val dataStoreFactory: Categ
     }
 
     override fun createCategory(categoryEntity: CategoryEntity, userUid: String): Single<CategoryEntity> {
-        return dataStoreFactory.retrieveDataStore(false).createCategory(mapper.mapToData(categoryEntity))
+        return dataStoreFactory.retrieveDataStore(false).createCategory(mapper.mapToData(categoryEntity), userUid)
                 .map { mapper.mapFromData(it) }
     }
 

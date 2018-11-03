@@ -26,6 +26,7 @@ class OrderDataEntity : FirestoreModel {
     var orderSubTotal: String? = null
     var orderTotal: Int? = null
 
+
     var firestoreUid: String? = null
 
 

@@ -1,12 +1,11 @@
 package com.rowland.delivery.merchant.features.dash.adapters
 
 import android.os.Bundle
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import butterknife.ButterKnife
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -16,6 +15,7 @@ import com.github.florent37.glidepalette.GlidePalette
 import com.google.firebase.storage.FirebaseStorage
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.features.dash.tools.recylerview.HFRecyclerView
+import com.rowland.delivery.presentation.model.product.ProductModel
 import com.rowland.delivery.presentation.viewmodels.product.ProductEvent
 import kotlinx.android.synthetic.main.content_single_product.view.*
 import kotlinx.android.synthetic.main.content_single_product_reveal.view.*
@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.row_single_product.view.*
  * Created by Rowland on 5/13/2018.
  */
 
-class ProductAdapter(data: List<ProductEntity>?, withHeader: Boolean, withFooter: Boolean) : HFRecyclerView<ProductEntity>(data, withHeader, withFooter) {
+class ProductAdapter(data: List<ProductModel>?, withHeader: Boolean, withFooter: Boolean) : HFRecyclerView<ProductModel>(data, withHeader, withFooter) {
 
     private lateinit var viewBinderHelper: ViewBinderHelper
     private lateinit var actionListener: ProductActionListener
@@ -54,7 +54,7 @@ class ProductAdapter(data: List<ProductEntity>?, withHeader: Boolean, withFooter
         return null
     }
 
-    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ProductViewHolder) {
             val data = getItem(position)
             holder.bind(data)
@@ -70,7 +70,7 @@ class ProductAdapter(data: List<ProductEntity>?, withHeader: Boolean, withFooter
         this.actionListener = actionListener
     }
 
-    fun setList(productEntities: List<ProductEntity>) {
+    fun setList(productEntities: List<ProductModel>) {
         if (this.data == null) {
             this.data = productEntities
             notifyItemRangeInserted(0, productEntities.size)
@@ -109,12 +109,8 @@ class ProductAdapter(data: List<ProductEntity>?, withHeader: Boolean, withFooter
 
     inner class ProductViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
-        init {
-            ButterKnife.bind(this, itemView)
-        }
-
-        fun bind(productEntity: ProductEntity) {
-            FirebaseStorage.getInstance().reference.child(productEntity.imageUrls.get(productEntity.imageUrls.size -1)).downloadUrl
+        fun bind(productModel: ProductModel) {
+            FirebaseStorage.getInstance().reference.child(productModel.imageUrls.get(productModel.imageUrls.size -1)).downloadUrl
                     .addOnSuccessListener { uri ->
                         val options = RequestOptions()
                         options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -131,22 +127,22 @@ class ProductAdapter(data: List<ProductEntity>?, withHeader: Boolean, withFooter
                                 .into(itemView.product_imageview!!)
                     }
 
-            itemView.product_name_textview!!.text = productEntity.name
-            itemView.product_description!!.text = productEntity.description
-            itemView.product_price!!.text = "Ksh " + productEntity.price!!
+            itemView.product_name_textview!!.text = productModel.name
+            itemView.product_description!!.text = productModel.description
+            itemView.product_price!!.text = "Ksh " + productModel.price!!
 
-            viewBinderHelper.bind(itemView.swipe_layout!!, productEntity.firestoreUid)
+            viewBinderHelper.bind(itemView.swipe_layout!!, productModel.firestoreUid)
 
             itemView.btn_unpublish!!.setOnClickListener { v ->
                 itemView.btn_unpublish!!.setIndeterminate()
                 actionListener.onProductActionListener(ProductEvent.Unpublish(), { itemView.btn_unpublish.setFinish() })
-                viewBinderHelper.closeLayout(productEntity.firestoreUid)
+                viewBinderHelper.closeLayout(productModel.firestoreUid)
             }
 
             itemView.btn_edit!!.setOnClickListener { v ->
                 itemView.btn_edit!!.setIndeterminate()
                 actionListener.onProductActionListener(ProductEvent.Edit(), { itemView.btn_edit.setFinish() })
-                viewBinderHelper.closeLayout(productEntity.firestoreUid)
+                viewBinderHelper.closeLayout(productModel.firestoreUid)
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.rowland.delivery.remote.model.order
 
+import com.google.firebase.firestore.Exclude
 import com.rowland.delivery.remote.model.FirestoreModel
 
 
@@ -27,7 +28,9 @@ class OrderDataPayload : FirestoreModel {
     var orderSubTotal: String? = null
     var orderTotal: Int? = null
 
+    @Exclude
     var firestoreUid: String? = null
+
 
 
     override fun <T : FirestoreModel> withFirestoreId(firestoreUid: String): T {

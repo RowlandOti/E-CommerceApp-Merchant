@@ -1,13 +1,11 @@
 package com.rowland.delivery.merchant.features.dash.adapters
 
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import butterknife.ButterKnife
-import com.rowland.delivery.domain.models.category.CategoryEntity
+import androidx.recyclerview.widget.DiffUtil
 import com.rowland.delivery.merchant.R
+import com.rowland.delivery.presentation.model.category.CategoryModel
 import kotlinx.android.synthetic.main.row_category.view.*
 import javax.inject.Inject
 
@@ -18,7 +16,7 @@ import javax.inject.Inject
 class CategoryAdapter @Inject
 constructor() : androidx.recyclerview.widget.RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
-    private var categoryEntityList: List<CategoryEntity>? = null
+    private var categoryList: List<CategoryModel>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.row_category, parent, false)
@@ -26,50 +24,46 @@ constructor() : androidx.recyclerview.widget.RecyclerView.Adapter<CategoryAdapte
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        holder.populate(categoryEntityList!![position])
+        holder.populate(categoryList!![position])
     }
 
     override fun getItemCount(): Int {
-        return if (categoryEntityList == null) 0 else categoryEntityList!!.size
+        return if (categoryList == null) 0 else categoryList!!.size
     }
 
-    fun setList(categoryEntities: List<CategoryEntity>) {
-        if (this.categoryEntityList == null) {
-            this.categoryEntityList = categoryEntities
-            notifyItemRangeInserted(0, categoryEntities.size)
+    fun setList(categoryModels: List<CategoryModel>) {
+        if (this.categoryList == null) {
+            this.categoryList = categoryModels
+            notifyItemRangeInserted(0, categoryModels.size)
         } else {
             val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
                 override fun getOldListSize(): Int {
-                    return this@CategoryAdapter.categoryEntityList!!.size
+                    return this@CategoryAdapter.categoryList!!.size
                 }
 
                 override fun getNewListSize(): Int {
-                    return categoryEntities.size
+                    return categoryModels.size
                 }
 
                 override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                    return this@CategoryAdapter.categoryEntityList!![oldItemPosition].name === categoryEntities[newItemPosition].name
+                    return this@CategoryAdapter.categoryList!![oldItemPosition].name === categoryModels[newItemPosition].name
                 }
 
                 override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                    val newItem = categoryEntities[newItemPosition]
-                    val oldItem = this@CategoryAdapter.categoryEntityList!![oldItemPosition]
+                    val newItem = categoryModels[newItemPosition]
+                    val oldItem = this@CategoryAdapter.categoryList!![oldItemPosition]
                     return newItem.name === oldItem.name && newItem == oldItem
                 }
             })
-            this.categoryEntityList = categoryEntities
+            this.categoryList = categoryModels
             result.dispatchUpdatesTo(this)
         }
     }
 
     class CategoryViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
-        init {
-            ButterKnife.bind(this, itemView)
-        }
-
-        fun populate(categoryEntity: CategoryEntity) {
-            itemView.cat_name!!.text = Character.toUpperCase(categoryEntity.name!![0]) + categoryEntity.name!!.substring(1)
+        fun populate(categoryModel: CategoryModel) {
+            itemView.cat_name!!.text = Character.toUpperCase(categoryModel.name!![0]) + categoryModel.name!!.substring(1)
         }
     }
 }

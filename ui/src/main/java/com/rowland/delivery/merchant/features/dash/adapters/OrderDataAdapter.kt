@@ -2,14 +2,14 @@ package com.rowland.delivery.merchant.features.dash.adapters
 
 
 import android.graphics.Color
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
-import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import butterknife.ButterKnife
+import androidx.recyclerview.widget.DiffUtil
+import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.features.dash.tools.recylerview.HFRecyclerView
+import com.rowland.delivery.merchant.utilities.DateUtils
+import com.rowland.delivery.presentation.model.order.OrderDataModel
 import kotlinx.android.synthetic.main.row_single_customer_order.view.*
 import java.util.*
 
@@ -17,13 +17,13 @@ import java.util.*
  * Created by Rowland on 5/9/2018.
  */
 
-class OrderDataAdapter : HFRecyclerView<OrderData> {
+class OrderDataAdapter : HFRecyclerView<OrderDataModel> {
 
     constructor() : super(null, false, false) {}
 
     constructor(withHeader: Boolean, withFooter: Boolean) : super(null, withHeader, withFooter) {}
 
-    constructor(data: List<OrderData>, withHeader: Boolean, withFooter: Boolean) : super(data, withHeader, withFooter) {}
+    constructor(data: List<OrderDataModel>, withHeader: Boolean, withFooter: Boolean) : super(data, withHeader, withFooter) {}
 
     override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder {
         return OrderDataViewHolder(inflater.inflate(R.layout.row_single_customer_order, parent, false))
@@ -48,7 +48,7 @@ class OrderDataAdapter : HFRecyclerView<OrderData> {
         }
     }
 
-    fun setList(orders: List<OrderData>) {
+    fun setList(orders: List<OrderDataModel>) {
         if (this.data == null) {
             this.data = orders
             notifyItemRangeInserted(0, orders.size)
@@ -79,11 +79,8 @@ class OrderDataAdapter : HFRecyclerView<OrderData> {
 
     class OrderDataViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
-        init {
-            ButterKnife.bind(this, itemView)
-        }
 
-        fun bind(orderData: OrderData) {
+        fun bind(orderData: OrderDataModel) {
             itemView.customer_name!!.text = orderData.name
 
             val lFromDate1 = Date(orderData.createdAt)

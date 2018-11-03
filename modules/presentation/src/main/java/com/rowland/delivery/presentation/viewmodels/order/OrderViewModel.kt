@@ -24,7 +24,7 @@ class OrderViewModel @Inject constructor(private val loadOrdersUseCase: LoadOrde
         this.loadOrdersUseCase.execute(OrderDataSubscriber(), LoadOrdersUseCase.Params.forOrders(userUID))
     }
 
-    fun updateOrder(orderUpdateFields: HashMap<String, Any>, status: String): Completable {
+    fun updateOrder(orderUpdateFields: HashMap<String, Any>): Completable {
         return updateOrderUseCase.updateOrder(orderUpdateFields, selectedListItem.value!!.firestoreUid!!)
     }
 

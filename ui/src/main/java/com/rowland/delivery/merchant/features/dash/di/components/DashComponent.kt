@@ -1,6 +1,6 @@
 package com.rowland.delivery.merchant.features.dash.di.components
 
-import com.rowland.delivery.features.dash.presentation.fragments.*
+
 import com.rowland.delivery.merchant.features.dash.activities.DashActivity
 import com.rowland.delivery.merchant.features.dash.di.modules.DashModule
 import com.rowland.delivery.merchant.features.dash.fragments.*

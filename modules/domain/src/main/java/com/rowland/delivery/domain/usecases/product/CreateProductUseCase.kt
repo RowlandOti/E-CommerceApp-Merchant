@@ -23,7 +23,7 @@ constructor(private val productRepository: IProductRepository, threadExecutor: I
 
     data class Params constructor(val productEntity: ProductEntity, val productCategory: String,val userUiD: String) {
         companion object {
-            fun forProducts(productEntity: ProductEntity, productCategory: String,userUiD: String): Params {
+            fun forProducts(productEntity: ProductEntity, productCategory: String, userUiD: String): Params {
                 return Params(productEntity, productCategory, userUiD)
             }
         }

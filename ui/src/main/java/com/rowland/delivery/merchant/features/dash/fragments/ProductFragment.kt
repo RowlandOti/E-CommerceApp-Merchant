@@ -1,23 +1,25 @@
 package com.rowland.delivery.merchant.features.dash.fragments
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DefaultItemAnimator
+import com.google.firebase.auth.FirebaseAuth
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.features.dash.activities.DashActivity
 import com.rowland.delivery.merchant.features.dash.adapters.ProductAdapter
 import com.rowland.delivery.merchant.features.dash.tools.recylerview.RecyclerItemClickListener
+import com.rowland.delivery.presentation.data.ResourceState
+import com.rowland.delivery.presentation.model.product.ProductModel
 import com.rowland.delivery.presentation.viewmodels.product.ProductEvent
 import com.rowland.delivery.presentation.viewmodels.product.ProductViewModel
 import kotlinx.android.synthetic.main.fragment_products.*
@@ -34,7 +36,7 @@ class ProductFragment : Fragment() {
     lateinit var productAdapter: ProductAdapter
 
     companion object {
-        fun newInstance(args: Bundle?): androidx.fragment.app.Fragment {
+        fun newInstance(args: Bundle?): Fragment {
             val frag = ProductFragment()
             frag.arguments = args
             return frag
@@ -47,7 +49,7 @@ class ProductFragment : Fragment() {
 
         if (arguments != null) {
             val category = arguments!!.getString("selected_category")
-            productViewModel.setCategory(category!!)
+            productViewModel.loadProducts(category!!, FirebaseAuth.getInstance().currentUser!!.uid)
         }
     }
 
@@ -72,7 +74,7 @@ class ProductFragment : Fragment() {
 
         val linearLayoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
         product_recyclerview.setLayoutManager(linearLayoutManager)
-        product_recyclerview.setItemAnimator(androidx.recyclerview.widget.DefaultItemAnimator())
+        product_recyclerview.setItemAnimator(DefaultItemAnimator())
         product_recyclerview.setAdapterWithProgress(productAdapter)
 
         if (savedInstanceState != null) {
@@ -123,11 +125,25 @@ class ProductFragment : Fragment() {
         })
 
         productViewModel.getDataList()
-                .observe(this, Observer { products -> productAdapter.setList(products!!) })
+                .observe(this, Observer { products -> handleDataState(products.status, products.data, products.message) })
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         productAdapter.saveStates(outState)
+    }
+
+    private fun handleDataState(resourceState: ResourceState, data: List<ProductModel>?, message: String?) {
+        when (resourceState) {
+            ResourceState.LOADING -> product_recyclerview.showProgress()
+            ResourceState.SUCCESS -> {
+                product_recyclerview.showRecycler()
+                productAdapter.setList(data!!)
+            }
+            ResourceState.ERROR -> {
+                product_recyclerview.showError()
+                Log.d(OrderFragment::class.java.simpleName, message)
+            }
+        }
     }
 }
