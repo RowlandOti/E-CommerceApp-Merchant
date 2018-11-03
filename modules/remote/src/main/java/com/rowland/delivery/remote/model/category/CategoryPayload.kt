@@ -1,5 +1,6 @@
 package com.rowland.delivery.remote.model.category
 
+import com.google.firebase.firestore.Exclude
 import com.rowland.delivery.remote.model.FirestoreModel
 
 
@@ -8,8 +9,9 @@ class CategoryPayload : FirestoreModel {
     var name: String? = null
 
 
+    @Exclude
     var firestoreUid: String? = null
-        private set
+
 
     override fun <T : FirestoreModel> withFirestoreId(firestoreUid: String): T {
         this.firestoreUid = firestoreUid

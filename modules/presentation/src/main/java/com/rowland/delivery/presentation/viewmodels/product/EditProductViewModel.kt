@@ -21,6 +21,11 @@ class EditProductViewModel @Inject constructor(private val updateProductUseCase:
     val images: LiveData<List<String>>
         get() = selectedImageUri
 
+
+    fun setImagesIsSelected(isSelected: Boolean) {
+        isImageSelected.value = isSelected
+    }
+
     fun setCategory(category: String) {
         productCategory.value = category
     }
@@ -43,7 +48,7 @@ class EditProductViewModel @Inject constructor(private val updateProductUseCase:
 
     fun updateProduct(productUpdateFields: HashMap<String, Any>): Completable {
         if (isImageSelected.value == true) {
-            return uploadImageUseCase.uploadImages(null!!, productCategory.value!!, currentUserUid.value!!)
+            return uploadImageUseCase.uploadImages(selectedImageUri.value!!, productCategory.value!!, currentUserUid.value!!)
                     .map { updateProduct(productUpdateFields, it) }
                     .switchMapCompletable { updateProductUseCase.updateProduct(it, productUid.value!!) }
         } else {

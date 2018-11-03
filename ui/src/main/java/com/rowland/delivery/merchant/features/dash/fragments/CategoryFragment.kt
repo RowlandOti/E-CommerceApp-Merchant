@@ -1,31 +1,29 @@
 package com.rowland.delivery.merchant.features.dash.fragments
 
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.GridLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.firebase.auth.FirebaseAuth
 import com.rowland.delivery.domain.models.category.CategoryEntity
-import com.rowland.delivery.features.dash.di.modules.category.CategoryModule
-import com.rowland.delivery.features.dash.domain.models.category.CategoryEntity
+import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.features.dash.activities.DashActivity
 import com.rowland.delivery.merchant.features.dash.adapters.CategoryAdapter
-import com.rowland.delivery.features.dash.presentation.tools.recylerview.GridSpacingItemDecoration
-import com.rowland.delivery.features.dash.presentation.tools.recylerview.RecyclerItemClickListener
-import com.rowland.delivery.features.dash.presentation.viewmodels.ViewEvent
-import com.rowland.delivery.features.dash.presentation.viewmodels.category.CategoryViewModel
-import com.rowland.delivery.merchant.R
+import com.rowland.delivery.merchant.features.dash.tools.recylerview.GridSpacingItemDecoration
+import com.rowland.delivery.merchant.features.dash.tools.recylerview.RecyclerItemClickListener
+import com.rowland.delivery.merchant.utilities.ScreenUtils
+import com.rowland.delivery.presentation.data.ResourceState
+import com.rowland.delivery.presentation.model.category.CategoryModel
 import com.rowland.delivery.presentation.viewmodels.category.CategoryViewModel
-import com.rowland.delivery.utilities.ScreenUtils
 import kotlinx.android.synthetic.main.fragment_category.*
 import javax.inject.Inject
 
@@ -81,44 +79,47 @@ class CategoryFragment : Fragment() {
             override fun onItemLongClick(view: View, position: Int) {}
         }))
 
-        create_cat_btn.setOnClickListener({ view ->
+        create_cat_btn.setOnClickListener { view ->
             MaterialDialog.Builder(activity!!)
                     .backgroundColorRes(android.R.color.white)
-                    .title("Create CategoryEntity")
+                    .title("Create Category")
                     .inputRangeRes(3, 12, android.R.color.holo_red_dark)
-                    .input("e.g Fruits", null) { dialog, input -> saveCategory(input.toString()) }
+                    .input("e.g Fruits", null) { dialog, input -> saveCategory(input.toString(), FirebaseAuth.getInstance().currentUser!!.uid!!) }
                     .show()
-        })
+        }
 
-        categoryViewModel.state.observe(this, Observer {
-            when (it!!.event) {
-                is ViewEvent.Success -> it.event.handle {
-                    /* Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT)
-                             .show();*/
-                }
-                is ViewEvent.Error -> it.event.handle {
-                    /* Toast.makeText(getActivity(), "Error Occured", Toast.LENGTH_SHORT)
-                             .show();*/
-                    cat_recyclerview.showError()
-                }
-            }
-        })
 
         categoryViewModel.getDataList()
                 .observe(this, Observer { categories ->
-                    categoryAdapter.setList(categories!!)
+                    handleDataState(categories.status, categories.data!!, categories.message)
+                })
+    }
+
+    private fun handleDataState(resourceState: ResourceState, data: List<CategoryModel>?, message: String?) {
+        when (resourceState) {
+            ResourceState.LOADING -> cat_recyclerview.showProgress()
+            ResourceState.SUCCESS -> {
+                cat_recyclerview.showRecycler()
+                categoryAdapter.setList(data!!)
+            }
+            ResourceState.ERROR -> {
+                cat_recyclerview.showError()
+                Log.d(CategoryFragment::class.java.simpleName, message)
+            }
+        }
+    }
+
+
+    private fun saveCategory(name: String, userUID: String) {
+        categoryViewModel.createCategory(CategoryEntity(name.toLowerCase()), userUID)
+                .subscribe({ category ->
+                    Toast.makeText(activity, String.format("CategoryEntity: %s created", category.name), Toast.LENGTH_SHORT)
+                            .show()
+                }, { throwable ->
+                    Toast.makeText(activity, String.format("CategoryEntity: %s not created", name), Toast.LENGTH_SHORT)
+                            .show()
                 })
     }
 
 
-    private fun saveCategory(name: String) {
-        categoryViewModel.saveCategory(CategoryEntity(name.toLowerCase()))
-                .subscribe({ category ->
-                    Toast.makeText(activity, String.format("CategoryEntity: %s created", name), Toast.LENGTH_SHORT)
-                            .show()
-                }) { throwable ->
-                    Toast.makeText(activity, String.format("CategoryEntity: %s not created", name), Toast.LENGTH_SHORT)
-                            .show()
-                }
-    }
 }

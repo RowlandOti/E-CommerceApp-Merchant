@@ -2,29 +2,36 @@ package com.rowland.delivery.merchant.features.dash.fragments
 
 
 import android.Manifest
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
-import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.meetic.shuffle.Shuffle
 import com.meetic.shuffle.ShuffleViewAnimatorOnSecondCard
 import com.rowland.delivery.domain.models.product.ProductEntity
+import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.features.dash.activities.DashActivity
+import com.rowland.delivery.presentation.viewmodels.product.EditProductViewModel
 import com.rowland.delivery.presentation.viewmodels.product.NewProductViewModel
+import com.rowland.rxgallery.RxGallery
 import com.tbruyelle.rxpermissions2.RxPermissions
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.content_product_images_shuffle.view.*
 import kotlinx.android.synthetic.main.fragment_new_product.*
 import java.util.*
@@ -49,11 +56,6 @@ class NewProductFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         newProductViewModel = ViewModelProviders.of(this, newProductFactory).get(NewProductViewModel::class.java)
-
-        if (arguments != null) {
-            val category = arguments!!.getString("selected_category")
-            newProductViewModel.setCategory(category!!)
-        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -77,7 +79,14 @@ class NewProductFragment : Fragment() {
                             if (!granted) {
                                 Toast.makeText(activity, "Please grant permissions to select image", Toast.LENGTH_SHORT).show()
                             } else {
-                                newProductViewModel.selectImages()
+                                RxGallery.gallery(activity!!, true, RxGallery.MimeType.IMAGE)
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe({ uris ->
+                                            newProductViewModel.setImageUri(uris)
+                                        }, { throwable -> Log.d(EditProductViewModel::class.java.simpleName, "Error Selecting Images: $throwable") }) {
+                                            Log.d(EditProductViewModel::class.java.simpleName, "Done Selecting Images")
+                                        }
                             }
                         }
             }
@@ -92,7 +101,9 @@ class NewProductFragment : Fragment() {
             product.description = input_product_description.text!!.toString()
             product.createdAt = Date()
 
-            newProductViewModel.saveProduct(product)
+            val category = arguments!!.getString("selected_category")
+
+            newProductViewModel.createProduct(product,category, FirebaseAuth.getInstance().currentUser!!.uid)
                     .subscribe({ newProduct ->
                         Toast.makeText(activity, "ProductEntity added succesfully", Toast.LENGTH_SHORT).show()
                         activity!!.supportFragmentManager.popBackStack(NewProductFragment::class.java.simpleName, POP_BACK_STACK_INCLUSIVE)
@@ -106,7 +117,7 @@ class NewProductFragment : Fragment() {
 
         newProductViewModel.images.observe(this, Observer { uris ->
             new_product_shuffle.shuffleSettings.numberOfDisplayedCards = uris!!.size
-            new_product_shuffle.shuffleAdapter = ImageShuffleAdapter(uris)
+            new_product_shuffle.shuffleAdapter = ImageShuffleAdapter(uris.map { uri -> Uri.parse(uri) })
             new_product_shuffle.viewAnimator = ShuffleViewAnimatorOnSecondCard()
         })
 

@@ -1,5 +1,6 @@
 package com.rowland.delivery.presentation.viewmodels.product
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.rowland.delivery.domain.models.product.ProductEntity
 import com.rowland.delivery.domain.usecases.product.DeleteProductUseCase
@@ -22,6 +23,10 @@ constructor(private val loadProductsUseCase: LoadProductsUseCase, private val de
 
     internal val productCategory = MutableLiveData<String>()
     internal val currentUserUid = MutableLiveData<String>()
+
+    val category: LiveData<String>
+        get() = productCategory
+
 
     fun loadProducts(category: String, userUid: String) {
         currentUserUid.value = userUid

@@ -44,7 +44,7 @@ class CategoryRemoteSource @Inject constructor(private val mFirebaseFirestone: F
                 .map {
                     val categoryPojos = mutableListOf<CategoryPojo>()
                     it.map { categoryPojos.add(mapper.mapFromRemote(it)) }
-                    categoryPojos
+                     categoryPojos
                 }
 
     }

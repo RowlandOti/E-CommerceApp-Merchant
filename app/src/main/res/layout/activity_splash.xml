@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0099cc"
-    tools:context="com.rowland.delivery.features.splash.ui.SplashActivity">
+    tools:context="com.rowland.delivery.merchant.features.splash.ui.SplashActivity">
 
     <include layout="@layout/content_splash" />
 

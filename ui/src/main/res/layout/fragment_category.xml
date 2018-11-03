@@ -22,7 +22,7 @@
                 style="@style/Widget.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="create categoryEntity"
+                android:text="Create Category"
                 android:textColor="@color/white"
                 app:backgroundTint="@color/colorAccent" />
 

@@ -9,7 +9,7 @@ import io.reactivex.Single
 import java.util.*
 import javax.inject.Inject
 
-class CategoryRemoteDataStore @Inject constructor(private val cache: ICategoryRemoteSource) : ICategoryDataStore {
+class CategoryRemoteDataStore @Inject constructor(private val dataSource: ICategoryRemoteSource) : ICategoryDataStore {
 
     override fun saveToCache(categorys: List<CategoryPojo>): Completable {
         throw UnsupportedOperationException()
@@ -20,22 +20,22 @@ class CategoryRemoteDataStore @Inject constructor(private val cache: ICategoryRe
     }
 
     override fun isCached(): Single<Boolean> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        throw java.lang.UnsupportedOperationException()
     }
 
-    override fun createCategory(category: CategoryPojo): Single<CategoryPojo> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun createCategory(category: CategoryPojo, userUid: String): Single<CategoryPojo> {
+        return dataSource.createCategory(category, userUid)
     }
 
     override fun updateCategory(categoryUpdateFields: HashMap<String, Any>, categoryUid: String): Completable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return dataSource.updateCategory(categoryUpdateFields, categoryUid)
     }
 
     override fun deleteCategory(categoryUid: String, userUid: String): Completable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return dataSource.deleteCategory(categoryUid, userUid)
     }
 
     override fun loadCategories(userUid: String): Flowable<List<CategoryPojo>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return dataSource.loadCategories(userUid)
     }
 }

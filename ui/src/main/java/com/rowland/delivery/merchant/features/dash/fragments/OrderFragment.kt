@@ -1,23 +1,26 @@
 package com.rowland.delivery.merchant.features.dash.fragments
 
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.features.dash.activities.DashActivity
 import com.rowland.delivery.merchant.features.dash.adapters.OrderDataAdapter
 import com.rowland.delivery.merchant.features.dash.tools.recylerview.RecyclerItemClickListener
+import com.rowland.delivery.presentation.data.ResourceState
+import com.rowland.delivery.presentation.model.order.OrderDataModel
 import com.rowland.delivery.presentation.viewmodels.order.OrderViewModel
 import kotlinx.android.synthetic.main.fragment_orders.*
-
 import javax.inject.Inject
 
 /**
@@ -58,9 +61,9 @@ class OrderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val linearLayoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+        val linearLayoutManager = LinearLayoutManager(activity)
         orders_recyclerview.setLayoutManager(linearLayoutManager)
-        orders_recyclerview.setItemAnimator(androidx.recyclerview.widget.DefaultItemAnimator())
+        orders_recyclerview.setItemAnimator(DefaultItemAnimator())
         orders_recyclerview.setAdapterWithProgress(orderAdapter)
 
         orders_recyclerview.addOnItemTouchListener(RecyclerItemClickListener(activity, orders_recyclerview.recyclerView, object : RecyclerItemClickListener.OnItemClickListener {
@@ -71,23 +74,9 @@ class OrderFragment : Fragment() {
             override fun onItemLongClick(view: View, position: Int) {}
         }))
 
-        orderViewModel.state.observe(this, Observer {
-            when (it!!.event) {
-                is ViewEvent.Success -> it.event.handle {
-                    /*Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT)
-                            .show();*/
-                }
-                is ViewEvent.Error -> it.event.handle {
-                    /*Toast.makeText(getActivity(), "Error Occured", Toast.LENGTH_SHORT)
-                            .show();*/
-                    orders_recyclerview.showError()
-                }
-            }
-        })
-
 
         orderViewModel.getDataList()
-                .observe(this, Observer { orders -> orderAdapter.setList(orders!!) })
+                .observe(this, Observer { orders -> handleDataState(orders.status, orders.data, orders.message) })
 
 
 /*
@@ -98,6 +87,20 @@ class OrderFragment : Fragment() {
                     Toast.makeText(getActivity(), "OrderData saved", Toast.LENGTH_SHORT)
                             .show();
                 });*/
+    }
+
+    private fun handleDataState(resourceState: ResourceState, data: List<OrderDataModel>?, message: String?) {
+        when (resourceState) {
+            ResourceState.LOADING -> orders_recyclerview.showProgress()
+            ResourceState.SUCCESS -> {
+                orders_recyclerview.showRecycler()
+                orderAdapter.setList(data!!)
+            }
+            ResourceState.ERROR -> {
+                orders_recyclerview.showError()
+                Log.d(OrderFragment::class.java.simpleName, message)
+            }
+        }
     }
 
 

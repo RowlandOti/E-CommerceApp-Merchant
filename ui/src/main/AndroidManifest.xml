@@ -16,9 +16,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning" >
+        tools:ignore="GoogleAppIndexingWarning">
 
-       <activity
+        <activity
+            android:name="com.rowland.delivery.merchant.features.splash.ui.SplashActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/FullscreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.categoryEntity.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.rowland.delivery.merchant.features.auth.ui.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_auth"
+            android:theme="@style/FullscreenTheme" />
+
+        <activity
             android:name="com.rowland.delivery.merchant.features.dash.activities.DashActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar" />

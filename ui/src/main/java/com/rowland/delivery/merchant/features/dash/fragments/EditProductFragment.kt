@@ -1,19 +1,19 @@
 package com.rowland.delivery.merchant.features.dash.fragments
 
 import android.Manifest
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -22,7 +22,10 @@ import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.features.dash.activities.DashActivity
 import com.rowland.delivery.presentation.viewmodels.product.EditProductViewModel
 import com.rowland.delivery.presentation.viewmodels.product.ProductViewModel
+import com.rowland.rxgallery.RxGallery
 import com.tbruyelle.rxpermissions2.RxPermissions
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_edit_product.*
 import java.util.*
 import javax.inject.Inject
@@ -81,14 +84,14 @@ class EditProductFragment : Fragment() {
                             }
 
                     editProductViewModel.setProductUid(product.firestoreUid!!)
-                    editProductViewModel.setCategory(productViewModel.productCategory.value!!)
+                    editProductViewModel.setCategory(productViewModel.category.value!!)
                 })
 
         editProductViewModel.images.observe(this, Observer { uris ->
             val options = RequestOptions()
             options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
             Glide.with(activity!!)
-                    .load(uris!!.get(uris.size -1))
+                    .load(uris!!.get(uris.size - 1))
                     .apply(options)
                     .into(edit_input_product_imageview)
         })
@@ -100,7 +103,15 @@ class EditProductFragment : Fragment() {
                             if (!granted) {
                                 Toast.makeText(activity, "Please grant permissions to select image", Toast.LENGTH_SHORT).show()
                             } else {
-                                editProductViewModel.selectImages()
+                                RxGallery.gallery(activity!!, true, RxGallery.MimeType.IMAGE)
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe({ uris ->
+                                            editProductViewModel.setImageUri(uris)
+                                            editProductViewModel.setImagesIsSelected(true)
+                                        }, { throwable -> Log.d(EditProductViewModel::class.java.simpleName, "Error Selecting Images: $throwable") }) {
+                                            Log.d(EditProductViewModel::class.java.simpleName, "Done Selecting Images")
+                                        }
                             }
                         }
             }
@@ -116,11 +127,13 @@ class EditProductFragment : Fragment() {
             productUpdateFields.put("updatedAt", Date())
 
             editProductViewModel.updateProduct(productUpdateFields)
-                    .subscribe({ newProduct ->
+                    .subscribe({
                         Toast.makeText(activity, "ProductEntity updated succesfully", Toast.LENGTH_SHORT).show()
                         activity!!.supportFragmentManager.popBackStack(EditProductFragment::class.java.simpleName, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                    }) { throwable -> Toast.makeText(activity, "ProductEntity not updated", Toast.LENGTH_SHORT).show() }
 
+                    }, { it ->
+                        Toast.makeText(activity, "ProductEntity not updated", Toast.LENGTH_SHORT).show()
+                    })
         }
 
         edit_btn_cancell.setOnClickListener { view ->
