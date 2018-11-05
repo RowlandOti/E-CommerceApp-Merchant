@@ -26,7 +26,7 @@ open class ProductMapper @Inject constructor() : IMapper<ProductPayload, Product
         product.unitsOfMeasure = type.unitsOfMeasure
         product.saleQuantity = type.saleQuantity
         product.imageUrl = type.imageUrl
-        product.imageUrls - type.imageUrls
+        product.imageUrls = type.imageUrls
         product.createdAt = type.createdAt
         product.updatedAt = type.updatedAt
         product.deletedAt = type.deletedAt
@@ -49,7 +49,7 @@ open class ProductMapper @Inject constructor() : IMapper<ProductPayload, Product
         product.unitsOfMeasure = type.unitsOfMeasure
         product.saleQuantity = type.saleQuantity
         product.imageUrl = type.imageUrl
-        product.imageUrls - type.imageUrls
+        product.imageUrls = type.imageUrls
         product.createdAt = type.createdAt
         product.updatedAt = type.updatedAt
         product.deletedAt = type.deletedAt

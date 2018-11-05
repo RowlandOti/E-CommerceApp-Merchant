@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.features.dash.activities.DashActivity
 import com.rowland.delivery.merchant.features.dash.adapters.OrderDataAdapter
@@ -47,6 +48,7 @@ class OrderFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         orderViewModel = ViewModelProviders.of(activity!!, orderFactory).get(OrderViewModel::class.java)
+        orderViewModel.loadOrders(FirebaseAuth.getInstance().currentUser!!.uid)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

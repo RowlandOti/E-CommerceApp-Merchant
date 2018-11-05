@@ -20,4 +20,11 @@ class ProductModel {
     var deletedAt: Date? = null
 
     var firestoreUid: String? = null
+
+
+    override fun toString(): String {
+        return "ProductModel(id=$id, name=$name, description=$description, price=$price, itemCode=$itemCode, merchantCode=$merchantCode, itemQuantity=$itemQuantity, unitsOfMeasure=$unitsOfMeasure, saleQuantity=$saleQuantity, imageUrl=$imageUrl, imageUrls=$imageUrls, createdAt=$createdAt, updatedAt=$updatedAt, deletedAt=$deletedAt, firestoreUid=$firestoreUid)"
+    }
+
+
 }

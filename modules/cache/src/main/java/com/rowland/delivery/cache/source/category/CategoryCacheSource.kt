@@ -5,6 +5,7 @@ import com.rowland.delivery.data.model.category.CategoryPojo
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
+import io.reactivex.internal.operators.completable.CompletableEmpty
 import java.util.*
 import javax.inject.Inject
 
@@ -27,7 +28,7 @@ class CategoryCacheSource @Inject constructor() : ICategoryCacheSource {
     }
 
     override fun saveToCache(categories: List<CategoryPojo>): Completable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return CompletableEmpty.complete()
     }
 
     override fun clearFromCache(): Completable {

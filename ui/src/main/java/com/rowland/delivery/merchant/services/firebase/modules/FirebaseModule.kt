@@ -3,7 +3,6 @@ package com.rowland.delivery.merchant.services.firebase.modules
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-
 import dagger.Module
 import dagger.Provides
 

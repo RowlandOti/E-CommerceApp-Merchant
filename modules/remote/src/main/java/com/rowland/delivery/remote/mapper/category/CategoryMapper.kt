@@ -13,6 +13,7 @@ class CategoryMapper @Inject constructor() : IMapper<CategoryPayload, CategoryPo
     override fun mapToRemote(type: CategoryPojo): CategoryPayload {
         val category = CategoryPayload()
         category.name = type.name
+        category.merchants = type.merchants
         return category
     }
 
@@ -22,6 +23,7 @@ class CategoryMapper @Inject constructor() : IMapper<CategoryPayload, CategoryPo
     override fun mapFromRemote(type: CategoryPayload): CategoryPojo {
         val category = CategoryPojo()
         category.name = type.name
+        category.merchants = type.merchants
         return category
     }
 }
