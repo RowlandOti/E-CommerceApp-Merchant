@@ -29,7 +29,7 @@ abstract class FlowableUseCase<T, in Params> constructor(
      */
     open fun execute(observer: DisposableSubscriber<T>, params: Params? = null) {
         val observable = this.buildUseCaseObservable(params)
-                .subscribeOn(Schedulers.from(threadExecutor))
+                .subscribeOn(Schedulers.single())
                 .observeOn(postExecutionThread.scheduler) as Flowable<T>
         addDisposable(observable.subscribeWith(observer))
     }

@@ -52,6 +52,7 @@ class CategoryFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         categoryViewModel = ViewModelProviders.of(activity!!, categoryFactory).get(CategoryViewModel::class.java)
+        categoryViewModel.loadCategories(FirebaseAuth.getInstance().currentUser!!.uid)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -91,7 +92,7 @@ class CategoryFragment : Fragment() {
 
         categoryViewModel.getDataList()
                 .observe(this, Observer { categories ->
-                    handleDataState(categories.status, categories.data!!, categories.message)
+                    handleDataState(categories.status, categories.data, categories.message)
                 })
     }
 
@@ -100,7 +101,8 @@ class CategoryFragment : Fragment() {
             ResourceState.LOADING -> cat_recyclerview.showProgress()
             ResourceState.SUCCESS -> {
                 cat_recyclerview.showRecycler()
-                categoryAdapter.setList(data!!)
+                if(data != null)
+                    categoryAdapter.setList(data!!)
             }
             ResourceState.ERROR -> {
                 cat_recyclerview.showError()
@@ -113,10 +115,10 @@ class CategoryFragment : Fragment() {
     private fun saveCategory(name: String, userUID: String) {
         categoryViewModel.createCategory(CategoryEntity(name.toLowerCase()), userUID)
                 .subscribe({ category ->
-                    Toast.makeText(activity, String.format("CategoryEntity: %s created", category.name), Toast.LENGTH_SHORT)
+                    Toast.makeText(activity, String.format("Category: %s created", category.name), Toast.LENGTH_SHORT)
                             .show()
                 }, { throwable ->
-                    Toast.makeText(activity, String.format("CategoryEntity: %s not created", name), Toast.LENGTH_SHORT)
+                    Toast.makeText(activity, String.format("Category: %s not created", name), Toast.LENGTH_SHORT)
                             .show()
                 })
     }
