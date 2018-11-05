@@ -1,8 +1,11 @@
 package com.rowland.delivery.data.model.category
 
+import java.util.*
+
 class CategoryPojo {
 
     var name: String? = null
+    var merchants = HashMap<String, Boolean>()
     var firestoreUid: String? = null
 
     constructor()
@@ -12,8 +15,8 @@ class CategoryPojo {
     }
 
     override fun toString(): String {
-        return "CategoryScope{" +
-                "name='" + name + '\''.toString() +
-                '}'.toString()
+        return "CategoryPojo(name=$name, merchants=$merchants, firestoreUid=$firestoreUid)"
     }
+
+
 }

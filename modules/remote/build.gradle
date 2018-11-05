@@ -39,8 +39,8 @@ dependencies {
 
     // Firebase and Google services
     implementation 'com.google.firebase:firebase-core:16.0.4'
-    implementation 'com.google.firebase:firebase-firestore:17.1.1'
-    implementation 'com.google.firebase:firebase-storage:16.0.3'
+    implementation 'com.google.firebase:firebase-firestore:17.1.2'
+    implementation 'com.google.firebase:firebase-storage:16.0.4'
     //If you are using Firestore in your project
     implementation 'com.github.FrangSierra:RxFirebase:1.5.2'
 

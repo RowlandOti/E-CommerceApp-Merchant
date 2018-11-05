@@ -1,6 +1,7 @@
 package com.rowland.delivery.domain.models.category
 
 import com.rowland.delivery.domain.models.FirestoreModel
+import java.util.*
 
 /**
  * Created by Rowland on 5/5/2018.
@@ -9,6 +10,7 @@ import com.rowland.delivery.domain.models.FirestoreModel
 class CategoryEntity : FirestoreModel {
 
     var name: String? = null
+    var merchants = HashMap<String, Boolean>()
 
 
     var firestoreUid: String? = null

@@ -1,9 +1,12 @@
 package com.rowland.delivery.merchant.features.dash.di.modules
 
 import androidx.multidex.MultiDexApplication
+import com.google.firebase.firestore.FirebaseFirestore
 import com.rowland.delivery.merchant.di.components.ApplicationComponent
 import com.rowland.delivery.merchant.di.components.DaggerApplicationComponent
 import com.rowland.delivery.merchant.di.modules.ContextModule
+
+
 
 
 /**
@@ -21,5 +24,7 @@ class MerchantApplication : MultiDexApplication() {
         applicationComponent = DaggerApplicationComponent.builder()
                 .contextModule(ContextModule(this))
                 .build()
+        // ToDo: Disable logging in production
+        FirebaseFirestore.setLoggingEnabled(true)
     }
 }

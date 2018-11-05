@@ -7,6 +7,7 @@ import com.rowland.delivery.remote.model.FirestoreModel
 class CategoryPayload : FirestoreModel {
 
     var name: String? = null
+    var merchants = HashMap<String, Boolean>()
 
 
     @Exclude
@@ -18,16 +19,8 @@ class CategoryPayload : FirestoreModel {
         return this as T
     }
 
-    constructor()
-
-    constructor(name: String) {
-        this.name = name
-    }
-
     override fun toString(): String {
-        return "CategoryScope{" +
-                "name='" + name + '\''.toString() +
-                '}'.toString()
+        return "CategoryPayload(name=$name, merchants=$merchants, firestoreUid=$firestoreUid)"
     }
 }
 

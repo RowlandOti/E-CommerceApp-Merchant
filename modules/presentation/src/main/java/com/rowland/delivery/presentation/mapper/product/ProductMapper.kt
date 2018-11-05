@@ -18,7 +18,7 @@ open class ProductMapper @Inject constructor() : IMapper<ProductModel, ProductEn
         productModel.unitsOfMeasure = type.unitsOfMeasure
         productModel.saleQuantity = type.saleQuantity
         productModel.imageUrl = type.imageUrl
-        productModel.imageUrls - type.imageUrls
+        productModel.imageUrls = type.imageUrls
         productModel.createdAt = type.createdAt
         productModel.updatedAt = type.updatedAt
         productModel.deletedAt = type.deletedAt

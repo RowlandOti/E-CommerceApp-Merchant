@@ -12,6 +12,7 @@ open class CategoryMapper @Inject constructor() : IMapper<CategoryModel, Categor
     override fun mapToView(type: CategoryEntity): CategoryModel {
         val category = CategoryModel()
         category.name = type.name
+        category.merchants = type.merchants
         return  category
     }
 }

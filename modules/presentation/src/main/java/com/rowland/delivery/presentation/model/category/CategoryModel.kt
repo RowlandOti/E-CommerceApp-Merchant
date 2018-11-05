@@ -1,8 +1,11 @@
 package com.rowland.delivery.presentation.model.category
 
+import java.util.*
+
 class CategoryModel {
 
     var name: String? = null
+    var merchants = HashMap<String, Boolean>()
     var firestoreUid: String? = null
 
     constructor()

@@ -20,7 +20,7 @@ class CategoryRemoteDataStore @Inject constructor(private val dataSource: ICateg
     }
 
     override fun isCached(): Single<Boolean> {
-        throw java.lang.UnsupportedOperationException()
+        throw UnsupportedOperationException()
     }
 
     override fun createCategory(category: CategoryPojo, userUid: String): Single<CategoryPojo> {

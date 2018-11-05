@@ -5,6 +5,7 @@ import com.rowland.delivery.data.model.product.ProductPojo
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
+import io.reactivex.internal.operators.completable.CompletableEmpty
 import java.util.*
 import javax.inject.Inject
 
@@ -26,7 +27,7 @@ class ProductCacheSource @Inject constructor() : IProductCacheSource {
     }
 
     override fun saveToCache(products: List<ProductPojo>): Completable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return CompletableEmpty.complete()
     }
 
     override fun clearFromCache(): Completable {
@@ -34,7 +35,7 @@ class ProductCacheSource @Inject constructor() : IProductCacheSource {
     }
 
     override fun isCached(): Single<Boolean> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return Single.just(false)
     }
 
     override fun setLastCacheTime(lastCache: Long) {
