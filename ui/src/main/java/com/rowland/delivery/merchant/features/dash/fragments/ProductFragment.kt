@@ -94,9 +94,9 @@ class ProductFragment : Fragment() {
                     is ProductEvent.Unpublish -> {
                         productViewModel.deleteProduct().subscribe({
                             fn()
-                            Toast.makeText(activity, "ProductEntity successfully deleted", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(activity, "Product successfully deleted", Toast.LENGTH_SHORT).show()
                         }) {
-                            Toast.makeText(activity, "ProductEntity Could not be deleted", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(activity, "Product Could not be deleted", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

@@ -105,9 +105,9 @@ class NewProductFragment : Fragment() {
 
             newProductViewModel.createProduct(product,category, FirebaseAuth.getInstance().currentUser!!.uid)
                     .subscribe({ newProduct ->
-                        Toast.makeText(activity, "ProductEntity added succesfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "Product added succesfully", Toast.LENGTH_SHORT).show()
                         activity!!.supportFragmentManager.popBackStack(NewProductFragment::class.java.simpleName, POP_BACK_STACK_INCLUSIVE)
-                    }) { throwable -> Toast.makeText(activity, "ProductEntity not added", Toast.LENGTH_SHORT).show() }
+                    }) { throwable -> Toast.makeText(activity, "Product not added", Toast.LENGTH_SHORT).show() }
 
         }
 

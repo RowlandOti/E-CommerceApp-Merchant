@@ -128,11 +128,11 @@ class EditProductFragment : Fragment() {
 
             editProductViewModel.updateProduct(productUpdateFields)
                     .subscribe({
-                        Toast.makeText(activity, "ProductEntity updated succesfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "Product updated succesfully", Toast.LENGTH_SHORT).show()
                         activity!!.supportFragmentManager.popBackStack(EditProductFragment::class.java.simpleName, androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE)
 
                     }, { it ->
-                        Toast.makeText(activity, "ProductEntity not updated", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "Product not updated", Toast.LENGTH_SHORT).show()
                     })
         }
 
