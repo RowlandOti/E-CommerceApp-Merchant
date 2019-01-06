@@ -109,10 +109,12 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun itemSelection(mSelectedId: Int) {
-        val manager = supportFragmentManager
+
         when (mSelectedId) {
             R.id.action_business -> {
-                manager.beginTransaction().replace(R.id.dash_container_body, OverviewFragment.newInstance(0)).commit()
+                if (supportFragmentManager.findFragmentByTag(OverviewFragment::class.java.simpleName) == null) {
+                    supportFragmentManager.beginTransaction().replace(R.id.dash_container_body, OverviewFragment.newInstance(0), OverviewFragment::class.java.simpleName).commit()
+                }
                 dash_drawer_layout.closeDrawer(GravityCompat.START)
             }
             R.id.action_ratings ->
