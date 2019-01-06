@@ -79,21 +79,25 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         orderViewModel = ViewModelProviders.of(this, orderFactory).get(OrderViewModel::class.java)
         orderViewModel.getSelectedListItem()
                 .observe(this, Observer { orderData ->
-                    supportFragmentManager.beginTransaction()
-                            .replace(R.id.dash_container_body, OrderItemFragment.newInstance(null))
-                            .addToBackStack(OrderItemFragment::class.java.simpleName)
-                            .commit()
+                    if (supportFragmentManager.findFragmentByTag(OrderItemFragment::class.java.simpleName) == null) {
+                        supportFragmentManager.beginTransaction()
+                                .replace(R.id.dash_container_body, OrderItemFragment.newInstance(null), OrderItemFragment::class.java.simpleName)
+                                .addToBackStack(OrderItemFragment::class.java.simpleName)
+                                .commit()
+                    }
                 })
 
         categoryViewModel = ViewModelProviders.of(this, categoryFactory).get(CategoryViewModel::class.java)
         categoryViewModel.getSelectedListItem()
                 .observe(this, Observer { category ->
-                    val args = Bundle()
-                    args.putString("selected_category", category!!.name)
-                    supportFragmentManager.beginTransaction()
-                            .replace(R.id.dash_container_body, ProductFragment.newInstance(args))
-                            .addToBackStack(ProductFragment::class.java.simpleName)
-                            .commit()
+                    if (supportFragmentManager.findFragmentByTag(ProductFragment::class.java.simpleName) == null) {
+                        val args = Bundle()
+                        args.putString("selected_category", category!!.name)
+                        supportFragmentManager.beginTransaction()
+                                .replace(R.id.dash_container_body, ProductFragment.newInstance(args), ProductFragment::class.java.simpleName)
+                                .addToBackStack(ProductFragment::class.java.simpleName)
+                                .commit()
+                    }
                 })
     }
 
