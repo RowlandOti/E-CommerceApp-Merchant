@@ -79,7 +79,7 @@ class ProductRepositoryTest {
         val mockProductUpdateFields = HashMap<String, Any>()
         mockProductUpdateFields.put("name", FAKEPRODUCTNAME)
 
-        Mockito.doReturn(Single.just(mockProduct)).`when`(productRepository).updateProduct(mockProductUpdateFields, FAKEPRODUCTFIRESTOREUID)
+        Mockito.doReturn(Completable.complete()).`when`(productRepository).updateProduct(mockProductUpdateFields, FAKEPRODUCTFIRESTOREUID)
 
         val testSubscriber = productRepository.updateProduct(mockProductUpdateFields, FAKEPRODUCTFIRESTOREUID).test()
         testSubscriber.awaitTerminalEvent()
