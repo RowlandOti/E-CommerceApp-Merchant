@@ -53,35 +53,32 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.palette:palette:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.0.0'
-    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     // Android Architecture components
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
     kapt "androidx.lifecycle:lifecycle-compiler:2.0.0"
     // Firebase and Google services
-    implementation 'com.google.firebase:firebase-core:16.0.4'
-    implementation 'com.google.firebase:firebase-firestore:17.1.2'
-    implementation 'com.google.firebase:firebase-storage:16.0.4'
-    implementation 'com.google.firebase:firebase-auth:16.0.5'
+    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.google.firebase:firebase-firestore:17.1.5'
+    implementation 'com.google.firebase:firebase-storage:16.0.5'
+    implementation 'com.google.firebase:firebase-auth:16.1.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'com.firebaseui:firebase-ui-auth:4.2.0'
     //If you are using Firestore in your project
     implementation 'com.github.FrangSierra:RxFirebase:1.5.2'
     // Miscellaneous
-    //implementation 'com.jakewharton:butterknife:8.8.1'
-    //kapt 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     kapt 'com.github.bumptech.glide:compiler:4.8.0'
     implementation 'com.github.florent37:glidepalette:2.1.2'
     implementation 'com.alexfacciorusso:daggerviewmodel:0.1.2'
-    //implementation 'com.github.abdularis:androidbuttonprogress:v0.1-alpha5'
+    implementation 'com.github.abdularis:androidbuttonprogress:1.0.2'
     //implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
-    implementation project(':library')
     implementation project(':swipe-reveal-layout')
     implementation 'me.himanshusoni.quantityview:quantity-view:1.2.0'
     //implementation 'com.meetic.shuffle:shuffle:1.0.8'
@@ -93,7 +90,7 @@ dependencies {
     implementation 'com.github.ybq:Android-SpinKit:1.1.0'
     implementation 'com.jude:easyrecyclerview:4.4.2'
     // Dependency injection
-    implementation 'com.google.dagger:dagger:2.16'
+    implementation 'com.google.dagger:dagger:2.17'
     implementation 'com.google.dagger:dagger-android:2.16'
     implementation 'com.google.dagger:dagger-android-support:2.16'
     /// if you use the support libraries
@@ -101,8 +98,8 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.17'
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

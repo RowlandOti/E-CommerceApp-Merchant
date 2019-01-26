@@ -1,5 +1,4 @@
-include ':modules:domain', ':modules:data', ':modules:presentation', ':modules:remote', ':modules:cache', ':ui', ':swipe-reveal-layout', ':library', ':rxgallery', ':shuffle'
+include ':modules:domain', ':modules:data', ':modules:presentation', ':modules:remote', ':modules:cache', ':ui', ':swipe-reveal-layout', ':rxgallery', ':shuffle'
 project(':swipe-reveal-layout').projectDir = new File('libraries/SwipeRevealLayout/swipe-reveal-layout')
-project(':library').projectDir = new File('libraries/AndroidButtonProgress/library')
 project(':rxgallery').projectDir = new File('libraries/rxgallery')
 project(':shuffle').projectDir = new File('libraries/shuffle')
