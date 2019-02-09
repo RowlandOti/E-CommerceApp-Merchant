@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.jaredsburrows.spoon'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
@@ -14,6 +15,7 @@ android {
         versionCode getVersionCode()
         versionName getVersionName()
         vectorDrawables.useSupportLibrary = true
+        testApplicationId 'com.rowland.delivery.merchant.test'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -36,7 +38,6 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
-
 }
 
 dependencies {
@@ -64,12 +65,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
     kapt "androidx.lifecycle:lifecycle-compiler:2.0.0"
     // Firebase and Google services
-    implementation 'com.google.firebase:firebase-core:16.0.6'
-    implementation 'com.google.firebase:firebase-firestore:17.1.5'
+    implementation 'com.google.firebase:firebase-core:16.0.7'
+    implementation 'com.google.firebase:firebase-firestore:18.0.0'
     implementation 'com.google.firebase:firebase-storage:16.0.5'
     implementation 'com.google.firebase:firebase-auth:16.1.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
-    implementation 'com.firebaseui:firebase-ui-auth:4.2.0'
+    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
     //If you are using Firestore in your project
     implementation 'com.github.FrangSierra:RxFirebase:1.5.2'
     // Miscellaneous
@@ -91,7 +92,7 @@ dependencies {
     implementation 'com.jude:easyrecyclerview:4.4.2'
     // Dependency injection
     implementation 'com.google.dagger:dagger:2.17'
-    implementation 'com.google.dagger:dagger-android:2.16'
+    implementation 'com.google.dagger:dagger-android:2.17'
     implementation 'com.google.dagger:dagger-android-support:2.16'
     /// if you use the support libraries
     kapt 'com.google.dagger:dagger-android-processor:2.17'
@@ -99,7 +100,9 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test:rules:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation 'com.squareup.spoon:spoon-client:2.0.0-SNAPSHOT' // For Spoon snapshot, until 2.0.0 is released
 }
 
 apply plugin: 'com.google.gms.google-services'
