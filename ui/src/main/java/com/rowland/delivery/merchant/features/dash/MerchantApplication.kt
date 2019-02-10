@@ -1,4 +1,4 @@
-package com.rowland.delivery.merchant.features.dash.di.modules
+package com.rowland.delivery.merchant.features.dash
 
 import androidx.multidex.MultiDexApplication
 import com.google.firebase.firestore.FirebaseFirestore
