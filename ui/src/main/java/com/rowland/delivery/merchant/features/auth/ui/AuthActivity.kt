@@ -54,15 +54,15 @@ class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks, GoogleApiClie
                 .load(R.drawable.flash)
                 .into(splash_imageview!!)
 
-        btn_google_login.setOnClickListener { mGoogleAuth!!.login() }
-        btn_login.setOnClickListener { mEmailAuth!!.login() }
-        btn_register.setOnClickListener { mEmailAuth!!.register() }
-        txt_reset_password.setOnClickListener { mEmailAuth!!.login() }
+        btn_google_login.setOnClickListener { mGoogleAuth.login() }
+        btn_login.setOnClickListener { mEmailAuth.login() }
+        btn_register.setOnClickListener { mEmailAuth.register() }
+        txt_reset_password.setOnClickListener { mEmailAuth.login() }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        mGoogleAuth!!.onActivityResult(requestCode, resultCode, data!!)
+        mGoogleAuth.onActivityResult(requestCode, resultCode, data!!)
     }
 
     override fun onLoginSuccess() {
