@@ -28,7 +28,7 @@ ext.getVersionName = { ->
     }
 }
 
-task showVersion << {
+task showVersion doLast {
     // Use inherited method
     println 'VersionName: ' + getVersionName()
     println 'VersionCode: ' + getVersionCode()
