@@ -88,7 +88,7 @@ dependencies {
     implementation 'com.github.dekoservidoni:omfm:1.1.1'
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5'
     implementation 'com.github.etiennelenhart:eiffel:3.0.0'
-    implementation 'com.github.ybq:Android-SpinKit:1.1.0'
+    implementation 'com.github.ybq:Android-SpinKit:1.2.0'
     implementation 'com.jude:easyrecyclerview:4.4.2'
     // Dependency injection
     implementation 'com.google.dagger:dagger:2.17'
