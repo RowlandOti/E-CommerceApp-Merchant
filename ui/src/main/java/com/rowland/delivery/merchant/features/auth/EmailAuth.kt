@@ -31,7 +31,7 @@ constructor(private val mAuthConfig: AuthConfig, private val mFirebaseAuth: Fire
         RxFirebaseAuth.signInWithEmailAndPassword(mFirebaseAuth, email!!, password!!)
                 .subscribe({ authResult ->
                     val firebaseUser = authResult.user
-                    RxFirebaseUser.getIdToken(firebaseUser, true)
+                    RxFirebaseUser.getIdToken(firebaseUser!!, true)
                             .subscribe { getTokenResult ->
                                 mSessionManager.setLogin(getTokenResult.token!!)
                                 mAuthConfig.callback.onLoginSuccess()
@@ -59,7 +59,7 @@ constructor(private val mAuthConfig: AuthConfig, private val mFirebaseAuth: Fire
         RxFirebaseAuth.createUserWithEmailAndPassword(mFirebaseAuth, email!!, password!!)
                 .subscribe({ authResult ->
                     val firebaseUser = authResult.user
-                    configureUserAccount(firebaseUser)
+                    configureUserAccount(firebaseUser!!)
                 }, { throwable -> mAuthConfig.callback.onLoginFailure(AuthException(throwable.message!!, throwable)) })
 
     }
