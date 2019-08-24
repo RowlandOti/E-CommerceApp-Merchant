@@ -72,7 +72,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
     //If you are using Firestore in your project
-    implementation 'com.github.FrangSierra:RxFirebase:1.5.2'
+    implementation 'com.github.FrangSierra:RxFirebase:1.5.7'
     // Miscellaneous
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     kapt 'com.github.bumptech.glide:compiler:4.9.0'
