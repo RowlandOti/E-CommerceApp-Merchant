@@ -3,9 +3,12 @@ apply plugin: 'com.jaredsburrows.spoon'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-allopen'
 apply from: '../.buildsystem/versioning.gradle'
 
 android {
+
+
     defaultConfig {
         applicationId "com.rowland.delivery.merchant"
         compileSdkVersion 28
@@ -16,7 +19,7 @@ android {
         versionName getVersionName()
         vectorDrawables.useSupportLibrary = true
         testApplicationId 'com.rowland.delivery.merchant.test'
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'com.github.tmurakami.dexopener.DexOpenerAndroidJUnitRunner'
     }
     buildTypes {
         release {
@@ -38,6 +41,15 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+    sourceSets {
+        androidTest.java.srcDirs += "src/test-common/java"
+        test.java.srcDirs += "src/test-common/java"
+    }
+}
+
+allOpen {
+    // allows mocking for classes w/o directly opening them for release builds
+    annotation 'com.rowland.delivery.merchant.testing.OpenClass'
 }
 
 dependencies {
@@ -99,10 +111,38 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.17'
 
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.assertj:assertj-core:2.5.0'
+    testImplementation 'androidx.test:runner:1.1.1'
+    testImplementation 'androidx.test:rules:1.1.1'
+    testImplementation "org.mockito:mockito-core:2.24.0"
+    testImplementation "org.mockito:mockito-inline:2.24.0"
+    testImplementation('com.nhaarman:mockito-kotlin-kt1.1:1.5.0') {
+        exclude group: 'org.jetbrains.kotlin'
+    }
+    testImplementation "org.robolectric:robolectric:4.0"
+    testImplementation 'com.github.fabioCollini.daggermock:daggermock:0.8.4'
+    testImplementation 'com.github.fabioCollini.daggermock:daggermock-kotlin:0.8.4'
+    testAnnotationProcessor "com.google.dagger:dagger-compiler:2.17"
+
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test:rules:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation "org.mockito:mockito-android:2.24.0"
+    androidTestImplementation 'com.github.tmurakami:dexopener:0.12.1'
+    androidTestImplementation('com.nhaarman:mockito-kotlin-kt1.1:1.5.0') {
+        exclude group: 'org.jetbrains.kotlin'
+    }
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.1') {
+        exclude group: 'javax.inject', module: 'javax.inject'
+        exclude group: 'com.squareup', module: 'javawriter'
+    }
+
     androidTestImplementation 'com.squareup.spoon:spoon-client:2.0.0-SNAPSHOT' // For Spoon snapshot, until 2.0.0 is released
+    androidTestImplementation 'com.github.tmurakami:dexopener:0.12.1'
+
+
+
+    androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock:0.8.4'
+    androidTestImplementation 'com.github.fabioCollini.daggermock:daggermock-kotlin:0.8.4'
 }
 
 apply plugin: 'com.google.gms.google-services'

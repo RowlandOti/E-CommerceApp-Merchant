@@ -4,9 +4,6 @@ import android.content.Context
 import dagger.Module
 import dagger.Provides
 
-class ApplicationModule {
-}
-
 @Module
 class ContextModule(private val context: Context) {
 
