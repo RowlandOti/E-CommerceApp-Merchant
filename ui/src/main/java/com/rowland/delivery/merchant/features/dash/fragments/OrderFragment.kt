@@ -55,7 +55,7 @@ class OrderFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_orders, container, false)
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         (activity as DashActivity).dashComponent.inject(this)
     }

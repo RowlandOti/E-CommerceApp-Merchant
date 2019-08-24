@@ -2,6 +2,7 @@ package com.rowland.delivery.merchant.features.dash.fragments
 
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.net.Uri
 import android.os.Build
@@ -62,7 +63,7 @@ class NewProductFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_new_product, container, false)
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         (activity as DashActivity).dashComponent.inject(this)
     }
