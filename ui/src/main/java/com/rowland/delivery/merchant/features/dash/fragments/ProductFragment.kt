@@ -112,20 +112,22 @@ class ProductFragment : Fragment() {
             override fun onItemLongClick(view: View, position: Int) {}
         }))
 
-        fab.setOnClickListener({ view ->
+        fab.setOnClickListener { view ->
             var args: Bundle? = null
             if (arguments != null) {
                 args = Bundle()
                 args.putString("selected_category", arguments!!.getString("selected_category"))
             }
             activity!!.supportFragmentManager.beginTransaction()
-                    .replace(R.id.dash_container_body, NewProductFragment.Companion.newInstance(args))
-                    .addToBackStack(NewProductFragment::class.java.simpleName)
-                    .commit()
-        })
+                .replace(R.id.dash_container_body, NewProductFragment.Companion.newInstance(args))
+                .addToBackStack(NewProductFragment::class.java.simpleName)
+                .commit()
+        }
 
         productViewModel.getDataList()
-                .observe(this, Observer { products -> handleDataState(products.status, products.data, products.message) })
+                .observe(this, Observer {
+                        products -> handleDataState(products.status, products.data, products.message)
+                })
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

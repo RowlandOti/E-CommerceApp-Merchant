@@ -9,7 +9,7 @@ import dagger.Component
  * Created by Rowland on 4/30/2018.
  */
 
-@Component(modules = arrayOf(ContextModule::class))
+@Component(modules = [ContextModule::class])
 interface ApplicationComponent {
 
     val context: Context
