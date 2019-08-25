@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.rowland.delivery.features.auth.ui.AuthActivity">
+    tools:context="com.rowland.delivery.merchant.features.auth.ui.AuthActivity">
 
     <ImageView
         android:id="@+id/splash_imageview"

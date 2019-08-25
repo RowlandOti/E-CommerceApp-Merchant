@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:theme="@style/TextLabel"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.rowland.delivery.features.auth.ui.AuthActivity"
+    tools:context="com.rowland.delivery.merchant.features.auth.ui.AuthActivity"
     tools:showIn="@layout/activity_auth">
 
     <include
@@ -16,14 +16,16 @@
 
     <LinearLayout
         android:id="@+id/login_layout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="80dp"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="30dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="80dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/constraint_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo_layout">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -62,8 +64,8 @@
             android:id="@+id/custom_login_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
@@ -73,8 +75,8 @@
                 android:layout_height="@dimen/btn_prefered_height"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:paddingTop="5dp"
                 android:paddingBottom="5dp"
+                android:paddingTop="5dp"
                 android:text="@string/login" />
 
             <com.google.android.material.button.MaterialButton
@@ -84,8 +86,8 @@
                 android:layout_height="@dimen/btn_prefered_height"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
-                android:paddingTop="5dp"
                 android:paddingBottom="5dp"
+                android:paddingTop="5dp"
                 android:text="@string/register" />
         </LinearLayout>
 
@@ -140,8 +142,8 @@
                 android:layout_height="@dimen/btn_prefered_height"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:paddingTop="5dp"
                 android:paddingBottom="5dp"
+                android:paddingTop="5dp"
                 android:text="Sign in with Google" />
         </LinearLayout>
     </LinearLayout>
