@@ -112,7 +112,7 @@ class ProductFragment : Fragment() {
             override fun onItemLongClick(view: View, position: Int) {}
         }))
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener { _ ->
             var args: Bundle? = null
             if (arguments != null) {
                 args = Bundle()

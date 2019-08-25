@@ -45,7 +45,7 @@ class SplashActivity : AppCompatActivity() {
 
         val handler = Handler()
         handler.postDelayed({
-            if (!sessionManager!!.isLoggedIn) {
+            if (!sessionManager.isLoggedIn) {
                 AuthActivity.startActivity(this@SplashActivity)
                 finish()
             } else {

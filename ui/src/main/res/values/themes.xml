@@ -48,11 +48,14 @@
     </style>
 
 
-    <style name="Widget.Toolbar" parent="Widget.AppCompat.Toolbar">
+    <style name="Widget.Toolbar" parent="Widget.MaterialComponents.Toolbar">
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="android:background">?attr/colorPrimary</item>
         <item name="elevation">6dp</item>
         <item name="titleTextAppearance">@style/Widget.Toolbar.TextAppearance</item>
+        <item name="titleTextColor">@android:color/white</item>
+        <item name="subtitleTextAppearance">?attr/textAppearanceSubtitle1</item>
+        <item name="subtitleTextColor">@android:color/white</item>
     </style>
 
     <style name="Widget.Toolbar.TextAppearance" parent="TextAppearance.MaterialComponents.Button">

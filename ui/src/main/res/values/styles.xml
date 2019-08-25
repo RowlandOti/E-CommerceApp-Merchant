@@ -10,6 +10,7 @@
         <item name="colorControlNormal">@color/lightTextColor</item>
         <item name="android:textColorPrimary">@color/primary_text_color</item>
         <item name="android:textColorSecondary">@color/secondary_text_color</item>
+        <item name="toolbarStyle">@style/Widget.Toolbar</item>
     </style>
 
     <style name="AppTheme.NoActionBar" parent="Theme.MaterialComponents.NoActionBar">
