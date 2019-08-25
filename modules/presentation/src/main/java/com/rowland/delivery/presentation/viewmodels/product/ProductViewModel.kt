@@ -35,7 +35,7 @@ constructor(private val loadProductsUseCase: LoadProductsUseCase, private val de
     }
 
     fun deleteProduct(): Completable {
-        return this.deleteProductsUseCase.execute(DeleteProductUseCase.Params.forProduct(this.getSelectedListItem().value!!.firestoreUid!!))
+        return this.deleteProductsUseCase.deleteProduct(DeleteProductUseCase.Params.forProduct(this.getSelectedListItem().value!!.firestoreUid!!))
     }
 
     inner class ProductsSubscriber : DisposableSubscriber<List<ProductEntity>>() {

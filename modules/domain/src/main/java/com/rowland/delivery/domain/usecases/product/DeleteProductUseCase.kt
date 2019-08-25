@@ -13,6 +13,10 @@ constructor(private val productRepository: IProductRepository, threadExecutor: I
         return this.productRepository.deleteProduct(params.productUID)
     }
 
+    fun deleteProduct(params: Params): Completable {
+        return this.productRepository.deleteProduct(params.productUID)
+    }
+
     data class Params constructor(val productUID: String) {
         companion object {
             fun forProduct(productUID: String): Params {

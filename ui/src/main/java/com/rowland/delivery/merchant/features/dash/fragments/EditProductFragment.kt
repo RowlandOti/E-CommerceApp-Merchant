@@ -96,7 +96,7 @@ class EditProductFragment : Fragment() {
                     .into(edit_input_product_imageview)
         })
 
-        edit_fab_addimage.setOnClickListener { view ->
+        edit_fab_addimage.setOnClickListener { _ ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 RxPermissions(activity!!).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         .subscribe { granted ->
@@ -117,7 +117,7 @@ class EditProductFragment : Fragment() {
             }
         }
 
-        edit_btn_update.setOnClickListener { view ->
+        edit_btn_update.setOnClickListener { _ ->
 
             val productUpdateFields = HashMap<String, Any>()
             productUpdateFields.put("price", Integer.valueOf(input_edit_price_view.quantity!!.toString()))
