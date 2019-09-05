@@ -7,6 +7,7 @@ import android.os.Build
 import android.util.TypedValue
 import android.view.View
 import android.view.WindowManager
+import kotlin.math.roundToInt
 
 /**
  * Created by invictus on 9/10/17.
@@ -32,6 +33,6 @@ object ScreenUtils {
      */
     fun dpToPx(context: Context, dp: Int): Int {
         val r = context.resources
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), r.displayMetrics))
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(), r.displayMetrics).roundToInt()
     }
 }
