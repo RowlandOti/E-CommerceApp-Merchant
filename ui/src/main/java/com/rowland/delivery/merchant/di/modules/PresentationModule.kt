@@ -14,7 +14,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 
-@Module(includes = arrayOf(DaggerViewModelInjectionModule::class))
+@Module(includes = [DaggerViewModelInjectionModule::class])
 abstract class PresentationModule {
 
     @Binds

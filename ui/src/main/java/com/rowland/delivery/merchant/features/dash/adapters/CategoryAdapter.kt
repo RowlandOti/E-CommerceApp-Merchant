@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.presentation.model.category.CategoryModel
 import kotlinx.android.synthetic.main.row_category.view.*
@@ -14,7 +15,7 @@ import javax.inject.Inject
  */
 
 class CategoryAdapter @Inject
-constructor() : androidx.recyclerview.widget.RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+constructor() : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     private var categoryList: List<CategoryModel>? = null
 

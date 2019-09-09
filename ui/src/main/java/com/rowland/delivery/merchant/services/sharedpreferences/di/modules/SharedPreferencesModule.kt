@@ -13,7 +13,7 @@ import dagger.Provides
  * Created by Rowland on 4/30/2018.
  */
 
-@Module(includes = arrayOf(ContextModule::class))
+@Module(includes = [ContextModule::class])
 class SharedPreferencesModule {
 
     @Provides

@@ -11,7 +11,7 @@ import com.rowland.delivery.presentation.data.Resource
 
 abstract class SharedViewModel<T> : ViewModel() {
 
-    protected val dataList = MutableLiveData<Resource<List<T>>>()
+    protected var dataList = MutableLiveData<Resource<List<T>>>()
     protected val selectedListItem = MutableLiveData<T>()
 
     open fun setSelectedListItem(position: Int) {
@@ -24,5 +24,9 @@ abstract class SharedViewModel<T> : ViewModel() {
 
     fun getDataList(): LiveData<Resource<List<T>>> {
         return dataList
+    }
+
+    fun clearDataList() {
+        dataList = MutableLiveData()
     }
 }

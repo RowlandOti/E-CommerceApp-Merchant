@@ -46,8 +46,8 @@ class ProductRepository @Inject constructor(private val dataStoreFactory: Produc
                 .map { mapper.mapFromData(it) }
     }
 
-    override fun updateProduct(productUpdateFields: HashMap<String, Any>, producteUid: String): Completable {
-        return dataStoreFactory.retrieveDataStore(false).updateProduct(productUpdateFields, producteUid)
+    override fun updateProduct(productUpdateFields: HashMap<String, Any>, productUid: String): Completable {
+        return dataStoreFactory.retrieveDataStore(false).updateProduct(productUpdateFields, productUid)
     }
 
     override fun deleteProduct(productUid: String): Completable {

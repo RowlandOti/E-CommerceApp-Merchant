@@ -1,8 +1,6 @@
-package com.rowland.delivery.features.dash.di.scope.product
+package com.rowland.delivery.merchant.di.scope.product
 
-import java.lang.annotation.Documented
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy.RUNTIME
+
 import javax.inject.Scope
 
 /**
@@ -10,6 +8,6 @@ import javax.inject.Scope
  */
 
 @Scope
-@Documented
-@Retention(RUNTIME)
+@MustBeDocumented
+@Retention(AnnotationRetention.RUNTIME)
 annotation class ProductScope

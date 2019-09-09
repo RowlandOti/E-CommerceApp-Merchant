@@ -24,6 +24,7 @@ import com.rowland.delivery.merchant.features.splash.ui.SplashActivity
 import com.rowland.delivery.merchant.services.session.SessionManager
 import com.rowland.delivery.presentation.viewmodels.category.CategoryViewModel
 import com.rowland.delivery.presentation.viewmodels.order.OrderViewModel
+import com.rowland.delivery.presentation.viewmodels.product.ProductViewModel
 import kotlinx.android.synthetic.main.activity_dash.*
 import javax.inject.Inject
 
@@ -34,6 +35,9 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     @Inject
     lateinit var categoryFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var productFactory: ViewModelProvider.Factory
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -91,6 +95,9 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         categoryViewModel.getSelectedListItem()
                 .observe(this, Observer { category ->
                     if (supportFragmentManager.findFragmentByTag(ProductFragment::class.java.simpleName) == null) {
+
+                        val productViewModel = ViewModelProviders.of(this, productFactory).get(ProductViewModel::class.java)
+                        productViewModel.clearDataList()
                         val args = Bundle()
                         args.putString("selected_category", category!!.name)
                         supportFragmentManager.beginTransaction()

@@ -52,19 +52,19 @@ abstract class FirestoreDocumentWithIdSnapshotMapper<T, U> private constructor()
     companion object {
 
         fun <U : FirestoreModel> of(clazz: Class<U>): FirestoreDocumentWithIdSnapshotMapper<DocumentSnapshot, U> {
-            return FirestoreDocumentWithIdSnapshotMapper.TypedDocumentSnapshotMapper(clazz)
+            return TypedDocumentSnapshotMapper(clazz)
         }
 
         fun <U : FirestoreModel> listOf(clazz: Class<U>): FirestoreDocumentWithIdSnapshotMapper<QuerySnapshot, List<U>> {
-            return FirestoreDocumentWithIdSnapshotMapper.TypedListQuerySnapshotMapper(clazz)
+            return TypedListQuerySnapshotMapper(clazz)
         }
 
         fun <U : FirestoreModel> listOf(clazz: Class<U>, mapper: Function<DocumentSnapshot, U>): FirestoreDocumentWithIdSnapshotMapper<QuerySnapshot, List<U>> {
-            return FirestoreDocumentWithIdSnapshotMapper.TypedListQuerySnapshotMapper(clazz, mapper)
+            return TypedListQuerySnapshotMapper(clazz, mapper)
         }
 
         fun <U : FirestoreModel> mapOf(clazz: Class<U>): FirestoreDocumentWithIdSnapshotMapper.TypedMapQuerySnapshotMapper<U> {
-            return FirestoreDocumentWithIdSnapshotMapper.TypedMapQuerySnapshotMapper(clazz)
+            return TypedMapQuerySnapshotMapper(clazz)
         }
 
         private fun <U : FirestoreModel> getDataSnapshotTypedValue(documentSnapshot: DocumentSnapshot, clazz: Class<U>): U {

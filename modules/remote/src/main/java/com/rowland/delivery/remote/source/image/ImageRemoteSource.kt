@@ -15,12 +15,12 @@ class ImageRemoteSource @Inject constructor(private val mFirebaseStorage: Fireba
 
     override fun uploadImages(imageEntitys: List<String>, imageCategory: String, userUid: String): Flowable<List<String>> {
         return Observable.fromArray(imageEntitys)
-                .flatMapIterable({ imageStrings -> imageStrings })
-                .flatMap({ imageString -> getPhotoUrl(Uri.parse(imageString), imageCategory, userUid)!!.subscribeOn(Schedulers.io()).toObservable() })
-                .toList().toFlowable()
+                .flatMapIterable { imageStrings -> imageStrings }
+            .flatMap { imageString -> getPhotoUrl(Uri.parse(imageString), imageCategory, userUid)!!.subscribeOn(Schedulers.io()).toObservable() }
+            .toList().toFlowable()
     }
 
-    fun getPhotoUrl(uri: Uri, imageCategory: String, userUid: String): Single<String>? {
+    private fun getPhotoUrl(uri: Uri, imageCategory: String, userUid: String): Single<String>? {
         val photoRef = mFirebaseStorage.reference
                 .child("photos").child("products").child(imageCategory).child(userUid)
                 .child(uri.lastPathSegment!!)
