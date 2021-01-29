@@ -8,7 +8,12 @@ import io.reactivex.Completable
 import javax.inject.Inject
 
 class DeleteProductUseCase @Inject
-constructor(private val productRepository: IProductRepository, threadExecutor: IThreadExecutor, postExecutionThread: IPostExecutionThread) : CompletableUseCase<DeleteProductUseCase.Params>(threadExecutor, postExecutionThread) {
+constructor(
+    private val productRepository: IProductRepository,
+    threadExecutor: IThreadExecutor,
+    postExecutionThread: IPostExecutionThread
+) : CompletableUseCase<DeleteProductUseCase.Params>(threadExecutor, postExecutionThread) {
+
     override fun buildUseCaseObservable(params: Params): Completable {
         return this.productRepository.deleteProduct(params.productUID)
     }

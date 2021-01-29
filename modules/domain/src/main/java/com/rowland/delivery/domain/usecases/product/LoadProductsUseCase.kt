@@ -13,7 +13,11 @@ import javax.inject.Inject
  */
 
 class LoadProductsUseCase @Inject
-constructor(private val productRepository: IProductRepository, threadExecutor: IThreadExecutor, postExecutionThread: IPostExecutionThread) : FlowableUseCase<List<ProductEntity>, LoadProductsUseCase.Params>(threadExecutor, postExecutionThread) {
+constructor(
+    private val productRepository: IProductRepository,
+    threadExecutor: IThreadExecutor,
+    postExecutionThread: IPostExecutionThread
+) : FlowableUseCase<List<ProductEntity>, LoadProductsUseCase.Params>(threadExecutor, postExecutionThread) {
 
     public override fun buildUseCaseObservable(params: Params?): Flowable<List<ProductEntity>> {
         return this.productRepository.loadProducts(params!!.userUID, params.productCategory)
