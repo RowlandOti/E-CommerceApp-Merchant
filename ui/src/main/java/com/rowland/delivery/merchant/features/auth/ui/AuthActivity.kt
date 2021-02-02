@@ -14,6 +14,7 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.R.id.input_email
 import com.rowland.delivery.merchant.R.id.input_password
+import com.rowland.delivery.merchant.R.string
 import com.rowland.delivery.merchant.di.modules.ContextModule
 import com.rowland.delivery.merchant.features.auth.Auth
 import com.rowland.delivery.merchant.features.auth.AuthException
@@ -66,12 +67,12 @@ class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks, GoogleApiClie
     }
 
     override fun onLoginSuccess() {
-        Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(string.login_successful), Toast.LENGTH_SHORT).show()
         DashActivity.startActivity(this)
     }
 
     override fun onLoginFailure(e: AuthException) {
-        Toast.makeText(this, "Login Unsuccessful", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(string.login_unsuccessful), Toast.LENGTH_SHORT).show()
     }
 
     override fun doEmailLogin(): Map<String, String> {
