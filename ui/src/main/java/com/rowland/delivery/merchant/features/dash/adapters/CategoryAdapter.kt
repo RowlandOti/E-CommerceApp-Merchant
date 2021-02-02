@@ -1,13 +1,11 @@
 package com.rowland.delivery.merchant.features.dash.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.rowland.delivery.merchant.R
+import com.rowland.delivery.merchant.databinding.RowCategoryBinding
 import com.rowland.delivery.presentation.model.category.CategoryModel
-import kotlinx.android.synthetic.main.row_category.view.*
 import javax.inject.Inject
 
 /**
@@ -20,8 +18,9 @@ constructor() : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
     private var categoryList: List<CategoryModel>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_category, parent, false)
-        return CategoryViewHolder(view)
+        val binding = RowCategoryBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+        return CategoryViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
@@ -61,10 +60,12 @@ constructor() : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
         }
     }
 
-    class CategoryViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+    class CategoryViewHolder(val itemViewBinding: RowCategoryBinding) :
+        RecyclerView.ViewHolder(itemViewBinding.root) {
 
         fun populate(categoryModel: CategoryModel) {
-            itemView.cat_name!!.text = Character.toUpperCase(categoryModel.name!![0]) + categoryModel.name!!.substring(1)
+            itemViewBinding.catName.text =
+                Character.toUpperCase(categoryModel.name!![0]) + categoryModel.name!!.substring(1)
         }
     }
 }

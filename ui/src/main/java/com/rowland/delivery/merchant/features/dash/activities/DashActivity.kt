@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.navigation.NavigationView
 import com.rowland.delivery.merchant.R
+import com.rowland.delivery.merchant.databinding.ActivityDashBinding
 import com.rowland.delivery.merchant.di.modules.ContextModule
 import com.rowland.delivery.merchant.features.dash.di.components.DaggerDashComponent
 import com.rowland.delivery.merchant.features.dash.di.components.DashComponent
@@ -25,7 +26,6 @@ import com.rowland.delivery.merchant.services.session.SessionManager
 import com.rowland.delivery.presentation.viewmodels.category.CategoryViewModel
 import com.rowland.delivery.presentation.viewmodels.order.OrderViewModel
 import com.rowland.delivery.presentation.viewmodels.product.ProductViewModel
-import kotlinx.android.synthetic.main.activity_dash.*
 import javax.inject.Inject
 
 class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, androidx.fragment.app.FragmentManager.OnBackStackChangedListener {
@@ -41,6 +41,9 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     @Inject
     lateinit var sessionManager: SessionManager
+
+    private lateinit var _binding: ActivityDashBinding
+    val binding get() = _binding
 
     private lateinit var orderViewModel: OrderViewModel
     private lateinit var categoryViewModel: CategoryViewModel
@@ -71,10 +74,11 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         dashComponent.inject(this)
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dash)
 
+        _binding = ActivityDashBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        dash_drawer.setNavigationItemSelectedListener(this)
+        binding.dashDrawer.setNavigationItemSelectedListener(this)
         mSelectedMenuId = savedInstanceState?.getInt("SELECTED_ID") ?: R.id.action_business
         itemSelection(mSelectedMenuId)
 
@@ -122,17 +126,17 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if (supportFragmentManager.findFragmentByTag(OverviewFragment::class.java.simpleName) == null) {
                     supportFragmentManager.beginTransaction().replace(R.id.dash_container_body, OverviewFragment.newInstance(0), OverviewFragment::class.java.simpleName).commit()
                 }
-                dash_drawer_layout.closeDrawer(GravityCompat.START)
+                binding.dashDrawerLayout.closeDrawer(GravityCompat.START)
             }
             R.id.action_ratings ->
                 //
-                dash_drawer_layout.closeDrawer(GravityCompat.START)
+                binding.dashDrawerLayout.closeDrawer(GravityCompat.START)
             R.id.action_logout -> {
                 sessionManager.logout()
-                dash_drawer_layout.closeDrawer(GravityCompat.START)
+                binding.dashDrawerLayout.closeDrawer(GravityCompat.START)
                 SplashActivity.startActivity(this)
             }
-            else -> dash_drawer_layout.closeDrawer(GravityCompat.START)
+            else -> binding.dashDrawerLayout.closeDrawer(GravityCompat.START)
         }
     }
 

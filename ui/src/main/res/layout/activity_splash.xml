@@ -5,6 +5,6 @@
     android:background="#0099cc"
     tools:context=".features.splash.ui.SplashActivity">
 
-    <include layout="@layout/content_splash" />
+    <include android:id="@+id/splash_content" layout="@layout/content_splash" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

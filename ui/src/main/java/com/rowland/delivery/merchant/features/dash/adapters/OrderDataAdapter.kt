@@ -1,16 +1,15 @@
 package com.rowland.delivery.merchant.features.dash.adapters
 
-
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import com.rowland.delivery.merchant.R
+import androidx.recyclerview.widget.RecyclerView
+import com.rowland.delivery.merchant.databinding.RowSingleCustomerOrderBinding
 import com.rowland.delivery.merchant.features.dash.tools.recylerview.HFRecyclerView
 import com.rowland.delivery.merchant.utilities.DateUtils
 import com.rowland.delivery.presentation.model.order.OrderDataModel
-import kotlinx.android.synthetic.main.row_single_customer_order.view.*
 import java.util.*
 
 /**
@@ -23,17 +22,33 @@ class OrderDataAdapter : HFRecyclerView<OrderDataModel> {
 
     constructor(withHeader: Boolean, withFooter: Boolean) : super(null, withHeader, withFooter) {}
 
-    constructor(data: List<OrderDataModel>, withHeader: Boolean, withFooter: Boolean) : super(data, withHeader, withFooter) {}
-
-    override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder {
-        return OrderDataViewHolder(inflater.inflate(R.layout.row_single_customer_order, parent, false))
+    constructor(data: List<OrderDataModel>, withHeader: Boolean, withFooter: Boolean) : super(
+        data,
+        withHeader,
+        withFooter
+    ) {
     }
 
-    override fun getHeaderView(inflater: LayoutInflater, parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder? {
+    override fun getItemView(
+        inflater: LayoutInflater,
+        parent: ViewGroup
+    ): RecyclerView.ViewHolder {
+        val binding = RowSingleCustomerOrderBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+        return OrderDataViewHolder(binding)
+    }
+
+    override fun getHeaderView(
+        inflater: LayoutInflater,
+        parent: ViewGroup
+    ): androidx.recyclerview.widget.RecyclerView.ViewHolder? {
         return null
     }
 
-    override fun getFooterView(inflater: LayoutInflater, parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder? {
+    override fun getFooterView(
+        inflater: LayoutInflater,
+        parent: ViewGroup
+    ): androidx.recyclerview.widget.RecyclerView.ViewHolder? {
         return null
     }
 
@@ -77,48 +92,48 @@ class OrderDataAdapter : HFRecyclerView<OrderDataModel> {
         }
     }
 
-    class OrderDataViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
-
+    class OrderDataViewHolder(private val itemViewBinding: RowSingleCustomerOrderBinding) :
+        RecyclerView.ViewHolder(itemViewBinding.root) {
 
         fun bind(orderData: OrderDataModel) {
-            itemView.customer_name!!.text = orderData.name
+            itemViewBinding.customerName.text = orderData.name
 
             val lFromDate1 = Date(orderData.createdAt)
-            itemView.order_date!!.text = DateUtils.getTimeAgo(lFromDate1.time)
+            itemViewBinding.orderDate.text = DateUtils.getTimeAgo(lFromDate1.time)
 
             var totalOrders = 0
             if (orderData.items != null) {
                 val items = orderData.items
                 for (item in items!!) {
-                    totalOrders = totalOrders + Integer.valueOf(item.itemQuantity!!)
+                    totalOrders += Integer.valueOf(item.itemQuantity!!)
                 }
             }
 
-            itemView.unique_orders!!.text = String.format("%s orders", totalOrders)
-            itemView.status!!.text = orderData.status
+            itemViewBinding.uniqueOrders.text = String.format("%s orders", totalOrders)
+            itemViewBinding.status.text = orderData.status
 
             when (orderData.status) {
-                "active" -> itemView.status!!.setTextColor(Color.parseColor("#378E3D"))
-                "delivered" -> itemView.status!!.setTextColor(Color.parseColor("#FF6D00"))
+                "active" -> itemViewBinding.status.setTextColor(Color.parseColor("#378E3D"))
+                "delivered" -> itemViewBinding.status.setTextColor(Color.parseColor("#FF6D00"))
                 "failed" -> {
-                    itemView.status!!.setTextColor(Color.parseColor("#B94464"))
-                    itemView.container_cardlayout!!.setBackgroundColor(Color.parseColor("#F0F0F0"))
+                    itemViewBinding.status.setTextColor(Color.parseColor("#B94464"))
+                    itemViewBinding.containerCardlayout.setBackgroundColor(Color.parseColor("#F0F0F0"))
                 }
                 "completed" -> {
-                    itemView.status!!.setTextColor(Color.parseColor("#AAAAAA"))
-                    itemView.container_cardlayout!!.setBackgroundColor(Color.parseColor("#F0F0F0"))
+                    itemViewBinding.status.setTextColor(Color.parseColor("#AAAAAA"))
+                    itemViewBinding.containerCardlayout.setBackgroundColor(Color.parseColor("#F0F0F0"))
                 }
                 "missed" -> {
-                    itemView.status!!.setTextColor(Color.parseColor("#B94464"))
-                    itemView.container_cardlayout!!.setBackgroundColor(Color.parseColor("#F0F0F0"))
+                    itemViewBinding.status.setTextColor(Color.parseColor("#B94464"))
+                    itemViewBinding.containerCardlayout.setBackgroundColor(Color.parseColor("#F0F0F0"))
                 }
-                "in_progress" -> itemView.status!!.setTextColor(Color.parseColor("#378E3D"))
-                "pending" -> itemView.status!!.setTextColor(Color.parseColor("#B94464"))
+                "in_progress" -> itemViewBinding.status.setTextColor(Color.parseColor("#378E3D"))
+                "pending" -> itemViewBinding.status.setTextColor(Color.parseColor("#B94464"))
                 "cancelled" -> {
-                    itemView.status!!.setTextColor(Color.parseColor("#B94464"))
-                    itemView.container_cardlayout!!.setBackgroundColor(Color.parseColor("#F0F0F0"))
+                    itemViewBinding.status.setTextColor(Color.parseColor("#B94464"))
+                    itemViewBinding.containerCardlayout.setBackgroundColor(Color.parseColor("#F0F0F0"))
                 }
-                else -> itemView.status!!.setTextColor(Color.parseColor("#AAAAAA"))
+                else -> itemViewBinding.status.setTextColor(Color.parseColor("#AAAAAA"))
             }
         }
     }

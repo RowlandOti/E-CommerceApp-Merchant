@@ -5,16 +5,14 @@ import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.rowland.delivery.merchant.R
-import com.rowland.delivery.merchant.R.id.input_email
-import com.rowland.delivery.merchant.R.id.input_password
 import com.rowland.delivery.merchant.R.string
+import com.rowland.delivery.merchant.databinding.ActivityAuthBinding
 import com.rowland.delivery.merchant.di.modules.ContextModule
 import com.rowland.delivery.merchant.features.auth.Auth
 import com.rowland.delivery.merchant.features.auth.AuthException
@@ -22,12 +20,9 @@ import com.rowland.delivery.merchant.features.auth.EmailAuth
 import com.rowland.delivery.merchant.features.auth.di.components.DaggerAuthComponent
 import com.rowland.delivery.merchant.features.auth.di.modules.AuthModule
 import com.rowland.delivery.merchant.features.dash.activities.DashActivity
-import kotlinx.android.synthetic.main.activity_auth.*
-import kotlinx.android.synthetic.main.content_auth.*
-import java.util.*
+import java.util.HashMap
 import javax.inject.Inject
 import javax.inject.Named
-
 
 class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -39,10 +34,13 @@ class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks, GoogleApiClie
     @field:Named("email_login")
     lateinit var mEmailAuth: Auth
 
+    private lateinit var binding: ActivityAuthBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_auth)
+        binding = ActivityAuthBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val authComponent = DaggerAuthComponent.builder()
                 .contextModule(ContextModule(this))
@@ -53,12 +51,12 @@ class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks, GoogleApiClie
 
         Glide.with(this)
                 .load(R.drawable.flash)
-                .into(splash_imageview!!)
+                .into(binding.splashImageview)
 
-        btn_google_login.setOnClickListener { mGoogleAuth.login() }
-        btn_login.setOnClickListener { mEmailAuth.login() }
-        btn_register.setOnClickListener { mEmailAuth.register() }
-        txt_reset_password.setOnClickListener { mEmailAuth.login() }
+        binding.authContent.btnGoogleLogin.setOnClickListener { mGoogleAuth.login() }
+        binding.authContent.btnLogin.setOnClickListener { mEmailAuth.login() }
+        binding.authContent.btnRegister.setOnClickListener { mEmailAuth.register() }
+        binding.authContent.txtResetPassword.setOnClickListener { mEmailAuth.login() }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -77,15 +75,15 @@ class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks, GoogleApiClie
 
     override fun doEmailLogin(): Map<String, String> {
         val credentialsMap = HashMap<String, String>()
-        credentialsMap[EmailAuth.CRED_EMAIL_KEY] = input_email!!.text.toString()
-        credentialsMap[EmailAuth.CRED_PASSWORD_KEY] = input_password!!.text.toString()
+        credentialsMap[EmailAuth.CRED_EMAIL_KEY] = binding.authContent.inputEmail.text.toString()
+        credentialsMap[EmailAuth.CRED_PASSWORD_KEY] = binding.authContent.inputPassword.text.toString()
         return credentialsMap
     }
 
     override fun doEmailRegister(): Map<String, String> {
         val credentialsMap = HashMap<String, String>()
-        credentialsMap[EmailAuth.CRED_EMAIL_KEY] = input_email!!.text.toString()
-        credentialsMap[EmailAuth.CRED_PASSWORD_KEY] = input_password!!.text.toString()
+        credentialsMap[EmailAuth.CRED_EMAIL_KEY] = binding.authContent.inputEmail.text.toString()
+        credentialsMap[EmailAuth.CRED_PASSWORD_KEY] = binding.authContent.inputPassword.text.toString()
         return credentialsMap
     }
 

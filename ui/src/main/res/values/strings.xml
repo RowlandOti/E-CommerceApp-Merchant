@@ -46,5 +46,14 @@
     <string name="login_wrong_password">Please enter the correct password</string>
     <string name="login_successful">Login Successful</string>
     <string name="login_unsuccessful">Login Unsuccessful</string>
+    <string name="msg_email_unprovided">Email not provided</string>
+    <string name="msg_address_unprovided">Address not provided</string>
+    <string name="order_status_update_success">Order Status Updated Successfull</string>
+    <string name="order_status_update_failed">Update Failed</string>
+    <string name="image_selection_perms_request">Please grant permissions to select image</string>
+    <string name="category_name">Category: %s created</string>
+    <string name="category_not_created">Category: %s not created</string>
+    <string name="product_update_success">Product updated succesfully</string>
+    <string name="product_update_failure">Product not updated</string>
 
 </resources>

@@ -2,7 +2,6 @@ package com.rowland.delivery.merchant.features.dash.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,13 +12,15 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import com.rowland.delivery.merchant.features.dash.activities.DashActivity
 import com.rowland.delivery.merchant.R
-import kotlinx.android.synthetic.main.activity_dash.*
-import kotlinx.android.synthetic.main.fragment_overview.*
+import com.rowland.delivery.merchant.databinding.FragmentOverviewBinding
 import java.util.*
 
 
 class OverviewFragment : Fragment() {
     private var movePosition: Int = 0
+
+    private var _binding: FragmentOverviewBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,18 +30,18 @@ class OverviewFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_overview, container, false)
+        _binding = FragmentOverviewBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val activity = activity as AppCompatActivity?
-        val drawerLayout = (activity as DashActivity).dash_drawer_layout
+        val drawerLayout = (activity as DashActivity).binding.dashDrawerLayout
 
-        if (overview_toolbar != null) {
-            activity.setSupportActionBar(overview_toolbar)
-            val drawerToggle = object : ActionBarDrawerToggle(activity, drawerLayout, overview_toolbar, R.string.drawer_open, R.string.drawer_close) {
+            activity.setSupportActionBar(binding.overviewToolbar)
+            val drawerToggle = object : ActionBarDrawerToggle(activity, drawerLayout, binding.overviewToolbar, R.string.drawer_open, R.string.drawer_close) {
                 override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                     super.onDrawerSlide(drawerView, slideOffset)
                     this.syncState()
@@ -86,15 +87,19 @@ class OverviewFragment : Fragment() {
             }
             drawerLayout.addDrawerListener(drawerToggle)
             drawerToggle.syncState()
-        }
 
         val adapter = ViewPagerAdapter(childFragmentManager)
         adapter.addFragment(CategoryFragment.Companion.newInstance(null), resources.getString(R.string.tab_categories))
         adapter.addFragment(OrderFragment.Companion.newInstance(null), resources.getString(R.string.tab_orders))
-        overview_viewpager.adapter = adapter
+        binding.overviewViewpager.adapter = adapter
 
-        overview_viewpager.currentItem = movePosition
-        overview_tabs.setupWithViewPager(overview_viewpager)
+        binding.overviewViewpager.currentItem = movePosition
+        binding.overviewTabs.setupWithViewPager(binding.overviewViewpager)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private inner class ViewPagerAdapter(fm: androidx.fragment.app.FragmentManager) : FragmentStatePagerAdapter(fm) {
