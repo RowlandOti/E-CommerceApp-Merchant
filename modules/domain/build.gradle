@@ -19,6 +19,6 @@ dependencies {
     implementation "javax.annotation:jsr250-api:1.0"
     implementation "javax.inject:javax.inject:1"
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.1'
     testImplementation 'org.mockito:mockito-core:2.28.2'
 }
