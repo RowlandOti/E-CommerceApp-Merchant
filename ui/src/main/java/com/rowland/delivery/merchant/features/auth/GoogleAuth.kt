@@ -56,7 +56,7 @@ constructor(private val mAuthConfig: AuthConfig, private val mFirebaseAuth: Fire
         if (requestCode == RC_SIGN_IN && resultCode == Activity.RESULT_OK) {
             val result = com.google.android.gms.auth.api.Auth.GoogleSignInApi.getSignInResultFromIntent(data)
 
-            val acct = result.signInAccount
+            val acct = result?.signInAccount
             val googleUser = UserUtils.populateGoogleUser(acct!!)
 
             firebaseAuthWithGoogle(googleUser, mAuthConfig.activity)
@@ -66,7 +66,7 @@ constructor(private val mAuthConfig: AuthConfig, private val mFirebaseAuth: Fire
     private fun firebaseAuthWithGoogle(user: GoogleUser, activity: Activity) {
         val credential = GoogleAuthProvider.getCredential(user.idToken, null)
 
-        RxFirebaseAuth.signInWithCredential(mFirebaseAuth, credential).subscribe { authResult ->
+        RxFirebaseAuth.signInWithCredential(mFirebaseAuth, credential).subscribe {
             val firebaseUser = mFirebaseAuth.currentUser
             user.userId = firebaseUser!!.uid
             configureUserAccount(user)
