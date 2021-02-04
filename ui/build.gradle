@@ -103,6 +103,8 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'com.squareup.spoon:spoon-client:2.0.0-SNAPSHOT' // For Spoon snapshot, until 2.0.0 is released
+    androidTestImplementation 'com.jraska:falcon:2.0.1'
+    androidTestImplementation 'com.jraska:falcon-spoon-compat:2.1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
