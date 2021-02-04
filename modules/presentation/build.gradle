@@ -36,7 +36,6 @@ dependencies {
     implementation "javax.annotation:jsr250-api:1.0"
     implementation "javax.inject:javax.inject:1"
     implementation 'com.github.etiennelenhart:eiffel:3.0.0'
-    //implementation 'com.alexfacciorusso:daggerviewmodel:0.1.2'
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5'
     //implementation 'com.github.ybq:Android-SpinKit:1.1.0'
     implementation 'com.jude:easyrecyclerview:4.4.2'
