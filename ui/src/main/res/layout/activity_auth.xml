@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/content_auth" />
+        <include android:id="@+id/auth_content" layout="@layout/content_auth" />
     </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

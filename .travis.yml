@@ -29,8 +29,8 @@ android:
     - extra-google-google_play_services
     - extra-android-m2repository
     - extra-google-m2repository
-    - build-tools-28.0.3
-    - android-28
+    - build-tools-30.0.3
+    - android-30
   licenses:
     - 'android-sdk-preview-license-52d11cd2'
     - 'android-sdk-license-.+'
@@ -58,5 +58,6 @@ before_install:
   - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
   - export JAVA_HOME=$JAVA8_HOME
   - chmod +x gradlew
+  - yes | sdkmanager --update
 script:
 - "./gradlew clean build --stacktrace"

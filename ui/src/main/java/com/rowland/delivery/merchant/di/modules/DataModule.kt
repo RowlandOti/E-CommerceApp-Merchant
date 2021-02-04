@@ -12,8 +12,11 @@ import com.rowland.delivery.domain.contracts.IProductRepository
 import com.rowland.delivery.domain.executor.IThreadExecutor
 import dagger.Binds
 import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
 @Module()
+@InstallIn(SingletonComponent::class)
 abstract class DataModule {
 
     @Binds

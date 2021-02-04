@@ -25,6 +25,7 @@
             android:orientation="vertical">
 
             <include
+                android:id="@+id/content_single_product_reveal"
                 layout="@layout/content_single_product_reveal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
@@ -36,6 +37,7 @@
             android:layout_height="wrap_content">
 
             <include
+                android:id="@+id/content_single_product"
                 layout="@layout/content_single_product"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

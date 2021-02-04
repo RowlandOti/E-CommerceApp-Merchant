@@ -7,7 +7,7 @@ open class Resource<out T> constructor(val status: ResourceState, val data: T?, 
     }
 
     fun <T> error(message: String, data: T?): Resource<T> {
-        return Resource(ResourceState.ERROR, null, message)
+        return Resource(ResourceState.ERROR, data, message)
     }
 
     fun <T> loading(): Resource<T> {

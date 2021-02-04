@@ -1,9 +1,6 @@
 package com.rowland.delivery.merchant.features.dash.fragments
 
-
 import android.Manifest
-import android.app.Activity
-import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -25,20 +22,20 @@ import com.google.firebase.auth.FirebaseAuth
 import com.meetic.shuffle.Shuffle
 import com.meetic.shuffle.ShuffleViewAnimatorOnSecondCard
 import com.rowland.delivery.domain.models.product.ProductEntity
-import com.rowland.delivery.merchant.R
-import com.rowland.delivery.merchant.features.dash.activities.DashActivity
+import com.rowland.delivery.merchant.R.string
+import com.rowland.delivery.merchant.databinding.ContentProductImagesShuffleBinding
+import com.rowland.delivery.merchant.databinding.FragmentNewProductBinding
 import com.rowland.delivery.presentation.viewmodels.product.EditProductViewModel
 import com.rowland.delivery.presentation.viewmodels.product.NewProductViewModel
 import com.rowland.rxgallery.RxGallery
 import com.tbruyelle.rxpermissions2.RxPermissions
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.content_product_images_shuffle.view.*
-import kotlinx.android.synthetic.main.fragment_new_product.*
-import java.util.*
+import java.util.Date
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class NewProductFragment : Fragment() {
 
     private lateinit var newProductViewModel: NewProductViewModel
@@ -46,8 +43,12 @@ class NewProductFragment : Fragment() {
     @Inject
     lateinit var newProductFactory: ViewModelProvider.Factory
 
+    private var _binding: FragmentNewProductBinding? = null
+    private val binding get() = _binding!!
+
     companion object {
-        fun newInstance(args: Bundle?): androidx.fragment.app.Fragment {
+
+        fun newInstance(args: Bundle?): Fragment {
             val frag = NewProductFragment()
             frag.arguments = args
             return frag
@@ -60,92 +61,110 @@ class NewProductFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_new_product, container, false)
+        _binding = FragmentNewProductBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity as DashActivity).dashComponent.inject(this)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as AppCompatActivity).setSupportActionBar(newproduct_toolbar)
+        (activity as AppCompatActivity).setSupportActionBar(binding.newproductToolbar)
 
-        fab_addimage.setOnClickListener { view ->
+        binding.fabAddimage.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                RxPermissions(activity!!).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        .subscribe { granted ->
-                            if (!granted) {
-                                Toast.makeText(activity, "Please grant permissions to select image", Toast.LENGTH_SHORT).show()
-                            } else {
-                                RxGallery.gallery(activity!!, true, RxGallery.MimeType.IMAGE)
-                                        .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe({ uris ->
-                                            newProductViewModel.setImageUri(uris)
-                                        }, { throwable -> Log.d(EditProductViewModel::class.java.simpleName, "Error Selecting Images: $throwable") }) {
-                                            Log.d(EditProductViewModel::class.java.simpleName, "Done Selecting Images")
-                                        }
-                            }
+                RxPermissions(requireActivity()).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    .subscribe { granted ->
+                        if (!granted) {
+                            Toast.makeText(
+                                activity,
+                                getString(string.image_selection_perms_request),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            RxGallery.gallery(requireActivity(), true, RxGallery.MimeType.IMAGE)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(
+                                    { uris ->
+                                        newProductViewModel.setImageUri(uris)
+                                    },
+                                    { throwable ->
+                                        Log.d(
+                                            EditProductViewModel::class.java.simpleName,
+                                            "Error Selecting Images: $throwable"
+                                        )
+                                    }) {
+                                    Log.d(EditProductViewModel::class.java.simpleName, "Done Selecting Images")
+                                }
                         }
+                    }
             }
         }
 
-        btn_save.setOnClickListener { view ->
+        binding.btnSave.setOnClickListener {
             val product = ProductEntity()
-            product.price = Integer.valueOf(input_product_pricing.text!!.toString())
-            product.name = input_product_name.text!!.toString()
-            product.saleQuantity = Integer.valueOf(input_product_quantity.text!!.toString())
-            product.itemQuantity = Integer.valueOf(input_product_stock!!.text!!.toString())
-            product.description = input_product_description.text!!.toString()
+            product.price = Integer.valueOf(binding.inputProductPricing.text.toString())
+            product.name = binding.inputProductName.text!!.toString()
+            product.saleQuantity = Integer.valueOf(binding.inputProductQuantity.text.toString())
+            product.itemQuantity = Integer.valueOf(binding.inputProductStock.text.toString())
+            product.description = binding.inputProductDescription.text.toString()
             product.createdAt = Date()
 
-            val category = arguments!!.getString("selected_category")
+            val category = requireArguments().getString("selected_category")
 
-            newProductViewModel.createProduct(product,category, FirebaseAuth.getInstance().currentUser!!.uid)
-                    .subscribe({ newProduct ->
-                        Toast.makeText(activity, "Product added succesfully", Toast.LENGTH_SHORT).show()
-                        activity!!.supportFragmentManager.popBackStack(NewProductFragment::class.java.simpleName, POP_BACK_STACK_INCLUSIVE)
-                    }) { throwable -> Toast.makeText(activity, "Product not added", Toast.LENGTH_SHORT).show() }
+            newProductViewModel.createProduct(product, category!!, FirebaseAuth.getInstance().currentUser!!.uid)
+                .subscribe({
+                    Toast.makeText(activity, "Product added succesfully", Toast.LENGTH_SHORT).show()
+                    requireActivity().supportFragmentManager.popBackStack(
+                        NewProductFragment::class.java.simpleName,
+                        POP_BACK_STACK_INCLUSIVE
+                    )
+                }) { Toast.makeText(activity, "Product not added", Toast.LENGTH_SHORT).show() }
 
         }
 
-        btn_cancell.setOnClickListener { view ->
-            activity!!.supportFragmentManager.popBackStack(NewProductFragment::class.java.simpleName, POP_BACK_STACK_INCLUSIVE)
+        binding.btnCancell.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack(
+                NewProductFragment::class.java.simpleName,
+                POP_BACK_STACK_INCLUSIVE
+            )
         }
 
-        newProductViewModel.images.observe(this, Observer { uris ->
-            new_product_shuffle.shuffleSettings.numberOfDisplayedCards = uris!!.size
-            new_product_shuffle.shuffleAdapter = ImageShuffleAdapter(uris.map { uri -> Uri.parse(uri) })
-            new_product_shuffle.viewAnimator = ShuffleViewAnimatorOnSecondCard()
+        newProductViewModel.images.observe(viewLifecycleOwner, Observer { uris ->
+            binding.newProductShuffle.shuffleSettings.numberOfDisplayedCards = uris!!.size
+            binding.newProductShuffle.shuffleAdapter = ImageShuffleAdapter(uris.map { uri -> Uri.parse(uri) })
+            binding.newProductShuffle.viewAnimator = ShuffleViewAnimatorOnSecondCard()
         })
-
     }
 
-    class ImageShuffleViewHolder(itemView: View) : Shuffle.ViewHolder(itemView) {
+    class ImageShuffleViewHolder(private val shuffleBinding: ContentProductImagesShuffleBinding) :
+        Shuffle.ViewHolder(shuffleBinding.root) {
+
         fun bind(uri: Uri, position: Int) {
-            itemView!!.product_images_count!!.text = position.toString()
+            this.shuffleBinding.productImagesCount.text = position.toString()
             val options = RequestOptions()
             options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
-            Glide.with(itemView!!.product_image.context)
-                    .load(uri)
-                    .apply(options)
-                    .into(itemView!!.product_image)
+            Glide.with(shuffleBinding.productImage.context)
+                .load(uri)
+                .apply(options)
+                .into(shuffleBinding.productImage)
         }
     }
 
     class ImageShuffleAdapter(_uris: List<Uri>) : Shuffle.Adapter<ImageShuffleViewHolder>() {
-        var uris: List<Uri>
 
-        init {
-            uris = _uris
-        }
+        var uris: List<Uri> = _uris
 
         override fun onCreateViewHolder(parent: ViewGroup, type: Int): ImageShuffleViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.content_product_images_shuffle, parent, false)
-            return ImageShuffleViewHolder(view)
+            val binding = ContentProductImagesShuffleBinding
+                .inflate(LayoutInflater.from(parent.context), parent, false)
+
+            return ImageShuffleViewHolder(binding)
         }
 
         override fun onBindViewHolder(viewHolder: ImageShuffleViewHolder, position: Int) {

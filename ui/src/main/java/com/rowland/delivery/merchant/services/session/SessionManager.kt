@@ -20,11 +20,10 @@ constructor(private val preferencesManager: SharedPreferencesManager) {
         get() = preferencesManager.getString(AppConstants.KEY_TOKEN)
 
     fun setLogin(token: String) {
-        val time_log = Date().time
 
         preferencesManager.putBoolean(AppConstants.KEY_IS_LOGGEDIN, true)
                 .putString(AppConstants.KEY_TOKEN, token)
-                .putLong(AppConstants.KEY_TIME, time_log)
+                .putLong(AppConstants.KEY_TIME, Date().time)
     }
 
     fun logout() {
@@ -37,14 +36,14 @@ constructor(private val preferencesManager: SharedPreferencesManager) {
         val diffMSec = Date().time - preferencesManager.getLong(AppConstants.KEY_TIME)
         val diffHours = (diffMSec / (1000 * 60 * 60)).toInt()
 
-        if (diffHours >= 23) {
+        return if (diffHours >= 23) {
             preferencesManager.putBoolean(AppConstants.KEY_IS_LOGGEDIN, false)
-                    .putString(AppConstants.KEY_TOKEN, "")
-                    .putLong(AppConstants.KEY_TIME, 0)
+                .putString(AppConstants.KEY_TOKEN, "")
+                .putLong(AppConstants.KEY_TIME, 0)
 
-            return true
+            true
         } else {
-            return false
+            false
         }
     }
 }

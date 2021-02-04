@@ -19,17 +19,21 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.dekoservidoni.omfm.OneMoreFabMenu
 import com.rowland.delivery.merchant.R
+import com.rowland.delivery.merchant.R.string
+import com.rowland.delivery.merchant.databinding.FragmentOrderItemBinding
 import com.rowland.delivery.merchant.features.dash.activities.DashActivity
 import com.rowland.delivery.merchant.features.dash.adapters.OrderItemAdapter
 import com.rowland.delivery.presentation.model.order.OrderDataModel
 import com.rowland.delivery.presentation.viewmodels.order.OrderViewModel
-import kotlinx.android.synthetic.main.fragment_order_item.*
-import java.util.*
+import dagger.hilt.android.AndroidEntryPoint
+import java.util.HashMap
 import javax.inject.Inject
 
 /**
  * Created by Rowland on 5/7/2018.
  */
+
+@AndroidEntryPoint
 class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
 
     private lateinit var orderViewModel: OrderViewModel
@@ -41,8 +45,12 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
     @Inject
     lateinit var orderFactory: ViewModelProvider.Factory
 
+    private var _binding: FragmentOrderItemBinding? = null
+    private val binding get() = _binding!!
+
     companion object {
-        private val CALL_PERMISSION = 100
+
+        private const val CALL_PERMISSION = 100
 
         fun newInstance(args: Bundle?): OrderItemFragment {
             val frag = OrderItemFragment()
@@ -53,38 +61,39 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        orderViewModel = ViewModelProviders.of(activity!!, orderFactory).get(OrderViewModel::class.java)
+        orderViewModel = ViewModelProviders.of(requireActivity(), orderFactory).get(OrderViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_order_item, container, false)
+        _binding = FragmentOrderItemBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity as DashActivity).dashComponent.inject(this)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as AppCompatActivity).setSupportActionBar(orderitem_toolbar)
+        (activity as AppCompatActivity).setSupportActionBar(binding.orderitemToolbar)
 
-        ordereditem_recyclerview.setLayoutManager(androidx.recyclerview.widget.LinearLayoutManager(activity))
-        ordereditem_recyclerview.setItemAnimator(androidx.recyclerview.widget.DefaultItemAnimator())
-        ordereditem_recyclerview.setAdapterWithProgress(adapter)
+        binding.ordereditemRecyclerview.setLayoutManager(androidx.recyclerview.widget.LinearLayoutManager(activity))
+        binding.ordereditemRecyclerview.setItemAnimator(androidx.recyclerview.widget.DefaultItemAnimator())
+        binding.ordereditemRecyclerview.setAdapterWithProgress(adapter)
 
-        action_call_btn.setOnClickListener({ view ->
+        binding.actionCallBtn.setOnClickListener { view ->
             makeCall()
-        })
+        }
 
-        orderitem_fab.setOptionsClick(this)
+        binding.orderitemFab.setOptionsClick(this)
 
         orderViewModel.getSelectedListItem()
-                .observe(this, Observer { orderData ->
-                    this.orderData = orderData
-                    setupData()
-                })
+            .observe(viewLifecycleOwner, Observer { orderData ->
+                this.orderData = orderData
+                setupData()
+            })
     }
 
     override fun onOptionClick(optionId: Int?) {
@@ -94,17 +103,20 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
             R.id.action_in_progress -> changeStatus("in_progress")
             R.id.action_canceled -> changeStatus("cancelled")
         }
-        orderitem_fab.performClick()
+        binding.orderitemFab.performClick()
     }
 
-
-    fun makeCall() {
-        if (ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+    private fun makeCall() {
+        if (ActivityCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.CALL_PHONE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             val callIntent = Intent(Intent.ACTION_CALL)
             callIntent.data = Uri.parse(String.format("tel:%s", orderData!!.phone))
             startActivity(callIntent)
         } else {
-            ActivityCompat.requestPermissions(activity!!, arrayOf(Manifest.permission.CALL_PHONE), CALL_PERMISSION)
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CALL_PHONE), CALL_PERMISSION)
         }
     }
 
@@ -118,8 +130,9 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
         }
     }
 
-    fun changeTextStatus(s: String) {
-        status.text = s
+    private fun changeTextStatus(s: String) {
+        val status = binding.status
+        status.setText(s)
         when (s) {
             "active" -> status.setTextColor(Color.parseColor("#378E3D"))
             "delivered" -> status.setTextColor(Color.parseColor("#FF6D00"))
@@ -133,32 +146,39 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
         }
     }
 
-    fun changeStatus(status: String) {
+    private fun changeStatus(status: String) {
         val orderUpdateFields = HashMap<String, Any>()
         orderUpdateFields.put("status", status)
         orderViewModel.updateOrder(orderUpdateFields)
-                .subscribe({ Toast.makeText(activity, "Order Status Updated Successfull", Toast.LENGTH_SHORT).show() }) { throwable -> Toast.makeText(activity, "Update Failed", Toast.LENGTH_SHORT).show() }
+            .subscribe({
+                Toast.makeText(activity, getString(string.order_status_update_success), Toast.LENGTH_SHORT).show()
+            }) {
+                Toast.makeText(
+                    activity, getString(
+                        string.order_status_update_failed
+                    ), Toast.LENGTH_SHORT
+                ).show()
+            }
     }
 
-
-    fun setupData() {
-        customer_name.text = orderData!!.name
+    private fun setupData() {
+        binding.customerName.text = orderData!!.name
         changeTextStatus(orderData!!.status!!)
 
-        phone.text = orderData!!.phone
-        email.text = "Email not provided"
+        binding.phone.text = orderData!!.phone
+        binding.email.text = getString(string.msg_email_unprovided)
 
         if (orderData!!.address!!.isEmpty()) {
-            address.text = "Address not provided"
+            binding.address.text = getString(string.msg_address_unprovided)
         } else {
-            address.text = orderData!!.address
+            binding.address.text = orderData!!.address
         }
 
-        order_ref.text = orderData!!.orderRef
-        all_items.text = "items (" + orderData!!.orderItemsQuantity + ")"
-        total_item_price.text = "Ksh " + orderData!!.orderSubTotal
-        delivery_fee.text = "Ksh " + orderData!!.deliveryFee!!
-        total_price.text = "Ksh " + orderData!!.orderTotal!!
+        binding.orderRef.text = orderData!!.orderRef
+        binding.allItems.text = "items (" + orderData!!.orderItemsQuantity + ")"
+        binding.totalItemPrice.text = "Ksh " + orderData!!.orderSubTotal
+        binding.deliveryFee.text = "Ksh " + orderData!!.deliveryFee!!
+        binding.totalPrice.text = "Ksh " + orderData!!.orderTotal!!
 
         adapter.setList(orderData!!.items!!)
         adapter.notifyDataSetChanged()

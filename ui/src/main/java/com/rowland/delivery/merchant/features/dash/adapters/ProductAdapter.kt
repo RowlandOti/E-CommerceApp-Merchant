@@ -13,44 +13,43 @@ import com.chauthai.swipereveallayout.ViewBinderHelper
 import com.github.florent37.glidepalette.BitmapPalette
 import com.github.florent37.glidepalette.GlidePalette
 import com.google.firebase.storage.FirebaseStorage
-import com.rowland.delivery.merchant.R
+import com.rowland.delivery.merchant.databinding.RowSingleProductBinding
 import com.rowland.delivery.merchant.features.dash.tools.recylerview.HFRecyclerView
 import com.rowland.delivery.presentation.model.product.ProductModel
 import com.rowland.delivery.presentation.viewmodels.product.ProductEvent
-import kotlinx.android.synthetic.main.content_single_product.view.*
-import kotlinx.android.synthetic.main.content_single_product_reveal.view.*
-import kotlinx.android.synthetic.main.row_single_product.view.*
-
 
 /**
  * Created by Rowland on 5/13/2018.
  */
 
-class ProductAdapter(data: List<ProductModel>?, withHeader: Boolean, withFooter: Boolean) : HFRecyclerView<ProductModel>(data, withHeader, withFooter) {
+class ProductAdapter(data: List<ProductModel>?, withHeader: Boolean, withFooter: Boolean) :
+    HFRecyclerView<ProductModel>(data, withHeader, withFooter) {
 
-    private lateinit var viewBinderHelper: ViewBinderHelper
+    private var viewBinderHelper: ViewBinderHelper = ViewBinderHelper()
     private lateinit var actionListener: ProductActionListener
 
     interface ProductActionListener {
+
         fun onProductActionListener(event: ProductEvent, fn: () -> Unit)
     }
 
     constructor() : this(false, false) {
-        viewBinderHelper = ViewBinderHelper()
         viewBinderHelper.setOpenOnlyOne(true)
     }
 
     constructor(withHeader: Boolean, withFooter: Boolean) : this(null, withHeader, withFooter)
 
-    override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder {
-        return ProductViewHolder(inflater.inflate(R.layout.row_single_product, parent, false))
+    override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder {
+        val binding = RowSingleProductBinding
+            .inflate(inflater, parent, false)
+        return ProductViewHolder(binding)
     }
 
-    override fun getHeaderView(inflater: LayoutInflater, parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder? {
+    override fun getHeaderView(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder? {
         return null
     }
 
-    override fun getFooterView(inflater: LayoutInflater, parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder? {
+    override fun getFooterView(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder? {
         return null
     }
 
@@ -58,7 +57,6 @@ class ProductAdapter(data: List<ProductModel>?, withHeader: Boolean, withFooter:
         if (holder is ProductViewHolder) {
             val data = getItem(position)
             holder.bind(data)
-
         } else if (holder is HeaderViewHolder) {
 
         } else if (holder is FooterViewHolder) {
@@ -107,47 +105,55 @@ class ProductAdapter(data: List<ProductModel>?, withHeader: Boolean, withFooter:
         viewBinderHelper.restoreStates(inState)
     }
 
-    inner class ProductViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
+    inner class ProductViewHolder(private val itemViewBinding: RowSingleProductBinding) :
+        RecyclerView.ViewHolder(itemViewBinding.root) {
 
         fun bind(productModel: ProductModel) {
-            FirebaseStorage.getInstance().reference.child(productModel.imageUrls.get(productModel.imageUrls.size -1)).downloadUrl
-                    .addOnSuccessListener { uri ->
-                        val options = RequestOptions()
-                        options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
+            FirebaseStorage.getInstance().reference.child(productModel.imageUrls[productModel.imageUrls.size - 1]).downloadUrl
+                .addOnSuccessListener { uri ->
+                    val options = RequestOptions()
+                    options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
 
-                        Glide.with(itemView.product_imageview!!.context)
-                                .load(uri.toString())
-                                .apply(options)
-                                .listener(GlidePalette.with(uri.toString())
-                                        .use(BitmapPalette.Profile.VIBRANT_LIGHT)
-                                        .intoBackground(itemView.card_main_content)
-                                        .use(BitmapPalette.Profile.VIBRANT_DARK)
-                                        .intoTextColor(itemView.product_description, BitmapPalette.Swatch.BODY_TEXT_COLOR)
-                                        .crossfade(true))
-                                .into(itemView.product_imageview!!)
-                    }
+                    Glide.with(itemViewBinding.contentSingleProduct.productImageview.context)
+                        .load(uri.toString())
+                        .apply(options)
+                        .listener(
+                            GlidePalette.with(uri.toString())
+                                .use(BitmapPalette.Profile.VIBRANT_LIGHT)
+                                .intoBackground(itemViewBinding.contentSingleProduct.cardMainContent)
+                                .use(BitmapPalette.Profile.VIBRANT_DARK)
+                                .intoTextColor(
+                                    itemViewBinding.contentSingleProduct.productDescription,
+                                    BitmapPalette.Swatch.BODY_TEXT_COLOR
+                                )
+                                .crossfade(true)
+                        )
+                        .into(itemViewBinding.contentSingleProduct.productImageview)
+                }
 
-            itemView.product_name_textview!!.text = productModel.name
-            itemView.product_description!!.text = productModel.description
-            itemView.product_price!!.text = "Ksh " + productModel.price!!
+            itemViewBinding.contentSingleProduct.productNameTextview.text = productModel.name
+            itemViewBinding.contentSingleProduct.productDescription.text = productModel.description
+            itemViewBinding.contentSingleProduct.productPrice.text = "Ksh " + productModel.price!!
 
-            viewBinderHelper.bind(itemView.swipe_layout!!, productModel.firestoreUid)
+            viewBinderHelper.bind(itemViewBinding.swipeLayout, productModel.firestoreUid)
 
-            itemView.btn_unpublish!!.setOnClickListener { v ->
-                itemView.btn_unpublish!!.setIndeterminate()
-                actionListener.onProductActionListener(ProductEvent.Unpublish(), { itemView.btn_unpublish.setFinish() })
+            itemViewBinding.contentSingleProductReveal.btnUnpublish.setOnClickListener {
+                itemViewBinding.contentSingleProductReveal.btnUnpublish.setIndeterminate()
+                actionListener.onProductActionListener(
+                    ProductEvent.Unpublish()
+                ) { itemViewBinding.contentSingleProductReveal.btnUnpublish.setFinish() }
                 viewBinderHelper.closeLayout(productModel.firestoreUid)
             }
 
-            itemView.btn_edit!!.setOnClickListener { v ->
-                itemView.btn_edit!!.setIndeterminate()
-                actionListener.onProductActionListener(ProductEvent.Edit(), { itemView.btn_edit.setFinish() })
+            itemViewBinding.contentSingleProductReveal.btnEdit.setOnClickListener {
+                itemViewBinding.contentSingleProductReveal.btnEdit.setIndeterminate()
+                actionListener.onProductActionListener(ProductEvent.Edit()) { itemViewBinding.contentSingleProductReveal.btnEdit.setFinish() }
                 viewBinderHelper.closeLayout(productModel.firestoreUid)
             }
         }
     }
 
-    class HeaderViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView)
+    class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    class FooterViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView)
+    class FooterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

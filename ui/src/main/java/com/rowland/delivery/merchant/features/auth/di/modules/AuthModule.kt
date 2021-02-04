@@ -1,6 +1,5 @@
 package com.rowland.delivery.merchant.features.auth.di.modules
 
-
 import android.app.Activity
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
@@ -19,6 +18,9 @@ import com.rowland.delivery.merchant.services.session.SessionManager
 import com.rowland.delivery.merchant.services.session.di.modules.SessionModule
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -26,46 +28,57 @@ import javax.inject.Singleton
  * Created by Rowland on 5/1/2018.
  */
 
-@Module(includes = arrayOf(ContextModule::class, SessionModule::class, FirebaseModule::class))
+@Module(includes = [ContextModule::class, SessionModule::class, FirebaseModule::class])
+@InstallIn(SingletonComponent::class)
 class AuthModule {
 
     @Provides
     @Singleton
     @Named("email_login")
-    fun providesEmailAuth(authConfig: AuthConfig, firebaseAuth: FirebaseAuth, firebaseFirestore: FirebaseFirestore, sessionManager: SessionManager): Auth {
+    fun providesEmailAuth(
+        authConfig: AuthConfig,
+        firebaseAuth: FirebaseAuth,
+        firebaseFirestore: FirebaseFirestore,
+        sessionManager: SessionManager
+    ): Auth {
         return EmailAuth(authConfig, firebaseAuth, firebaseFirestore, sessionManager)
     }
 
     @Provides
     @Singleton
     @Named("google_login")
-    fun providesGoogleAuth(authConfig: AuthConfig, firebaseAuth: FirebaseAuth, firebaseFirestore: FirebaseFirestore, sessionManager: SessionManager): Auth {
+    fun providesGoogleAuth(
+        authConfig: AuthConfig,
+        firebaseAuth: FirebaseAuth,
+        firebaseFirestore: FirebaseFirestore,
+        sessionManager: SessionManager
+    ): Auth {
         return GoogleAuth(authConfig, firebaseAuth, firebaseFirestore, sessionManager)
     }
 
     @Provides
     @Singleton
-    fun providesSocialAuthConfig(context: Context, googleApiClient: GoogleApiClient): AuthConfig {
+    fun providesSocialAuthConfig(@ApplicationContext context: Context, googleApiClient: GoogleApiClient): AuthConfig {
         return AuthConfig(context as Activity, context as Auth.AuthLoginCallbacks)
-                .setGoogleApiClient(googleApiClient)
+            .setGoogleApiClient(googleApiClient)
     }
 
     @Provides
     @Singleton
-    fun providesGoogleApiClient(context: Context, gso: GoogleSignInOptions): GoogleApiClient {
+    fun providesGoogleApiClient(@ApplicationContext context: Context, gso: GoogleSignInOptions): GoogleApiClient {
         return GoogleApiClient.Builder(context)
-                .enableAutoManage(context as FragmentActivity, context as GoogleApiClient.OnConnectionFailedListener)
-                .addApi(com.google.android.gms.auth.api.Auth.GOOGLE_SIGN_IN_API, gso)
-                .build()
+            .enableAutoManage(context as FragmentActivity, context as GoogleApiClient.OnConnectionFailedListener)
+            .addApi(com.google.android.gms.auth.api.Auth.GOOGLE_SIGN_IN_API, gso)
+            .build()
     }
 
     @Provides
     @Singleton
-    fun providesGoogleSignOptions(context: Context): GoogleSignInOptions {
+    fun providesGoogleSignOptions(@ApplicationContext context: Context): GoogleSignInOptions {
         return GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(context.getString(R.string.default_web_client_id))
-                .requestEmail()
-                .requestProfile()
-                .build()
+            .requestIdToken(context.getString(R.string.default_web_client_id))
+            .requestEmail()
+            .requestProfile()
+            .build()
     }
 }

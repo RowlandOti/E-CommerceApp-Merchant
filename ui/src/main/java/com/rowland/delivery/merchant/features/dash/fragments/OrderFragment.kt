@@ -1,7 +1,5 @@
 package com.rowland.delivery.merchant.features.dash.fragments
 
-
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,19 +12,20 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
-import com.rowland.delivery.merchant.R
-import com.rowland.delivery.merchant.features.dash.activities.DashActivity
+import com.rowland.delivery.merchant.databinding.FragmentOrdersBinding
 import com.rowland.delivery.merchant.features.dash.adapters.OrderDataAdapter
 import com.rowland.delivery.merchant.features.dash.tools.recylerview.RecyclerItemClickListener
 import com.rowland.delivery.presentation.data.ResourceState
 import com.rowland.delivery.presentation.model.order.OrderDataModel
 import com.rowland.delivery.presentation.viewmodels.order.OrderViewModel
-import kotlinx.android.synthetic.main.fragment_orders.*
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
  * Created by Rowland on 5/7/2018.
  */
+
+@AndroidEntryPoint
 class OrderFragment : Fragment() {
 
     private lateinit var orderViewModel: OrderViewModel
@@ -37,8 +36,12 @@ class OrderFragment : Fragment() {
     @Inject
     lateinit var orderAdapter: OrderDataAdapter
 
+    private var _binding: FragmentOrdersBinding? = null
+    private val binding get() = _binding!!
+
     companion object {
-        fun newInstance(args: Bundle?): androidx.fragment.app.Fragment {
+
+        fun newInstance(args: Bundle?): Fragment {
             val frag = OrderFragment()
             frag.arguments = args
             return frag
@@ -47,39 +50,41 @@ class OrderFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        orderViewModel = ViewModelProviders.of(activity!!, orderFactory).get(OrderViewModel::class.java)
+        orderViewModel = ViewModelProviders.of(requireActivity(), orderFactory).get(OrderViewModel::class.java)
         orderViewModel.loadOrders(FirebaseAuth.getInstance().currentUser!!.uid)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_orders, container, false)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity as DashActivity).dashComponent.inject(this)
+        _binding = FragmentOrdersBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val linearLayoutManager = LinearLayoutManager(activity)
-        orders_recyclerview.setLayoutManager(linearLayoutManager)
-        orders_recyclerview.setItemAnimator(DefaultItemAnimator())
-        orders_recyclerview.setAdapterWithProgress(orderAdapter)
+        binding.ordersRecyclerview.setLayoutManager(linearLayoutManager)
+        binding.ordersRecyclerview.setItemAnimator(DefaultItemAnimator())
+        binding.ordersRecyclerview.setAdapterWithProgress(orderAdapter)
 
-        orders_recyclerview.addOnItemTouchListener(RecyclerItemClickListener(activity, orders_recyclerview.recyclerView, object : RecyclerItemClickListener.OnItemClickListener {
-            override fun onItemClick(view: View, position: Int) {
-                orderViewModel.setSelectedListItem(position)
-            }
+        binding.ordersRecyclerview.addOnItemTouchListener(
+            RecyclerItemClickListener(
+                activity,
+                binding.ordersRecyclerview.recyclerView,
+                object : RecyclerItemClickListener.OnItemClickListener {
+                    override fun onItemClick(view: View, position: Int) {
+                        orderViewModel.setSelectedListItem(position)
+                    }
 
-            override fun onItemLongClick(view: View, position: Int) {}
-        }))
+                    override fun onItemLongClick(view: View, position: Int) {}
+                })
+        )
 
 
         orderViewModel.getDataList()
-                .observe(this, Observer { orders -> handleDataState(orders.status, orders.data, orders.message) })
-
+            .observe(
+                viewLifecycleOwner,
+                { orders -> handleDataState(orders.status, orders.data, orders.message) })
 
 /*
         FirebaseFirestore.getInstance()
@@ -91,19 +96,22 @@ class OrderFragment : Fragment() {
                 });*/
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun handleDataState(resourceState: ResourceState, data: List<OrderDataModel>?, message: String?) {
         when (resourceState) {
-            ResourceState.LOADING -> orders_recyclerview.showProgress()
+            ResourceState.LOADING -> binding.ordersRecyclerview.showProgress()
             ResourceState.SUCCESS -> {
-                orders_recyclerview.showRecycler()
+                binding.ordersRecyclerview.showRecycler()
                 orderAdapter.setList(data!!)
             }
             ResourceState.ERROR -> {
-                orders_recyclerview.showError()
-                Log.d(OrderFragment::class.java.simpleName, message)
+                binding.ordersRecyclerview.showError()
+                message?.let { Log.d(OrderFragment::class.java.simpleName, it) }
             }
         }
     }
-
-
 }

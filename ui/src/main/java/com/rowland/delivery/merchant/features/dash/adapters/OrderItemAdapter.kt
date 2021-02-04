@@ -3,12 +3,13 @@ package com.rowland.delivery.merchant.features.dash.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.NonNull
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.rowland.delivery.merchant.R
+import com.rowland.delivery.merchant.databinding.RowSingleOrderItemBinding
 import com.rowland.delivery.merchant.features.dash.tools.recylerview.HFRecyclerView
 import com.rowland.delivery.presentation.model.order.OrderItemModel
-import kotlinx.android.synthetic.main.row_single_order_item.view.*
 
 
 /**
@@ -23,19 +24,21 @@ class OrderItemAdapter : HFRecyclerView<OrderItemModel> {
 
     constructor(data: List<OrderItemModel>, withHeader: Boolean, withFooter: Boolean) : super(data, withHeader, withFooter) {}
 
-    override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder {
-        return OrderItemViewHolder(inflater.inflate(R.layout.row_single_order_item, parent, false))
+    override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder {
+        val binding = RowSingleOrderItemBinding
+            .inflate(inflater, parent, false)
+        return OrderItemViewHolder(binding)
     }
 
     override fun getHeaderView(inflater: LayoutInflater, parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder? {
         return null
     }
 
-    override fun getFooterView(inflater: LayoutInflater, parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder? {
+    override fun getFooterView(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder? {
         return null
     }
 
-    override fun onBindViewHolder(holder: androidx.recyclerview.widget.RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is OrderItemViewHolder) {
             val data = getItem(position)
             holder.bind(data)
@@ -75,16 +78,14 @@ class OrderItemAdapter : HFRecyclerView<OrderItemModel> {
         }
     }
 
-    class OrderItemViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
-
-
+    class OrderItemViewHolder(private val itemViewBinding: RowSingleOrderItemBinding) :RecyclerView.ViewHolder(itemViewBinding.root) {
 
         fun bind(orderItem: OrderItemModel) {
-            Glide.with(itemView.food_image!!.context).load(orderItem.imageUrl).into(itemView.food_image!!)
-            itemView.items_count!!.text = orderItem.itemQuantity.toString()
-            itemView.item_name!!.text = orderItem.title
-            itemView.item_price!!.text = "Price: Ksh " + orderItem.price + " each"
-            itemView.item_total_price!!.text = "Total price: Ksh " + orderItem.itemTotal!!
+            Glide.with(itemViewBinding.foodImage.context).load(orderItem.imageUrl).into(itemViewBinding.foodImage)
+            itemViewBinding.itemsCount.text = orderItem.itemQuantity.toString()
+            itemViewBinding.itemName.text = orderItem.title
+            itemViewBinding.itemPrice.text = "Price: Ksh " + orderItem.price + " each"
+            itemViewBinding.itemTotalPrice.text = "Total price: Ksh " + orderItem.itemTotal!!
         }
     }
 

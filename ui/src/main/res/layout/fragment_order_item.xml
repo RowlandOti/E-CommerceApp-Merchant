@@ -156,7 +156,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:padding="5dp"
-                            android:tint="@color/colorPrimary"
+                            app:tint="@color/colorPrimary"
                             app:srcCompat="@drawable/ic_phone" />
 
 
@@ -208,7 +208,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:padding="5dp"
-                            android:tint="@color/colorPrimary"
+                            app:tint="@color/colorPrimary"
                             app:srcCompat="@drawable/ic_email" />
 
 
@@ -296,7 +296,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:padding="5dp"
-                            android:tint="@color/colorPrimary"
+                            app:tint="@color/colorPrimary"
                             app:srcCompat="@drawable/ic_location" />
 
 

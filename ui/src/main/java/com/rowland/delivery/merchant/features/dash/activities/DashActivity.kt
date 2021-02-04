@@ -13,10 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.navigation.NavigationView
 import com.rowland.delivery.merchant.R
-import com.rowland.delivery.merchant.di.modules.ContextModule
-import com.rowland.delivery.merchant.features.dash.di.components.DaggerDashComponent
-import com.rowland.delivery.merchant.features.dash.di.components.DashComponent
-import com.rowland.delivery.merchant.features.dash.di.modules.DashModule
+import com.rowland.delivery.merchant.databinding.ActivityDashBinding
 import com.rowland.delivery.merchant.features.dash.fragments.OrderItemFragment
 import com.rowland.delivery.merchant.features.dash.fragments.OverviewFragment
 import com.rowland.delivery.merchant.features.dash.fragments.ProductFragment
@@ -25,10 +22,12 @@ import com.rowland.delivery.merchant.services.session.SessionManager
 import com.rowland.delivery.presentation.viewmodels.category.CategoryViewModel
 import com.rowland.delivery.presentation.viewmodels.order.OrderViewModel
 import com.rowland.delivery.presentation.viewmodels.product.ProductViewModel
-import kotlinx.android.synthetic.main.activity_dash.*
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, androidx.fragment.app.FragmentManager.OnBackStackChangedListener {
+@AndroidEntryPoint
+class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+    androidx.fragment.app.FragmentManager.OnBackStackChangedListener {
 
     @Inject
     lateinit var orderFactory: ViewModelProvider.Factory
@@ -42,14 +41,16 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     @Inject
     lateinit var sessionManager: SessionManager
 
+    private lateinit var _binding: ActivityDashBinding
+    val binding get() = _binding
+
     private lateinit var orderViewModel: OrderViewModel
     private lateinit var categoryViewModel: CategoryViewModel
     private var mSelectedMenuId: Int = 0
 
-    lateinit var dashComponent: DashComponent
-        private set
 
     companion object {
+
         fun startActivity(context: Context) {
             val intent = Intent(context, DashActivity::class.java)
             context.startActivity(intent)
@@ -63,18 +64,12 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        dashComponent = DaggerDashComponent.builder()
-                .dashModule(DashModule())
-                .contextModule(ContextModule(this))
-                .build()
-
-        dashComponent.inject(this)
-
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dash)
 
+        _binding = ActivityDashBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        dash_drawer.setNavigationItemSelectedListener(this)
+        binding.dashDrawer.setNavigationItemSelectedListener(this)
         mSelectedMenuId = savedInstanceState?.getInt("SELECTED_ID") ?: R.id.action_business
         itemSelection(mSelectedMenuId)
 
@@ -82,30 +77,39 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         orderViewModel = ViewModelProviders.of(this, orderFactory).get(OrderViewModel::class.java)
         orderViewModel.getSelectedListItem()
-                .observe(this, Observer { orderData ->
-                    if (supportFragmentManager.findFragmentByTag(OrderItemFragment::class.java.simpleName) == null) {
-                        supportFragmentManager.beginTransaction()
-                                .replace(R.id.dash_container_body, OrderItemFragment.newInstance(null), OrderItemFragment::class.java.simpleName)
-                                .addToBackStack(OrderItemFragment::class.java.simpleName)
-                                .commit()
-                    }
-                })
+            .observe(this, Observer { orderData ->
+                if (supportFragmentManager.findFragmentByTag(OrderItemFragment::class.java.simpleName) == null) {
+                    supportFragmentManager.beginTransaction()
+                        .replace(
+                            R.id.dash_container_body,
+                            OrderItemFragment.newInstance(null),
+                            OrderItemFragment::class.java.simpleName
+                        )
+                        .addToBackStack(OrderItemFragment::class.java.simpleName)
+                        .commit()
+                }
+            })
 
         categoryViewModel = ViewModelProviders.of(this, categoryFactory).get(CategoryViewModel::class.java)
         categoryViewModel.getSelectedListItem()
-                .observe(this, Observer { category ->
-                    if (supportFragmentManager.findFragmentByTag(ProductFragment::class.java.simpleName) == null) {
+            .observe(this, Observer { category ->
+                if (supportFragmentManager.findFragmentByTag(ProductFragment::class.java.simpleName) == null) {
 
-                        val productViewModel = ViewModelProviders.of(this, productFactory).get(ProductViewModel::class.java)
-                        productViewModel.clearDataList()
-                        val args = Bundle()
-                        args.putString("selected_category", category!!.name)
-                        supportFragmentManager.beginTransaction()
-                                .replace(R.id.dash_container_body, ProductFragment.newInstance(args), ProductFragment::class.java.simpleName)
-                                .addToBackStack(ProductFragment::class.java.simpleName)
-                                .commit()
-                    }
-                })
+                    val productViewModel =
+                        ViewModelProviders.of(this, productFactory).get(ProductViewModel::class.java)
+                    productViewModel.clearDataList()
+                    val args = Bundle()
+                    args.putString("selected_category", category!!.name)
+                    supportFragmentManager.beginTransaction()
+                        .replace(
+                            R.id.dash_container_body,
+                            ProductFragment.newInstance(args),
+                            ProductFragment::class.java.simpleName
+                        )
+                        .addToBackStack(ProductFragment::class.java.simpleName)
+                        .commit()
+                }
+            })
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -120,19 +124,23 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         when (mSelectedId) {
             R.id.action_business -> {
                 if (supportFragmentManager.findFragmentByTag(OverviewFragment::class.java.simpleName) == null) {
-                    supportFragmentManager.beginTransaction().replace(R.id.dash_container_body, OverviewFragment.newInstance(0), OverviewFragment::class.java.simpleName).commit()
+                    supportFragmentManager.beginTransaction().replace(
+                        R.id.dash_container_body,
+                        OverviewFragment.newInstance(0),
+                        OverviewFragment::class.java.simpleName
+                    ).commit()
                 }
-                dash_drawer_layout.closeDrawer(GravityCompat.START)
+                binding.dashDrawerLayout.closeDrawer(GravityCompat.START)
             }
             R.id.action_ratings ->
                 //
-                dash_drawer_layout.closeDrawer(GravityCompat.START)
+                binding.dashDrawerLayout.closeDrawer(GravityCompat.START)
             R.id.action_logout -> {
                 sessionManager.logout()
-                dash_drawer_layout.closeDrawer(GravityCompat.START)
+                binding.dashDrawerLayout.closeDrawer(GravityCompat.START)
                 SplashActivity.startActivity(this)
             }
-            else -> dash_drawer_layout.closeDrawer(GravityCompat.START)
+            else -> binding.dashDrawerLayout.closeDrawer(GravityCompat.START)
         }
     }
 
@@ -151,7 +159,7 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    fun shouldDisplayHomeUp() {
+    private fun shouldDisplayHomeUp() {
         val canGoBack = supportFragmentManager.backStackEntryCount > 0
         supportActionBar!!.setDisplayHomeAsUpEnabled(canGoBack)
     }
