@@ -38,7 +38,7 @@ constructor(private val mAuthConfig: AuthConfig, private val mFirebaseAuth: Fire
             return true
 
         } catch (e: Exception) {
-            Log.e("Logout Failed", e.message)
+            e.message?.let { Log.e("Logout Failed", it) }
             return false
         }
 
