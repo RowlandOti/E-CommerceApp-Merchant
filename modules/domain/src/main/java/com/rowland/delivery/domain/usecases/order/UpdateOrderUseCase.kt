@@ -12,7 +12,7 @@ import javax.inject.Inject
 class UpdateOrderUseCase @Inject
 constructor(private val orderRepository: IOrderRepository, threadExecutor: IThreadExecutor, postExecutionThread: IPostExecutionThread): CompletableUseCase<UpdateOrderUseCase.Params>(threadExecutor, postExecutionThread) {
     override fun buildUseCaseObservable(params: Params): Completable {
-        return this.orderRepository.updateOrder(params!!.orderUpdateFields, params!!.orderUID)
+        return this.orderRepository.updateOrder(params.orderUpdateFields, params.orderUID)
     }
 
     fun updateOrder(orderUpdateFields: HashMap<String, Any>, orderUID: String): Completable {
