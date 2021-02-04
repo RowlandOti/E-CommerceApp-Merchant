@@ -11,8 +11,6 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.rowland.delivery.merchant.R
-import com.rowland.delivery.merchant.R.string
-import com.rowland.delivery.merchant.R.string
 import com.rowland.delivery.merchant.databinding.ActivityAuthBinding
 import com.rowland.delivery.merchant.features.auth.Auth
 import com.rowland.delivery.merchant.features.auth.AuthException
@@ -57,12 +55,12 @@ class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks, GoogleApiClie
     }
 
     override fun onLoginSuccess() {
-        Toast.makeText(this, getString(string.login_successful), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string.login_successful), Toast.LENGTH_SHORT).show()
         DashActivity.startActivity(this)
     }
 
     override fun onLoginFailure(e: AuthException) {
-        Toast.makeText(this, getString(string.login_unsuccessful), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, getString(R.string.login_unsuccessful), Toast.LENGTH_SHORT).show()
     }
 
     override fun doEmailLogin(): Map<String, String> {
