@@ -8,9 +8,9 @@ apply from: '../.buildsystem/versioning.gradle'
 android {
     defaultConfig {
         applicationId "com.rowland.delivery.merchant"
-        compileSdkVersion 28
+        compileSdkVersion 29
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 29
         multiDexEnabled true
         versionCode getVersionCode()
         versionName getVersionName()
