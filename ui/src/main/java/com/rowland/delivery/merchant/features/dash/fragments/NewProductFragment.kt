@@ -9,9 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -25,6 +27,7 @@ import com.rowland.delivery.domain.models.product.ProductEntity
 import com.rowland.delivery.merchant.R.string
 import com.rowland.delivery.merchant.databinding.ContentProductImagesShuffleBinding
 import com.rowland.delivery.merchant.databinding.FragmentNewProductBinding
+import com.rowland.delivery.presentation.viewmodels.category.CategoryViewModel
 import com.rowland.delivery.presentation.viewmodels.product.EditProductViewModel
 import com.rowland.delivery.presentation.viewmodels.product.NewProductViewModel
 import com.rowland.rxgallery.RxGallery
@@ -38,10 +41,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class NewProductFragment : Fragment() {
 
-    private lateinit var newProductViewModel: NewProductViewModel
-
-    @Inject
-    lateinit var newProductFactory: ViewModelProvider.Factory
+    private val newProductViewModel: NewProductViewModel by viewModels()
 
     private var _binding: FragmentNewProductBinding? = null
     private val binding get() = _binding!!
@@ -57,10 +57,9 @@ class NewProductFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        newProductViewModel = ViewModelProviders.of(this, newProductFactory).get(NewProductViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentNewProductBinding.inflate(inflater, container, false)
         return binding.root
     }

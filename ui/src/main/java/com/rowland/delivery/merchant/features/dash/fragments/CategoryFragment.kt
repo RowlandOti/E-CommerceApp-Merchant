@@ -1,17 +1,17 @@
 package com.rowland.delivery.merchant.features.dash.fragments
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
@@ -19,7 +19,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.rowland.delivery.domain.models.category.CategoryEntity
 import com.rowland.delivery.merchant.R.string
 import com.rowland.delivery.merchant.databinding.FragmentCategoryBinding
-import com.rowland.delivery.merchant.features.dash.activities.DashActivity
 import com.rowland.delivery.merchant.features.dash.adapters.CategoryAdapter
 import com.rowland.delivery.merchant.features.dash.tools.recylerview.GridSpacingItemDecoration
 import com.rowland.delivery.merchant.features.dash.tools.recylerview.RecyclerItemClickListener
@@ -38,11 +37,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CategoryFragment : Fragment() {
 
-    private lateinit var categoryViewModel: CategoryViewModel
-
-    //@field:[Inject Named("category")]
-    @Inject
-    lateinit var categoryFactory: ViewModelProvider.Factory
+    private val categoryViewModel: CategoryViewModel by viewModels()
 
     @Inject
     lateinit var categoryAdapter: CategoryAdapter
@@ -61,8 +56,6 @@ class CategoryFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        categoryViewModel =
-            ViewModelProviders.of(requireActivity(), categoryFactory).get(CategoryViewModel::class.java)
         categoryViewModel.loadCategories(FirebaseAuth.getInstance().currentUser!!.uid)
     }
 

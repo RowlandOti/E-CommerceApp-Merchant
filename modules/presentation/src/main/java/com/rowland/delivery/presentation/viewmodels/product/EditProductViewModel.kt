@@ -6,11 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.rowland.delivery.domain.usecases.images.UploadImageUseCase
 import com.rowland.delivery.domain.usecases.product.UpdateProductUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Completable
-import java.util.*
+import java.util.ArrayList
+import java.util.HashMap
 import javax.inject.Inject
 
-class EditProductViewModel @Inject constructor(private val updateProductUseCase: UpdateProductUseCase, private val uploadImageUseCase: UploadImageUseCase) : ViewModel() {
+@HiltViewModel
+class EditProductViewModel @Inject constructor(
+    private val updateProductUseCase: UpdateProductUseCase,
+    private val uploadImageUseCase: UploadImageUseCase
+) : ViewModel() {
 
     internal val productUid = MutableLiveData<String>()
     internal val isImageSelected = MutableLiveData<Boolean>()
@@ -20,7 +26,6 @@ class EditProductViewModel @Inject constructor(private val updateProductUseCase:
 
     val images: LiveData<List<String>>
         get() = selectedImageUri
-
 
     fun setImagesIsSelected(isSelected: Boolean) {
         isImageSelected.value = isSelected
@@ -48,15 +53,22 @@ class EditProductViewModel @Inject constructor(private val updateProductUseCase:
 
     fun updateProduct(productUpdateFields: HashMap<String, Any>): Completable {
         if (isImageSelected.value == true) {
-            return uploadImageUseCase.uploadImages(selectedImageUri.value!!, productCategory.value!!, currentUserUid.value!!)
-                    .map { updateProduct(productUpdateFields, it) }
-                    .switchMapCompletable { updateProductUseCase.updateProduct(it, productUid.value!!) }
+            return uploadImageUseCase.uploadImages(
+                selectedImageUri.value!!,
+                productCategory.value!!,
+                currentUserUid.value!!
+            )
+                .map { updateProduct(productUpdateFields, it) }
+                .switchMapCompletable { updateProductUseCase.updateProduct(it, productUid.value!!) }
         } else {
             return updateProductUseCase.updateProduct(productUpdateFields, productUid.value!!)
         }
     }
 
-    private fun updateProduct(productUpdateFields: HashMap<String, Any>, imageUrls: List<String>): HashMap<String, Any> {
+    private fun updateProduct(
+        productUpdateFields: HashMap<String, Any>,
+        imageUrls: List<String>
+    ): HashMap<String, Any> {
         productUpdateFields.put("imageUrls", imageUrls)
         return productUpdateFields
     }

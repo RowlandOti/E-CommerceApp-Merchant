@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
@@ -28,10 +26,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class OrderFragment : Fragment() {
 
-    private lateinit var orderViewModel: OrderViewModel
-
-    @Inject
-    lateinit var orderFactory: ViewModelProvider.Factory
+    private val orderViewModel: OrderViewModel by viewModels()
 
     @Inject
     lateinit var orderAdapter: OrderDataAdapter
@@ -50,7 +45,6 @@ class OrderFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        orderViewModel = ViewModelProviders.of(requireActivity(), orderFactory).get(OrderViewModel::class.java)
         orderViewModel.loadOrders(FirebaseAuth.getInstance().currentUser!!.uid)
     }
 

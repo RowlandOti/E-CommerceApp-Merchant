@@ -8,6 +8,7 @@ import com.rowland.delivery.presentation.data.ResourceState
 import com.rowland.delivery.presentation.mapper.category.CategoryMapper
 import com.rowland.delivery.presentation.model.category.CategoryModel
 import com.rowland.delivery.presentation.viewmodels.SharedViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Single
 import io.reactivex.subscribers.DisposableSubscriber
 import javax.inject.Inject
@@ -16,7 +17,12 @@ import javax.inject.Inject
  * Created by Rowland on 5/14/2018.
  */
 
-class CategoryViewModel @Inject constructor(private val loadCategoriesUseCase: LoadCategoriesUseCase, private val createCategoryUseCase: CreateCategoryUseCase, private val mapper: CategoryMapper) : SharedViewModel<CategoryModel>() {
+@HiltViewModel
+class CategoryViewModel @Inject constructor(
+    private val loadCategoriesUseCase: LoadCategoriesUseCase,
+    private val createCategoryUseCase: CreateCategoryUseCase,
+    private val mapper: CategoryMapper
+) : SharedViewModel<CategoryModel>() {
 
     fun loadCategories(userUID: String) {
         this.loadCategoriesUseCase.execute(CategorySubscriber(), LoadCategoriesUseCase.Params.forOrders(userUID))
@@ -27,8 +33,8 @@ class CategoryViewModel @Inject constructor(private val loadCategoriesUseCase: L
     }
 
     inner class CategorySubscriber : DisposableSubscriber<List<CategoryEntity>>() {
-        override fun onComplete() {
 
+        override fun onComplete() {
         }
 
         override fun onNext(t: List<CategoryEntity>) {

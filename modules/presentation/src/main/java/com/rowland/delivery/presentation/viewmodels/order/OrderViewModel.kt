@@ -8,17 +8,22 @@ import com.rowland.delivery.presentation.data.ResourceState
 import com.rowland.delivery.presentation.mapper.order.OrderDataMapper
 import com.rowland.delivery.presentation.model.order.OrderDataModel
 import com.rowland.delivery.presentation.viewmodels.SharedViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Completable
 import io.reactivex.subscribers.DisposableSubscriber
-import java.util.*
+import java.util.HashMap
 import javax.inject.Inject
 
 /**
  * Created by Rowland on 5/8/2018.
  */
 
-class OrderViewModel @Inject constructor(private val loadOrdersUseCase: LoadOrdersUseCase, private val updateOrderUseCase: UpdateOrderUseCase, private val mapper: OrderDataMapper) : SharedViewModel<OrderDataModel>() {
-
+@HiltViewModel
+class OrderViewModel @Inject constructor(
+    private val loadOrdersUseCase: LoadOrdersUseCase,
+    private val updateOrderUseCase: UpdateOrderUseCase,
+    private val mapper: OrderDataMapper,
+) : SharedViewModel<OrderDataModel>() {
 
     fun loadOrders(userUID: String) {
         this.loadOrdersUseCase.execute(OrderDataSubscriber(), LoadOrdersUseCase.Params.forOrders(userUID))
@@ -29,8 +34,8 @@ class OrderViewModel @Inject constructor(private val loadOrdersUseCase: LoadOrde
     }
 
     inner class OrderDataSubscriber : DisposableSubscriber<List<OrderDataEntity>>() {
-        override fun onComplete() {
 
+        override fun onComplete() {
         }
 
         override fun onNext(t: List<OrderDataEntity>) {
