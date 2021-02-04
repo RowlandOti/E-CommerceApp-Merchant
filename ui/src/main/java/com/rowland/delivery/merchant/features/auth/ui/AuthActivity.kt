@@ -12,6 +12,7 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.R.string
+import com.rowland.delivery.merchant.R.string
 import com.rowland.delivery.merchant.databinding.ActivityAuthBinding
 import com.rowland.delivery.merchant.features.auth.Auth
 import com.rowland.delivery.merchant.features.auth.AuthException
