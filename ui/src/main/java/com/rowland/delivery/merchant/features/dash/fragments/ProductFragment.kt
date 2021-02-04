@@ -135,7 +135,7 @@ class ProductFragment : Fragment() {
 
         productViewModel.getDataList()
             .observe(viewLifecycleOwner, { products ->
-                handleDataState(products.status, products.data, products.message!!)
+                handleDataState(products.status, products.data, products.message)
             })
     }
 
@@ -144,7 +144,7 @@ class ProductFragment : Fragment() {
         productAdapter.saveStates(outState)
     }
 
-    private fun handleDataState(resourceState: ResourceState, data: List<ProductModel>?, message: String) {
+    private fun handleDataState(resourceState: ResourceState, data: List<ProductModel>?, message: String?) {
         when (resourceState) {
             ResourceState.LOADING -> binding.productRecyclerview.showProgress()
             ResourceState.SUCCESS -> {
@@ -153,7 +153,7 @@ class ProductFragment : Fragment() {
             }
             ResourceState.ERROR -> {
                 binding.productRecyclerview.showError()
-                Log.d(OrderFragment::class.java.simpleName, message)
+                message?.let { Log.d(OrderFragment::class.java.simpleName, it) }
             }
         }
     }
