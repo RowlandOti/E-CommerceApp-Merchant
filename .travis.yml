@@ -59,6 +59,5 @@ before_install:
   - export JAVA_HOME=$JAVA8_HOME
   - chmod +x gradlew
   - yes | sdkmanager --update
-  - yes | sdkmanager --licenses
 script:
 - "./gradlew clean build --stacktrace"
