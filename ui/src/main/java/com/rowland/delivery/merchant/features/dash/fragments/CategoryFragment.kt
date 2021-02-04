@@ -27,12 +27,15 @@ import com.rowland.delivery.merchant.utilities.ScreenUtils
 import com.rowland.delivery.presentation.data.ResourceState
 import com.rowland.delivery.presentation.model.category.CategoryModel
 import com.rowland.delivery.presentation.viewmodels.category.CategoryViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 import javax.inject.Inject
 
 /**
  * Created by Rowland on 5/7/2018.
  */
+
+@AndroidEntryPoint
 class CategoryFragment : Fragment() {
 
     private lateinit var categoryViewModel: CategoryViewModel
@@ -46,7 +49,7 @@ class CategoryFragment : Fragment() {
 
     companion object {
 
-        fun newInstance(args: Bundle?): androidx.fragment.app.Fragment {
+        fun newInstance(args: Bundle?): Fragment {
             val frag = CategoryFragment()
             frag.arguments = args
             return frag
@@ -58,18 +61,14 @@ class CategoryFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        categoryViewModel = ViewModelProviders.of(activity!!, categoryFactory).get(CategoryViewModel::class.java)
+        categoryViewModel =
+            ViewModelProviders.of(requireActivity(), categoryFactory).get(CategoryViewModel::class.java)
         categoryViewModel.loadCategories(FirebaseAuth.getInstance().currentUser!!.uid)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentCategoryBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity as DashActivity).dashComponent.inject(this)
     }
 
     override fun onDestroyView() {
@@ -84,7 +83,7 @@ class CategoryFragment : Fragment() {
         binding.catRecyclerview.addItemDecoration(
             GridSpacingItemDecoration(
                 3,
-                ScreenUtils.dpToPx(activity!!, 10),
+                ScreenUtils.dpToPx(requireActivity(), 10),
                 true
             )
         )
@@ -105,14 +104,14 @@ class CategoryFragment : Fragment() {
         )
 
         binding.createCatBtn.setOnClickListener {
-            MaterialDialog.Builder(activity!!)
+            MaterialDialog.Builder(requireActivity())
                 .backgroundColorRes(android.R.color.white)
                 .title("Create Category")
                 .inputRangeRes(3, 12, android.R.color.holo_red_dark)
                 .input("e.g Fruits", null) { dialog, input ->
                     saveCategory(
                         input.toString(),
-                        FirebaseAuth.getInstance().currentUser!!.uid!!
+                        FirebaseAuth.getInstance().currentUser!!.uid
                     )
                 }
                 .show()
@@ -120,7 +119,7 @@ class CategoryFragment : Fragment() {
 
 
         categoryViewModel.getDataList()
-            .observe(this, Observer { categories ->
+            .observe(viewLifecycleOwner, Observer { categories ->
                 handleDataState(categories.status, categories.data, categories.message)
             })
     }
@@ -150,7 +149,7 @@ class CategoryFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 )
                     .show()
-            }, { throwable ->
+            }, {
                 Toast.makeText(
                     activity,
                     String.format(getString(string.category_not_created), name),

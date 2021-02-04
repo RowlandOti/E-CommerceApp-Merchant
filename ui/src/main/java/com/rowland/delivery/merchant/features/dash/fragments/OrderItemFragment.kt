@@ -25,12 +25,15 @@ import com.rowland.delivery.merchant.features.dash.activities.DashActivity
 import com.rowland.delivery.merchant.features.dash.adapters.OrderItemAdapter
 import com.rowland.delivery.presentation.model.order.OrderDataModel
 import com.rowland.delivery.presentation.viewmodels.order.OrderViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.HashMap
 import javax.inject.Inject
 
 /**
  * Created by Rowland on 5/7/2018.
  */
+
+@AndroidEntryPoint
 class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
 
     private lateinit var orderViewModel: OrderViewModel
@@ -47,7 +50,7 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
 
     companion object {
 
-        private val CALL_PERMISSION = 100
+        private const val CALL_PERMISSION = 100
 
         fun newInstance(args: Bundle?): OrderItemFragment {
             val frag = OrderItemFragment()
@@ -58,7 +61,7 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        orderViewModel = ViewModelProviders.of(activity!!, orderFactory).get(OrderViewModel::class.java)
+        orderViewModel = ViewModelProviders.of(requireActivity(), orderFactory).get(OrderViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -69,11 +72,6 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity as DashActivity).dashComponent.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -92,7 +90,7 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
         binding.orderitemFab.setOptionsClick(this)
 
         orderViewModel.getSelectedListItem()
-            .observe(this, Observer { orderData ->
+            .observe(viewLifecycleOwner, Observer { orderData ->
                 this.orderData = orderData
                 setupData()
             })
@@ -110,7 +108,7 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
 
     private fun makeCall() {
         if (ActivityCompat.checkSelfPermission(
-                activity!!,
+                requireActivity(),
                 Manifest.permission.CALL_PHONE
             ) == PackageManager.PERMISSION_GRANTED
         ) {
@@ -118,7 +116,7 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
             callIntent.data = Uri.parse(String.format("tel:%s", orderData!!.phone))
             startActivity(callIntent)
         } else {
-            ActivityCompat.requestPermissions(activity!!, arrayOf(Manifest.permission.CALL_PHONE), CALL_PERMISSION)
+            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CALL_PHONE), CALL_PERMISSION)
         }
     }
 
@@ -154,7 +152,7 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
         orderViewModel.updateOrder(orderUpdateFields)
             .subscribe({
                 Toast.makeText(activity, getString(string.order_status_update_success), Toast.LENGTH_SHORT).show()
-            }) { throwable ->
+            }) {
                 Toast.makeText(
                     activity, getString(
                         string.order_status_update_failed

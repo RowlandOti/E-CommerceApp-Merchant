@@ -10,7 +10,7 @@ android {
         applicationId "com.rowland.delivery.merchant"
         compileSdkVersion 28
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 30
         multiDexEnabled true
         versionCode getVersionCode()
         versionName getVersionName()
@@ -93,15 +93,7 @@ dependencies {
     implementation 'com.github.etiennelenhart:eiffel:3.0.0'
     implementation 'com.github.ybq:Android-SpinKit:1.2.0'
     implementation 'com.jude:easyrecyclerview:4.4.2'
-    // Dependency injection
-    implementation 'com.google.dagger:dagger:2.17'
-    implementation 'com.google.dagger:dagger-android:2.17'
-    implementation 'com.google.dagger:dagger-android-support:2.16'
-    /// if you use the support libraries
-    kapt 'com.google.dagger:dagger-android-processor:2.17'
-    kapt 'com.google.dagger:dagger-compiler:2.17'
-
-    // Dagger Hilt - DI
+    // Dependency injection-  Dagger Hilt - DI
     implementation 'com.google.dagger:hilt-android:2.31.2-alpha'
     kapt 'com.google.dagger:hilt-android-compiler:2.31.2-alpha'
 

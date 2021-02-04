@@ -1,6 +1,5 @@
 package com.rowland.delivery.merchant.features.dash.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,15 +15,16 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import com.google.firebase.auth.FirebaseAuth
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.databinding.FragmentProductsBinding
-import com.rowland.delivery.merchant.features.dash.activities.DashActivity
 import com.rowland.delivery.merchant.features.dash.adapters.ProductAdapter
 import com.rowland.delivery.merchant.features.dash.tools.recylerview.RecyclerItemClickListener
 import com.rowland.delivery.presentation.data.ResourceState
 import com.rowland.delivery.presentation.model.product.ProductModel
 import com.rowland.delivery.presentation.viewmodels.product.ProductEvent
 import com.rowland.delivery.presentation.viewmodels.product.ProductViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ProductFragment : Fragment() {
 
     private lateinit var productViewModel: ProductViewModel
@@ -49,10 +49,10 @@ class ProductFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        productViewModel = ViewModelProviders.of(activity!!, productFactory).get(ProductViewModel::class.java)
+        productViewModel = ViewModelProviders.of(requireActivity(), productFactory).get(ProductViewModel::class.java)
 
         if (arguments != null) {
-            val category = arguments!!.getString("selected_category")
+            val category = requireArguments().getString("selected_category")
             productViewModel.loadProducts(category!!, FirebaseAuth.getInstance().currentUser!!.uid)
         }
     }
@@ -60,11 +60,6 @@ class ProductFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentProductsBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity as DashActivity).dashComponent.inject(this)
     }
 
     override fun onDestroyView() {
@@ -78,7 +73,7 @@ class ProductFragment : Fragment() {
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbarProduct)
 
         if (arguments != null) {
-            val category = arguments!!.getString("selected_category")
+            val category = requireArguments().getString("selected_category")
             binding.productCategory.text = category
         }
 
@@ -130,16 +125,16 @@ class ProductFragment : Fragment() {
             var args: Bundle? = null
             if (arguments != null) {
                 args = Bundle()
-                args.putString("selected_category", arguments!!.getString("selected_category"))
+                args.putString("selected_category", requireArguments().getString("selected_category"))
             }
-            activity!!.supportFragmentManager.beginTransaction()
+            requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.dash_container_body, NewProductFragment.Companion.newInstance(args))
                 .addToBackStack(NewProductFragment::class.java.simpleName)
                 .commit()
         }
 
         productViewModel.getDataList()
-            .observe(this, Observer { products ->
+            .observe(viewLifecycleOwner, Observer { products ->
                 handleDataState(products.status, products.data, products.message)
             })
     }

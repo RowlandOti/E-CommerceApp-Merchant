@@ -8,13 +8,14 @@ import com.rowland.delivery.presentation.viewmodels.order.OrderViewModel
 import com.rowland.delivery.presentation.viewmodels.product.EditProductViewModel
 import com.rowland.delivery.presentation.viewmodels.product.NewProductViewModel
 import com.rowland.delivery.presentation.viewmodels.product.ProductViewModel
-
-
 import dagger.Binds
 import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.multibindings.IntoMap
 
 @Module(includes = [DaggerViewModelInjectionModule::class])
+@InstallIn(ViewModelComponent::class)
 abstract class PresentationModule {
 
     @Binds

@@ -1,7 +1,6 @@
 package com.rowland.delivery.merchant.features.dash.fragments
 
 import android.Manifest
-import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -26,16 +25,17 @@ import com.rowland.delivery.domain.models.product.ProductEntity
 import com.rowland.delivery.merchant.R.string
 import com.rowland.delivery.merchant.databinding.ContentProductImagesShuffleBinding
 import com.rowland.delivery.merchant.databinding.FragmentNewProductBinding
-import com.rowland.delivery.merchant.features.dash.activities.DashActivity
 import com.rowland.delivery.presentation.viewmodels.product.EditProductViewModel
 import com.rowland.delivery.presentation.viewmodels.product.NewProductViewModel
 import com.rowland.rxgallery.RxGallery
 import com.tbruyelle.rxpermissions2.RxPermissions
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.Date
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class NewProductFragment : Fragment() {
 
     private lateinit var newProductViewModel: NewProductViewModel
@@ -48,7 +48,7 @@ class NewProductFragment : Fragment() {
 
     companion object {
 
-        fun newInstance(args: Bundle?): androidx.fragment.app.Fragment {
+        fun newInstance(args: Bundle?): Fragment {
             val frag = NewProductFragment()
             frag.arguments = args
             return frag
@@ -70,11 +70,6 @@ class NewProductFragment : Fragment() {
         _binding = null
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity as DashActivity).dashComponent.inject(this)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -82,7 +77,7 @@ class NewProductFragment : Fragment() {
 
         binding.fabAddimage.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                RxPermissions(activity!!).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                RxPermissions(requireActivity()).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     .subscribe { granted ->
                         if (!granted) {
                             Toast.makeText(
@@ -91,7 +86,7 @@ class NewProductFragment : Fragment() {
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
-                            RxGallery.gallery(activity!!, true, RxGallery.MimeType.IMAGE)
+                            RxGallery.gallery(requireActivity(), true, RxGallery.MimeType.IMAGE)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(
@@ -120,12 +115,12 @@ class NewProductFragment : Fragment() {
             product.description = binding.inputProductDescription.text.toString()
             product.createdAt = Date()
 
-            val category = arguments!!.getString("selected_category")
+            val category = requireArguments().getString("selected_category")
 
             newProductViewModel.createProduct(product, category, FirebaseAuth.getInstance().currentUser!!.uid)
                 .subscribe({ newProduct ->
                     Toast.makeText(activity, "Product added succesfully", Toast.LENGTH_SHORT).show()
-                    activity!!.supportFragmentManager.popBackStack(
+                    requireActivity().supportFragmentManager.popBackStack(
                         NewProductFragment::class.java.simpleName,
                         POP_BACK_STACK_INCLUSIVE
                     )
@@ -134,13 +129,13 @@ class NewProductFragment : Fragment() {
         }
 
         binding.btnCancell.setOnClickListener {
-            activity!!.supportFragmentManager.popBackStack(
+            requireActivity().supportFragmentManager.popBackStack(
                 NewProductFragment::class.java.simpleName,
                 POP_BACK_STACK_INCLUSIVE
             )
         }
 
-        newProductViewModel.images.observe(this, Observer { uris ->
+        newProductViewModel.images.observe(viewLifecycleOwner, Observer { uris ->
             binding.newProductShuffle.shuffleSettings.numberOfDisplayedCards = uris!!.size
             binding.newProductShuffle.shuffleAdapter = ImageShuffleAdapter(uris.map { uri -> Uri.parse(uri) })
             binding.newProductShuffle.viewAnimator = ShuffleViewAnimatorOnSecondCard()

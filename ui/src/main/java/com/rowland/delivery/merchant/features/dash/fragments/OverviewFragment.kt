@@ -13,9 +13,10 @@ import android.view.WindowManager
 import com.rowland.delivery.merchant.features.dash.activities.DashActivity
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.databinding.FragmentOverviewBinding
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
-
+@AndroidEntryPoint
 class OverviewFragment : Fragment() {
     private var movePosition: Int = 0
 
@@ -25,7 +26,7 @@ class OverviewFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            movePosition = arguments!!.getInt(TAB_POSITION, 0)
+            movePosition = requireArguments().getInt(TAB_POSITION, 0)
         }
     }
 
@@ -47,7 +48,7 @@ class OverviewFragment : Fragment() {
                     this.syncState()
                     try {
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                            val window = getActivity()!!.window
+                            val window = requireActivity().window
                             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
                             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
                             window.statusBarColor = resources.getColor(R.color.colorPrimaryDarkTransparent)
@@ -69,7 +70,7 @@ class OverviewFragment : Fragment() {
 
                     try {
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                            val window = getActivity()!!.window
+                            val window = requireActivity().window
                             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
                             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
                             window.statusBarColor = resources.getColor(R.color.colorPrimaryDark)
@@ -113,12 +114,12 @@ class OverviewFragment : Fragment() {
             mFragmentTitleList = ArrayList()
         }
 
-        fun addFragment(fragment: androidx.fragment.app.Fragment, title: String) {
+        fun addFragment(fragment: Fragment, title: String) {
             this.mFragmentList.add(fragment)
             this.mFragmentTitleList.add(title)
         }
 
-        override fun getItem(position: Int): androidx.fragment.app.Fragment {
+        override fun getItem(position: Int): Fragment {
             return mFragmentList[position]
         }
 
@@ -133,7 +134,7 @@ class OverviewFragment : Fragment() {
 
     companion object {
 
-        private val TAB_POSITION = "tabposition"
+        private const val TAB_POSITION = "tabposition"
 
         fun newInstance(tabPosition: Int): OverviewFragment {
             val frag = OverviewFragment()

@@ -13,17 +13,16 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.R.string
 import com.rowland.delivery.merchant.databinding.ActivityAuthBinding
-import com.rowland.delivery.merchant.di.modules.ContextModule
 import com.rowland.delivery.merchant.features.auth.Auth
 import com.rowland.delivery.merchant.features.auth.AuthException
 import com.rowland.delivery.merchant.features.auth.EmailAuth
-import com.rowland.delivery.merchant.features.auth.di.components.DaggerAuthComponent
-import com.rowland.delivery.merchant.features.auth.di.modules.AuthModule
 import com.rowland.delivery.merchant.features.dash.activities.DashActivity
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.HashMap
 import javax.inject.Inject
 import javax.inject.Named
 
+@AndroidEntryPoint
 class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     @Inject
@@ -36,22 +35,14 @@ class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks, GoogleApiClie
 
     private lateinit var binding: ActivityAuthBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val authComponent = DaggerAuthComponent.builder()
-                .contextModule(ContextModule(this))
-                .authModule(AuthModule())
-                .build()
-
-        authComponent.injectAuthActivity(this)
-
         Glide.with(this)
-                .load(R.drawable.flash)
-                .into(binding.splashImageview)
+            .load(R.drawable.flash)
+            .into(binding.splashImageview)
 
         binding.authContent.btnGoogleLogin.setOnClickListener { mGoogleAuth.login() }
         binding.authContent.btnLogin.setOnClickListener { mEmailAuth.login() }
@@ -88,7 +79,6 @@ class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks, GoogleApiClie
     }
 
     override fun onConnectionFailed(connectionResult: ConnectionResult) {
-
     }
 
     companion object {

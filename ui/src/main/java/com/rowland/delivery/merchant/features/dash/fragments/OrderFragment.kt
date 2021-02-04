@@ -1,6 +1,5 @@
 package com.rowland.delivery.merchant.features.dash.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,17 +13,19 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.rowland.delivery.merchant.databinding.FragmentOrdersBinding
-import com.rowland.delivery.merchant.features.dash.activities.DashActivity
 import com.rowland.delivery.merchant.features.dash.adapters.OrderDataAdapter
 import com.rowland.delivery.merchant.features.dash.tools.recylerview.RecyclerItemClickListener
 import com.rowland.delivery.presentation.data.ResourceState
 import com.rowland.delivery.presentation.model.order.OrderDataModel
 import com.rowland.delivery.presentation.viewmodels.order.OrderViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
  * Created by Rowland on 5/7/2018.
  */
+
+@AndroidEntryPoint
 class OrderFragment : Fragment() {
 
     private lateinit var orderViewModel: OrderViewModel
@@ -49,18 +50,13 @@ class OrderFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        orderViewModel = ViewModelProviders.of(activity!!, orderFactory).get(OrderViewModel::class.java)
+        orderViewModel = ViewModelProviders.of(requireActivity(), orderFactory).get(OrderViewModel::class.java)
         orderViewModel.loadOrders(FirebaseAuth.getInstance().currentUser!!.uid)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentOrdersBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity as DashActivity).dashComponent.inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -86,7 +82,9 @@ class OrderFragment : Fragment() {
 
 
         orderViewModel.getDataList()
-            .observe(this, Observer { orders -> handleDataState(orders.status, orders.data, orders.message) })
+            .observe(
+                viewLifecycleOwner,
+                Observer { orders -> handleDataState(orders.status, orders.data, orders.message) })
 
 /*
         FirebaseFirestore.getInstance()

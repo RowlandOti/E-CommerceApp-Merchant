@@ -10,8 +10,11 @@ import com.rowland.delivery.remote.source.order.OrderRemoteSource
 import com.rowland.delivery.remote.source.product.ProductRemoteSource
 import dagger.Binds
 import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
 @Module()
+@InstallIn(SingletonComponent::class)
 abstract class RemoteModule {
     @Binds
     abstract fun bindProductRemote(productRemote: ProductRemoteSource): IProductRemoteSource

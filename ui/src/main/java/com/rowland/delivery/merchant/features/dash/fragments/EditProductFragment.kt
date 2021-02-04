@@ -1,7 +1,6 @@
 package com.rowland.delivery.merchant.features.dash.fragments
 
 import android.Manifest
-import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -21,17 +20,18 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.rowland.delivery.merchant.R.string
 import com.rowland.delivery.merchant.databinding.FragmentEditProductBinding
-import com.rowland.delivery.merchant.features.dash.activities.DashActivity
 import com.rowland.delivery.presentation.viewmodels.product.EditProductViewModel
 import com.rowland.delivery.presentation.viewmodels.product.ProductViewModel
 import com.rowland.rxgallery.RxGallery
 import com.tbruyelle.rxpermissions2.RxPermissions
+import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.Date
 import java.util.HashMap
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class EditProductFragment : Fragment() {
 
     private lateinit var productViewModel: ProductViewModel
@@ -42,7 +42,7 @@ class EditProductFragment : Fragment() {
 
     companion object {
 
-        fun newInstance(args: Bundle?): androidx.fragment.app.Fragment {
+        fun newInstance(args: Bundle?): Fragment {
             val frag = EditProductFragment()
             frag.arguments = args
             return frag
@@ -54,7 +54,7 @@ class EditProductFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        productViewModel = ViewModelProviders.of(activity!!, productFactory).get(ProductViewModel::class.java)
+        productViewModel = ViewModelProviders.of(requireActivity(), productFactory).get(ProductViewModel::class.java)
         editProductViewModel = ViewModelProviders.of(this, productFactory).get(EditProductViewModel::class.java)
     }
 
@@ -63,17 +63,12 @@ class EditProductFragment : Fragment() {
         return binding.root
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity as DashActivity).dashComponent.inject(this)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).setSupportActionBar(binding.editproductToolbar)
 
         productViewModel.getSelectedListItem()
-            .observe(this, Observer { product ->
+            .observe(viewLifecycleOwner, Observer { product ->
                 binding.inputEditPriceView.quantity = product!!.price!!
                 binding.inputEditStockView.quantity = product.itemQuantity!!
                 binding.inputEditProductName.setText(product.name)
@@ -82,7 +77,7 @@ class EditProductFragment : Fragment() {
                 FirebaseStorage.getInstance().reference.child(product.imageUrls.get(0)).downloadUrl
                     .addOnSuccessListener { uri ->
                         options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
-                        Glide.with(activity!!)
+                        Glide.with(requireActivity())
                             .load(uri)
                             .apply(options)
                             .into(binding.editInputProductImageview)
@@ -92,10 +87,10 @@ class EditProductFragment : Fragment() {
                 editProductViewModel.setCategory(productViewModel.category.value!!)
             })
 
-        editProductViewModel.images.observe(this, Observer { uris ->
+        editProductViewModel.images.observe(viewLifecycleOwner, Observer { uris ->
             val options = RequestOptions()
             options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
-            Glide.with(activity!!)
+            Glide.with(requireActivity())
                 .load(uris!!.get(uris.size - 1))
                 .apply(options)
                 .into(binding.editInputProductImageview)
@@ -103,13 +98,13 @@ class EditProductFragment : Fragment() {
 
         binding.editFabAddimage.setOnClickListener { _ ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                RxPermissions(activity!!).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                RxPermissions(requireActivity()).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     .subscribe { granted ->
                         if (!granted) {
                             Toast.makeText(activity, "Please grant permissions to select image", Toast.LENGTH_SHORT)
                                 .show()
                         } else {
-                            RxGallery.gallery(activity!!, true, RxGallery.MimeType.IMAGE)
+                            RxGallery.gallery(requireActivity(), true, RxGallery.MimeType.IMAGE)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(
@@ -133,16 +128,16 @@ class EditProductFragment : Fragment() {
         binding.editBtnUpdate.setOnClickListener { _ ->
 
             val productUpdateFields = HashMap<String, Any>()
-            productUpdateFields.put("price", Integer.valueOf(binding.inputEditPriceView.quantity.toString()))
-            productUpdateFields.put("name", binding.inputEditProductName.text!!.toString())
-            productUpdateFields.put("itemQuantity", Integer.valueOf(binding.inputEditStockView.quantity.toString()))
-            productUpdateFields.put("description", binding.inputEditProductDescription.text!!.toString())
-            productUpdateFields.put("updatedAt", Date())
+            productUpdateFields["price"] = Integer.valueOf(binding.inputEditPriceView.quantity.toString())
+            productUpdateFields["name"] = binding.inputEditProductName.text!!.toString()
+            productUpdateFields["itemQuantity"] = Integer.valueOf(binding.inputEditStockView.quantity.toString())
+            productUpdateFields["description"] = binding.inputEditProductDescription.text!!.toString()
+            productUpdateFields["updatedAt"] = Date()
 
             editProductViewModel.updateProduct(productUpdateFields)
                 .subscribe({
                     Toast.makeText(activity, getString(string.product_update_success), Toast.LENGTH_SHORT).show()
-                    activity!!.supportFragmentManager.popBackStack(
+                    requireActivity().supportFragmentManager.popBackStack(
                         EditProductFragment::class.java.simpleName,
                         FragmentManager.POP_BACK_STACK_INCLUSIVE
                     )
@@ -153,7 +148,7 @@ class EditProductFragment : Fragment() {
         }
 
         binding.editBtnCancell.setOnClickListener {
-            activity!!.supportFragmentManager.popBackStack(
+            requireActivity().supportFragmentManager.popBackStack(
                 EditProductFragment::class.java.simpleName,
                 FragmentManager.POP_BACK_STACK_INCLUSIVE
             )
