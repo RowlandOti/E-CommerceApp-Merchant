@@ -84,7 +84,7 @@ class OrderFragment : Fragment() {
         orderViewModel.getDataList()
             .observe(
                 viewLifecycleOwner,
-                Observer { orders -> handleDataState(orders.status, orders.data, orders.message) })
+                Observer { orders -> handleDataState(orders.status, orders.data, orders.message!!) })
 
 /*
         FirebaseFirestore.getInstance()
@@ -101,7 +101,7 @@ class OrderFragment : Fragment() {
         _binding = null
     }
 
-    private fun handleDataState(resourceState: ResourceState, data: List<OrderDataModel>?, message: String?) {
+    private fun handleDataState(resourceState: ResourceState, data: List<OrderDataModel>?, message: String) {
         when (resourceState) {
             ResourceState.LOADING -> binding.ordersRecyclerview.showProgress()
             ResourceState.SUCCESS -> {

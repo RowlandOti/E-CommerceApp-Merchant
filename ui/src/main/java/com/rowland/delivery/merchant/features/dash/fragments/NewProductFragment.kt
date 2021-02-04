@@ -117,8 +117,8 @@ class NewProductFragment : Fragment() {
 
             val category = requireArguments().getString("selected_category")
 
-            newProductViewModel.createProduct(product, category, FirebaseAuth.getInstance().currentUser!!.uid)
-                .subscribe({ newProduct ->
+            newProductViewModel.createProduct(product, category!!, FirebaseAuth.getInstance().currentUser!!.uid)
+                .subscribe({
                     Toast.makeText(activity, "Product added succesfully", Toast.LENGTH_SHORT).show()
                     requireActivity().supportFragmentManager.popBackStack(
                         NewProductFragment::class.java.simpleName,

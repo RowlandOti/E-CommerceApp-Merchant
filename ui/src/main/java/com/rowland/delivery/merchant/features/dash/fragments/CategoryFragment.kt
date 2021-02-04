@@ -134,7 +134,7 @@ class CategoryFragment : Fragment() {
             }
             ResourceState.ERROR -> {
                 binding.catRecyclerview.showError()
-                Log.d(CategoryFragment::class.java.simpleName, message)
+                message?.let { Log.d(CategoryFragment::class.java.simpleName, it) }
             }
         }
     }
