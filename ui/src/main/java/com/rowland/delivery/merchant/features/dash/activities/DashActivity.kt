@@ -5,6 +5,7 @@ import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -24,6 +25,7 @@ import com.rowland.delivery.presentation.viewmodels.product.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import androidx.activity.viewModels
+import com.rowland.delivery.merchant.features.dash.fragments.CategoryFragment
 
 @AndroidEntryPoint
 class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
@@ -44,7 +46,6 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         fun startActivity(context: Context) {
             val intent = Intent(context, DashActivity::class.java)
-            context.startActivity(intent)
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 val bundle = ActivityOptions.makeSceneTransitionAnimation(context as Activity).toBundle()
                 context.startActivity(intent, bundle)
@@ -66,6 +67,8 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         supportFragmentManager.addOnBackStackChangedListener(this)
 
+        Log.d("Hash-${DashActivity::class.java.simpleName}", orderViewModel.toString())
+        Log.d("Hash-${DashActivity::class.java.simpleName}", categoryViewModel.toString())
         orderViewModel.getSelectedListItem()
             .observe(this, {
                 if (supportFragmentManager.findFragmentByTag(OrderItemFragment::class.java.simpleName) == null) {

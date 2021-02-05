@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
@@ -26,7 +26,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class OrderFragment : Fragment() {
 
-    private val orderViewModel: OrderViewModel by viewModels()
+    private val orderViewModel: OrderViewModel by activityViewModels()
 
     @Inject
     lateinit var orderAdapter: OrderDataAdapter
@@ -46,6 +46,7 @@ class OrderFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         orderViewModel.loadOrders(FirebaseAuth.getInstance().currentUser!!.uid)
+        Log.d("Hash-${OrderFragment::class.java.simpleName}", orderViewModel.toString())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
