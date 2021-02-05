@@ -1,7 +1,6 @@
 package com.rowland.delivery.merchant.features.dash.di.modules
 
 import com.rowland.delivery.merchant.di.modules.CacheModule
-import com.rowland.delivery.merchant.di.modules.ContextModule
 import com.rowland.delivery.merchant.di.modules.DataModule
 import com.rowland.delivery.merchant.di.modules.DomainModule
 import com.rowland.delivery.merchant.di.modules.PresentationModule
@@ -22,32 +21,30 @@ import dagger.hilt.components.SingletonComponent
  * Created by Rowland on 5/6/2018.
  */
 
-@Module(includes = [FirebaseModule::class, ContextModule::class, SessionModule::class, PresentationModule::class,
-    DataModule::class, UiModule::class, DataModule::class, DomainModule::class, PresentationModule::class,
-    RemoteModule::class, CacheModule::class, FirebaseModule::class])
+@Module(
+    includes = [FirebaseModule::class, SessionModule::class, PresentationModule::class,
+        DataModule::class, UiModule::class, DataModule::class, DomainModule::class, PresentationModule::class,
+        RemoteModule::class, CacheModule::class, FirebaseModule::class]
+)
 @InstallIn(SingletonComponent::class)
 class DashModule {
 
     @Provides
-    //@ProductScope
     internal fun providesProductAdapter(): ProductAdapter {
         return ProductAdapter()
     }
 
     @Provides
-    //@CategoryScope
     internal fun providesCategoryAdapter(): CategoryAdapter {
         return CategoryAdapter()
     }
 
     @Provides
-    //@OrderScope
     internal fun providesOrderDataAdapter(): OrderDataAdapter {
         return OrderDataAdapter()
     }
 
     @Provides
-    //@OrderScope
     internal fun providesOrderItemAdapter(): OrderItemAdapter {
         return OrderItemAdapter()
     }

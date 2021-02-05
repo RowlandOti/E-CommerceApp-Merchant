@@ -8,7 +8,6 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.rowland.delivery.merchant.R
-import com.rowland.delivery.merchant.di.modules.ContextModule
 import com.rowland.delivery.merchant.features.auth.Auth
 import com.rowland.delivery.merchant.features.auth.AuthConfig
 import com.rowland.delivery.merchant.features.auth.EmailAuth
@@ -28,7 +27,7 @@ import javax.inject.Singleton
  * Created by Rowland on 5/1/2018.
  */
 
-@Module(includes = [ContextModule::class, SessionModule::class, FirebaseModule::class])
+@Module(includes = [SessionModule::class, FirebaseModule::class])
 @InstallIn(SingletonComponent::class)
 class AuthModule {
 

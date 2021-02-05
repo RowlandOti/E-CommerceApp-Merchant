@@ -30,8 +30,8 @@ class SplashActivity : AppCompatActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        ScreenUtils.makeFullScreen(this)
-        ScreenUtils.changeStatusBarColor(this)
+        ScreenUtils.makeFullScreen(window)
+        ScreenUtils.changeStatusBarColor(window)
 
         Glide.with(this)
             .load(R.drawable.flash)
@@ -52,7 +52,7 @@ class SplashActivity : AppCompatActivity() {
 
     companion object {
 
-        private const val SPLASH_DISPLAY_LENGTH = 500
+        private const val SPLASH_DISPLAY_LENGTH = 200
 
         fun startActivity(context: Context) {
             val intent = Intent(context, SplashActivity::class.java)
