@@ -1,8 +1,7 @@
-package com.rowland.delivery.merchant.features.dash.di.modules
+package com.rowland.delivery.merchant
 
 import androidx.multidex.MultiDexApplication
 import com.google.firebase.firestore.FirebaseFirestore
-import com.rowland.delivery.merchant.BuildConfig
 import dagger.hilt.android.HiltAndroidApp
 
 /**
