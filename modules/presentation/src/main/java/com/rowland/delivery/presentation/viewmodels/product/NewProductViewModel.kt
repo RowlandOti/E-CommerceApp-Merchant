@@ -7,15 +7,19 @@ import androidx.lifecycle.ViewModel
 import com.rowland.delivery.domain.models.product.ProductEntity
 import com.rowland.delivery.domain.usecases.images.UploadImageUseCase
 import com.rowland.delivery.domain.usecases.product.CreateProductUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Flowable
 import javax.inject.Inject
-
 
 /**
  * Created by Rowland on 5/15/2018.
  */
 
-class NewProductViewModel @Inject constructor(private val createProductUseCase: CreateProductUseCase, private val uploadImageUseCase: UploadImageUseCase) : ViewModel() {
+@HiltViewModel
+class NewProductViewModel @Inject constructor(
+    private val createProductUseCase: CreateProductUseCase,
+    private val uploadImageUseCase: UploadImageUseCase
+) : ViewModel() {
 
     internal val selectedImageUri = MutableLiveData<List<String>>()
 
@@ -30,13 +34,21 @@ class NewProductViewModel @Inject constructor(private val createProductUseCase: 
         selectedImageUri.value = imageStrings
     }
 
-    fun createProduct(productEntity: ProductEntity,category: String,userUid: String): Flowable<ProductEntity> {
+    fun createProduct(productEntity: ProductEntity, category: String, userUid: String): Flowable<ProductEntity> {
         return uploadImageUseCase.uploadImages(selectedImageUri.value!!, category, userUid)
-                .map {
-                    productEntity.imageUrls = it as ArrayList<String>
-                    productEntity.merchantCode = userUid
-                    productEntity
-                }
-                .flatMapSingle { createProductUseCase.execute(CreateProductUseCase.Params.forProducts(it, category, userUid)) }
+            .map {
+                productEntity.imageUrls = it as ArrayList<String>
+                productEntity.merchantCode = userUid
+                productEntity
+            }
+            .flatMapSingle {
+                createProductUseCase.execute(
+                    CreateProductUseCase.Params.forProducts(
+                        it,
+                        category,
+                        userUid
+                    )
+                )
+            }
     }
 }

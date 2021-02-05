@@ -5,12 +5,12 @@ import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.lifecycle.Observer
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.navigation.NavigationView
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.databinding.ActivityDashBinding
@@ -24,19 +24,12 @@ import com.rowland.delivery.presentation.viewmodels.order.OrderViewModel
 import com.rowland.delivery.presentation.viewmodels.product.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import androidx.activity.viewModels
+import com.rowland.delivery.merchant.features.dash.fragments.CategoryFragment
 
 @AndroidEntryPoint
 class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
-    androidx.fragment.app.FragmentManager.OnBackStackChangedListener {
-
-    @Inject
-    lateinit var orderFactory: ViewModelProvider.Factory
-
-    @Inject
-    lateinit var categoryFactory: ViewModelProvider.Factory
-
-    @Inject
-    lateinit var productFactory: ViewModelProvider.Factory
+    FragmentManager.OnBackStackChangedListener {
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -44,8 +37,8 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var _binding: ActivityDashBinding
     val binding get() = _binding
 
-    private lateinit var orderViewModel: OrderViewModel
-    private lateinit var categoryViewModel: CategoryViewModel
+    private val orderViewModel: OrderViewModel by viewModels()
+    private val categoryViewModel: CategoryViewModel by viewModels()
     private var mSelectedMenuId: Int = 0
 
 
@@ -53,7 +46,6 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         fun startActivity(context: Context) {
             val intent = Intent(context, DashActivity::class.java)
-            context.startActivity(intent)
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 val bundle = ActivityOptions.makeSceneTransitionAnimation(context as Activity).toBundle()
                 context.startActivity(intent, bundle)
@@ -75,9 +67,10 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         supportFragmentManager.addOnBackStackChangedListener(this)
 
-        orderViewModel = ViewModelProviders.of(this, orderFactory).get(OrderViewModel::class.java)
+        Log.d("Hash-${DashActivity::class.java.simpleName}", orderViewModel.toString())
+        Log.d("Hash-${DashActivity::class.java.simpleName}", categoryViewModel.toString())
         orderViewModel.getSelectedListItem()
-            .observe(this, Observer { orderData ->
+            .observe(this, {
                 if (supportFragmentManager.findFragmentByTag(OrderItemFragment::class.java.simpleName) == null) {
                     supportFragmentManager.beginTransaction()
                         .replace(
@@ -90,13 +83,10 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             })
 
-        categoryViewModel = ViewModelProviders.of(this, categoryFactory).get(CategoryViewModel::class.java)
         categoryViewModel.getSelectedListItem()
-            .observe(this, Observer { category ->
+            .observe(this, { category ->
                 if (supportFragmentManager.findFragmentByTag(ProductFragment::class.java.simpleName) == null) {
-
-                    val productViewModel =
-                        ViewModelProviders.of(this, productFactory).get(ProductViewModel::class.java)
+                    val productViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
                     productViewModel.clearDataList()
                     val args = Bundle()
                     args.putString("selected_category", category!!.name)

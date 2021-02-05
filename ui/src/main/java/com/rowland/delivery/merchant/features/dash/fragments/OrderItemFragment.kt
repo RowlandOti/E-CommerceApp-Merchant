@@ -1,12 +1,12 @@
 package com.rowland.delivery.merchant.features.dash.fragments
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,14 +14,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.dekoservidoni.omfm.OneMoreFabMenu
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.R.string
 import com.rowland.delivery.merchant.databinding.FragmentOrderItemBinding
-import com.rowland.delivery.merchant.features.dash.activities.DashActivity
 import com.rowland.delivery.merchant.features.dash.adapters.OrderItemAdapter
 import com.rowland.delivery.presentation.model.order.OrderDataModel
 import com.rowland.delivery.presentation.viewmodels.order.OrderViewModel
@@ -36,14 +35,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
 
-    private lateinit var orderViewModel: OrderViewModel
+    private val orderViewModel: OrderViewModel by activityViewModels()
     private var orderData: OrderDataModel? = null
 
     @Inject
     lateinit var adapter: OrderItemAdapter
-
-    @Inject
-    lateinit var orderFactory: ViewModelProvider.Factory
 
     private var _binding: FragmentOrderItemBinding? = null
     private val binding get() = _binding!!
@@ -61,7 +57,7 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        orderViewModel = ViewModelProviders.of(requireActivity(), orderFactory).get(OrderViewModel::class.java)
+        Log.d("Hash-${OrderItemFragment::class.java.simpleName}", orderViewModel.toString())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -116,7 +112,11 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
             callIntent.data = Uri.parse(String.format("tel:%s", orderData!!.phone))
             startActivity(callIntent)
         } else {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CALL_PHONE), CALL_PERMISSION)
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.CALL_PHONE),
+                CALL_PERMISSION
+            )
         }
     }
 

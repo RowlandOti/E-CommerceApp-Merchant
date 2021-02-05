@@ -8,9 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -20,6 +23,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.rowland.delivery.merchant.R.string
 import com.rowland.delivery.merchant.databinding.FragmentEditProductBinding
+import com.rowland.delivery.presentation.viewmodels.category.CategoryViewModel
 import com.rowland.delivery.presentation.viewmodels.product.EditProductViewModel
 import com.rowland.delivery.presentation.viewmodels.product.ProductViewModel
 import com.rowland.rxgallery.RxGallery
@@ -34,11 +38,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class EditProductFragment : Fragment() {
 
-    private lateinit var productViewModel: ProductViewModel
-    private lateinit var editProductViewModel: EditProductViewModel
+    private val productViewModel: ProductViewModel by activityViewModels()
+    private val editProductViewModel: EditProductViewModel by viewModels()
 
-    @Inject
-    lateinit var productFactory: ViewModelProvider.Factory
 
     companion object {
 
@@ -54,8 +56,6 @@ class EditProductFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        productViewModel = ViewModelProviders.of(requireActivity(), productFactory).get(ProductViewModel::class.java)
-        editProductViewModel = ViewModelProviders.of(this, productFactory).get(EditProductViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -68,7 +68,7 @@ class EditProductFragment : Fragment() {
         (activity as AppCompatActivity).setSupportActionBar(binding.editproductToolbar)
 
         productViewModel.getSelectedListItem()
-            .observe(viewLifecycleOwner, Observer { product ->
+            .observe(viewLifecycleOwner, { product ->
                 binding.inputEditPriceView.quantity = product!!.price!!
                 binding.inputEditStockView.quantity = product.itemQuantity!!
                 binding.inputEditProductName.setText(product.name)
@@ -87,11 +87,11 @@ class EditProductFragment : Fragment() {
                 editProductViewModel.setCategory(productViewModel.category.value!!)
             })
 
-        editProductViewModel.images.observe(viewLifecycleOwner, Observer { uris ->
+        editProductViewModel.images.observe(viewLifecycleOwner, { uris ->
             val options = RequestOptions()
             options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
             Glide.with(requireActivity())
-                .load(uris!!.get(uris.size - 1))
+                .load(uris!![uris.size - 1])
                 .apply(options)
                 .into(binding.editInputProductImageview)
         })

@@ -10,6 +10,7 @@ import com.rowland.delivery.presentation.data.ResourceState
 import com.rowland.delivery.presentation.mapper.product.ProductMapper
 import com.rowland.delivery.presentation.model.product.ProductModel
 import com.rowland.delivery.presentation.viewmodels.SharedViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Completable
 import io.reactivex.subscribers.DisposableSubscriber
 import javax.inject.Inject
@@ -18,8 +19,13 @@ import javax.inject.Inject
  * Created by Rowland on 5/13/2018.
  */
 
-class ProductViewModel @Inject
-constructor(private val loadProductsUseCase: LoadProductsUseCase, private val deleteProductsUseCase: DeleteProductUseCase, private val mapper: ProductMapper) : SharedViewModel<ProductModel>() {
+@HiltViewModel
+class ProductViewModel
+@Inject constructor(
+    private val loadProductsUseCase: LoadProductsUseCase,
+    private val deleteProductsUseCase: DeleteProductUseCase,
+    private val mapper: ProductMapper
+) : SharedViewModel<ProductModel>() {
 
     internal val productCategory = MutableLiveData<String>()
     internal val currentUserUid = MutableLiveData<String>()
@@ -27,11 +33,13 @@ constructor(private val loadProductsUseCase: LoadProductsUseCase, private val de
     val category: LiveData<String>
         get() = productCategory
 
-
     fun loadProducts(category: String, userUid: String) {
         currentUserUid.value = userUid
         productCategory.value = category
-        this.loadProductsUseCase.execute(ProductsSubscriber(), LoadProductsUseCase.Params.forProducts(currentUserUid.value!!, productCategory.value!!))
+        this.loadProductsUseCase.execute(
+            ProductsSubscriber(),
+            LoadProductsUseCase.Params.forProducts(currentUserUid.value!!, productCategory.value!!)
+        )
     }
 
     fun deleteProduct(): Completable {
@@ -39,8 +47,8 @@ constructor(private val loadProductsUseCase: LoadProductsUseCase, private val de
     }
 
     inner class ProductsSubscriber : DisposableSubscriber<List<ProductEntity>>() {
-        override fun onComplete() {
 
+        override fun onComplete() {
         }
 
         override fun onNext(t: List<ProductEntity>) {
