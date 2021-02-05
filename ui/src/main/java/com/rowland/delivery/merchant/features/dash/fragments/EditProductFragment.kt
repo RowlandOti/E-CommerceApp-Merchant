@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -37,7 +38,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class EditProductFragment : Fragment() {
 
-    private val productViewModel: ProductViewModel by viewModels()
+    private val productViewModel: ProductViewModel by activityViewModels()
     private val editProductViewModel: EditProductViewModel by viewModels()
 
 
@@ -67,7 +68,7 @@ class EditProductFragment : Fragment() {
         (activity as AppCompatActivity).setSupportActionBar(binding.editproductToolbar)
 
         productViewModel.getSelectedListItem()
-            .observe(viewLifecycleOwner, Observer { product ->
+            .observe(viewLifecycleOwner, { product ->
                 binding.inputEditPriceView.quantity = product!!.price!!
                 binding.inputEditStockView.quantity = product.itemQuantity!!
                 binding.inputEditProductName.setText(product.name)
@@ -86,11 +87,11 @@ class EditProductFragment : Fragment() {
                 editProductViewModel.setCategory(productViewModel.category.value!!)
             })
 
-        editProductViewModel.images.observe(viewLifecycleOwner, Observer { uris ->
+        editProductViewModel.images.observe(viewLifecycleOwner, { uris ->
             val options = RequestOptions()
             options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
             Glide.with(requireActivity())
-                .load(uris!!.get(uris.size - 1))
+                .load(uris!![uris.size - 1])
                 .apply(options)
                 .into(binding.editInputProductImageview)
         })

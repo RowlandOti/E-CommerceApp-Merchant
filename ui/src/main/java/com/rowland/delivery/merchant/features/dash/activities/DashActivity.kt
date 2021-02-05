@@ -86,7 +86,6 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         categoryViewModel.getSelectedListItem()
             .observe(this, { category ->
                 if (supportFragmentManager.findFragmentByTag(ProductFragment::class.java.simpleName) == null) {
-
                     val productViewModel = ViewModelProvider(this).get(ProductViewModel::class.java)
                     productViewModel.clearDataList()
                     val args = Bundle()

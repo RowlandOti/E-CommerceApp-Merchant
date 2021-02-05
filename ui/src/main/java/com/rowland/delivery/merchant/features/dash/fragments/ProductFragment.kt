@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.google.firebase.auth.FirebaseAuth
@@ -25,7 +26,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ProductFragment : Fragment() {
 
-    private val productViewModel: ProductViewModel by viewModels()
+    private val productViewModel: ProductViewModel by activityViewModels()
 
     @Inject
     lateinit var productAdapter: ProductAdapter
