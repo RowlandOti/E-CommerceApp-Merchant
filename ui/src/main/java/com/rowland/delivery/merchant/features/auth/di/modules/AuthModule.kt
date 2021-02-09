@@ -3,6 +3,8 @@ package com.rowland.delivery.merchant.features.auth.di.modules
 import android.app.Activity
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
@@ -18,6 +20,8 @@ import com.rowland.delivery.merchant.services.session.di.modules.SessionModule
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Named
@@ -28,11 +32,10 @@ import javax.inject.Singleton
  */
 
 @Module(includes = [SessionModule::class, FirebaseModule::class])
-@InstallIn(SingletonComponent::class)
+@InstallIn(ActivityComponent::class)
 class AuthModule {
 
     @Provides
-    @Singleton
     @Named("email_login")
     fun providesEmailAuth(
         authConfig: AuthConfig,
@@ -44,7 +47,6 @@ class AuthModule {
     }
 
     @Provides
-    @Singleton
     @Named("google_login")
     fun providesGoogleAuth(
         authConfig: AuthConfig,
@@ -56,24 +58,18 @@ class AuthModule {
     }
 
     @Provides
-    @Singleton
-    fun providesSocialAuthConfig(@ApplicationContext context: Context, googleApiClient: GoogleApiClient): AuthConfig {
+    fun providesSocialAuthConfig(@ActivityContext context: Context, googleSignInClient: GoogleSignInClient): AuthConfig {
         return AuthConfig(context as Activity, context as Auth.AuthLoginCallbacks)
-            .setGoogleApiClient(googleApiClient)
+            .setGoogleSignInClient(googleSignInClient)
     }
 
     @Provides
-    @Singleton
-    fun providesGoogleApiClient(@ApplicationContext context: Context, gso: GoogleSignInOptions): GoogleApiClient {
-        return GoogleApiClient.Builder(context)
-            .enableAutoManage(context as FragmentActivity, context as GoogleApiClient.OnConnectionFailedListener)
-            .addApi(com.google.android.gms.auth.api.Auth.GOOGLE_SIGN_IN_API, gso)
-            .build()
+    fun providesGoogleSignInClient(@ActivityContext context: Context, gso: GoogleSignInOptions): GoogleSignInClient {
+        return GoogleSignIn.getClient(context as FragmentActivity, gso)
     }
 
     @Provides
-    @Singleton
-    fun providesGoogleSignOptions(@ApplicationContext context: Context): GoogleSignInOptions {
+    fun providesGoogleSignOptions(@ActivityContext context: Context): GoogleSignInOptions {
         return GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(context.getString(R.string.default_web_client_id))
             .requestEmail()

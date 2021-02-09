@@ -25,11 +25,11 @@ import javax.inject.Named
 class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     @Inject
-    @field:Named("google_login")
+    @Named("google_login")
     lateinit var mGoogleAuth: Auth
 
     @Inject
-    @field:Named("email_login")
+    @Named("email_login")
     lateinit var mEmailAuth: Auth
 
     private lateinit var binding: ActivityAuthBinding

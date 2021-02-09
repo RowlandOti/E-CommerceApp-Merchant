@@ -116,6 +116,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.3.0'
     androidTestImplementation 'androidx.test:rules:1.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.2'
     androidTestImplementation 'com.squareup.spoon:spoon-client:2.0.0-SNAPSHOT'
     androidTestImplementation 'com.jraska:falcon:2.0.1'
