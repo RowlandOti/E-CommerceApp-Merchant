@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.rowland.delivery.merchant.R
@@ -22,10 +21,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ActivityContext
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
 import javax.inject.Named
-import javax.inject.Singleton
 
 /**
  * Created by Rowland on 5/1/2018.
@@ -58,7 +54,10 @@ class AuthModule {
     }
 
     @Provides
-    fun providesSocialAuthConfig(@ActivityContext context: Context, googleSignInClient: GoogleSignInClient): AuthConfig {
+    fun providesSocialAuthConfig(
+        @ActivityContext context: Context,
+        googleSignInClient: GoogleSignInClient
+    ): AuthConfig {
         return AuthConfig(context as Activity, context as Auth.AuthLoginCallbacks)
             .setGoogleSignInClient(googleSignInClient)
     }
