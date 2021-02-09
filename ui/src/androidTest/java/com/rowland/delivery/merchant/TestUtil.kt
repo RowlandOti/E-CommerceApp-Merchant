@@ -12,5 +12,3 @@ import com.rowland.delivery.merchant.robots.LoginRobot
 
 fun login(func: LoginRobot.() -> Unit) = LoginRobot()
     .apply { func() }
-
-fun getString(resId: Int) = InstrumentationRegistry.getInstrumentation().targetContext.resources.getString(resId)
