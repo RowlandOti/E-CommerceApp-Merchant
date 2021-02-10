@@ -56,13 +56,13 @@ class SplashActivity : AppCompatActivity() {
 
         fun startActivity(context: Context) {
             val intent = Intent(context, SplashActivity::class.java)
-            context.startActivity(intent)
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 val bundle = ActivityOptions.makeSceneTransitionAnimation(context as Activity).toBundle()
                 context.startActivity(intent, bundle)
             } else {
                 context.startActivity(intent)
             }
+            (context as Activity).finish()
         }
     }
 }

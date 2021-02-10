@@ -52,6 +52,7 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             } else {
                 context.startActivity(intent)
             }
+            (context as Activity).finish()
         }
     }
 
