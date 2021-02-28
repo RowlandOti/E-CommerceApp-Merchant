@@ -34,7 +34,7 @@ dependencies {
     implementation project(path: ':modules:data', configuration: 'default')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "io.reactivex.rxjava2:rxkotlin:2.3.0"
+    implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
     implementation "javax.annotation:jsr250-api:1.0"
     implementation "javax.inject:javax.inject:1"
 
@@ -45,7 +45,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:22.0.2'
     implementation 'com.google.firebase:firebase-storage:19.2.1'
     //If you are using Firestore in your project
-    implementation 'com.github.FrangSierra:RxFirebase:1.5.2'
+    implementation 'com.github.FrangSierra:RxFirebase:1.5.7'
 
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test:runner:1.3.0'
