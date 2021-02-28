@@ -42,7 +42,7 @@ dependencies {
 
     // Firebase and Google services
     implementation 'com.google.firebase:firebase-core:18.0.2'
-    implementation 'com.google.firebase:firebase-firestore:22.0.2'
+    implementation 'com.google.firebase:firebase-firestore:22.1.0'
     implementation 'com.google.firebase:firebase-storage:19.2.1'
     //If you are using Firestore in your project
     implementation 'com.github.FrangSierra:RxFirebase:1.5.7'
