@@ -46,11 +46,10 @@ class SplashActivity : AppCompatActivity() {
             .subscribe {
                 if (!sessionManager.isLoggedIn) {
                     AuthActivity.startActivity(this@SplashActivity)
-                    finish()
                 } else {
                     DashActivity.startActivity(this@SplashActivity)
-                    finish()
                 }
+                finish()
                 overridePendingTransition(0, 0)
             }
     }
