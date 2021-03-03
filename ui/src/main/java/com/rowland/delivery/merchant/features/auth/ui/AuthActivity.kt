@@ -8,8 +8,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.api.GoogleApiClient
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.databinding.ActivityAuthBinding
 import com.rowland.delivery.merchant.features.auth.Auth
@@ -22,7 +20,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @AndroidEntryPoint
-class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks, GoogleApiClient.OnConnectionFailedListener {
+class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks {
 
     @Inject
     @Named("google_login")
@@ -43,10 +41,12 @@ class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks, GoogleApiClie
             .load(R.drawable.flash)
             .into(binding.splashImageview)
 
-        binding.authContent.btnGoogleLogin.setOnClickListener { mGoogleAuth.login() }
-        binding.authContent.btnLogin.setOnClickListener { mEmailAuth.login() }
-        binding.authContent.btnRegister.setOnClickListener { mEmailAuth.register() }
-        binding.authContent.txtResetPassword.setOnClickListener { mEmailAuth.login() }
+        binding.authContent.apply {
+            btnGoogleLogin.setOnClickListener { mGoogleAuth.login() }
+            btnLogin.setOnClickListener { mEmailAuth.login() }
+            btnRegister.setOnClickListener { mEmailAuth.register() }
+            txtResetPassword.setOnClickListener { mEmailAuth.login() }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -75,9 +75,6 @@ class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks, GoogleApiClie
         credentialsMap[EmailAuth.CRED_EMAIL_KEY] = binding.authContent.inputEmail.text.toString()
         credentialsMap[EmailAuth.CRED_PASSWORD_KEY] = binding.authContent.inputPassword.text.toString()
         return credentialsMap
-    }
-
-    override fun onConnectionFailed(connectionResult: ConnectionResult) {
     }
 
     companion object {
