@@ -1,8 +1,12 @@
-package com.rowland.delivery.merchant.features.auth
+package com.rowland.delivery.merchant.features.auth.di.modules
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import com.rowland.delivery.merchant.features.auth.Auth
+import com.rowland.delivery.merchant.features.auth.AuthConfig
+import com.rowland.delivery.merchant.features.auth.AuthException
+import com.rowland.delivery.merchant.features.auth.EmailAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

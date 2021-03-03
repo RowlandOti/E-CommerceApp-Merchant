@@ -2,7 +2,7 @@ package com.rowland.delivery.merchant.features.auth.ui
 
 import androidx.test.ext.junit.rules.activityScenarioRule
 import com.rowland.delivery.merchant.R
-import com.rowland.delivery.merchant.features.auth.FakeAuthModule
+import com.rowland.delivery.merchant.features.auth.di.modules.FakeAuthModule
 import com.rowland.delivery.merchant.features.auth.di.modules.AuthModule
 import com.rowland.delivery.merchant.getActivity
 import com.rowland.delivery.merchant.googleLogin
@@ -40,7 +40,7 @@ class AuthActivityTest {
         login {
             dismissKeyboard()
             clickLogin()
-            spoon.screenshot(activity, "auth_login_Empty_credentials");
+            spoon.screenshot(activity, "auth_login_Empty_credentials")
             matchToastText(activity.getString(R.string.login_unsuccessful), activity.window.decorView)
         }
     }
@@ -50,7 +50,7 @@ class AuthActivityTest {
         login {
             setPassword(FakeAuthModule.USER_PASS)
             clickLogin()
-            spoon.screenshot(activity, "auth_login_Empty_email");
+            spoon.screenshot(activity, "auth_login_Empty_email")
             matchToastText(activity.getString(R.string.login_unsuccessful), activity.window.decorView)
         }
     }
@@ -60,7 +60,7 @@ class AuthActivityTest {
         login {
             setEmail(FakeAuthModule.USER_EMAIL)
             clickLogin()
-            spoon.screenshot(activity, "auth_login_empty_password");
+            spoon.screenshot(activity, "auth_login_empty_password")
             matchToastText(activity.getString(R.string.login_unsuccessful), activity.window.decorView)
         }
     }
@@ -93,7 +93,7 @@ class AuthActivityTest {
             setEmail(FakeAuthModule.USER_EMAIL)
             setPassword(FakeAuthModule.USER_PASS)
             clickLogin()
-            spoon.screenshot(activity, "auth_login_success");
+            spoon.screenshot(activity, "auth_login_success")
             matchToastText(activity.getString(R.string.login_successful), activity.window.decorView)
         }
     }
@@ -102,7 +102,7 @@ class AuthActivityTest {
     fun onGoogleLoginSuccess() {
         googleLogin {
             clickGoogleLogin()
-            spoon.screenshot(activity, "auth_google_login_success");
+            spoon.screenshot(activity, "auth_google_login_success")
             matchToastText(activity.getString(R.string.login_successful), activity.window.decorView)
         }
     }
@@ -112,7 +112,7 @@ class AuthActivityTest {
         register {
             setPassword(FakeAuthModule.USER_PASS)
             clickRegister()
-            spoon.screenshot(activity, "auth_register_empty_password");
+            spoon.screenshot(activity, "auth_register_empty_password")
             matchToastText(activity.getString(R.string.login_unsuccessful), activity.window.decorView)
         }
     }
@@ -122,7 +122,7 @@ class AuthActivityTest {
         register {
             setEmail(FakeAuthModule.USER_EMAIL)
             clickRegister()
-            spoon.screenshot(activity, "auth_register_empty_password");
+            spoon.screenshot(activity, "auth_register_empty_password")
             matchToastText(activity.getString(R.string.login_unsuccessful), activity.window.decorView)
         }
     }
