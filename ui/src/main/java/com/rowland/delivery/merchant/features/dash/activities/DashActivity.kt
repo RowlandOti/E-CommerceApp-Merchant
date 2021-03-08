@@ -7,10 +7,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.databinding.ActivityDashBinding
@@ -24,12 +33,10 @@ import com.rowland.delivery.presentation.viewmodels.order.OrderViewModel
 import com.rowland.delivery.presentation.viewmodels.product.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import androidx.activity.viewModels
-import com.rowland.delivery.merchant.features.dash.fragments.CategoryFragment
 
 @AndroidEntryPoint
 class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
-    FragmentManager.OnBackStackChangedListener {
+    FragmentManager.OnBackStackChangedListener, NavController.OnDestinationChangedListener {
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -37,12 +44,14 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var _binding: ActivityDashBinding
     val binding get() = _binding
 
+    private lateinit var navController: NavController
     private val orderViewModel: OrderViewModel by viewModels()
     private val categoryViewModel: CategoryViewModel by viewModels()
     private var mSelectedMenuId: Int = 0
 
-
     companion object {
+
+        const val SELECTED_ID = "selected_id"
 
         fun startActivity(context: Context) {
             val intent = Intent(context, DashActivity::class.java)
@@ -62,8 +71,12 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         _binding = ActivityDashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.dashDrawer.setNavigationItemSelectedListener(this)
-        mSelectedMenuId = savedInstanceState?.getInt("SELECTED_ID") ?: R.id.action_business
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+
+        setupDrawerWithNavigator()
+        binding.dashDrawerNavigation.setNavigationItemSelectedListener(this)
+        mSelectedMenuId = savedInstanceState?.getInt(SELECTED_ID) ?: R.id.action_business
         itemSelection(mSelectedMenuId)
 
         supportFragmentManager.addOnBackStackChangedListener(this)
@@ -75,7 +88,7 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 if (supportFragmentManager.findFragmentByTag(OrderItemFragment::class.java.simpleName) == null) {
                     supportFragmentManager.beginTransaction()
                         .replace(
-                            R.id.dash_container_body,
+                            R.id.nav_host_fragment,
                             OrderItemFragment.newInstance(null),
                             OrderItemFragment::class.java.simpleName
                         )
@@ -93,7 +106,7 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     args.putString("selected_category", category!!.name)
                     supportFragmentManager.beginTransaction()
                         .replace(
-                            R.id.dash_container_body,
+                            R.id.nav_host_fragment,
                             ProductFragment.newInstance(args),
                             ProductFragment::class.java.simpleName
                         )
@@ -110,17 +123,29 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
+    private fun setupDrawerWithNavigator() {
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.overviewFragment),
+            binding.dashDrawerLayout
+        )
+
+//        setupActionBarWithNavController(this, navController, appBarConfiguration)
+        binding.dashDrawerNavigation.setupWithNavController(navController)
+    }
+
     private fun itemSelection(mSelectedId: Int) {
 
         when (mSelectedId) {
             R.id.action_business -> {
-                if (supportFragmentManager.findFragmentByTag(OverviewFragment::class.java.simpleName) == null) {
+                /*if (supportFragmentManager.findFragmentByTag(OverviewFragment::class.java.simpleName) == null) {
                     supportFragmentManager.beginTransaction().replace(
-                        R.id.dash_container_body,
+                        R.id.nav_host_fragment,
                         OverviewFragment.newInstance(0),
                         OverviewFragment::class.java.simpleName
                     ).commit()
-                }
+                }*/
+
+                //navController.navigate(DashActivity)
                 binding.dashDrawerLayout.closeDrawer(GravityCompat.START)
             }
             R.id.action_ratings ->
@@ -144,14 +169,32 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         shouldDisplayHomeUp()
     }
 
-    override fun onSupportNavigateUp(): Boolean {
+/*    override fun onSupportNavigateUp(): Boolean {
         super.onSupportNavigateUp()
         supportFragmentManager.popBackStack()
         return true
+    }*/
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() ||
+                super.onSupportNavigateUp()
     }
 
     private fun shouldDisplayHomeUp() {
-        val canGoBack = supportFragmentManager.backStackEntryCount > 0
-        supportActionBar!!.setDisplayHomeAsUpEnabled(canGoBack)
+        supportFragmentManager.addOnBackStackChangedListener {
+            val canGoBack = supportFragmentManager.backStackEntryCount > 0
+            supportActionBar!!.setDisplayHomeAsUpEnabled(canGoBack)
+        }
+    }
+
+    override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
+        when (destination.id) {
+            R.id.overviewFragment -> {
+                binding.dashDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            }
+            else -> {
+                binding.dashDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            }
+        }
     }
 }

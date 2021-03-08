@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.google.firebase.auth.FirebaseAuth
 import com.rowland.delivery.merchant.R
@@ -87,7 +86,7 @@ class ProductFragment : Fragment() {
                     is ProductEvent.Edit -> {
                         fn()
                         activity!!.supportFragmentManager.beginTransaction()
-                            .replace(R.id.dash_container_body, EditProductFragment.Companion.newInstance(null))
+                            .replace(R.id.nav_host_fragment, EditProductFragment.newInstance(null))
                             .addToBackStack(EditProductFragment::class.java.simpleName)
                             .commit()
                     }
@@ -123,7 +122,7 @@ class ProductFragment : Fragment() {
                 args.putString("selected_category", requireArguments().getString("selected_category"))
             }
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.dash_container_body, NewProductFragment.Companion.newInstance(args))
+                .replace(R.id.nav_host_fragment, NewProductFragment.newInstance(args))
                 .addToBackStack(NewProductFragment::class.java.simpleName)
                 .commit()
         }

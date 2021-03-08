@@ -15,6 +15,7 @@
     <color name="primary_text_color">#212121</color>
     <color name="secondary_text_color">#757575</color>
     <color name="lightTextColor">#AAAAAA</color>
+    <color name="greySurfaceColor">#818181</color>
 
 
     <color name="mtrl_textinput_default_box_stroke_color">@color/grey</color>

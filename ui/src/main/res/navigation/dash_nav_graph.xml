@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/dash_nav_graph"
+    app:startDestination="@id/overviewFragment">
+
+    <activity
+        android:id="@+id/dashActivity"
+        android:name="com.rowland.delivery.merchant.features.dash.activities.DashActivity"
+        android:label="DashboardActivity"/>
+
+    <fragment
+        android:id="@+id/overviewFragment"
+        android:name="com.rowland.delivery.merchant.features.dash.fragments.OverviewFragment"
+        android:label="OverviewFragment">
+        <action
+            android:id="@+id/action_overviewFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+        <action
+            android:id="@+id/action_overviewFragment_to_orderFragment"
+            app:destination="@id/orderFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.rowland.delivery.merchant.features.dash.fragments.CategoryFragment"
+        android:label="categoryFragment">
+        <action
+            android:id="@+id/action_categoryFragment_to_productFragment"
+            app:destination="@id/productFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/productFragment"
+        android:name="com.rowland.delivery.merchant.features.dash.fragments.ProductFragment"
+        android:label="productFragment">
+        <action
+            android:id="@+id/action_productFragment_to_editProductFragment"
+            app:destination="@id/editProductFragment" />
+        <action
+            android:id="@+id/action_productFragment_to_newProductFragment"
+            app:destination="@id/newProductFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/editProductFragment"
+        android:name="com.rowland.delivery.merchant.features.dash.fragments.EditProductFragment"
+        android:label="editProductFragment" />
+
+    <fragment
+        android:id="@+id/newProductFragment"
+        android:name="com.rowland.delivery.merchant.features.dash.fragments.NewProductFragment"
+        android:label="newProductFragment" />
+
+    <fragment
+        android:id="@+id/orderFragment"
+        android:name="com.rowland.delivery.merchant.features.dash.fragments.OrderFragment"
+        android:label="orderFragment">
+        <action
+            android:id="@+id/action_orderFragment_to_orderItemFragment"
+            app:destination="@id/orderItemFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/orderItemFragment"
+        android:name="com.rowland.delivery.merchant.features.dash.fragments.OrderItemFragment"
+        android:label="orderItemFragment" />
+</navigation>
