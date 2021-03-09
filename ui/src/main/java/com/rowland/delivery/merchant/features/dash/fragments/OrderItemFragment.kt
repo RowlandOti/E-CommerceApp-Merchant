@@ -1,6 +1,7 @@
 package com.rowland.delivery.merchant.features.dash.fragments
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -135,9 +136,10 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
         }
     }
 
+    @SuppressLint("CheckResult")
     private fun changeStatus(status: String) {
         val orderUpdateFields = HashMap<String, Any>()
-        orderUpdateFields.put("status", status)
+        orderUpdateFields["status"] = status
         orderViewModel.updateOrder(orderUpdateFields)
             .subscribe({
                 Toast.makeText(activity, getString(string.order_status_update_success), Toast.LENGTH_SHORT).show()

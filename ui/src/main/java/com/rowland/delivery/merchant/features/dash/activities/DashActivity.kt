@@ -40,7 +40,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
-    FragmentManager.OnBackStackChangedListener, NavController.OnDestinationChangedListener {
+    NavController.OnDestinationChangedListener {
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -52,8 +52,6 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var mSelectedMenuId: Int = 0
 
     companion object {
-
-        const val SELECTED_ID = "selected_id"
 
         fun startActivity(context: Context) {
             val intent = Intent(context, DashActivity::class.java)
@@ -69,20 +67,16 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         _binding = ActivityDashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
+        navController.addOnDestinationChangedListener(this)
 
         setupDrawerWithToolbar()
         setupDrawerWithNavigator()
         binding.dashDrawerNavigation.setNavigationItemSelectedListener(this)
-        //mSelectedMenuId = savedInstanceState?.getInt(SELECTED_ID) ?: R.id.action_business
-        //itemSelection(mSelectedMenuId)
-
-        supportFragmentManager.addOnBackStackChangedListener(this)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -141,7 +135,7 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         window.statusBarColor = resources.getColor(R.color.colorPrimaryDark)
                     }
                 } catch (e: Exception) {
-                    Log.e(OverviewFragment::class.java.simpleName, ":" + e.fillInStackTrace().toString())
+                    Log.e(DashActivity::class.java.simpleName, ":" + e.fillInStackTrace().toString())
                 }
             }
 
@@ -173,36 +167,16 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    public override fun onResume() {
-        super.onResume()
-        shouldDisplayHomeUp()
-    }
-
-    override fun onBackStackChanged() {
-        shouldDisplayHomeUp()
-    }
-
-/*    override fun onSupportNavigateUp(): Boolean {
-        super.onSupportNavigateUp()
-        supportFragmentManager.popBackStack()
-        return true
-    }*/
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() ||
                 super.onSupportNavigateUp()
     }
 
-    private fun shouldDisplayHomeUp() {
-        supportFragmentManager.addOnBackStackChangedListener {
-            val canGoBack = supportFragmentManager.backStackEntryCount > 0
-            supportActionBar!!.setDisplayHomeAsUpEnabled(canGoBack)
-        }
-    }
-
     override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
         when (destination.id) {
             R.id.overviewFragment -> {
+                supportActionBar?.let { it.subtitle = "" }
                 binding.dashDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             }
             else -> {

@@ -7,19 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commitNow
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.adapter.FragmentStateAdapter.FragmentTransactionCallback.OnPostEventListener
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.databinding.FragmentOverviewBinding
-import com.rowland.delivery.presentation.viewmodels.category.CategoryViewModel
-import com.rowland.delivery.presentation.viewmodels.order.OrderViewModel
+import com.rowland.delivery.presentation.model.order.OrderDataModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,8 +22,6 @@ class OverviewFragment : Fragment(), BottomNavigationView.OnNavigationItemSelect
     private var movePosition: Int = 0
     private var _binding: FragmentOverviewBinding? = null
     private val binding get() = _binding!!
-    private val orderViewModel: OrderViewModel by viewModels()
-    private val categoryViewModel: CategoryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,19 +48,27 @@ class OverviewFragment : Fragment(), BottomNavigationView.OnNavigationItemSelect
         })
         binding.overviewBottomNavigation.setOnNavigationItemSelectedListener(this)
 
-        orderViewModel.getSelectedListItem()
-            .observe(viewLifecycleOwner, {
-                    findNavController(this).navigate(
-                        OverviewFragmentDirections.actionOverviewFragmentToOrderItemFragment(it)
-                    )
-            })
+        childFragmentManager.setFragmentResultListener(
+            CategoryFragment.REQUEST_CATEGORY_SELECTED,
+            viewLifecycleOwner
+        ) { _, bundle ->
+            bundle.getString(CategoryFragment.CATEGORY)?.let {
+                findNavController(this).navigate(
+                    OverviewFragmentDirections.actionOverviewFragmentToProductFragment(it)
+                )
+            }
+        }
 
-        categoryViewModel.getSelectedListItem()
-            .observe(viewLifecycleOwner, {
-                    findNavController(this).navigate(
-                        OverviewFragmentDirections.actionOverviewFragmentToProductFragment(it.name)
-                    )
-            })
+        childFragmentManager.setFragmentResultListener(
+            OrderFragment.REQUEST_ORDER_SELECTED,
+            viewLifecycleOwner
+        ) { _, bundle ->
+            bundle.getParcelable<OrderDataModel>(OrderFragment.ORDER)?.let {
+                findNavController(this).navigate(
+                    OverviewFragmentDirections.actionOverviewFragmentToOrderItemFragment(it)
+                )
+            }
+        }
     }
 
     override fun onDestroyView() {
