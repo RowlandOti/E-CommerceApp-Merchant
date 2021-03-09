@@ -56,7 +56,7 @@ class SplashActivity : AppCompatActivity() {
 
     companion object {
 
-        private const val SPLASH_DISPLAY_LENGTH = 200
+        private const val SPLASH_DISPLAY_LENGTH = 50
 
         fun startActivity(context: Context) {
             val intent = Intent(context, SplashActivity::class.java)

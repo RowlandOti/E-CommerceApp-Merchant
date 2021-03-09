@@ -7,24 +7,30 @@
     <activity
         android:id="@+id/dashActivity"
         android:name="com.rowland.delivery.merchant.features.dash.activities.DashActivity"
-        android:label="DashboardActivity"/>
+        android:label="@string/dashboard" />
 
     <fragment
         android:id="@+id/overviewFragment"
         android:name="com.rowland.delivery.merchant.features.dash.fragments.OverviewFragment"
-        android:label="OverviewFragment">
+        android:label="@string/dashboard">
         <action
             android:id="@+id/action_overviewFragment_to_categoryFragment"
             app:destination="@id/categoryFragment" />
         <action
             android:id="@+id/action_overviewFragment_to_orderFragment"
             app:destination="@id/orderFragment" />
+        <action
+            android:id="@+id/action_overviewFragment_to_orderItemFragment"
+            app:destination="@id/orderItemFragment" />
+        <action
+            android:id="@+id/action_overviewFragment_to_productFragment"
+            app:destination="@id/productFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/categoryFragment"
         android:name="com.rowland.delivery.merchant.features.dash.fragments.CategoryFragment"
-        android:label="categoryFragment">
+        android:label="@string/category_label">
         <action
             android:id="@+id/action_categoryFragment_to_productFragment"
             app:destination="@id/productFragment" />
@@ -33,7 +39,12 @@
     <fragment
         android:id="@+id/productFragment"
         android:name="com.rowland.delivery.merchant.features.dash.fragments.ProductFragment"
-        android:label="productFragment">
+        android:label="@string/products_label">
+
+        <argument
+            android:name="selected_category"
+            app:argType="string" />
+
         <action
             android:id="@+id/action_productFragment_to_editProductFragment"
             app:destination="@id/editProductFragment" />
@@ -46,17 +57,17 @@
     <fragment
         android:id="@+id/editProductFragment"
         android:name="com.rowland.delivery.merchant.features.dash.fragments.EditProductFragment"
-        android:label="editProductFragment" />
+        android:label="@string/edit_product_label" />
 
     <fragment
         android:id="@+id/newProductFragment"
         android:name="com.rowland.delivery.merchant.features.dash.fragments.NewProductFragment"
-        android:label="newProductFragment" />
+        android:label="@string/new_product_label" />
 
     <fragment
         android:id="@+id/orderFragment"
         android:name="com.rowland.delivery.merchant.features.dash.fragments.OrderFragment"
-        android:label="orderFragment">
+        android:label="@string/order_label">
         <action
             android:id="@+id/action_orderFragment_to_orderItemFragment"
             app:destination="@id/orderItemFragment" />
@@ -65,5 +76,9 @@
     <fragment
         android:id="@+id/orderItemFragment"
         android:name="com.rowland.delivery.merchant.features.dash.fragments.OrderItemFragment"
-        android:label="orderItemFragment" />
+        android:label="@string/order_item_label" >
+        <argument
+            android:name="order_data_item"
+            app:argType="com.rowland.delivery.presentation.model.order.OrderDataModel" />
+    </fragment>
 </navigation>

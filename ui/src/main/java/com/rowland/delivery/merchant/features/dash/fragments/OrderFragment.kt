@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
@@ -26,11 +26,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class OrderFragment : Fragment() {
 
-    private val orderViewModel: OrderViewModel by activityViewModels()
-
     @Inject
     lateinit var orderAdapter: OrderDataAdapter
 
+    private val orderViewModel: OrderViewModel by viewModels({ requireParentFragment() })
     private var _binding: FragmentOrdersBinding? = null
     private val binding get() = _binding!!
 

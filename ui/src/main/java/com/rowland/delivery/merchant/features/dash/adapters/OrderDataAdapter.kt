@@ -10,7 +10,7 @@ import com.rowland.delivery.merchant.databinding.RowSingleCustomerOrderBinding
 import com.rowland.delivery.merchant.features.dash.tools.recylerview.HFRecyclerView
 import com.rowland.delivery.merchant.utilities.DateUtils
 import com.rowland.delivery.presentation.model.order.OrderDataModel
-import java.util.*
+import java.util.Date
 
 /**
  * Created by Rowland on 5/9/2018.
@@ -41,7 +41,7 @@ class OrderDataAdapter : HFRecyclerView<OrderDataModel> {
     override fun getHeaderView(
         inflater: LayoutInflater,
         parent: ViewGroup
-    ): androidx.recyclerview.widget.RecyclerView.ViewHolder? {
+    ): RecyclerView.ViewHolder? {
         return null
     }
 

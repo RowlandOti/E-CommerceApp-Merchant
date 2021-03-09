@@ -1,7 +1,10 @@
 package com.rowland.delivery.presentation.model.order
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-class OrderDataModel {
+@Parcelize
+class OrderDataModel : Parcelable{
 
     var id: Int? = null
     var orderRef: String? = null
@@ -23,7 +26,7 @@ class OrderDataModel {
     var firestoreUid: String? = null
 
     override fun toString(): String {
-        return "OrderDataPojo{" +
+        return "OrderDataModel{" +
                 "id=" + id +
                 ", orderRef='" + orderRef + '\''.toString() +
                 ", status='" + status + '\''.toString() +
@@ -36,7 +39,7 @@ class OrderDataModel {
                 ", lng='" + lng + '\''.toString() +
                 ", lat='" + lat + '\''.toString() +
                 ", orderDescription='" + orderDescription + '\''.toString() +
-                ", items=" + items +
+                ", items=" + items.toString() +
                 ", deliveryFee=" + deliveryFee +
                 ", orderItemsQuantity=" + orderItemsQuantity +
                 ", orderSubTotal='" + orderSubTotal + '\''.toString() +

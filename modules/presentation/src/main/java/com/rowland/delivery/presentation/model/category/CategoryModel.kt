@@ -4,7 +4,7 @@ import java.util.*
 
 class CategoryModel {
 
-    var name: String? = null
+    lateinit var name: String
     var merchants = HashMap<String, Boolean>()
     var firestoreUid: String? = null
 

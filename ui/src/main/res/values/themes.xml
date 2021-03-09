@@ -63,7 +63,7 @@
         <item name="elevation">6dp</item>
         <item name="titleTextAppearance">@style/Widget.Toolbar.TextAppearance</item>
         <item name="titleTextColor">@android:color/white</item>
-        <item name="subtitleTextAppearance">?attr/textAppearanceSubtitle1</item>
+        <item name="subtitleTextAppearance">@style/Widget.TextAppearance.Subtitle2</item>
         <item name="subtitleTextColor">@android:color/white</item>
     </style>
 

@@ -1,30 +1,34 @@
 package com.rowland.delivery.merchant.features.dash.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commitNow
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.navigation.Navigation
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.adapter.FragmentStateAdapter.FragmentTransactionCallback.OnPostEventListener
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.databinding.FragmentOverviewBinding
-import com.rowland.delivery.merchant.features.dash.activities.DashActivity
+import com.rowland.delivery.presentation.viewmodels.category.CategoryViewModel
+import com.rowland.delivery.presentation.viewmodels.order.OrderViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class OverviewFragment : Fragment(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     private var movePosition: Int = 0
-
     private var _binding: FragmentOverviewBinding? = null
     private val binding get() = _binding!!
+    private val orderViewModel: OrderViewModel by viewModels()
+    private val categoryViewModel: CategoryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,61 +45,6 @@ class OverviewFragment : Fragment(), BottomNavigationView.OnNavigationItemSelect
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val activity = activity as AppCompatActivity?
-        val drawerLayout = (activity as DashActivity).binding.dashDrawerLayout
-
-        activity.setSupportActionBar(binding.overviewToolbar)
-        val drawerToggle = object : ActionBarDrawerToggle(
-            activity,
-            drawerLayout,
-            binding.overviewToolbar,
-            R.string.drawer_open,
-            R.string.drawer_close
-        ) {
-            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-                super.onDrawerSlide(drawerView, slideOffset)
-                this.syncState()
-                try {
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                        val window = requireActivity().window
-                        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                        window.statusBarColor = resources.getColor(R.color.colorPrimaryDarkTransparent)
-                    }
-                } catch (e: Exception) {
-                    Log.e(OverviewFragment::class.java.simpleName, ":" + e.fillInStackTrace().toString())
-                }
-            }
-
-            override fun onDrawerStateChanged(newState: Int) {
-                super.onDrawerStateChanged(newState)
-                this.syncState()
-            }
-
-            override fun onDrawerClosed(view: View) {
-                super.onDrawerClosed(view)
-                this.syncState()
-
-                try {
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                        val window = requireActivity().window
-                        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                        window.statusBarColor = resources.getColor(R.color.colorPrimaryDark)
-                    }
-                } catch (e: Exception) {
-                    Log.e(OverviewFragment::class.java.simpleName, ":" + e.fillInStackTrace().toString())
-                }
-            }
-
-            override fun onDrawerOpened(drawerView: View) {
-                super.onDrawerOpened(drawerView)
-                this.syncState()
-            }
-        }
-        drawerLayout.addDrawerListener(drawerToggle)
-        drawerToggle.syncState()
-
         val adapter = ViewPagerAdapter()
         binding.overviewViewpager.adapter = adapter
         binding.overviewViewpager.currentItem = movePosition
@@ -105,6 +54,24 @@ class OverviewFragment : Fragment(), BottomNavigationView.OnNavigationItemSelect
             }
         })
         binding.overviewBottomNavigation.setOnNavigationItemSelectedListener(this)
+
+        orderViewModel.getSelectedListItem()
+            .observe(viewLifecycleOwner, {
+                activity?.let { activity ->
+                    Navigation.findNavController(activity, R.id.nav_host_fragment).navigate(
+                        OverviewFragmentDirections.actionOverviewFragmentToOrderItemFragment(it)
+                    )
+                }
+            })
+
+        categoryViewModel.getSelectedListItem()
+            .observe(viewLifecycleOwner, {
+                activity?.let { activity ->
+                    Navigation.findNavController(activity, R.id.nav_host_fragment).navigate(
+                        OverviewFragmentDirections.actionOverviewFragmentToProductFragment(it.name)
+                    )
+                }
+            })
     }
 
     override fun onDestroyView() {
@@ -135,7 +102,8 @@ class OverviewFragment : Fragment(), BottomNavigationView.OnNavigationItemSelect
     }
 
     private fun syncWithDependentViews(item: MenuItem): Boolean {
-        binding.overviewToolbar.title = item.title
+        (activity as AppCompatActivity?)?.supportActionBar?.let { it.title = item.title }
+
         return when (item.itemId) {
             R.id.action_category -> {
                 binding.overviewViewpager.currentItem = 0
@@ -154,15 +122,16 @@ class OverviewFragment : Fragment(), BottomNavigationView.OnNavigationItemSelect
             throw IllegalStateException("Menu items count should sync with ViewPager items")
         }
         val item = binding.overviewBottomNavigation.menu.getItem(position)
-        binding.overviewToolbar.title = item.title
+        (activity as AppCompatActivity?)?.supportActionBar?.let { it.title = item.title }
         binding.overviewBottomNavigation.selectedItemId = item.itemId
     }
 
     private inner class ViewPagerAdapter : FragmentStateAdapter(this) {
 
-/*        init {
+        /*init {
             registerFragmentTransactionCallback(object : FragmentTransactionCallback() {
-                override fun onFragmentMaxLifecyclePreUpdated(fragment: Fragment,
+                override fun onFragmentMaxLifecyclePreUpdated(
+                    fragment: Fragment,
                     maxLifecycleState: Lifecycle.State
                 ) = if (maxLifecycleState == Lifecycle.State.RESUMED) {
                     OnPostEventListener {
@@ -174,8 +143,8 @@ class OverviewFragment : Fragment(), BottomNavigationView.OnNavigationItemSelect
                     super.onFragmentMaxLifecyclePreUpdated(fragment, maxLifecycleState)
                 }
             })
-        }*/
-
+        }
+*/
         override fun getItemCount(): Int {
             return OVERVIEW_SCREENS_COUNT
         }
