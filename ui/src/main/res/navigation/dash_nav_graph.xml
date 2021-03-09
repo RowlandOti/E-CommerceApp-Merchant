@@ -57,12 +57,24 @@
     <fragment
         android:id="@+id/editProductFragment"
         android:name="com.rowland.delivery.merchant.features.dash.fragments.EditProductFragment"
-        android:label="@string/edit_product_label" />
+        android:label="@string/edit_product_label">
+        <argument
+            android:name="product_item"
+            app:argType="com.rowland.delivery.presentation.model.product.ProductModel" />
+
+        <argument
+            android:name="product_category"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/newProductFragment"
         android:name="com.rowland.delivery.merchant.features.dash.fragments.NewProductFragment"
-        android:label="@string/new_product_label" />
+        android:label="@string/new_product_label">
+        <argument
+            android:name="product_category"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/orderFragment"
@@ -76,7 +88,7 @@
     <fragment
         android:id="@+id/orderItemFragment"
         android:name="com.rowland.delivery.merchant.features.dash.fragments.OrderItemFragment"
-        android:label="@string/order_item_label" >
+        android:label="@string/order_item_label">
         <argument
             android:name="order_data_item"
             app:argType="com.rowland.delivery.presentation.model.order.OrderDataModel" />

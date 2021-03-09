@@ -67,5 +67,19 @@
     <string name="ksh_label_with_value_str">Ksh  %s</string>
     <string name="ksh_label_with_value_num">Ksh  %d</string>
     <string name="items_label_with_value_num">items (%d)</string>
+    <string name="add_product">Add Product</string>
+    <string name="product_successfuly_deleted">Product successfully deleted</string>
+    <string name="product_could_not_be_deleted">Product Could not be deleted</string>
+    <string name="product_image">Product image</string>
+    <string name="price_label">Price</string>
+    <string name="items_in_stock_label">No. of items in Stock</string>
+    <string name="add_images">Upload images</string>
+    <string name="title_label">Title</string>
+    <string name="description_label">Description</string>
+    <string name="unit_label">Unit</string>
+    <string name="grant_permissions_gallery_msg">Please grant permissions to select image</string>
+    <string name="product_successfully_added">Product added successfully</string>
+    <string name="product_not_added">Product not added</string>
+    <string name="quatity_label">Quantity</string>
 
 </resources>

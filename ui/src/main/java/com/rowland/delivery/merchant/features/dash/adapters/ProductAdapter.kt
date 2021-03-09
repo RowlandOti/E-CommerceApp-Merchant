@@ -13,6 +13,7 @@ import com.chauthai.swipereveallayout.ViewBinderHelper
 import com.github.florent37.glidepalette.BitmapPalette
 import com.github.florent37.glidepalette.GlidePalette
 import com.google.firebase.storage.FirebaseStorage
+import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.databinding.RowSingleProductBinding
 import com.rowland.delivery.merchant.features.dash.tools.recylerview.HFRecyclerView
 import com.rowland.delivery.presentation.model.product.ProductModel
@@ -133,22 +134,28 @@ class ProductAdapter(data: List<ProductModel>?, withHeader: Boolean, withFooter:
 
             itemViewBinding.contentSingleProduct.productNameTextview.text = productModel.name
             itemViewBinding.contentSingleProduct.productDescription.text = productModel.description
-            itemViewBinding.contentSingleProduct.productPrice.text = "Ksh " + productModel.price!!
+            itemViewBinding.contentSingleProduct.productPrice.apply {
+                text = this.context.getString(
+                    R.string.ksh_label_with_value_num, productModel.price!!
+                )
+            }
 
             viewBinderHelper.bind(itemViewBinding.swipeLayout, productModel.firestoreUid)
 
-            itemViewBinding.contentSingleProductReveal.btnUnpublish.setOnClickListener {
-                itemViewBinding.contentSingleProductReveal.btnUnpublish.setIndeterminate()
-                actionListener.onProductActionListener(
-                    ProductEvent.Unpublish()
-                ) { itemViewBinding.contentSingleProductReveal.btnUnpublish.setFinish() }
-                viewBinderHelper.closeLayout(productModel.firestoreUid)
+            itemViewBinding.contentSingleProductReveal.btnUnpublish.apply {
+                setOnClickListener {
+                    this.setIndeterminate()
+                    actionListener.onProductActionListener(ProductEvent.UnPublish) { this.setFinish() }
+                    viewBinderHelper.closeLayout(productModel.firestoreUid)
+                }
             }
 
-            itemViewBinding.contentSingleProductReveal.btnEdit.setOnClickListener {
-                itemViewBinding.contentSingleProductReveal.btnEdit.setIndeterminate()
-                actionListener.onProductActionListener(ProductEvent.Edit()) { itemViewBinding.contentSingleProductReveal.btnEdit.setFinish() }
-                viewBinderHelper.closeLayout(productModel.firestoreUid)
+            itemViewBinding.contentSingleProductReveal.btnEdit.apply {
+                setOnClickListener {
+                    this.setIndeterminate()
+                    actionListener.onProductActionListener(ProductEvent.Edit(productModel)) { this.setFinish() }
+                    viewBinderHelper.closeLayout(productModel.firestoreUid)
+                }
             }
         }
     }

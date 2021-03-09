@@ -8,24 +8,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.rowland.delivery.merchant.R.string
 import com.rowland.delivery.merchant.databinding.FragmentEditProductBinding
-import com.rowland.delivery.presentation.viewmodels.category.CategoryViewModel
 import com.rowland.delivery.presentation.viewmodels.product.EditProductViewModel
-import com.rowland.delivery.presentation.viewmodels.product.ProductViewModel
 import com.rowland.rxgallery.RxGallery
 import com.tbruyelle.rxpermissions2.RxPermissions
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,14 +26,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.Date
 import java.util.HashMap
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class EditProductFragment : Fragment() {
 
-    private val productViewModel: ProductViewModel by activityViewModels()
     private val editProductViewModel: EditProductViewModel by viewModels()
-
+    private val args by navArgs<EditProductFragmentArgs>()
 
     companion object {
 
@@ -65,27 +56,24 @@ class EditProductFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as AppCompatActivity).setSupportActionBar(binding.editproductToolbar)
 
-        productViewModel.getSelectedListItem()
-            .observe(viewLifecycleOwner, { product ->
-                binding.inputEditPriceView.quantity = product!!.price!!
-                binding.inputEditStockView.quantity = product.itemQuantity!!
-                binding.inputEditProductName.setText(product.name)
-                binding.inputEditProductDescription.setText(product.description)
+        binding.inputEditPriceView.quantity = args.productItem.price!!
+        binding.inputEditStockView.quantity = args.productItem.itemQuantity!!
+        binding.inputEditProductName.setText(args.productItem.name)
+        binding.inputEditProductDescription.setText(args.productItem.description)
+
+        FirebaseStorage.getInstance().reference.child(args.productItem.imageUrls[0]).downloadUrl
+            .addOnSuccessListener { uri ->
                 val options = RequestOptions()
-                FirebaseStorage.getInstance().reference.child(product.imageUrls.get(0)).downloadUrl
-                    .addOnSuccessListener { uri ->
-                        options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
-                        Glide.with(requireActivity())
-                            .load(uri)
-                            .apply(options)
-                            .into(binding.editInputProductImageview)
-                    }
+                options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
+                Glide.with(requireActivity())
+                    .load(uri)
+                    .apply(options)
+                    .into(binding.editInputProductImageview)
+            }
 
-                editProductViewModel.setProductUid(product.firestoreUid!!)
-                editProductViewModel.setCategory(productViewModel.category.value!!)
-            })
+        editProductViewModel.setProductUid(args.productItem.firestoreUid!!)
+        editProductViewModel.setCategory(args.productCategory)
 
         editProductViewModel.images.observe(viewLifecycleOwner, { uris ->
             val options = RequestOptions()
@@ -101,7 +89,7 @@ class EditProductFragment : Fragment() {
                 RxPermissions(requireActivity()).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     .subscribe { granted ->
                         if (!granted) {
-                            Toast.makeText(activity, "Please grant permissions to select image", Toast.LENGTH_SHORT)
+                            Toast.makeText(activity, getString(string.grant_permissions_gallery_msg), Toast.LENGTH_SHORT)
                                 .show()
                         } else {
                             RxGallery.gallery(requireActivity(), true, RxGallery.MimeType.IMAGE)
@@ -125,7 +113,7 @@ class EditProductFragment : Fragment() {
             }
         }
 
-        binding.editBtnUpdate.setOnClickListener { _ ->
+        binding.editBtnUpdate.setOnClickListener {
 
             val productUpdateFields = HashMap<String, Any>()
             productUpdateFields["price"] = Integer.valueOf(binding.inputEditPriceView.quantity.toString())
@@ -137,21 +125,14 @@ class EditProductFragment : Fragment() {
             editProductViewModel.updateProduct(productUpdateFields)
                 .subscribe({
                     Toast.makeText(activity, getString(string.product_update_success), Toast.LENGTH_SHORT).show()
-                    requireActivity().supportFragmentManager.popBackStack(
-                        EditProductFragment::class.java.simpleName,
-                        FragmentManager.POP_BACK_STACK_INCLUSIVE
-                    )
-
+                    findNavController().popBackStack()
                 }, {
                     Toast.makeText(activity, getString(string.product_update_failure), Toast.LENGTH_SHORT).show()
                 })
         }
 
         binding.editBtnCancell.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack(
-                EditProductFragment::class.java.simpleName,
-                FragmentManager.POP_BACK_STACK_INCLUSIVE
-            )
+            findNavController().popBackStack()
         }
     }
 }

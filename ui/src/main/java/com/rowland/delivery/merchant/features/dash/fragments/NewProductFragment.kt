@@ -9,14 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -27,7 +23,6 @@ import com.rowland.delivery.domain.models.product.ProductEntity
 import com.rowland.delivery.merchant.R.string
 import com.rowland.delivery.merchant.databinding.ContentProductImagesShuffleBinding
 import com.rowland.delivery.merchant.databinding.FragmentNewProductBinding
-import com.rowland.delivery.presentation.viewmodels.category.CategoryViewModel
 import com.rowland.delivery.presentation.viewmodels.product.EditProductViewModel
 import com.rowland.delivery.presentation.viewmodels.product.NewProductViewModel
 import com.rowland.rxgallery.RxGallery
@@ -36,12 +31,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.Date
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class NewProductFragment : Fragment() {
 
     private val newProductViewModel: NewProductViewModel by viewModels()
+    private val args by navArgs<EditProductFragmentArgs>()
 
     private var _binding: FragmentNewProductBinding? = null
     private val binding get() = _binding!!
@@ -71,8 +66,6 @@ class NewProductFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        (activity as AppCompatActivity).setSupportActionBar(binding.newproductToolbar)
 
         binding.fabAddimage.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -114,27 +107,23 @@ class NewProductFragment : Fragment() {
             product.description = binding.inputProductDescription.text.toString()
             product.createdAt = Date()
 
-            val category = requireArguments().getString("selected_category")
-
-            newProductViewModel.createProduct(product, category!!, FirebaseAuth.getInstance().currentUser!!.uid)
+            newProductViewModel.createProduct(
+                product,
+                args.productCategory,
+                FirebaseAuth.getInstance().currentUser!!.uid
+            )
                 .subscribe({
-                    Toast.makeText(activity, "Product added succesfully", Toast.LENGTH_SHORT).show()
-                    requireActivity().supportFragmentManager.popBackStack(
-                        NewProductFragment::class.java.simpleName,
-                        POP_BACK_STACK_INCLUSIVE
-                    )
-                }) { Toast.makeText(activity, "Product not added", Toast.LENGTH_SHORT).show() }
+                    Toast.makeText(activity, getString(string.product_successfully_added), Toast.LENGTH_SHORT).show()
+                    findNavController().popBackStack()
+                }) { Toast.makeText(activity, getString(string.product_not_added), Toast.LENGTH_SHORT).show() }
 
         }
 
         binding.btnCancell.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack(
-                NewProductFragment::class.java.simpleName,
-                POP_BACK_STACK_INCLUSIVE
-            )
+            findNavController().popBackStack()
         }
 
-        newProductViewModel.images.observe(viewLifecycleOwner, Observer { uris ->
+        newProductViewModel.images.observe(viewLifecycleOwner, { uris ->
             binding.newProductShuffle.shuffleSettings.numberOfDisplayedCards = uris!!.size
             binding.newProductShuffle.shuffleAdapter = ImageShuffleAdapter(uris.map { uri -> Uri.parse(uri) })
             binding.newProductShuffle.viewAnimator = ShuffleViewAnimatorOnSecondCard()
@@ -146,8 +135,7 @@ class NewProductFragment : Fragment() {
 
         fun bind(uri: Uri, position: Int) {
             this.shuffleBinding.productImagesCount.text = position.toString()
-            val options = RequestOptions()
-            options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
+            val options = RequestOptions().centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
             Glide.with(shuffleBinding.productImage.context)
                 .load(uri)
                 .apply(options)

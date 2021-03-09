@@ -13,7 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,7 +34,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
 
-    private val orderViewModel: OrderViewModel by activityViewModels()
+    private val orderViewModel: OrderViewModel by viewModels()
     private val args by navArgs<OrderItemFragmentArgs>()
 
     @Inject

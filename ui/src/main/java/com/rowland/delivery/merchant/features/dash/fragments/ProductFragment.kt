@@ -9,9 +9,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.google.firebase.auth.FirebaseAuth
 import com.rowland.delivery.merchant.R
+import com.rowland.delivery.merchant.R.string
 import com.rowland.delivery.merchant.databinding.FragmentProductsBinding
 import com.rowland.delivery.merchant.features.dash.adapters.ProductAdapter
 import com.rowland.delivery.merchant.features.dash.tools.recylerview.RecyclerItemClickListener
@@ -26,6 +29,7 @@ import javax.inject.Inject
 class ProductFragment : Fragment() {
 
     private val productViewModel: ProductViewModel by activityViewModels()
+    private val args by navArgs<ProductFragmentArgs>()
 
     @Inject
     lateinit var productAdapter: ProductAdapter
@@ -45,10 +49,7 @@ class ProductFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (arguments != null) {
-            val category = requireArguments().getString("selected_category")
-            productViewModel.loadProducts(category!!, FirebaseAuth.getInstance().currentUser!!.uid)
-        }
+        productViewModel.loadProducts(args.selectedCategory, FirebaseAuth.getInstance().currentUser!!.uid)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -64,12 +65,7 @@ class ProductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as AppCompatActivity).setSupportActionBar(binding.toolbarProduct)
-
-        if (arguments != null) {
-            val category = requireArguments().getString("selected_category")
-            binding.productCategory.text = category
-        }
+        (activity as AppCompatActivity?)?.supportActionBar?.let { it.subtitle = args.selectedCategory }
 
         val linearLayoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
         binding.productRecyclerview.setLayoutManager(linearLayoutManager)
@@ -85,17 +81,27 @@ class ProductFragment : Fragment() {
                 when (event) {
                     is ProductEvent.Edit -> {
                         fn()
-                        activity!!.supportFragmentManager.beginTransaction()
-                            .replace(R.id.nav_host_fragment, EditProductFragment.newInstance(null))
-                            .addToBackStack(EditProductFragment::class.java.simpleName)
-                            .commit()
+                        findNavController(this@ProductFragment).navigate(
+                            ProductFragmentDirections.actionProductFragmentToEditProductFragment(
+                                event.productModel,
+                                args.selectedCategory
+                            )
+                        )
                     }
-                    is ProductEvent.Unpublish -> {
+                    is ProductEvent.UnPublish -> {
                         productViewModel.deleteProduct().subscribe({
                             fn()
-                            Toast.makeText(activity, "Product successfully deleted", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                activity,
+                                getString(string.product_successfuly_deleted),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }) {
-                            Toast.makeText(activity, "Product Could not be deleted", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                activity,
+                                getString(string.product_could_not_be_deleted),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }
@@ -115,16 +121,12 @@ class ProductFragment : Fragment() {
                 })
         )
 
-        binding.fab.setOnClickListener { _ ->
-            var args: Bundle? = null
-            if (arguments != null) {
-                args = Bundle()
-                args.putString("selected_category", requireArguments().getString("selected_category"))
-            }
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment, NewProductFragment.newInstance(args))
-                .addToBackStack(NewProductFragment::class.java.simpleName)
-                .commit()
+        binding.fab.setOnClickListener {
+            findNavController(this@ProductFragment).navigate(
+                ProductFragmentDirections.actionProductFragmentToNewProductFragment(
+                    args.selectedCategory
+                )
+            )
         }
 
         productViewModel.getDataList()

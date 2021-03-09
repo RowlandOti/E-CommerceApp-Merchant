@@ -11,6 +11,7 @@ import androidx.fragment.app.commitNow
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter.FragmentTransactionCallback.OnPostEventListener
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
@@ -57,20 +58,16 @@ class OverviewFragment : Fragment(), BottomNavigationView.OnNavigationItemSelect
 
         orderViewModel.getSelectedListItem()
             .observe(viewLifecycleOwner, {
-                activity?.let { activity ->
-                    Navigation.findNavController(activity, R.id.nav_host_fragment).navigate(
+                    findNavController(this).navigate(
                         OverviewFragmentDirections.actionOverviewFragmentToOrderItemFragment(it)
                     )
-                }
             })
 
         categoryViewModel.getSelectedListItem()
             .observe(viewLifecycleOwner, {
-                activity?.let { activity ->
-                    Navigation.findNavController(activity, R.id.nav_host_fragment).navigate(
+                    findNavController(this).navigate(
                         OverviewFragmentDirections.actionOverviewFragmentToProductFragment(it.name)
                     )
-                }
             })
     }
 
