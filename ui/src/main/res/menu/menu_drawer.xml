@@ -5,7 +5,7 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/action_business"
+            android:id="@+id/overviewFragment"
             android:icon="@drawable/campass_outline_vector"
             android:title="@string/action_business_string" />
 

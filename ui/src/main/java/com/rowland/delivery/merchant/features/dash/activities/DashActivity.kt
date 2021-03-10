@@ -50,7 +50,6 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     val binding get() = _binding
 
     private lateinit var navController: NavController
-    private var mSelectedMenuId: Int = 0
 
     companion object {
 
@@ -82,8 +81,7 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         item.isChecked = true
-        mSelectedMenuId = item.itemId
-        itemSelection(mSelectedMenuId)
+        itemSelection(item.itemId)
         return true
     }
 
@@ -151,7 +149,7 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun itemSelection(mSelectedId: Int) {
 
         when (mSelectedId) {
-            R.id.action_business -> {
+            R.id.overviewFragment -> {
                 navController.navigate(R.id.overviewFragment)
                 binding.dashDrawerLayout.closeDrawer(GravityCompat.START)
             }
@@ -183,5 +181,6 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 binding.dashDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             }
         }
+        binding.dashDrawerNavigation.menu.findItem(destination.id)?.isChecked = true
     }
 }
