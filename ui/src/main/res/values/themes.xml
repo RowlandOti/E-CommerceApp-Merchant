@@ -28,7 +28,7 @@
     </style>
 
 
-    <style name="Widget.TabLayout.Dash" parent="Widget.Design.TabLayout">
+    <style name="Widget.TabLayout.Dash" parent="Widget.MaterialComponents.TabLayout">
         <item name="tabIndicatorColor">?attr/colorAccent</item>
         <item name="tabIndicatorHeight">4dp</item>
         <item name="tabPaddingStart">6dp</item>
@@ -47,6 +47,14 @@
         <item name="fontFamily">@font/dosis_medium</item>
     </style>
 
+    <style name="Widget.BottomNavigationView.Overview" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">@color/tab_text_icon_color_selector</item>
+        <item name="itemTextAppearanceInactive">@style/Widget.Tab.TextAppearance</item>
+        <item name="itemTextAppearanceActive">@style/Widget.Tab.TextAppearance</item>
+        <item name="itemTextColor">@color/tab_text_icon_color_selector</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
 
     <style name="Widget.Toolbar" parent="Widget.MaterialComponents.Toolbar">
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
@@ -54,7 +62,7 @@
         <item name="elevation">6dp</item>
         <item name="titleTextAppearance">@style/Widget.Toolbar.TextAppearance</item>
         <item name="titleTextColor">@android:color/white</item>
-        <item name="subtitleTextAppearance">?attr/textAppearanceSubtitle1</item>
+        <item name="subtitleTextAppearance">@style/Widget.TextAppearance.Subtitle2</item>
         <item name="subtitleTextColor">@android:color/white</item>
     </style>
 
@@ -68,8 +76,8 @@
     <style name="Widget.NavigationDrawer.Dash" parent="">
         <item name="android:background">@color/drawer_color</item>
         <item name="headerLayout">@layout/nav_drawer_header</item>
-        <item name="itemTextColor">@color/drawer_icon_color_state</item>
-        <item name="itemIconTint">@color/drawer_icon_color_state</item>
+        <item name="itemTextColor">@color/drawer_icon_color_selector</item>
+        <item name="itemIconTint">@color/drawer_icon_color_selector</item>
         <item name="menu">@menu/menu_drawer</item>
         <item name="itemTextAppearance">@style/Widget.NavigationDrawer.TextAppearance</item>
     </style>

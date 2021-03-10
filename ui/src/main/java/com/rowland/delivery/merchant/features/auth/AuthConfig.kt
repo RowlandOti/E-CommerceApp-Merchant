@@ -1,6 +1,7 @@
 package com.rowland.delivery.merchant.features.auth
 
 import android.app.Activity
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 
 import com.google.android.gms.common.api.GoogleApiClient
 
@@ -10,14 +11,14 @@ import com.google.android.gms.common.api.GoogleApiClient
 
 class AuthConfig(val activity: Activity, val callback: Auth.AuthLoginCallbacks) {
 
-    internal var googleApiClient: GoogleApiClient? = null
+    private var googleSignInClient: GoogleSignInClient? = null
 
-    fun getGoogleApiClient(): GoogleApiClient? {
-        return this.googleApiClient
+    fun getGoogleSignClient(): GoogleSignInClient? {
+        return this.googleSignInClient
     }
 
-    fun setGoogleApiClient(googleApiClient: GoogleApiClient): AuthConfig {
-        this.googleApiClient = googleApiClient
+    fun setGoogleSignInClient(googleSignInClient: GoogleSignInClient): AuthConfig {
+        this.googleSignInClient = googleSignInClient
         return this
     }
 

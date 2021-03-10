@@ -6,7 +6,7 @@ import com.rowland.delivery.remote.model.FirestoreModel
 
 class CategoryPayload : FirestoreModel {
 
-    var name: String? = null
+    lateinit var name: String
     var merchants = HashMap<String, Boolean>()
 
 

@@ -1,10 +1,14 @@
 package com.rowland.delivery.presentation.model.order
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 /**
  * Created by Rowland on 5/8/2018.
  */
 
-class OrderItemModel {
+@Parcelize
+class OrderItemModel: Parcelable {
 
     var itemCode: String? = null
     var title: String? = null
@@ -14,8 +18,7 @@ class OrderItemModel {
     var itemTotal: Int? = null
     var foreign: Boolean? = null
 
-
     override fun toString(): String {
-        return "OrderItemPojo(itemCode=$itemCode, title=$title, imageUrl=$imageUrl, itemQuantity=$itemQuantity, price=$price, itemTotal=$itemTotal, foreign=$foreign)"
+        return "OrderItemModel(itemCode=$itemCode, title=$title, imageUrl=$imageUrl, itemQuantity=$itemQuantity, price=$price, itemTotal=$itemTotal, foreign=$foreign)"
     }
 }
