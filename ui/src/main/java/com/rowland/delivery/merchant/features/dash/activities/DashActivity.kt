@@ -21,6 +21,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
@@ -91,8 +92,7 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             setOf(R.id.overviewFragment),
             binding.dashDrawerLayout
         )
-
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        NavigationUI.setupWithNavController(binding.dashToolbar, navController, appBarConfiguration)
         binding.dashDrawerNavigation.setupWithNavController(navController)
     }
 
