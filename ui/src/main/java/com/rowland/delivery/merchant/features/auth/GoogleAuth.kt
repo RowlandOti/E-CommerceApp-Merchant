@@ -14,27 +14,36 @@ import com.rowland.delivery.merchant.features.auth.models.utils.UserUtils
 import com.rowland.delivery.merchant.services.session.SessionManager
 import durdinapps.rxfirebase2.RxFirebaseAuth
 import durdinapps.rxfirebase2.RxFirestore
-import java.util.*
+import java.util.HashMap
 import javax.inject.Inject
-
 
 /**
  * Created by Rowland on 5/1/2018.
  */
 
 class GoogleAuth @Inject
-constructor(private val mAuthConfig: AuthConfig, private val mFirebaseAuth: FirebaseAuth, private val mFirebaseFirestone: FirebaseFirestore, private val mSessionManager: SessionManager) : Auth() {
+constructor(
+    private val mAuthConfig: AuthConfig,
+    private val mFirebaseAuth: FirebaseAuth,
+    private val mFirebaseFirestone: FirebaseFirestore,
+    private val mSessionManager: SessionManager
+) : Auth() {
 
     override fun login() {
-        val googleApiClient = mAuthConfig.googleApiClient
-
-        val signInIntent = com.google.android.gms.auth.api.Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
-        mAuthConfig.activity.startActivityForResult(signInIntent, RC_SIGN_IN)
+        mAuthConfig.getGoogleSignClient()?.let {
+            mAuthConfig.activity.startActivityForResult(it.signInIntent, RC_SIGN_IN)
+        }
     }
 
     override fun logout(context: Context): Boolean {
         try {
-            mSessionManager.logout()
+            mAuthConfig.getGoogleSignClient()?.let {
+               it.signOut()
+                    .addOnCompleteListener(mAuthConfig.activity) {
+                        mSessionManager.logout()
+                    }
+            }
+
             return true
 
         } catch (e: Exception) {
@@ -59,11 +68,11 @@ constructor(private val mAuthConfig: AuthConfig, private val mFirebaseAuth: Fire
             val acct = result?.signInAccount
             val googleUser = UserUtils.populateGoogleUser(acct!!)
 
-            firebaseAuthWithGoogle(googleUser, mAuthConfig.activity)
+            firebaseAuthWithGoogle(googleUser)
         }
     }
 
-    private fun firebaseAuthWithGoogle(user: GoogleUser, activity: Activity) {
+    private fun firebaseAuthWithGoogle(user: GoogleUser) {
         val credential = GoogleAuthProvider.getCredential(user.idToken, null)
 
         RxFirebaseAuth.signInWithCredential(mFirebaseAuth, credential).subscribe {

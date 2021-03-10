@@ -1,12 +1,12 @@
 package com.rowland.delivery.merchant.features.dash.fragments
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,15 +14,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.dekoservidoni.omfm.OneMoreFabMenu
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.R.string
 import com.rowland.delivery.merchant.databinding.FragmentOrderItemBinding
 import com.rowland.delivery.merchant.features.dash.adapters.OrderItemAdapter
-import com.rowland.delivery.presentation.model.order.OrderDataModel
 import com.rowland.delivery.presentation.viewmodels.order.OrderViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.HashMap
@@ -35,8 +35,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
 
-    private val orderViewModel: OrderViewModel by activityViewModels()
-    private var orderData: OrderDataModel? = null
+    private val orderViewModel: OrderViewModel by viewModels()
+    private val args by navArgs<OrderItemFragmentArgs>()
 
     @Inject
     lateinit var adapter: OrderItemAdapter
@@ -57,10 +57,9 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("Hash-${OrderItemFragment::class.java.simpleName}", orderViewModel.toString())
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentOrderItemBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -73,23 +72,14 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as AppCompatActivity).setSupportActionBar(binding.orderitemToolbar)
-
-        binding.ordereditemRecyclerview.setLayoutManager(androidx.recyclerview.widget.LinearLayoutManager(activity))
-        binding.ordereditemRecyclerview.setItemAnimator(androidx.recyclerview.widget.DefaultItemAnimator())
+        binding.ordereditemRecyclerview.setLayoutManager(LinearLayoutManager(activity))
+        binding.ordereditemRecyclerview.setItemAnimator(DefaultItemAnimator())
         binding.ordereditemRecyclerview.setAdapterWithProgress(adapter)
 
-        binding.actionCallBtn.setOnClickListener { view ->
-            makeCall()
-        }
+        setupData()
 
+        binding.actionCallBtn.setOnClickListener { makeCall() }
         binding.orderitemFab.setOptionsClick(this)
-
-        orderViewModel.getSelectedListItem()
-            .observe(viewLifecycleOwner, Observer { orderData ->
-                this.orderData = orderData
-                setupData()
-            })
     }
 
     override fun onOptionClick(optionId: Int?) {
@@ -109,7 +99,7 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             val callIntent = Intent(Intent.ACTION_CALL)
-            callIntent.data = Uri.parse(String.format("tel:%s", orderData!!.phone))
+            callIntent.data = Uri.parse(String.format("tel:%s", args.orderDataItem.phone))
             startActivity(callIntent)
         } else {
             ActivityCompat.requestPermissions(
@@ -122,17 +112,17 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode == CALL_PERMISSION) {
-            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 makeCall()
             } else {
-                Toast.makeText(activity, "Please grant permission to call", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, getString(string.permision_to_call_msg), Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun changeTextStatus(s: String) {
         val status = binding.status
-        status.setText(s)
+        status.text = s
         when (s) {
             "active" -> status.setTextColor(Color.parseColor("#378E3D"))
             "delivered" -> status.setTextColor(Color.parseColor("#FF6D00"))
@@ -146,9 +136,10 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
         }
     }
 
+    @SuppressLint("CheckResult")
     private fun changeStatus(status: String) {
         val orderUpdateFields = HashMap<String, Any>()
-        orderUpdateFields.put("status", status)
+        orderUpdateFields["status"] = status
         orderViewModel.updateOrder(orderUpdateFields)
             .subscribe({
                 Toast.makeText(activity, getString(string.order_status_update_success), Toast.LENGTH_SHORT).show()
@@ -162,25 +153,25 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
     }
 
     private fun setupData() {
-        binding.customerName.text = orderData!!.name
-        changeTextStatus(orderData!!.status!!)
+        (activity as AppCompatActivity?)?.supportActionBar?.let { it.subtitle = args.orderDataItem.orderRef }
+        binding.customerName.text = args.orderDataItem.name
+        changeTextStatus(args.orderDataItem.status!!)
 
-        binding.phone.text = orderData!!.phone
+        binding.phone.text = args.orderDataItem.phone
         binding.email.text = getString(string.msg_email_unprovided)
 
-        if (orderData!!.address!!.isEmpty()) {
+        if (args.orderDataItem.address!!.isEmpty()) {
             binding.address.text = getString(string.msg_address_unprovided)
         } else {
-            binding.address.text = orderData!!.address
+            binding.address.text = args.orderDataItem.address
         }
 
-        binding.orderRef.text = orderData!!.orderRef
-        binding.allItems.text = "items (" + orderData!!.orderItemsQuantity + ")"
-        binding.totalItemPrice.text = "Ksh " + orderData!!.orderSubTotal
-        binding.deliveryFee.text = "Ksh " + orderData!!.deliveryFee!!
-        binding.totalPrice.text = "Ksh " + orderData!!.orderTotal!!
+        binding.allItems.text = getString(string.items_label_with_value_num, args.orderDataItem.orderItemsQuantity)
+        binding.totalItemPrice.text = getString(string.ksh_label_with_value_str, args.orderDataItem.orderSubTotal)
+        binding.deliveryFee.text = getString(string.ksh_label_with_value_num, args.orderDataItem.deliveryFee!!)
+        binding.totalPrice.text = getString(string.ksh_label_with_value_num, args.orderDataItem.orderTotal!!)
 
-        adapter.setList(orderData!!.items!!)
+        adapter.setList(args.orderDataItem.items!!)
         adapter.notifyDataSetChanged()
     }
 }

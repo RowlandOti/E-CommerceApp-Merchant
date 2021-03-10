@@ -5,14 +5,14 @@ package com.rowland.delivery.merchant.utilities
  */
 
 object DateUtils {
-    private val SECOND_MILLIS = 1000
-    private val MINUTE_MILLIS = 60 * SECOND_MILLIS
-    private val HOUR_MILLIS = 60 * MINUTE_MILLIS
-    private val DAY_MILLIS = 24 * HOUR_MILLIS
+    private const val SECOND_MILLIS = 1000
+    private const val MINUTE_MILLIS = 60 * SECOND_MILLIS
+    private const val HOUR_MILLIS = 60 * MINUTE_MILLIS
+    private const val DAY_MILLIS = 24 * HOUR_MILLIS
 
 
-    fun getTimeAgo(time: Long): String? {
-        var time = time
+    fun getTimeAgo(t: Long): String? {
+        var time = t
         if (time < 1000000000000L) {
             // if timestamp given in seconds, convert to millis
             time *= 1000

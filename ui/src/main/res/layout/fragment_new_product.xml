@@ -6,42 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".features.dash.fragments.NewProductFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/newproduct_appbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/newproduct_toolbar"
-            style="@style/Widget.Toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_collapseMode="pin">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Add New Product"
-                    android:textAppearance="@style/Widget.Toolbar.TextAppearance"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-        </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
-
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/newproduct_ncview"
+        android:id="@+id/new_product_ncview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
-            android:id="@+id/newproduct_container"
+            android:id="@+id/new_product_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -86,7 +58,7 @@
                             android:id="@+id/input_product_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Title" />
+                            android:hint="@string/title_label" />
                     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -99,7 +71,7 @@
                             android:id="@+id/input_product_description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Description" />
+                            android:hint="@string/description_label" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <LinearLayout
@@ -117,7 +89,7 @@
                                 android:id="@+id/input_product_quantity"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Quantity"
+                                android:hint="@string/quatity_label"
                                 android:inputType="number" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -129,7 +101,7 @@
                             android:layout_gravity="bottom"
                             android:layout_weight="1"
                             android:entries="@array/unit_names"
-                            android:hint="Unit"
+                            android:hint="@string/unit_label"
                             android:paddingBottom="10dp"
                             android:textColor="@color/white" />
 
@@ -144,7 +116,7 @@
                                 android:id="@+id/input_product_pricing"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Price"
+                                android:hint="@string/price_label"
                                 android:inputType="number" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -160,7 +132,7 @@
                             android:id="@+id/input_product_stock"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Number of items in stock"
+                            android:hint="@string/items_in_stock_label"
                             android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -188,7 +160,7 @@
                         style="@style/Widget.Button.Primary"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/btn_prefered_height"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
                         android:layout_weight="1"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
@@ -199,7 +171,7 @@
                         style="@style/Widget.Button"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/btn_prefered_height"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
@@ -217,6 +189,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
         android:clickable="true"
+        android:contentDescription="@string/add_images"
+        android:focusable="true"
         app:backgroundTint="@color/colorPrimary"
         app:layout_anchor="@id/viewA"
         app:layout_anchorGravity="bottom|right|end"

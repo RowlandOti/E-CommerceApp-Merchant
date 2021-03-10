@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
@@ -26,15 +28,17 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class OrderFragment : Fragment() {
 
-    private val orderViewModel: OrderViewModel by activityViewModels()
-
     @Inject
     lateinit var orderAdapter: OrderDataAdapter
 
+    private val orderViewModel: OrderViewModel by viewModels({ requireParentFragment() })
     private var _binding: FragmentOrdersBinding? = null
     private val binding get() = _binding!!
 
     companion object {
+
+        const val REQUEST_ORDER_SELECTED = "order_selected_"
+        const val ORDER = "order_"
 
         fun newInstance(args: Bundle?): Fragment {
             val frag = OrderFragment()
@@ -46,7 +50,6 @@ class OrderFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         orderViewModel.loadOrders(FirebaseAuth.getInstance().currentUser!!.uid)
-        Log.d("Hash-${OrderFragment::class.java.simpleName}", orderViewModel.toString())
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -62,18 +65,27 @@ class OrderFragment : Fragment() {
         binding.ordersRecyclerview.setItemAnimator(DefaultItemAnimator())
         binding.ordersRecyclerview.setAdapterWithProgress(orderAdapter)
 
-        binding.ordersRecyclerview.addOnItemTouchListener(
-            RecyclerItemClickListener(
-                activity,
-                binding.ordersRecyclerview.recyclerView,
-                object : RecyclerItemClickListener.OnItemClickListener {
-                    override fun onItemClick(view: View, position: Int) {
-                        orderViewModel.setSelectedListItem(position)
-                    }
+        binding.ordersRecyclerview.apply {
+            addOnItemTouchListener(
+                RecyclerItemClickListener(
+                    activity,
+                    this.recyclerView,
+                    object : RecyclerItemClickListener.OnItemClickListener {
+                        override fun onItemClick(view: View, position: Int) {
+                            orderViewModel.setSelectedListItem(position)
 
-                    override fun onItemLongClick(view: View, position: Int) {}
-                })
-        )
+                            setFragmentResult(
+                                REQUEST_ORDER_SELECTED, bundleOf(
+                                    ORDER to
+                                            orderViewModel.getSelectedListItem().value!!
+                                )
+                            )
+                        }
+
+                        override fun onItemLongClick(view: View, position: Int) {}
+                    })
+            )
+        }
 
 
         orderViewModel.getDataList()

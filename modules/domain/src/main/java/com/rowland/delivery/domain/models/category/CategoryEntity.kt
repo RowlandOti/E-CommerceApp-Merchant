@@ -9,7 +9,7 @@ import java.util.*
 
 class CategoryEntity : FirestoreModel {
 
-    var name: String? = null
+    lateinit var name: String
     var merchants = HashMap<String, Boolean>()
 
 

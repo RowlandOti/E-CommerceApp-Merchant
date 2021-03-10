@@ -11,6 +11,8 @@
     tools:showIn="@layout/activity_auth">
 
     <include
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/logo_layout"
         layout="@layout/content_logo" />
 

@@ -1,8 +1,12 @@
 package com.rowland.delivery.presentation.model.product
 
-import java.util.*
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+import java.util.ArrayList
+import java.util.Date
 
-class ProductModel {
+@Parcelize
+class ProductModel : Parcelable {
 
     var id: Int? = null
     var name: String? = null
@@ -21,10 +25,7 @@ class ProductModel {
 
     var firestoreUid: String? = null
 
-
     override fun toString(): String {
         return "ProductModel(id=$id, name=$name, description=$description, price=$price, itemCode=$itemCode, merchantCode=$merchantCode, itemQuantity=$itemQuantity, unitsOfMeasure=$unitsOfMeasure, saleQuantity=$saleQuantity, imageUrl=$imageUrl, imageUrls=$imageUrls, createdAt=$createdAt, updatedAt=$updatedAt, deletedAt=$deletedAt, firestoreUid=$firestoreUid)"
     }
-
-
 }

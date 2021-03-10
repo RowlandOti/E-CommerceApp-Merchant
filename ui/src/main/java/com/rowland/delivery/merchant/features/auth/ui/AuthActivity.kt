@@ -8,8 +8,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.api.GoogleApiClient
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.databinding.ActivityAuthBinding
 import com.rowland.delivery.merchant.features.auth.Auth
@@ -22,14 +20,14 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @AndroidEntryPoint
-class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks, GoogleApiClient.OnConnectionFailedListener {
+class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks {
 
     @Inject
-    @field:Named("google_login")
+    @Named("google_login")
     lateinit var mGoogleAuth: Auth
 
     @Inject
-    @field:Named("email_login")
+    @Named("email_login")
     lateinit var mEmailAuth: Auth
 
     private lateinit var binding: ActivityAuthBinding
@@ -43,10 +41,12 @@ class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks, GoogleApiClie
             .load(R.drawable.flash)
             .into(binding.splashImageview)
 
-        binding.authContent.btnGoogleLogin.setOnClickListener { mGoogleAuth.login() }
-        binding.authContent.btnLogin.setOnClickListener { mEmailAuth.login() }
-        binding.authContent.btnRegister.setOnClickListener { mEmailAuth.register() }
-        binding.authContent.txtResetPassword.setOnClickListener { mEmailAuth.login() }
+        binding.authContent.apply {
+            btnGoogleLogin.setOnClickListener { mGoogleAuth.login() }
+            btnLogin.setOnClickListener { mEmailAuth.login() }
+            btnRegister.setOnClickListener { mEmailAuth.register() }
+            txtResetPassword.setOnClickListener { mEmailAuth.login() }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -77,22 +77,18 @@ class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks, GoogleApiClie
         return credentialsMap
     }
 
-    override fun onConnectionFailed(connectionResult: ConnectionResult) {
-    }
-
     companion object {
 
         fun startActivity(context: Context) {
             val intent = Intent(context, AuthActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
-            context.startActivity(intent)
-
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 val bundle = ActivityOptions.makeSceneTransitionAnimation(context as Activity).toBundle()
                 context.startActivity(intent, bundle)
             } else {
                 context.startActivity(intent)
             }
+            (context as Activity).finish()
         }
     }
 }
