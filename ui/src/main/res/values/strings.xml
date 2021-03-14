@@ -56,13 +56,13 @@
     <string name="product_update_success">Product updated successfully</string>
     <string name="product_update_failure">Product not updated</string>
     <string name="dashboard">dashboard</string>
+    <string name="my_business">My Business</string>
     <string name="category_label">Categories</string>
     <string name="order_label">Orders</string>
     <string name="order_item_label">Order Item</string>
     <string name="new_product_label">New Product</string>
     <string name="edit_product_label">Edit Product</string>
     <string name="products_label">Products</string>
-    <string name="create_category">Create Category</string>
     <string name="permision_to_call_msg">Please grant permission to call</string>
     <string name="ksh_label_with_value_str">Ksh  %s</string>
     <string name="ksh_label_with_value_num">Ksh  %d</string>
@@ -80,6 +80,8 @@
     <string name="grant_permissions_gallery_msg">Please grant permissions to select image</string>
     <string name="product_successfully_added">Product added successfully</string>
     <string name="product_not_added">Product not added</string>
-    <string name="quatity_label">Quantity</string>
+    <string name="quantity_label">Quantity</string>
+    <string name="create_category">Create Category</string>
+    <string name="create_category_hint">e.g Fruits</string>
 
 </resources>

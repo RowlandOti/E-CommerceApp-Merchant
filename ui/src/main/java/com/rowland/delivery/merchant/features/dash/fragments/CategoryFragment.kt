@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.rowland.delivery.domain.models.category.CategoryEntity
+import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.R.string
 import com.rowland.delivery.merchant.databinding.FragmentCategoryBinding
 import com.rowland.delivery.merchant.features.dash.adapters.CategoryAdapter
@@ -108,9 +109,9 @@ class CategoryFragment : Fragment() {
         binding.createCatBtn.setOnClickListener {
             MaterialDialog.Builder(requireActivity())
                 .backgroundColorRes(android.R.color.white)
-                .title("Create Category")
+                .title(getString(string.create_category))
                 .inputRangeRes(3, 12, android.R.color.holo_red_dark)
-                .input("e.g Fruits", null) { dialog, input ->
+                .input(getString(string.create_category_hint), null) { _, input ->
                     saveCategory(
                         input.toString(),
                         FirebaseAuth.getInstance().currentUser!!.uid
@@ -147,14 +148,14 @@ class CategoryFragment : Fragment() {
             .subscribe({ category ->
                 Toast.makeText(
                     activity,
-                    String.format(getString(string.category_name), category.name),
+                    String.format(getString(R.string.category_name), category.name),
                     Toast.LENGTH_SHORT
                 )
                     .show()
             }, {
                 Toast.makeText(
                     activity,
-                    String.format(getString(string.category_not_created), name),
+                    String.format(getString(R.string.category_not_created), name),
                     Toast.LENGTH_SHORT
                 )
                     .show()

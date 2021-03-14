@@ -12,7 +12,7 @@
     <fragment
         android:id="@+id/overviewFragment"
         android:name="com.rowland.delivery.merchant.features.dash.fragments.OverviewFragment"
-        android:label="@string/dashboard">
+        android:label="@string/my_business">
         <action
             android:id="@+id/action_overviewFragment_to_categoryFragment"
             app:destination="@id/categoryFragment" />
