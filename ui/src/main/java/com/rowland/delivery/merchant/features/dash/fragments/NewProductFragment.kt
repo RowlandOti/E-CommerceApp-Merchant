@@ -36,7 +36,7 @@ import java.util.Date
 class NewProductFragment : Fragment() {
 
     private val newProductViewModel: NewProductViewModel by viewModels()
-    private val args by navArgs<EditProductFragmentArgs>()
+    private val args by navArgs<NewProductFragmentArgs>()
 
     private var _binding: FragmentNewProductBinding? = null
     private val binding get() = _binding!!
