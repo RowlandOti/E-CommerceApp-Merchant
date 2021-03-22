@@ -1,0 +1,53 @@
+apply plugin: "com.diffplug.spotless"
+
+ext {
+    ktlintVersion = "0.40.0"
+}
+
+spotless {
+    // optional: limit format enforcement to just the files changed by this feature branch
+    ratchetFrom 'origin/master'
+
+    format 'misc', {
+        // define the files to apply `misc` to
+        target '*.gradle', '*.md', '.gitignore'
+
+        // define the steps to apply to those files
+        trimTrailingWhitespace()
+        indentWithTabs() // or spaces. Takes an integer argument if you don't like 4
+        endWithNewline()
+    }
+
+    kotlin {
+        target("**/*.kt")
+        ktlint(ktlintVersion).userData([max_line_length : '120', "disabled_rules" : "import-ordering, no-wildcard-imports"])
+        licenseHeaderFile(rootProject.file("./.buildsystem/license.kt"), "^(package|plugins|import//startfile)")
+    }
+    kotlinGradle {
+        target '*.gradle.kts'
+        ktlint()
+        licenseHeaderFile(rootProject.file("./.buildsystem/license.kt"), "^(package|plugins|import//startfile)")
+    }
+
+    java {
+        importOrder()
+        removeUnusedImports()
+
+        googleJavaFormat()
+        prettier()
+
+        licenseHeaderFile(rootProject.file("./.buildsystem/license.kt"), "^(package|plugins|import//startfile)")
+    }
+
+    groovyGradle {
+        target '*.gradle'
+        greclipse()
+        licenseHeaderFile(rootProject.file("./.buildsystem/license.kt"), "^(package|apply|import//startfile)")
+    }
+}
+
+tasks.whenTaskAdded {
+    if (name == "preBuild") {
+        mustRunAfter("spotlessCheck")
+    }
+}
