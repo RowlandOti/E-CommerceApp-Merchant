@@ -1,3 +1,20 @@
+/*
+ * Copyright 2021 Otieno Rowland
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
 package com.rowland.delivery.merchant.features.auth
 
 import android.app.Activity
@@ -38,27 +55,23 @@ constructor(
     override fun logout(context: Context): Boolean {
         try {
             mAuthConfig.getGoogleSignClient()?.let {
-               it.signOut()
+                it.signOut()
                     .addOnCompleteListener(mAuthConfig.activity) {
                         mSessionManager.logout()
                     }
             }
 
             return true
-
         } catch (e: Exception) {
             e.message?.let { Log.e("Logout Failed", it) }
             return false
         }
-
     }
 
     override fun register() {
-
     }
 
     override fun passwordReset() {
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -93,15 +106,17 @@ constructor(
         members[String.format("members.%s", user.userId)] = true
         batch.update(groupUsersCollectionRef.document(Group.MERCHANT), members)
 
-        RxFirestore.atomicOperation(batch).subscribe({
-            mSessionManager.setLogin(user.idToken!!)
-            mAuthConfig.callback.onLoginSuccess()
-            Toast.makeText(mAuthConfig.activity, "Account Setup Successful", Toast.LENGTH_SHORT).show()
-
-        }, { throwable ->
-            mAuthConfig.callback.onLoginFailure(AuthException(throwable.message!!, throwable))
-            Toast.makeText(mAuthConfig.activity, "Account Setup Unsuccessful", Toast.LENGTH_SHORT).show()
-        })
+        RxFirestore.atomicOperation(batch).subscribe(
+            {
+                mSessionManager.setLogin(user.idToken!!)
+                mAuthConfig.callback.onLoginSuccess()
+                Toast.makeText(mAuthConfig.activity, "Account Setup Successful", Toast.LENGTH_SHORT).show()
+            },
+            { throwable ->
+                mAuthConfig.callback.onLoginFailure(AuthException(throwable.message!!, throwable))
+                Toast.makeText(mAuthConfig.activity, "Account Setup Unsuccessful", Toast.LENGTH_SHORT).show()
+            }
+        )
     }
 
     companion object {

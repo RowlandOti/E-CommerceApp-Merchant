@@ -1,3 +1,20 @@
+/*
+ * Copyright 2021 Otieno Rowland
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
 package com.rowland.delivery.merchant.features.dash.fragments
 
 import android.annotation.SuppressLint
@@ -95,15 +112,17 @@ class CategoryFragment : Fragment() {
                     override fun onItemClick(view: View, position: Int) {
                         categoryViewModel.setSelectedListItem(position)
                         setFragmentResult(
-                            REQUEST_CATEGORY_SELECTED, bundleOf(
+                            REQUEST_CATEGORY_SELECTED,
+                            bundleOf(
                                 CATEGORY to
-                                        categoryViewModel.getSelectedListItem().value!!.name
+                                    categoryViewModel.getSelectedListItem().value!!.name
                             )
                         )
                     }
 
                     override fun onItemLongClick(view: View, position: Int) {}
-                })
+                }
+            )
         )
 
         binding.createCatBtn.setOnClickListener {
@@ -120,11 +139,13 @@ class CategoryFragment : Fragment() {
                 .show()
         }
 
-
         categoryViewModel.getDataList()
-            .observe(viewLifecycleOwner, Observer { categories ->
-                handleDataState(categories.status, categories.data, categories.message)
-            })
+            .observe(
+                viewLifecycleOwner,
+                Observer { categories ->
+                    handleDataState(categories.status, categories.data, categories.message)
+                }
+            )
     }
 
     private fun handleDataState(resourceState: ResourceState, data: List<CategoryModel>?, message: String?) {
@@ -145,20 +166,23 @@ class CategoryFragment : Fragment() {
     @SuppressLint("CheckResult")
     private fun saveCategory(name: String, userUID: String) {
         categoryViewModel.createCategory(CategoryEntity(name.toLowerCase(Locale.ROOT)), userUID)
-            .subscribe({ category ->
-                Toast.makeText(
-                    activity,
-                    String.format(getString(R.string.category_name), category.name),
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
-            }, {
-                Toast.makeText(
-                    activity,
-                    String.format(getString(R.string.category_not_created), name),
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
-            })
+            .subscribe(
+                { category ->
+                    Toast.makeText(
+                        activity,
+                        String.format(getString(R.string.category_name), category.name),
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                },
+                {
+                    Toast.makeText(
+                        activity,
+                        String.format(getString(R.string.category_not_created), name),
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+            )
     }
 }
