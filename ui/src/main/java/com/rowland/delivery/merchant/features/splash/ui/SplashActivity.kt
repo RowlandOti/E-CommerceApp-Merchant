@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 package com.rowland.delivery.merchant.features.splash.ui
 
 import android.annotation.SuppressLint

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 package com.rowland.delivery.merchant.views.behaviors
 
 import android.content.Context

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 package com.rowland.delivery.merchant.features.auth.ui
 
 import androidx.test.ext.junit.rules.activityScenarioRule

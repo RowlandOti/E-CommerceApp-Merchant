@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 package com.rowland.delivery.merchant.features.dash.fragments
 
 import android.annotation.SuppressLint
