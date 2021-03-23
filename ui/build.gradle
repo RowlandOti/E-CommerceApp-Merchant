@@ -17,10 +17,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.jaredsburrows.spoon'
 apply from: '../.buildsystem/versioning.gradle'
-apply from: '../.buildsystem/quality.gradle'
+apply from: '../.buildsystem/misc.gradle'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
@@ -67,8 +66,9 @@ android {
 
 dependencies {
 	implementation fileTree(include: ['*.jar'], dir: 'libs')
-	implementation project(':rxgallery')
-	implementation project(':shuffle')
+	implementation project(':libraries:rxgallery')
+	implementation project(':libraries:shuffle')
+	implementation project(':libraries:swipereveallayout:swipe-reveal-layout')
 
 	// Hexagonal modules
 	implementation project(':modules:domain')
@@ -108,7 +108,6 @@ dependencies {
 	implementation 'com.github.florent37:glidepalette:2.1.2'
 	implementation 'com.github.abdularis:androidbuttonprogress:1.0.2'
 	//implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
-	implementation project(':swipe-reveal-layout')
 	implementation 'me.himanshusoni.quantityview:quantity-view:1.2.0'
 	//implementation 'com.meetic.shuffle:shuffle:1.0.8'
 	implementation 'com.meetic.dragueur:dragueur:1.0.3'
