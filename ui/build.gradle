@@ -19,7 +19,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.jaredsburrows.spoon'
-apply from: "${rootProject.rootDir}/.buildsystem/versioning.gradle"
 apply from: "${rootProject.rootDir}/.buildsystem/misc.gradle"
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
