@@ -1,1 +1,1 @@
-apply from: '../.buildsystem/quality.gradle'
+apply from: "${rootProject.rootDir}/.buildsystem/quality.gradle"
