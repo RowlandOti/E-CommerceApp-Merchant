@@ -36,9 +36,9 @@ class CategoryRemoteSource @Inject constructor(
     private val mapper: CategoryMapper
 ) : ICategoryRemoteSource {
 
-    override fun createCategory(categoryPojo: CategoryPojo, userUid: String): Single<CategoryPojo> {
-        val documentReference = mFirebaseFirestone.collection("categories").document(categoryPojo.name!!)
-        documentReference.set(mapper.mapToRemote(categoryPojo), SetOptions.merge()).addOnSuccessListener { _ ->
+    override fun createCategory(category: CategoryPojo, userUid: String): Single<CategoryPojo> {
+        val documentReference = mFirebaseFirestone.collection("categories").document(category.name!!)
+        documentReference.set(mapper.mapToRemote(category), SetOptions.merge()).addOnSuccessListener { _ ->
             val members = HashMap<String, Any>()
             members[String.format("merchants.%s", userUid)] = true
             documentReference.update(members)
