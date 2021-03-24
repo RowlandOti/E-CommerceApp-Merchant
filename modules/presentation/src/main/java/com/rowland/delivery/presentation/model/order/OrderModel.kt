@@ -1,3 +1,19 @@
+/*
+ * Copyright 2021 Otieno Rowland
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.rowland.delivery.presentation.model.order
 
 import java.util.*
@@ -26,8 +42,10 @@ class OrderModel {
     val orderSubTotal: String? = null
     val orderTotal: Int? = null
 
-
     override fun toString(): String {
-        return "OrderPojo(id=$id, orderRef=$orderRef, status=$status, createdAt=$createdAt, updatedAt=$updatedAt, itemIds=$itemIds, phone=$phone, name=$name, address=$address, lng=$lng, lat=$lat, orderDescription=$orderDescription, items=$items, deliveryFee=$deliveryFee, orderItemsQuantity=$orderItemsQuantity, orderSubTotal=$orderSubTotal, orderTotal=$orderTotal)"
+        return "OrderPojo(id=$id, orderRef=$orderRef, status=$status, createdAt=$createdAt, updatedAt=$updatedAt, " +
+            "itemIds=$itemIds, phone=$phone, name=$name, address=$address, lng=$lng, lat=$lat, " +
+            "orderDescription=$orderDescription, items=$items, deliveryFee=$deliveryFee, " +
+            "orderItemsQuantity=$orderItemsQuantity, orderSubTotal=$orderSubTotal, orderTotal=$orderTotal)"
     }
 }
