@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Otieno Rowland
+ * Copyright (c) Otieno Rowland,  2021. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,8 +59,11 @@ object FakeAuthModule {
 
     @Provides
     fun providesSocialAuthConfig(@ActivityContext context: Context): AuthConfig {
-        return AuthConfig(context as Activity, context as
-                Auth.AuthLoginCallbacks)
+        return AuthConfig(
+            context as Activity,
+            context as
+                Auth.AuthLoginCallbacks
+        )
     }
 
     class FakeEmailAuth(private val authConfig: AuthConfig) : Auth() {
@@ -71,13 +74,13 @@ object FakeAuthModule {
             val password = credentials[EmailAuth.CRED_PASSWORD_KEY]
 
             if ((email.isNullOrEmpty() || password.isNullOrEmpty()) || (
-                        email.contains(
-                            WRONG_USER_EMAIL,
-                            true
-                        ) || password.contains(
-                            WRONG_USER_PASS, true
-                        )
-                        )
+                email.contains(
+                        WRONG_USER_EMAIL,
+                        true
+                    ) || password.contains(
+                        WRONG_USER_PASS, true
+                    )
+                )
             ) {
                 authConfig.callback.onLoginFailure(
                     AuthException(
