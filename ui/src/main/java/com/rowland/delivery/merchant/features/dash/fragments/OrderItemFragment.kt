@@ -156,7 +156,7 @@ class OrderItemFragment : Fragment(), OneMoreFabMenu.OptionsClick {
     private fun changeStatus(status: String) {
         val orderUpdateFields = HashMap<String, Any>()
         orderUpdateFields["status"] = status
-        orderViewModel.updateOrder(orderUpdateFields)
+        orderViewModel.updateOrder(orderUpdateFields, args.orderDataItem.firestoreUid!!)
             .subscribe({
                 Toast.makeText(activity, getString(string.order_status_update_success), Toast.LENGTH_SHORT).show()
             }) {
