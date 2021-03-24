@@ -37,8 +37,9 @@ spotless {
     }
 }
 
+/*
 tasks.whenTaskAdded {
     if (name == "preBuild") {
         mustRunAfter("spotlessCheck")
     }
-}
+}*/
