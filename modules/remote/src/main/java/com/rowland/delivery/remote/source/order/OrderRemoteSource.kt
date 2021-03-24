@@ -19,9 +19,11 @@ package com.rowland.delivery.remote.source.order
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.rowland.delivery.data.contracts.order.IOrderRemoteSource
+import com.rowland.delivery.data.model.category.CategoryPojo
 import com.rowland.delivery.data.model.order.OrderDataPojo
 import com.rowland.delivery.remote.firebasesnapshots.FirestoreDocumentWithIdSnapshotMapper
 import com.rowland.delivery.remote.mapper.order.OrderDataMapper
+import com.rowland.delivery.remote.model.category.CategoryPayload
 import com.rowland.delivery.remote.model.order.OrderDataPayload
 import durdinapps.rxfirebase2.RxFirestore
 import io.reactivex.Completable
@@ -51,8 +53,9 @@ class OrderRemoteSource @Inject constructor(
 
     override fun loadOrders(userUid: String): Flowable<List<OrderDataPojo>> {
         val orderCollectionRef = mFirebaseFirestone.collection("orderdata")
+        val query = orderCollectionRef.whereEqualTo(String.format("merchants.%s", userUid), true)
         return RxFirestore.observeQueryRef(
-            orderCollectionRef,
+            query,
             FirestoreDocumentWithIdSnapshotMapper.listOf(OrderDataPayload::class.java) as
                 io.reactivex.functions.Function<QuerySnapshot, List<OrderDataPayload>>
         )
