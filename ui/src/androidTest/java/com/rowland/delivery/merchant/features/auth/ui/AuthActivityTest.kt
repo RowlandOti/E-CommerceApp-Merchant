@@ -16,6 +16,7 @@
 
 package com.rowland.delivery.merchant.features.auth.ui
 
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.rules.activityScenarioRule
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.features.auth.di.modules.FakeAuthModule
@@ -41,7 +42,7 @@ class AuthActivityTest {
     val spoon = SpoonRule()
 
     @get:Rule(order = 3)
-    var activityScenarioRule = activityScenarioRule<AuthActivity>()
+    var activityScenarioRule: ActivityScenarioRule<AuthActivity> = activityScenarioRule()
 
     private lateinit var activity: AuthActivity
 

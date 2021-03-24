@@ -66,7 +66,12 @@ class AuthModule {
         firebaseFirestore: FirebaseFirestore,
         sessionManager: SessionManager
     ): Auth {
-        return GoogleAuth(authConfig, firebaseAuth, firebaseFirestore, sessionManager)
+        return GoogleAuth(
+            authConfig,
+            firebaseAuth,
+            firebaseFirestore,
+            sessionManager
+        )
     }
 
     @Provides
@@ -74,12 +79,17 @@ class AuthModule {
         @ActivityContext context: Context,
         googleSignInClient: GoogleSignInClient
     ): AuthConfig {
-        return AuthConfig(context as Activity, context as Auth.AuthLoginCallbacks)
+        return AuthConfig(
+            context as Activity,
+            context as Auth.AuthLoginCallbacks
+        )
             .setGoogleSignInClient(googleSignInClient)
     }
 
     @Provides
-    fun providesGoogleSignInClient(@ActivityContext context: Context, gso: GoogleSignInOptions): GoogleSignInClient {
+    fun providesGoogleSignInClient(
+        @ActivityContext context: Context, gso: GoogleSignInOptions
+    ): GoogleSignInClient {
         return GoogleSignIn.getClient(context as FragmentActivity, gso)
     }
 

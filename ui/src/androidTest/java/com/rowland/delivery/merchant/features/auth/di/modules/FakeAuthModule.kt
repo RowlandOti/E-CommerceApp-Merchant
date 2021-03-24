@@ -48,81 +48,86 @@ object FakeAuthModule {
     @Provides
     @Named("email_login")
     fun providesEmailAuth(authConfig: AuthConfig): Auth {
-        return object : Auth() {
-            override fun login() {
-                val credentials = authConfig.callback.doEmailLogin()
-                val email = credentials[EmailAuth.CRED_EMAIL_KEY]
-                val password = credentials[EmailAuth.CRED_PASSWORD_KEY]
-
-                if ((email.isNullOrEmpty() || password.isNullOrEmpty()) || (
-                    email.contains(
-                            WRONG_USER_EMAIL,
-                            true
-                        ) || password.contains(
-                            WRONG_USER_PASS, true
-                        )
-                    )
-                ) {
-                    authConfig.callback.onLoginFailure(
-                        AuthException(
-                            "Error logging in with null credential",
-                            Throwable()
-                        )
-                    )
-                    return
-                }
-
-                authConfig.callback.onLoginSuccess()
-            }
-
-            override fun logout(context: Context): Boolean {
-                return true
-            }
-
-            override fun register() {
-                val credentials = authConfig.callback.doEmailRegister()
-                val email = credentials[EmailAuth.CRED_EMAIL_KEY]
-                val password = credentials[EmailAuth.CRED_PASSWORD_KEY]
-
-                if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
-                    authConfig.callback.onLoginFailure(
-                        AuthException(
-                            "Error logging in with null credential",
-                            Throwable()
-                        )
-                    )
-                    return
-                }
-            }
-
-            override fun passwordReset() {}
-
-            override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {}
-        }
+        return FakeEmailAuth(authConfig)
     }
 
     @Provides
     @Named("google_login")
     fun providesGoogleAuth(authConfig: AuthConfig): Auth {
-        return object : Auth() {
-            override fun login() {
-                authConfig.callback.onLoginSuccess()
-            }
-
-            override fun logout(context: Context): Boolean {
-                return true
-            }
-
-            override fun register() {}
-
-            override fun passwordReset() {}
-
-            override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {}
-        }
+        return FakeGoogleAuth(authConfig)
     }
 
     @Provides
     fun providesSocialAuthConfig(@ActivityContext context: Context): AuthConfig {
-        return AuthConfig(context as Activity, context as Auth.AuthLoginCallbacks)
+        return AuthConfig(context as Activity, context as
+                Auth.AuthLoginCallbacks)
+    }
+
+    class FakeEmailAuth(private val authConfig: AuthConfig) : Auth() {
+
+        override fun login() {
+            val credentials = authConfig.callback.doEmailLogin()
+            val email = credentials[EmailAuth.CRED_EMAIL_KEY]
+            val password = credentials[EmailAuth.CRED_PASSWORD_KEY]
+
+            if ((email.isNullOrEmpty() || password.isNullOrEmpty()) || (
+                        email.contains(
+                            WRONG_USER_EMAIL,
+                            true
+                        ) || password.contains(
+                            WRONG_USER_PASS, true
+                        )
+                        )
+            ) {
+                authConfig.callback.onLoginFailure(
+                    AuthException(
+                        "Error logging in with null credential",
+                        Throwable()
+                    )
+                )
+                return
+            }
+
+            authConfig.callback.onLoginSuccess()
+        }
+
+        override fun logout(context: Context): Boolean = true
+
+        override fun register() {
+            val credentials = authConfig.callback.doEmailRegister()
+            val email = credentials[EmailAuth.CRED_EMAIL_KEY]
+            val password = credentials[EmailAuth.CRED_PASSWORD_KEY]
+
+            if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
+                authConfig.callback.onLoginFailure(
+                    AuthException(
+                        "Error logging in with null credential",
+                        Throwable()
+                    )
+                )
+                return
+            }
+        }
+
+        override fun passwordReset() {}
+
+        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {}
+    }
+
+    class FakeGoogleAuth(private val authConfig: AuthConfig) : Auth() {
+
+        override fun login() {
+            authConfig.callback.onLoginSuccess()
+        }
+
+        override fun logout(context: Context): Boolean {
+            return true
+        }
+
+        override fun register() {}
+
+        override fun passwordReset() {}
+
+        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {}
     }
 }

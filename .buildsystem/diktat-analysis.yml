@@ -1,0 +1,28 @@
+- name: FILE_WILDCARD_IMPORTS
+  enabled: true
+  configuration:
+    allowedWildcards: "org.junit.Assert.*, org.junit.*, org.hamcrest.*"
+    useRecommendedImportsOrder: true
+- name: WRONG_NEWLINES
+  enabled: true
+  configuration:
+    maxParametersInOneLine: 3
+    maxCallsInOneLine: 3
+- name: MISSING_KDOC_CLASS_ELEMENTS
+  enabled: false
+- name: KDOC_NO_EMPTY_TAGS
+  enabled: false
+- name: KDOC_WITHOUT_PARAM_TAG
+  enabled: false
+- name: MISSING_KDOC_ON_FUNCTION
+  enabled: false
+- name: HEADER_MISSING_IN_NON_SINGLE_CLASS_FILE
+  enabled: false
+- name: MISSING_KDOC_TOP_LEVEL
+  enabled: false
+- name: FUNCTION_BOOLEAN_PREFIX
+  enabled: false
+- name: LONG_LINE
+  enabled: false
+  configuration:
+    lineLength: '120'

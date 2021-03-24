@@ -29,13 +29,17 @@ abstract class Auth {
     abstract fun logout(context: Context): Boolean
     abstract fun register()
     abstract fun passwordReset()
-    abstract fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent)
+    abstract fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent
+    )
 
     interface AuthLoginCallbacks {
 
         fun onLoginSuccess()
 
-        fun onLoginFailure(e: AuthException)
+        fun onLoginFailure(exception: AuthException)
 
         fun doEmailLogin(): Map<String, String>
 

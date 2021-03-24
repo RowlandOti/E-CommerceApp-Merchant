@@ -27,7 +27,5 @@ import javax.inject.Inject
  * which will execute actions on the Android UI thread
  */
 class UiThread @Inject internal constructor() : IPostExecutionThread {
-
-    override val scheduler: Scheduler
-        get() = AndroidSchedulers.mainThread()
+    override val scheduler: Scheduler = AndroidSchedulers.mainThread()
 }
