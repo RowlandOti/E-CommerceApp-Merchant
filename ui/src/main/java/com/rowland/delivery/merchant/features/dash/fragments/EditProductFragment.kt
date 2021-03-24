@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) Otieno Rowland,  2021. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.rowland.delivery.merchant.features.dash.fragments
 
 import android.Manifest
@@ -75,22 +91,27 @@ class EditProductFragment : Fragment() {
         editProductViewModel.setProductUid(args.productItem.firestoreUid!!)
         editProductViewModel.setCategory(args.productCategory)
 
-        editProductViewModel.images.observe(viewLifecycleOwner, { uris ->
-            val options = RequestOptions()
-            options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
-            Glide.with(requireActivity())
-                .load(uris!![uris.size - 1])
-                .apply(options)
-                .into(binding.editInputProductImageview)
-        })
+        editProductViewModel.images.observe(
+            viewLifecycleOwner,
+            { uris ->
+                val options = RequestOptions()
+                options.centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL)
+                Glide.with(requireActivity())
+                    .load(uris!![uris.size - 1])
+                    .apply(options)
+                    .into(binding.editInputProductImageview)
+            }
+        )
 
         binding.editFabAddimage.setOnClickListener { _ ->
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 RxPermissions(requireActivity()).request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     .subscribe { granted ->
                         if (!granted) {
-                            Toast.makeText(activity, getString(string.grant_permissions_gallery_msg), Toast.LENGTH_SHORT)
-                                .show()
+                            Toast.makeText(
+                                activity, getString(string.grant_permissions_gallery_msg),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         } else {
                             RxGallery.gallery(requireActivity(), true, RxGallery.MimeType.IMAGE)
                                 .subscribeOn(Schedulers.io())
@@ -105,7 +126,8 @@ class EditProductFragment : Fragment() {
                                             EditProductViewModel::class.java.simpleName,
                                             "Error Selecting Images: $throwable"
                                         )
-                                    }) {
+                                    }
+                                ) {
                                     Log.d(EditProductViewModel::class.java.simpleName, "Done Selecting Images")
                                 }
                         }
@@ -123,12 +145,15 @@ class EditProductFragment : Fragment() {
             productUpdateFields["updatedAt"] = Date()
 
             editProductViewModel.updateProduct(productUpdateFields)
-                .subscribe({
-                    Toast.makeText(activity, getString(string.product_update_success), Toast.LENGTH_SHORT).show()
-                    findNavController().popBackStack()
-                }, {
-                    Toast.makeText(activity, getString(string.product_update_failure), Toast.LENGTH_SHORT).show()
-                })
+                .subscribe(
+                    {
+                        Toast.makeText(activity, getString(string.product_update_success), Toast.LENGTH_SHORT).show()
+                        findNavController().popBackStack()
+                    },
+                    {
+                        Toast.makeText(activity, getString(string.product_update_failure), Toast.LENGTH_SHORT).show()
+                    }
+                )
         }
 
         binding.editBtnCancell.setOnClickListener {

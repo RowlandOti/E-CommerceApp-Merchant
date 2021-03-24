@@ -1,16 +1,30 @@
+/*
+ * Copyright (c) Otieno Rowland,  2021. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.rowland.delivery.merchant.features.dash.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.NonNull
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.rowland.delivery.merchant.databinding.RowSingleOrderItemBinding
 import com.rowland.delivery.merchant.features.dash.tools.recylerview.HFRecyclerView
 import com.rowland.delivery.presentation.model.order.OrderItemModel
-
 
 /**
  * Created by Rowland on 5/9/2018.
@@ -22,7 +36,10 @@ class OrderItemAdapter : HFRecyclerView<OrderItemModel> {
 
     constructor(withHeader: Boolean, withFooter: Boolean) : super(null, withHeader, withFooter) {}
 
-    constructor(data: List<OrderItemModel>, withHeader: Boolean, withFooter: Boolean) : super(data, withHeader, withFooter) {}
+    constructor(data: List<OrderItemModel>, withHeader: Boolean, withFooter: Boolean) : super(
+        data, withHeader,
+        withFooter
+    ) {}
 
     override fun getItemView(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder {
         val binding = RowSingleOrderItemBinding
@@ -30,7 +47,7 @@ class OrderItemAdapter : HFRecyclerView<OrderItemModel> {
         return OrderItemViewHolder(binding)
     }
 
-    override fun getHeaderView(inflater: LayoutInflater, parent: ViewGroup): androidx.recyclerview.widget.RecyclerView.ViewHolder? {
+    override fun getHeaderView(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder? {
         return null
     }
 
@@ -43,9 +60,7 @@ class OrderItemAdapter : HFRecyclerView<OrderItemModel> {
             val data = getItem(position)
             holder.bind(data)
         } else if (holder is HeaderViewHolder) {
-
         } else if (holder is FooterViewHolder) {
-
         }
     }
 
@@ -78,10 +93,12 @@ class OrderItemAdapter : HFRecyclerView<OrderItemModel> {
         }
     }
 
-    class OrderItemViewHolder(private val itemViewBinding: RowSingleOrderItemBinding) :RecyclerView.ViewHolder(itemViewBinding.root) {
+    class OrderItemViewHolder(private val itemViewBinding: RowSingleOrderItemBinding) :
+        RecyclerView.ViewHolder(itemViewBinding.root) {
 
         fun bind(orderItem: OrderItemModel) {
-            Glide.with(itemViewBinding.foodImage.context).load(orderItem.imageUrl).into(itemViewBinding.foodImage)
+            Glide.with(itemViewBinding.foodImage.context).load(orderItem.imageUrl)
+                .into(itemViewBinding.foodImage)
             itemViewBinding.itemsCount.text = orderItem.itemQuantity.toString()
             itemViewBinding.itemName.text = orderItem.title
             itemViewBinding.itemPrice.text = "Price: Ksh " + orderItem.price + " each"

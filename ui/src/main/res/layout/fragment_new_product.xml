@@ -89,7 +89,7 @@
                                 android:id="@+id/input_product_quantity"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="@string/quatity_label"
+                                android:hint="@string/quantity_label"
                                 android:inputType="number" />
                         </com.google.android.material.textfield.TextInputLayout>
 

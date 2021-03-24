@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) Otieno Rowland,  2021. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.rowland.delivery.merchant.features.auth.di.modules
 
 import android.app.Activity
@@ -50,7 +66,12 @@ class AuthModule {
         firebaseFirestore: FirebaseFirestore,
         sessionManager: SessionManager
     ): Auth {
-        return GoogleAuth(authConfig, firebaseAuth, firebaseFirestore, sessionManager)
+        return GoogleAuth(
+            authConfig,
+            firebaseAuth,
+            firebaseFirestore,
+            sessionManager
+        )
     }
 
     @Provides
@@ -58,12 +79,18 @@ class AuthModule {
         @ActivityContext context: Context,
         googleSignInClient: GoogleSignInClient
     ): AuthConfig {
-        return AuthConfig(context as Activity, context as Auth.AuthLoginCallbacks)
+        return AuthConfig(
+            context as Activity,
+            context as Auth.AuthLoginCallbacks
+        )
             .setGoogleSignInClient(googleSignInClient)
     }
 
     @Provides
-    fun providesGoogleSignInClient(@ActivityContext context: Context, gso: GoogleSignInOptions): GoogleSignInClient {
+    fun providesGoogleSignInClient(
+        @ActivityContext context: Context,
+        gso: GoogleSignInOptions
+    ): GoogleSignInClient {
         return GoogleSignIn.getClient(context as FragmentActivity, gso)
     }
 

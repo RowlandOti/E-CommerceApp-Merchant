@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) Otieno Rowland,  2021. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.rowland.delivery.merchant.features.dash.fragments
 
 import android.annotation.SuppressLint
@@ -11,12 +27,12 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.rowland.delivery.domain.models.category.CategoryEntity
+import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.R.string
 import com.rowland.delivery.merchant.databinding.FragmentCategoryBinding
 import com.rowland.delivery.merchant.features.dash.adapters.CategoryAdapter
@@ -94,23 +110,25 @@ class CategoryFragment : Fragment() {
                     override fun onItemClick(view: View, position: Int) {
                         categoryViewModel.setSelectedListItem(position)
                         setFragmentResult(
-                            REQUEST_CATEGORY_SELECTED, bundleOf(
+                            REQUEST_CATEGORY_SELECTED,
+                            bundleOf(
                                 CATEGORY to
-                                        categoryViewModel.getSelectedListItem().value!!.name
+                                    categoryViewModel.getSelectedListItem().value!!.name
                             )
                         )
                     }
 
                     override fun onItemLongClick(view: View, position: Int) {}
-                })
+                }
+            )
         )
 
         binding.createCatBtn.setOnClickListener {
             MaterialDialog.Builder(requireActivity())
                 .backgroundColorRes(android.R.color.white)
-                .title("Create Category")
+                .title(getString(string.create_category))
                 .inputRangeRes(3, 12, android.R.color.holo_red_dark)
-                .input("e.g Fruits", null) { dialog, input ->
+                .input(getString(string.create_category_hint), null) { _, input ->
                     saveCategory(
                         input.toString(),
                         FirebaseAuth.getInstance().currentUser!!.uid
@@ -119,11 +137,13 @@ class CategoryFragment : Fragment() {
                 .show()
         }
 
-
         categoryViewModel.getDataList()
-            .observe(viewLifecycleOwner, Observer { categories ->
-                handleDataState(categories.status, categories.data, categories.message)
-            })
+            .observe(
+                viewLifecycleOwner,
+                { categories ->
+                    handleDataState(categories.status, categories.data, categories.message)
+                }
+            )
     }
 
     private fun handleDataState(resourceState: ResourceState, data: List<CategoryModel>?, message: String?) {
@@ -144,20 +164,23 @@ class CategoryFragment : Fragment() {
     @SuppressLint("CheckResult")
     private fun saveCategory(name: String, userUID: String) {
         categoryViewModel.createCategory(CategoryEntity(name.toLowerCase(Locale.ROOT)), userUID)
-            .subscribe({ category ->
-                Toast.makeText(
-                    activity,
-                    String.format(getString(string.category_name), category.name),
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
-            }, {
-                Toast.makeText(
-                    activity,
-                    String.format(getString(string.category_not_created), name),
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
-            })
+            .subscribe(
+                { category ->
+                    Toast.makeText(
+                        activity,
+                        String.format(getString(R.string.category_name), category.name),
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                },
+                {
+                    Toast.makeText(
+                        activity,
+                        String.format(getString(R.string.category_not_created), name),
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+            )
     }
 }

@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) Otieno Rowland,  2021. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.rowland.delivery.merchant.features.dash.fragments
 
 import android.os.Bundle
@@ -7,6 +23,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commitNow
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
@@ -99,14 +117,18 @@ class OverviewFragment : Fragment(), BottomNavigationView.OnNavigationItemSelect
     }
 
     private fun syncWithDependentViews(item: MenuItem): Boolean {
-        (activity as AppCompatActivity?)?.supportActionBar?.let { it.title = item.title }
-
         return when (item.itemId) {
             R.id.action_category -> {
+                (activity as AppCompatActivity?)?.supportActionBar?.let {
+                    it.subtitle = getString(R.string.category_label)
+                }
                 binding.overviewViewpager.currentItem = 0
                 true
             }
             R.id.action_orders -> {
+                (activity as AppCompatActivity?)?.supportActionBar?.let {
+                    it.subtitle = getString(R.string.order_label)
+                }
                 binding.overviewViewpager.currentItem = 1
                 true
             }
@@ -119,13 +141,12 @@ class OverviewFragment : Fragment(), BottomNavigationView.OnNavigationItemSelect
             throw IllegalStateException("Menu items count should sync with ViewPager items")
         }
         val item = binding.overviewBottomNavigation.menu.getItem(position)
-        (activity as AppCompatActivity?)?.supportActionBar?.let { it.title = item.title }
         binding.overviewBottomNavigation.selectedItemId = item.itemId
     }
 
     private inner class ViewPagerAdapter : FragmentStateAdapter(this) {
 
-        /*init {
+        init {
             registerFragmentTransactionCallback(object : FragmentTransactionCallback() {
                 override fun onFragmentMaxLifecyclePreUpdated(
                     fragment: Fragment,
@@ -141,7 +162,7 @@ class OverviewFragment : Fragment(), BottomNavigationView.OnNavigationItemSelect
                 }
             })
         }
-*/
+
         override fun getItemCount(): Int {
             return OVERVIEW_SCREENS_COUNT
         }

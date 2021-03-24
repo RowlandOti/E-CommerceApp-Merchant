@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) Otieno Rowland,  2021. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.rowland.delivery.merchant.features.dash.adapters
 
 import android.view.LayoutInflater
@@ -46,7 +62,8 @@ constructor() : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
                 }
 
                 override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                    return this@CategoryAdapter.categoryList!![oldItemPosition].name === categoryModels[newItemPosition].name
+                    return this@CategoryAdapter.categoryList!![oldItemPosition].name ===
+                        categoryModels[newItemPosition].name
                 }
 
                 override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
@@ -65,7 +82,8 @@ constructor() : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
         fun populate(categoryModel: CategoryModel) {
             itemViewBinding.catName.text =
-                Character.toUpperCase(categoryModel.name!![0]) + categoryModel.name!!.substring(1)
+                Character.toUpperCase(categoryModel.name!![0]) +
+                categoryModel.name!!.substring(1)
         }
     }
 }

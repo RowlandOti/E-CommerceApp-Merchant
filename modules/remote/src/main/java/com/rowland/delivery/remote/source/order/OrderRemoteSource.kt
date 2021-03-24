@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) Otieno Rowland,  2021. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.rowland.delivery.remote.source.order
 
 import com.google.firebase.firestore.FirebaseFirestore
@@ -11,12 +27,16 @@ import durdinapps.rxfirebase2.RxFirestore
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
-import java.util.*
+import java.util.HashMap
 import javax.inject.Inject
 
-class OrderRemoteSource @Inject constructor(private val mFirebaseFirestone: FirebaseFirestore, private val mapper: OrderDataMapper) : IOrderRemoteSource {
+class OrderRemoteSource @Inject constructor(
+    private val mFirebaseFirestone: FirebaseFirestore,
+    private val mapper: OrderDataMapper
+) : IOrderRemoteSource {
+
     override fun createOrder(order: OrderDataPojo, userUid: String): Single<OrderDataPojo> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
     override fun updateOrder(orderUpdateFields: HashMap<String, Any>, orderUid: String): Completable {
@@ -31,12 +51,16 @@ class OrderRemoteSource @Inject constructor(private val mFirebaseFirestone: Fire
 
     override fun loadOrders(userUid: String): Flowable<List<OrderDataPojo>> {
         val orderCollectionRef = mFirebaseFirestone.collection("orderdata")
-        return RxFirestore.observeQueryRef(orderCollectionRef, FirestoreDocumentWithIdSnapshotMapper.listOf(OrderDataPayload::class.java) as io.reactivex.functions.Function<QuerySnapshot, List<OrderDataPayload>>)
-                .map { it }
-                .map {
-                    val orderDataPojos = mutableListOf<OrderDataPojo>()
-                    it.map { orderDataPojos.add(mapper.mapFromRemote(it)) }
-                    orderDataPojos
-                }
+        return RxFirestore.observeQueryRef(
+            orderCollectionRef,
+            FirestoreDocumentWithIdSnapshotMapper.listOf(OrderDataPayload::class.java) as
+                io.reactivex.functions.Function<QuerySnapshot, List<OrderDataPayload>>
+        )
+            .map { it }
+            .map {
+                val orderDataPojos = mutableListOf<OrderDataPojo>()
+                it.map { orderDataPojos.add(mapper.mapFromRemote(it)) }
+                orderDataPojos
+            }
     }
 }

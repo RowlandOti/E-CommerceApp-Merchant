@@ -1,46 +1,54 @@
+/*
+ * Copyright (c) Otieno Rowland,  2021. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.rowland.delivery.merchant.features.dash.activities
 
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
-import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.databinding.ActivityDashBinding
-import com.rowland.delivery.merchant.features.dash.fragments.OrderItemFragment
 import com.rowland.delivery.merchant.features.dash.fragments.OverviewFragment
-import com.rowland.delivery.merchant.features.dash.fragments.OverviewFragmentDirections
-import com.rowland.delivery.merchant.features.dash.fragments.ProductFragment
 import com.rowland.delivery.merchant.features.splash.ui.SplashActivity
 import com.rowland.delivery.merchant.services.session.SessionManager
-import com.rowland.delivery.presentation.viewmodels.category.CategoryViewModel
-import com.rowland.delivery.presentation.viewmodels.order.OrderViewModel
-import com.rowland.delivery.presentation.viewmodels.product.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+class DashActivity :
+    AppCompatActivity(),
+    NavigationView.OnNavigationItemSelectedListener,
     NavController.OnDestinationChangedListener {
 
     @Inject
@@ -55,7 +63,7 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         fun startActivity(context: Context) {
             val intent = Intent(context, DashActivity::class.java)
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 val bundle = ActivityOptions.makeSceneTransitionAnimation(context as Activity).toBundle()
                 context.startActivity(intent, bundle)
             } else {
@@ -107,7 +115,7 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 super.onDrawerSlide(drawerView, slideOffset)
                 this.syncState()
                 try {
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
                         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
                         window.statusBarColor = resources.getColor(R.color.colorPrimaryDarkTransparent)
@@ -127,7 +135,7 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 this.syncState()
 
                 try {
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
                         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
                         window.statusBarColor = resources.getColor(R.color.colorPrimaryDark)
@@ -149,7 +157,7 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun itemSelection(mSelectedId: Int) {
 
         when (mSelectedId) {
-            R.id.overviewFragment -> {
+            R.id.action_my_business -> {
                 navController.navigate(R.id.overviewFragment)
                 binding.dashDrawerLayout.closeDrawer(GravityCompat.START)
             }
@@ -165,16 +173,14 @@ class DashActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() ||
-                super.onSupportNavigateUp()
+            super.onSupportNavigateUp()
     }
 
     override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
         when (destination.id) {
             R.id.overviewFragment -> {
-                supportActionBar?.let { it.subtitle = "" }
                 binding.dashDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             }
             else -> {

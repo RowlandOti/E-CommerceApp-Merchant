@@ -11,7 +11,7 @@ env:
     - secure: T4Grbm3hASYRIUogx2eo+aNbMA3cK2eL0qhNpQKLlVwtm2C4kOVsr5J6FAWKgtLIRIaTGfL6cJqWDrnxv/MuLbuYGCXSmHBualN1xkktKVlzM23EkucChJeJ1AKLULyYSCTZet8rg9aHo5qvoDa4dw5hnZsyBijljqIzncO18tNL/+QucIjfQbR7GKUjb8J5LyR/nAj2afp0xshjsem6LnMgwUej/YhrAATi71pCbUXVflk6C65hcQmLR/TNZ9ZxTvJkTtQyVp2+3EWkoUFo/rD/uljLzy9NKKijeHqjjIwHzoi74NBoL02p5r5LoDdBsujF965HivB/p1kHT10eaxA6OoPw/TzxvwimD5tfmCvqKNiKX0zb965Z57G2XsgR4jv9duecCnOaa8NfIYt8f0pzGfTd652t2bnoeGktuW4DbNW/CBTIuJiRGqgHmjIF9ga5pNWXaFdqefeZa3yAw/KTz7/DgFSCaDTUPMXzSss1SbwMf8Nf8t+ddxpTrjT38C5h4zCgLa350a73Wc5o7qC4hxs+3EDs2b00NC6yORaayjS7DcBROLXK4IAqr/bgEkV5XAjea7RsKzg80ZkO1eYoK+fM+A4yNFZnRSy0uZIcYcwQWebIwLmqRKHa3Za4aFUzIswCDpKerl5pSs9CfkUHBRZ8PtsYzXRyMMgMbqk=
 
 jdk:
-- oraclejdk8
+  - oraclejdk8
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
@@ -50,7 +50,11 @@ deploy:
     repo: RowlandOti/E-CommerceApp-Merchant
     # and we are building a tag
     tags: true
+install:
+  - npm install
 before_install:
+  - nvm install 6
+  - node --version
   # Install SDK license so Android Gradle plugin can install deps.
   - mkdir "$ANDROID_HOME/licenses" || true
   - echo "d56f5187479451eabf01fb78af6dfcb131a6481e" > "$ANDROID_HOME/licenses/android-sdk-license"
@@ -60,4 +64,4 @@ before_install:
   - chmod +x gradlew
   - yes | sdkmanager --update
 script:
-- "./gradlew clean build --stacktrace"
+  - "./gradlew clean build --stacktrace"

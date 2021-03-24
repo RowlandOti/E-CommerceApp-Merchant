@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) Otieno Rowland,  2021. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.rowland.delivery.merchant.features.dash.fragments
 
 import android.Manifest
@@ -36,7 +52,7 @@ import java.util.Date
 class NewProductFragment : Fragment() {
 
     private val newProductViewModel: NewProductViewModel by viewModels()
-    private val args by navArgs<EditProductFragmentArgs>()
+    private val args by navArgs<NewProductFragmentArgs>()
 
     private var _binding: FragmentNewProductBinding? = null
     private val binding get() = _binding!!
@@ -90,7 +106,8 @@ class NewProductFragment : Fragment() {
                                             EditProductViewModel::class.java.simpleName,
                                             "Error Selecting Images: $throwable"
                                         )
-                                    }) {
+                                    }
+                                ) {
                                     Log.d(EditProductViewModel::class.java.simpleName, "Done Selecting Images")
                                 }
                         }
@@ -116,18 +133,20 @@ class NewProductFragment : Fragment() {
                     Toast.makeText(activity, getString(string.product_successfully_added), Toast.LENGTH_SHORT).show()
                     findNavController().popBackStack()
                 }) { Toast.makeText(activity, getString(string.product_not_added), Toast.LENGTH_SHORT).show() }
-
         }
 
         binding.btnCancell.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        newProductViewModel.images.observe(viewLifecycleOwner, { uris ->
-            binding.newProductShuffle.shuffleSettings.numberOfDisplayedCards = uris!!.size
-            binding.newProductShuffle.shuffleAdapter = ImageShuffleAdapter(uris.map { uri -> Uri.parse(uri) })
-            binding.newProductShuffle.viewAnimator = ShuffleViewAnimatorOnSecondCard()
-        })
+        newProductViewModel.images.observe(
+            viewLifecycleOwner,
+            { uris ->
+                binding.newProductShuffle.shuffleSettings.numberOfDisplayedCards = uris!!.size
+                binding.newProductShuffle.shuffleAdapter = ImageShuffleAdapter(uris.map { uri -> Uri.parse(uri) })
+                binding.newProductShuffle.viewAnimator = ShuffleViewAnimatorOnSecondCard()
+            }
+        )
     }
 
     class ImageShuffleViewHolder(private val shuffleBinding: ContentProductImagesShuffleBinding) :
