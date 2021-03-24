@@ -141,7 +141,7 @@ class CategoryFragment : Fragment() {
         categoryViewModel.getDataList()
             .observe(
                 viewLifecycleOwner,
-                Observer { categories ->
+                { categories ->
                     handleDataState(categories.status, categories.data, categories.message)
                 }
             )

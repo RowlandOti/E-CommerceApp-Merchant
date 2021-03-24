@@ -25,6 +25,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -43,7 +44,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ProductFragment : Fragment() {
 
-    private val productViewModel: ProductViewModel by activityViewModels()
+    private val productViewModel: ProductViewModel by viewModels()
     private val args by navArgs<ProductFragmentArgs>()
 
     @Inject
