@@ -1,3 +1,8 @@
+exec {
+    commandLine "git", "submodule", "update", "--init", "--recursive"
+    ignoreExitValue true
+}
+
 include ':duka-merchant-sdk:domain', ':duka-merchant-sdk:data', ':duka-merchant-sdk:presentation', ':duka-merchant-sdk:remote', ':duka-merchant-sdk:cache', ':ui',
         ':libraries:swipereveallayout:swipe-reveal-layout', ':libraries:rxgallery', ':libraries:shuffle'
 rootProject.name = "Duka Merchant"
