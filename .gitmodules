@@ -1,0 +1,3 @@
+[submodule "duka-merchant-sdk"]
+	path = duka-merchant-sdk
+	url = git@github.com:RowlandOti/Duka-Merchant-SDK.git
