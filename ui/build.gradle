@@ -71,11 +71,11 @@ dependencies {
 	implementation project(':libraries:swipereveallayout:swipe-reveal-layout')
 
 	// Hexagonal modules
-	implementation project(':duka-merchant-sdk:domain')
-	implementation project(':duka-merchant-sdk:data')
-	implementation project(':duka-merchant-sdk:presentation')
-	implementation project(':duka-merchant-sdk:remote')
-	implementation project(':duka-merchant-sdk:cache')
+	implementation project(':domain')
+	implementation project(':data')
+	implementation project(':presentation')
+	implementation project(':remote')
+	implementation project(':cache')
 
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
 	implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'

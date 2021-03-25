@@ -3,6 +3,11 @@ exec {
     ignoreExitValue true
 }
 
-include ':duka-merchant-sdk:domain', ':duka-merchant-sdk:data', ':duka-merchant-sdk:presentation', ':duka-merchant-sdk:remote', ':duka-merchant-sdk:cache', ':ui',
+include ':domain', ':data', ':presentation', ':remote', ':cache', ':ui',
         ':libraries:swipereveallayout:swipe-reveal-layout', ':libraries:rxgallery', ':libraries:shuffle'
+project(':domain').projectDir = new File("duka-merchant-sdk/domain")
+project(':data').projectDir = new File("duka-merchant-sdk/data")
+project(':presentation').projectDir = new File("duka-merchant-sdk/presentation")
+project(':remote').projectDir = new File("duka-merchant-sdk/remote")
+project(':cache').projectDir = new File("duka-merchant-sdk/cache")
 rootProject.name = "Duka Merchant"
