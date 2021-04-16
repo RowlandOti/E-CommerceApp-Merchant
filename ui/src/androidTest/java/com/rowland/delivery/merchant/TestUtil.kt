@@ -17,7 +17,7 @@
 package com.rowland.delivery.merchant
 
 import android.app.Activity
-import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.core.app.ActivityScenario
 import com.rowland.delivery.merchant.robots.auth.GoogleLoginRobot
 import com.rowland.delivery.merchant.robots.auth.LoginRobot
 import com.rowland.delivery.merchant.robots.auth.RegisterRobot
@@ -37,8 +37,8 @@ inline fun googleLogin(func: GoogleLoginRobot.() -> Unit) = GoogleLoginRobot()
 inline fun register(func: RegisterRobot.() -> Unit) = RegisterRobot()
     .apply { func() }
 
-fun <T : Activity?> getActivity(activityScenarioRule: ActivityScenarioRule<T>): T {
+fun <T : Activity?> ActivityScenario<T>.getActivity(): T {
     val activityRef: AtomicReference<T> = AtomicReference()
-    activityScenarioRule.scenario.onActivity(activityRef::set)
+    onActivity(activityRef::set)
     return activityRef.get()
 }

@@ -19,6 +19,7 @@ package com.rowland.delivery.merchant.features.auth.ui
 import android.Manifest
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.rules.activityScenarioRule
+import androidx.test.filters.MediumTest
 import androidx.test.rule.GrantPermissionRule
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.features.auth.di.modules.AuthModule
@@ -35,6 +36,7 @@ import org.junit.*
 
 @HiltAndroidTest
 @UninstallModules(AuthModule::class)
+@MediumTest
 class AuthActivityTest {
 
     @get:Rule(order = 1)
@@ -57,7 +59,12 @@ class AuthActivityTest {
     @Before
     fun setup() {
         hiltRule.inject()
-        activity = getActivity(activityScenarioRule)
+        activity = activityScenarioRule.scenario.getActivity()
+    }
+
+    @After
+    fun tearDown() {
+        activityScenarioRule.scenario.close()
     }
 
     @Test
