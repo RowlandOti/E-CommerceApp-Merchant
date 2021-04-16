@@ -28,13 +28,13 @@ import java.util.concurrent.atomic.AtomicReference
  *
  */
 
-fun login(func: LoginRobot.() -> Unit) = LoginRobot()
+inline fun login(func: LoginRobot.() -> Unit) = LoginRobot()
     .apply { func() }
 
-fun googleLogin(func: GoogleLoginRobot.() -> Unit) = GoogleLoginRobot()
+inline fun googleLogin(func: GoogleLoginRobot.() -> Unit) = GoogleLoginRobot()
     .apply { func() }
 
-fun register(func: RegisterRobot.() -> Unit) = RegisterRobot()
+inline fun register(func: RegisterRobot.() -> Unit) = RegisterRobot()
     .apply { func() }
 
 fun <T : Activity?> getActivity(activityScenarioRule: ActivityScenarioRule<T>): T {
