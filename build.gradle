@@ -1,16 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext {
-        kotlinVersion = '1.4.31'
-        navVersion = "2.3.3"
-        viewpager_version = "1.1.0-alpha01"
-        spotlessVersion = "5.11.0"
-        androidGradleVersion = "4.1.3"
-        googleServicePluginVersion = "4.3.5"
-        daggerHiltVersion = "2.31.2-alpha"
-        spoonPluginVersion = "1.5.0"
-    }
     repositories {
         google()
         jcenter()
@@ -18,13 +8,13 @@ buildscript {
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:$androidGradleVersion"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "com.android.tools.build:gradle:$androidPluginVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinPluginVersion"
         classpath "com.google.gms:google-services:$googleServicePluginVersion"
         classpath "com.jaredsburrows:gradle-spoon-plugin:$spoonPluginVersion"
-        classpath "com.google.dagger:hilt-android-gradle-plugin:$daggerHiltVersion"
-        classpath "com.diffplug.spotless:spotless-plugin-gradle:$spotlessVersion"
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navVersion"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$daggerHiltPluginVersion"
+        classpath "com.diffplug.spotless:spotless-plugin-gradle:$spotlessPluginVersion"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navSafeArgsPluginVersion"
     }
 }
 
