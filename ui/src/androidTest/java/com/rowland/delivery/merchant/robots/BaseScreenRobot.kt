@@ -93,6 +93,12 @@ abstract class BaseScreenRobot<T : BaseScreenRobot<T>> {
         return this as T
     }
 
+    fun swipeUpOnView(@IdRes viewId: Int) :T {
+        Espresso.onView(ViewMatchers.withId(viewId))
+            .perform(ViewActions.swipeUp())
+        return this as T
+    }
+
     fun clickOnListItem(listRes: Int, position: Int): T {
         Espresso.onData(CoreMatchers.anything())
             .inAdapterView(CoreMatchers.allOf(ViewMatchers.withId(listRes)))

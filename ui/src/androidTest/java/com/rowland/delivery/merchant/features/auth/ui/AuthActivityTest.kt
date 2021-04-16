@@ -16,11 +16,13 @@
 
 package com.rowland.delivery.merchant.features.auth.ui
 
+import android.Manifest
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.rules.activityScenarioRule
+import androidx.test.rule.GrantPermissionRule
 import com.rowland.delivery.merchant.R
-import com.rowland.delivery.merchant.features.auth.di.modules.FakeAuthModule
 import com.rowland.delivery.merchant.features.auth.di.modules.AuthModule
+import com.rowland.delivery.merchant.features.auth.di.modules.FakeAuthModule
 import com.rowland.delivery.merchant.getActivity
 import com.rowland.delivery.merchant.googleLogin
 import com.rowland.delivery.merchant.login
@@ -44,6 +46,12 @@ class AuthActivityTest {
     @get:Rule(order = 3)
     var activityScenarioRule: ActivityScenarioRule<AuthActivity> = activityScenarioRule()
 
+    @get:Rule(order = 4)
+    var runtimePermissionRule: GrantPermissionRule = GrantPermissionRule.grant(
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_EXTERNAL_STORAGE
+    )
+
     private lateinit var activity: AuthActivity
 
     @Before
@@ -55,7 +63,6 @@ class AuthActivityTest {
     @Test
     fun onLoginEmptyEmailAndPasswordFails() {
         login {
-            dismissKeyboard()
             clickLogin()
             spoon.screenshot(activity, "auth_login_Empty_credentials")
             matchToastText(activity.getString(R.string.login_unsuccessful), activity.window.decorView)

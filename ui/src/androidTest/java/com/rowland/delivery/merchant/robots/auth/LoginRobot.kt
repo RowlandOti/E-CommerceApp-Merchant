@@ -29,5 +29,9 @@ class LoginRobot : BaseScreenRobot<LoginRobot>() {
 
     fun setPassword(pass: String) = enterTextIntoView(R.id.input_password, pass)
 
-    fun clickLogin() = performClickOnView(R.id.btn_login)
+    fun clickLogin() {
+        dismissKeyboard()
+        swipeUpOnView(R.id.nc_view)
+        performClickOnView(R.id.btn_login)
+    }
 }
