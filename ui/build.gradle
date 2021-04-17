@@ -96,11 +96,11 @@ dependencies {
 	// Firebase and Google services
 	implementation platform("com.google.firebase:firebase-bom:$firebaseBomVersion")
 	implementation 'com.google.firebase:firebase-core'
-	implementation 'com.google.firebase:firebase-firestore'
-	implementation 'com.google.firebase:firebase-storage'
-	implementation 'com.google.firebase:firebase-auth'
-	implementation "com.google.android.gms:play-services-auth:$googlePlayServicesAuthVersion"
+	implementation 'com.google.firebase:firebase-firestore-ktx'
+	implementation 'com.google.firebase:firebase-storage-ktx'
+	implementation 'com.google.firebase:firebase-auth-ktx'
 	implementation "com.firebaseui:firebase-ui-auth:$firebaseUiAuthVersion"
+	implementation "com.google.android.gms:play-services-auth:$googlePlayServicesAuthVersion"
 	//If you are using Firestore in your project
 	implementation 'com.github.FrangSierra:RxFirebase:1.5.7'
 	// Miscellaneous
