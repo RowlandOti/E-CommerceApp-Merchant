@@ -19,6 +19,7 @@ package com.rowland.delivery.merchant.features.dash.di.modules
 import com.rowland.delivery.merchant.di.modules.CacheModule
 import com.rowland.delivery.merchant.di.modules.DataModule
 import com.rowland.delivery.merchant.di.modules.DomainModule
+import com.rowland.delivery.merchant.di.modules.FirebaseModule
 import com.rowland.delivery.merchant.di.modules.PresentationModule
 import com.rowland.delivery.merchant.di.modules.RemoteModule
 import com.rowland.delivery.merchant.di.modules.UiModule
@@ -26,7 +27,6 @@ import com.rowland.delivery.merchant.features.dash.adapters.CategoryAdapter
 import com.rowland.delivery.merchant.features.dash.adapters.OrderDataAdapter
 import com.rowland.delivery.merchant.features.dash.adapters.OrderItemAdapter
 import com.rowland.delivery.merchant.features.dash.adapters.ProductAdapter
-import com.rowland.delivery.merchant.services.firebase.modules.FirebaseModule
 import com.rowland.delivery.merchant.services.session.di.modules.SessionModule
 import dagger.Module
 import dagger.Provides

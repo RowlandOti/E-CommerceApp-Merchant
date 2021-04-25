@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.rowland.delivery.merchant.services.sharedpreferences.di.modules
+package com.rowland.delivery.merchant.di.modules
 
 import android.content.Context
-import android.preference.PreferenceManager
-import com.rowland.delivery.merchant.services.sharedpreferences.SharedPreferencesManager
+import com.rowland.delivery.data.contracts.IPreferencesManager
+import com.rowland.delivery.sharedpreferences.SharedPreferencesManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,7 +34,7 @@ import dagger.hilt.components.SingletonComponent
 class SharedPreferencesModule {
 
     @Provides
-    fun providesSharedPreferencesManager(@ApplicationContext context: Context): SharedPreferencesManager {
-        return SharedPreferencesManager(PreferenceManager.getDefaultSharedPreferences(context))
+    fun providesSharedPreferencesManager(@ApplicationContext context: Context): IPreferencesManager {
+        return SharedPreferencesManager(context)
     }
 }

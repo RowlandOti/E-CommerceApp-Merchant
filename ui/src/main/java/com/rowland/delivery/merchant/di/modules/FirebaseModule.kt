@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.rowland.delivery.merchant.services.firebase.modules
+package com.rowland.delivery.merchant.di.modules
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

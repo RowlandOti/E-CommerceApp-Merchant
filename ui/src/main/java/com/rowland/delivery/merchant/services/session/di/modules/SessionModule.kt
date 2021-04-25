@@ -16,10 +16,9 @@
 
 package com.rowland.delivery.merchant.services.session.di.modules
 
+import com.rowland.delivery.data.contracts.IPreferencesManager
+import com.rowland.delivery.merchant.di.modules.SharedPreferencesModule
 import com.rowland.delivery.merchant.services.session.SessionManager
-import com.rowland.delivery.merchant.services.sharedpreferences.SharedPreferencesManager
-import com.rowland.delivery.merchant.services.sharedpreferences.di.modules.SharedPreferencesModule
-
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,7 +33,7 @@ import dagger.hilt.components.SingletonComponent
 class SessionModule {
 
     @Provides
-    fun providesSessionManager(preferencesManager: SharedPreferencesManager): SessionManager {
+    fun providesSessionManager(preferencesManager: IPreferencesManager): SessionManager {
         return SessionManager(preferencesManager)
     }
 }
