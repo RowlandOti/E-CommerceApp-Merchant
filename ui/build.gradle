@@ -86,7 +86,7 @@ dependencies {
 	implementation "androidx.appcompat:appcompat:$androidXAppcompatVersion"
 	implementation 'androidx.multidex:multidex:2.0.1'
 	implementation "androidx.activity:activity-ktx:$activityKtxVersion"
-	implementation "androidx.fragment:fragment-ktx:$kotlinKtxVersion"
+	implementation "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
 	implementation "androidx.viewpager2:viewpager2:$viewpagerVersion"
 
 	// Android Architecture components
