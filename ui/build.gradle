@@ -26,9 +26,9 @@ apply plugin: 'androidx.navigation.safeargs.kotlin'
 android {
 	defaultConfig {
 		applicationId "com.rowland.delivery.merchant"
-		compileSdkVersion 30
-		minSdkVersion 19
-		targetSdkVersion 30
+		compileSdkVersion comSdkVersion as Integer
+		minSdkVersion miniSdkVersion as Integer
+		targetSdkVersion tarSdkVersion as Integer
 		multiDexEnabled true
 		versionCode getVersionCode()
 		versionName getVersionName()
