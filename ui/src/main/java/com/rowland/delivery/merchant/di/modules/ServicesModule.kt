@@ -14,23 +14,30 @@
  * limitations under the License.
  */
 
-package com.rowland.delivery.merchant.services.session.di.modules
+package com.rowland.delivery.merchant.di.modules
 
+import android.content.Context
 import com.rowland.delivery.data.contracts.IPreferencesManager
-import com.rowland.delivery.merchant.di.modules.SharedPreferencesModule
 import com.rowland.delivery.merchant.services.session.SessionManager
+import com.rowland.delivery.sharedpreferences.SharedPreferencesManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
 /**
  * Created by Rowland on 4/30/2018.
  */
 
-@Module(includes = [SharedPreferencesModule::class])
+@Module
 @InstallIn(SingletonComponent::class)
-class SessionModule {
+class ServicesModule {
+
+    @Provides
+    fun providesSharedPreferencesManager(@ApplicationContext context: Context): IPreferencesManager {
+        return SharedPreferencesManager(context)
+    }
 
     @Provides
     fun providesSessionManager(preferencesManager: IPreferencesManager): SessionManager {
