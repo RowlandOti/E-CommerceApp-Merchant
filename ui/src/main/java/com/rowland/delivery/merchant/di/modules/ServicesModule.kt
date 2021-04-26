@@ -17,6 +17,9 @@
 package com.rowland.delivery.merchant.di.modules
 
 import android.content.Context
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.rowland.delivery.data.contracts.IPreferencesManager
 import com.rowland.delivery.merchant.services.session.SessionManager
 import com.rowland.delivery.sharedpreferences.SharedPreferencesManager
@@ -35,12 +38,27 @@ import dagger.hilt.components.SingletonComponent
 class ServicesModule {
 
     @Provides
+    fun providesFirebaseAuth(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
+    }
+
+    @Provides
+    fun providesFirebaseFirestore(): FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
+    }
+
+    @Provides
+    fun providesFirebaseStorage(): FirebaseStorage {
+        return FirebaseStorage.getInstance()
+    }
+
+    @Provides
     fun providesSharedPreferencesManager(@ApplicationContext context: Context): IPreferencesManager {
         return SharedPreferencesManager(context)
     }
 
     @Provides
-    fun providesSessionManager(preferencesManager: IPreferencesManager): SessionManager {
-        return SessionManager(preferencesManager)
+    fun providesSessionManager(preferencesManager: IPreferencesManager, firebaseAuth: FirebaseAuth): SessionManager {
+        return SessionManager(preferencesManager, firebaseAuth)
     }
 }

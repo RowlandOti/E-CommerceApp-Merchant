@@ -16,6 +16,7 @@
 
 package com.rowland.delivery.merchant.services.session
 
+import com.google.firebase.auth.FirebaseAuth
 import com.rowland.delivery.data.contracts.IPreferencesManager
 import com.rowland.delivery.merchant.utilities.AppConstants
 import java.util.Date
@@ -26,7 +27,38 @@ import javax.inject.Inject
  */
 
 class SessionManager @Inject
-constructor(private val preferencesManager: IPreferencesManager) {
+constructor(
+    private val preferencesManager: IPreferencesManager,
+    private val firebaseAuth: FirebaseAuth
+) :
+    FirebaseAuth.AuthStateListener {
+
+    private val onSignOutListeners: MutableList<OnSignOutListener> = mutableListOf()
+
+    init {
+        firebaseAuth.addAuthStateListener(this);
+    }
+
+    interface OnSignOutListener {
+
+        fun onSignOut()
+    }
+
+    fun addOnSignOutListener(onSignOutListener: OnSignOutListener) {
+        onSignOutListeners.add(onSignOutListener)
+    }
+
+    override fun onAuthStateChanged(firebaseAuth: FirebaseAuth) {
+        firebaseAuth.currentUser?.let { } ?: run {
+            preferencesManager.remove(AppConstants.KEY_IS_LOGGEDIN)
+                .remove(AppConstants.KEY_TOKEN)
+                .remove(AppConstants.KEY_TIME)
+
+            for (listener in onSignOutListeners) {
+                listener.onSignOut()
+            }
+        }
+    }
 
     val isLoggedIn: Boolean
         get() = preferencesManager.getBoolean(AppConstants.KEY_IS_LOGGEDIN, false)
@@ -35,16 +67,13 @@ constructor(private val preferencesManager: IPreferencesManager) {
         get() = preferencesManager.getString(AppConstants.KEY_TOKEN, "")
 
     fun setLogin(token: String) {
-
         preferencesManager.set(AppConstants.KEY_IS_LOGGEDIN, true)
             .set(AppConstants.KEY_TOKEN, token)
             .set(AppConstants.KEY_TIME, Date().time)
     }
 
     fun logout() {
-        preferencesManager.remove(AppConstants.KEY_IS_LOGGEDIN)
-            .remove(AppConstants.KEY_TOKEN)
-            .remove(AppConstants.KEY_TIME)
+        firebaseAuth.signOut()
     }
 
     fun shouldLogout(): Boolean {

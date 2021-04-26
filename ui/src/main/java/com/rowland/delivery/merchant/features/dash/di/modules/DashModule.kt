@@ -19,7 +19,6 @@ package com.rowland.delivery.merchant.features.dash.di.modules
 import com.rowland.delivery.merchant.di.modules.CacheModule
 import com.rowland.delivery.merchant.di.modules.DataModule
 import com.rowland.delivery.merchant.di.modules.DomainModule
-import com.rowland.delivery.merchant.di.modules.FirebaseModule
 import com.rowland.delivery.merchant.di.modules.PresentationModule
 import com.rowland.delivery.merchant.di.modules.RemoteModule
 import com.rowland.delivery.merchant.di.modules.ServicesModule
@@ -39,9 +38,9 @@ import dagger.hilt.components.SingletonComponent
 
 @Module(
     includes = [
-        FirebaseModule::class, ServicesModule::class, PresentationModule::class,
+        ServicesModule::class, PresentationModule::class,
         DataModule::class, UiModule::class, DataModule::class, DomainModule::class, PresentationModule::class,
-        RemoteModule::class, CacheModule::class, FirebaseModule::class
+        RemoteModule::class, CacheModule::class
     ]
 )
 @InstallIn(SingletonComponent::class)
