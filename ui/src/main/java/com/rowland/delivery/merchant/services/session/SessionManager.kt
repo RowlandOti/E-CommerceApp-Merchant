@@ -36,7 +36,7 @@ constructor(
     private val onSignOutListeners: MutableList<OnSignOutListener> = mutableListOf()
 
     init {
-        firebaseAuth.addAuthStateListener(this);
+        firebaseAuth.addAuthStateListener(this)
     }
 
     interface OnSignOutListener {

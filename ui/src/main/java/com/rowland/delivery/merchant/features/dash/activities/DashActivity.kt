@@ -49,7 +49,8 @@ import javax.inject.Inject
 class DashActivity :
     AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener,
-    NavController.OnDestinationChangedListener, SessionManager.OnSignOutListener {
+    NavController.OnDestinationChangedListener,
+    SessionManager.OnSignOutListener {
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -176,7 +177,7 @@ class DashActivity :
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() ||
-                super.onSupportNavigateUp()
+            super.onSupportNavigateUp()
     }
 
     override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {

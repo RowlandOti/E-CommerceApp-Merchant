@@ -29,7 +29,7 @@ class RegisterRobot : BaseScreenRobot<RegisterRobot>() {
 
     fun setPassword(pass: String) = enterTextIntoView(R.id.input_password, pass)
 
-    fun clickRegister()  {
+    fun clickRegister() {
         dismissKeyboard()
         swipeUpOnView(R.id.nc_view)
         performClickOnView(R.id.btn_register)
