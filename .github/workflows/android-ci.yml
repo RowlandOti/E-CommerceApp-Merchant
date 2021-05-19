@@ -27,7 +27,7 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('**/build.gradle') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
       - name: Lint checks
         run: ./gradlew -Pci --console=plain :ui:lintDebug
-  check-style:
+  spotless-check:
     name: Spotless Check
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -45,7 +45,7 @@ jobs:
         with:
           path: ~/.gradle/caches
           key: gradle-${{ runner.os }}-${{ hashFiles('**/build.gradle') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
-      - name: Lint checks
+      - name: Spotless check
         run: ./gradlew -Pci --console=plain :ui:spotlessCheck
   unit-tests:
     name: Unit Tests
