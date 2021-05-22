@@ -1,0 +1,1 @@
+A merchant facing app, for merchants to manage their products and orders
