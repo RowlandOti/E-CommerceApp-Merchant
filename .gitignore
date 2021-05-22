@@ -172,5 +172,6 @@ fabric.properties
 /.idea/assetWizardSettings.xml
 /.idea/codeStyles/Project.xml
 /.buildsystem/keystore.jks
+/.buildsystem/keystore.jks.b64
 /.buildsystem/playstore_services_config.json
 /.buildsystem/playstore_services_config.json.b64
