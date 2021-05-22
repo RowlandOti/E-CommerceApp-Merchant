@@ -28,6 +28,7 @@ import com.rowland.delivery.merchant.getActivity
 import com.rowland.delivery.merchant.googleLogin
 import com.rowland.delivery.merchant.login
 import com.rowland.delivery.merchant.register
+import com.rowland.delivery.merchant.spoon
 import com.squareup.spoon.SpoonRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -43,7 +44,7 @@ class AuthActivityTest {
     val hiltRule = HiltAndroidRule(this)
 
     @get:Rule(order = 2)
-    val spoon = SpoonRule()
+    val spoonRule = SpoonRule()
 
     @get:Rule(order = 3)
     var activityScenarioRule: ActivityScenarioRule<AuthActivity> = activityScenarioRule()
@@ -70,91 +71,100 @@ class AuthActivityTest {
     @Test
     fun onLoginEmptyEmailAndPasswordFails() {
         login {
-            clickLogin()
-            spoon.screenshot(activity, "auth_login_Empty_credentials")
-            matchToastText(activity.getString(R.string.login_unsuccessful), activity.window.decorView)
+            spoon(spoonRule, activity, "auth_login_empty_credentials") {
+                clickLogin()
+                matchToastText(activity.getString(R.string.login_unsuccessful), activity.window.decorView)
+            }
         }
     }
 
     @Test
     fun onLoginEmptyEmailFails() {
         login {
-            setPassword(FakeAuthModule.USER_PASS)
-            clickLogin()
-            spoon.screenshot(activity, "auth_login_Empty_email")
-            matchToastText(activity.getString(R.string.login_unsuccessful), activity.window.decorView)
+            spoon(spoonRule, activity, "auth_login_empty_email") {
+                setPassword(FakeAuthModule.USER_PASS)
+                clickLogin()
+                matchToastText(activity.getString(R.string.login_unsuccessful), activity.window.decorView)
+            }
         }
     }
 
     @Test
     fun onLoginEmptyPasswordFails() {
         login {
-            setEmail(FakeAuthModule.USER_EMAIL)
-            clickLogin()
-            spoon.screenshot(activity, "auth_login_empty_password")
-            matchToastText(activity.getString(R.string.login_unsuccessful), activity.window.decorView)
+            spoon(spoonRule, activity, "auth_login_empty_password") {
+                setEmail(FakeAuthModule.USER_EMAIL)
+                clickLogin()
+                matchToastText(activity.getString(R.string.login_unsuccessful), activity.window.decorView)
+            }
         }
     }
 
     @Test
     fun onLoginWrongPasswordFails() {
         login {
-            setEmail(FakeAuthModule.USER_EMAIL)
-            setPassword(FakeAuthModule.WRONG_USER_PASS)
-            clickLogin()
-            spoon.screenshot(activity, "auth_login_wrong_password")
-            matchToastText(activity.getString(R.string.login_successful), activity.window.decorView)
+            spoon(spoonRule, activity, "auth_login_wrong_password") {
+                setEmail(FakeAuthModule.USER_EMAIL)
+                setPassword(FakeAuthModule.WRONG_USER_PASS)
+                clickLogin()
+                matchToastText(activity.getString(R.string.login_successful), activity.window.decorView)
+            }
         }
     }
 
     @Test
     fun onLoginWrongEmailFails() {
         login {
-            setEmail(FakeAuthModule.WRONG_USER_EMAIL)
-            setPassword(FakeAuthModule.USER_PASS)
-            clickLogin()
-            spoon.screenshot(activity, "auth_login_wrong_password")
-            matchToastText(activity.getString(R.string.login_successful), activity.window.decorView)
+            spoon(spoonRule, activity, "auth_login_wrong_email") {
+                setEmail(FakeAuthModule.WRONG_USER_EMAIL)
+                setPassword(FakeAuthModule.USER_PASS)
+                clickLogin()
+                matchToastText(activity.getString(R.string.login_successful), activity.window.decorView)
+            }
         }
     }
 
     @Test
     fun onLoginSuccess() {
         login {
-            setEmail(FakeAuthModule.USER_EMAIL)
-            setPassword(FakeAuthModule.USER_PASS)
-            clickLogin()
-            spoon.screenshot(activity, "auth_login_success")
-            matchToastText(activity.getString(R.string.login_successful), activity.window.decorView)
+            spoon(spoonRule, activity, "auth_login_success") {
+                setEmail(FakeAuthModule.USER_EMAIL)
+                setPassword(FakeAuthModule.USER_PASS)
+                clickLogin()
+                matchToastText(activity.getString(R.string.login_successful), activity.window.decorView)
+            }
         }
     }
 
     @Test
     fun onGoogleLoginSuccess() {
         googleLogin {
-            clickGoogleLogin()
-            spoon.screenshot(activity, "auth_google_login_success")
-            matchToastText(activity.getString(R.string.login_successful), activity.window.decorView)
+            spoon(spoonRule, activity, "auth_google_login_success") {
+                clickGoogleLogin()
+                matchToastText(activity.getString(R.string.login_successful), activity.window.decorView)
+            }
         }
     }
 
     @Test
     fun onRegisterEmptyEmailFails() {
         register {
-            setPassword(FakeAuthModule.USER_PASS)
-            clickRegister()
-            spoon.screenshot(activity, "auth_register_empty_password")
-            matchToastText(activity.getString(R.string.login_unsuccessful), activity.window.decorView)
+            spoon(spoonRule, activity, "auth_register_empty_password") {
+                setPassword(FakeAuthModule.USER_PASS)
+                clickRegister()
+                matchToastText(activity.getString(R.string.login_unsuccessful), activity.window.decorView)
+            }
         }
     }
 
     @Test
     fun onRegisterEmptyPasswordFails() {
         register {
-            setEmail(FakeAuthModule.USER_EMAIL)
-            clickRegister()
-            spoon.screenshot(activity, "auth_register_empty_password")
-            matchToastText(activity.getString(R.string.login_unsuccessful), activity.window.decorView)
+            spoon(spoonRule, activity, "auth_register_empty_password") {
+                setEmail(FakeAuthModule.USER_EMAIL)
+                clickRegister()
+                matchToastText(activity.getString(R.string.login_unsuccessful), activity.window.decorView)
+            }
         }
     }
 }

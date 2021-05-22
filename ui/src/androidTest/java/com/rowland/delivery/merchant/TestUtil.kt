@@ -17,10 +17,12 @@
 package com.rowland.delivery.merchant
 
 import android.app.Activity
+import android.os.Build
 import androidx.test.core.app.ActivityScenario
 import com.rowland.delivery.merchant.robots.auth.GoogleLoginRobot
 import com.rowland.delivery.merchant.robots.auth.LoginRobot
 import com.rowland.delivery.merchant.robots.auth.RegisterRobot
+import com.squareup.spoon.SpoonRule
 import java.util.concurrent.atomic.AtomicReference
 
 /**
@@ -36,6 +38,13 @@ inline fun googleLogin(func: GoogleLoginRobot.() -> Unit) = GoogleLoginRobot()
 
 inline fun register(func: RegisterRobot.() -> Unit) = RegisterRobot()
     .apply { func() }
+
+inline fun spoon(spoonRule: SpoonRule, activity: Activity, message: String, func: () -> Unit) {
+    func()
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        spoonRule.screenshot(activity, message)
+    }
+}
 
 fun <T : Activity?> ActivityScenario<T>.getActivity(): T {
     val activityRef: AtomicReference<T> = AtomicReference()
