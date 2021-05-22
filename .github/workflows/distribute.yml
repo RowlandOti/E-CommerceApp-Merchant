@@ -147,7 +147,7 @@ jobs:
       - name: Create Firebase Service Config file
         run: |
           echo "$FIREBASE_SERVICES_CONFIG" > firebase_credentials.json.b64
-          base64 -d -i firebase_services_config.json.b64 > firebase_services_config.json
+          base64 -d -i firebase_services_config.json.b64 > ./.buildsystem/firebase_services_config.json
         env:
           FIREBASE_SERVICES_CONFIG: ${{ secrets.FIREBASE_SERVICES_CONFIG }}
 

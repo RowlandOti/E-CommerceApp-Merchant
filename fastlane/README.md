@@ -21,16 +21,56 @@ or alternatively using `brew install fastlane`
 fastlane android test
 ```
 Runs all the tests
+### android buildDebug
+```
+fastlane android buildDebug
+```
+Builds the debug code
+### android buildRelease
+```
+fastlane android buildRelease
+```
+Builds the release code
 ### android beta
 ```
 fastlane android beta
 ```
-Submit a new Beta Build to Crashlytics Beta
-### android deploy
+Deploy a new Beta Build to Crashlytics Beta
+### android deployInternal
 ```
-fastlane android deploy
+fastlane android deployInternal
 ```
-Deploy a new version to the Google Play
+Deploy a new Internal Build to Play Store
+### android deployAlpha
+```
+fastlane android deployAlpha
+```
+Deploy a new Alpha Build to Play Store
+### android deployProduction
+```
+fastlane android deployProduction
+```
+Deploy a new Production Build to the Play Store
+### android deployDistribute
+```
+fastlane android deployDistribute
+```
+Lane for distributing app using Firebase App Distributions
+### android promoteInternalToAlpha
+```
+fastlane android promoteInternalToAlpha
+```
+Promote Internal to Alpha
+### android promoteAlphaToBeta
+```
+fastlane android promoteAlphaToBeta
+```
+Promote Alpha to Beta
+### android promoteBetaToProduction
+```
+fastlane android promoteBetaToProduction
+```
+Promote Beta to Production
 
 ----
 
