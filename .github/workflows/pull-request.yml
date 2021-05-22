@@ -22,6 +22,19 @@ jobs:
         with:
           path: ~/.gradle/caches
           key: gradle-${{ runner.os }}-${{ hashFiles('**/build.gradle') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
+      - name: Configure Keystore
+        run: |
+          echo "$ANDROID_KEYSTORE_FILE" > ./.buildsystem/keystore.jks.b64
+          base64 -d -i ./.buildsystem/keystore.jks.b64 > ./.buildsystem/keystore.jks
+          echo "storeFile=./.buildsystem/keystore.jks" >> ./.buildsystem/keystore.properties
+          echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> ./.buildsystem/keystore.properties
+          echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> ./.buildsystem/keystore.properties
+          echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> ./.buildsystem/keystore.properties
+        env:
+          ANDROID_KEYSTORE_FILE: ${{ secrets.ANDROID_KEYSTORE_FILE }}
+          KEYSTORE_KEY_ALIAS: ${{ secrets.ANDROID_KEYSTORE_KEY_ALIAS }}
+          KEYSTORE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_KEY_PASSWORD }}
+          KEYSTORE_STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_STORE_PASSWORD }}
       - name: Lint checks
         run: ./gradlew -Pci --console=plain lintDebug
   spotless-check:
@@ -42,6 +55,19 @@ jobs:
         with:
           path: ~/.gradle/caches
           key: gradle-${{ runner.os }}-${{ hashFiles('**/build.gradle') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
+      - name: Configure Keystore
+        run: |
+          echo "$ANDROID_KEYSTORE_FILE" > ./.buildsystem/keystore.jks.b64
+          base64 -d -i ./.buildsystem/keystore.jks.b64 > ./.buildsystem/keystore.jks
+          echo "storeFile=./.buildsystem/keystore.jks" >> ./.buildsystem/keystore.properties
+          echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> ./.buildsystem/keystore.properties
+          echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> ./.buildsystem/keystore.properties
+          echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> ./.buildsystem/keystore.properties
+        env:
+          ANDROID_KEYSTORE_FILE: ${{ secrets.ANDROID_KEYSTORE_FILE }}
+          KEYSTORE_KEY_ALIAS: ${{ secrets.ANDROID_KEYSTORE_KEY_ALIAS }}
+          KEYSTORE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_KEY_PASSWORD }}
+          KEYSTORE_STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_STORE_PASSWORD }}
       - name: Spotless check
         run: ./gradlew -Pci --console=plain spotlessCheck
   unit-tests:
@@ -62,18 +88,30 @@ jobs:
         with:
           path: ~/.gradle/caches
           key: gradle-${{ runner.os }}-${{ hashFiles('**/build.gradle') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
+      - name: Configure Keystore
+        run: |
+          echo "$ANDROID_KEYSTORE_FILE" > ./.buildsystem/keystore.jks.b64
+          base64 -d -i ./.buildsystem/keystore.jks.b64 > ./.buildsystem/keystore.jks
+          echo "storeFile=./.buildsystem/keystore.jks" >> ./.buildsystem/keystore.properties
+          echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> ./.buildsystem/keystore.properties
+          echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> ./.buildsystem/keystore.properties
+          echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> ./.buildsystem/keystore.properties
+        env:
+          ANDROID_KEYSTORE_FILE: ${{ secrets.ANDROID_KEYSTORE_FILE }}
+          KEYSTORE_KEY_ALIAS: ${{ secrets.ANDROID_KEYSTORE_KEY_ALIAS }}
+          KEYSTORE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_KEY_PASSWORD }}
+          KEYSTORE_STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_STORE_PASSWORD }}
       - name: Unit tests
         run: ./gradlew -Pci --console=plain testDebugUnitTest
-
-
   instrumented-tests:
     name: Instrumentation tests
-    runs-on: macOS-latest
+    runs-on: macOS-10.15
     timeout-minutes: 60
     strategy:
       fail-fast: true
       matrix:
         api-level: [29]
+        target: [google_apis]
     steps:
       - uses: actions/checkout@v2.3.1
         with:
@@ -90,10 +128,24 @@ jobs:
         with:
           path: ~/.gradle/caches
           key: gradle-${{ runner.os }}-${{ hashFiles('**/build.gradle') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
-
+      - name: Configure Keystore
+        run: |
+          echo "$ANDROID_KEYSTORE_FILE" > ./.buildsystem/keystore.jks.b64
+          base64 -d -i ./.buildsystem/keystore.jks.b64 > ./.buildsystem/keystore.jks
+          echo "storeFile=./.buildsystem/keystore.jks" >> ./.buildsystem/keystore.properties
+          echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> ./.buildsystem/keystore.properties
+          echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> ./.buildsystem/keystore.properties
+          echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> ./.buildsystem/keystore.properties
+        env:
+          ANDROID_KEYSTORE_FILE: ${{ secrets.ANDROID_KEYSTORE_FILE }}
+          KEYSTORE_KEY_ALIAS: ${{ secrets.ANDROID_KEYSTORE_KEY_ALIAS }}
+          KEYSTORE_KEY_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_KEY_PASSWORD }}
+          KEYSTORE_STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_STORE_PASSWORD }}
       - name: Instrumentation tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
-          arch: x86
+          target: ${{ matrix.target }}
+          arch: x86_64
+          profile: Nexus 6
           script: ./gradlew :ui:connectedDebugAndroidTest --no-parallel
