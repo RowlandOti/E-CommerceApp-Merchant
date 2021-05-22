@@ -21,6 +21,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.rules.activityScenarioRule
 import androidx.test.filters.MediumTest
 import androidx.test.rule.GrantPermissionRule
+import com.google.firebase.auth.FirebaseAuth
 import com.rowland.delivery.merchant.R
 import com.rowland.delivery.merchant.features.auth.di.modules.AuthModule
 import com.rowland.delivery.merchant.features.auth.di.modules.FakeAuthModule
@@ -33,6 +34,7 @@ import com.squareup.spoon.SpoonRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
+import io.mockk.*
 import org.junit.*
 
 @HiltAndroidTest
@@ -126,6 +128,9 @@ class AuthActivityTest {
 
     @Test
     fun onLoginSuccess() {
+        mockkStatic(FirebaseAuth::class)
+        every { FirebaseAuth.getInstance() } returns mockk(relaxed = true)
+
         login {
             spoon(spoonRule, activity, "auth_login_success") {
                 setEmail(FakeAuthModule.USER_EMAIL)

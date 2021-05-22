@@ -97,7 +97,7 @@ dependencies {
 	implementation "androidx.palette:palette-ktx:$androidXPalleteVersion"
 	implementation "androidx.core:core-ktx:$androidXCoreVersion"
 	implementation "androidx.appcompat:appcompat:$androidXAppcompatVersion"
-	implementation 'androidx.multidex:multidex:2.0.1'
+	implementation "androidx.multidex:multidex:$multiDexVersion"
 	implementation "androidx.activity:activity-ktx:$activityKtxVersion"
 	implementation "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
 	implementation "androidx.viewpager2:viewpager2:$viewpagerVersion"
@@ -142,11 +142,13 @@ dependencies {
 
 	testImplementation "junit:junit:$jUnitVersion"
 	testImplementation "com.google.dagger:hilt-android-testing:$daggerHiltVersion"
+	testImplementation "io.mockk:mockk-android:$mockkAndroidVersion"
 	kaptTest "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
 
 	androidTestImplementation "com.google.dagger:hilt-android-testing:$daggerHiltVersion"
 	kaptAndroidTest "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
 
+	androidTestImplementation "io.mockk:mockk-android:$mockkAndroidVersion"
 	androidTestImplementation "androidx.test:runner:$androidXTestRunner"
 	androidTestImplementation "androidx.test:rules:$androidXTestRules"
 	androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
