@@ -95,7 +95,7 @@ jobs:
         with:
           api-level: ${{ matrix.api-level }}
           arch: x86
-          script: ./gradlew :cache:connectedDebugAndroidTest :remote:connectedDebugAndroidTest :presentation:connectedDebugAndroidTest :ui:connectedDebugAndroidTest --no-parallel
+          script: ./gradlew :ui:connectedDebugAndroidTest --no-parallel
 
   deploy:
     name: Deploy to distribution lists
