@@ -171,6 +171,6 @@ fabric.properties
 # End of https://www.gitignore.io/api/android,androidstudio
 /.idea/assetWizardSettings.xml
 /.idea/codeStyles/Project.xml
-/.buildsystem/shahMerchant.jks
+/.buildsystem/keystore.jks
 /.buildsystem/playstore_services_config.json
 /.buildsystem/playstore_services_config.json.b64
