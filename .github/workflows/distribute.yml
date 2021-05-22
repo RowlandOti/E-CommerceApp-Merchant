@@ -132,12 +132,12 @@ jobs:
           bundle install --jobs 4 --retry 3
       - name: Configure Keystore
         run: |
-          echo "$ANDROID_KEYSTORE_FILE" > keystore.jks.b64
-          base64 -d -i keystore.jks.b64 > keystore.jks
-          echo "storeFile=keystore.jks" >> keystore.properties
-          echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> keystore.properties
-          echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> keystore.properties
-          echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> keystore.properties
+          echo "$ANDROID_KEYSTORE_FILE" > ./.buildsystem/keystore.jks.b64
+          base64 -d -i ./.buildsystem/keystore.jks.b64 > ./.buildsystem/keystore.jks
+          echo "storeFile=./.buildsystem/keystore.jks" >> ./.buildsystem/keystore.properties
+          echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> ./.buildsystem/keystore.properties
+          echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> ./.buildsystem/keystore.properties
+          echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> ./.buildsystem/keystore.properties
         env:
           ANDROID_KEYSTORE_FILE: ${{ secrets.ANDROID_KEYSTORE_FILE }}
           KEYSTORE_KEY_ALIAS: ${{ secrets.ANDROID_KEYSTORE_KEY_ALIAS }}
@@ -145,8 +145,8 @@ jobs:
           KEYSTORE_STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_STORE_PASSWORD }}
       - name: Create Firebase Service Config file
         run: |
-          echo "$FIREBASE_SERVICES_CONFIG" > firebase_credentials.json.b64
-          base64 -d -i firebase_services_config.json.b64 > ./.buildsystem/firebase_services_config.json
+          echo "$FIREBASE_SERVICES_CONFIG" > ./.buildsystem/firebase_credentials.json.b64
+          base64 -d -i ./.buildsystem/firebase_services_config.json.b64 > ./.buildsystem/firebase_services_config.json
         env:
           FIREBASE_SERVICES_CONFIG: ${{ secrets.FIREBASE_SERVICES_CONFIG }}
 

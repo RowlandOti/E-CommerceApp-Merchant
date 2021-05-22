@@ -173,6 +173,7 @@ fabric.properties
 /.idea/codeStyles/Project.xml
 /.buildsystem/keystore.jks
 /.buildsystem/keystore.jks.b64
+/.buildsystem/keystore.properties
 /.buildsystem/playstore_services_config.json
 /.buildsystem/playstore_services_config.json.b64
 /.buildsystem/firebase_services_config.json
