@@ -105,12 +105,13 @@ jobs:
         run: ./gradlew -Pci --console=plain testDebugUnitTest
   instrumented-tests:
     name: Instrumentation tests
-    runs-on: macOS-latest
+    runs-on: macOS-10.15
     timeout-minutes: 60
     strategy:
       fail-fast: true
       matrix:
-        api-level: [28]
+        api-level: [29]
+        target: [google_apis]
     steps:
       - uses: actions/checkout@v2.3.1
         with:
@@ -144,5 +145,7 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
-          arch: x86
+          target: ${{ matrix.target }}
+          arch: x86_64
+          profile: Nexus 6
           script: ./gradlew :ui:connectedDebugAndroidTest --no-parallel
