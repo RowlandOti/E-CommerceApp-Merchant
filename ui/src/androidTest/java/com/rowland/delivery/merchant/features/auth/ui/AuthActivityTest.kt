@@ -92,7 +92,6 @@ class AuthActivityTest {
     }
 
     @Test
-    @Ignore
     fun onLoginEmptyPasswordFails() {
         login {
             spoon(spoonRule, activity, "auth_login_empty_password") {
