@@ -172,3 +172,5 @@ fabric.properties
 /.idea/assetWizardSettings.xml
 /.idea/codeStyles/Project.xml
 /.buildsystem/shahMerchant.jks
+/.buildsystem/playstore_service.json
+/.buildsystem/playstore_services_config.json.b64
