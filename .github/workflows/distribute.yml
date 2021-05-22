@@ -64,7 +64,6 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('**/build.gradle') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}
       - name: Unit tests
         run: ./gradlew -Pci --console=plain testDebugUnitTest
-
   instrumented-tests:
     name: Instrumentation tests
     runs-on: macOS-latest
