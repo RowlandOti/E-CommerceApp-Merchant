@@ -175,3 +175,5 @@ fabric.properties
 /.buildsystem/keystore.jks.b64
 /.buildsystem/playstore_services_config.json
 /.buildsystem/playstore_services_config.json.b64
+/.buildsystem/firebase_services_config.json
+/.buildsystem/firebase_services_config.json.b64

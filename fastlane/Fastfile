@@ -65,8 +65,9 @@ platform :android do
       firebase_app_distribution(
               service_credentials_file: "firebase_credentials.json",
               app: ENV['FIREBASE_APP_ID'],
-              release_notes_file: "FirebaseAppDistributionConfig/release_notes.txt",
-              groups_file: "FirebaseAppDistributionConfig/groups.txt"
+              release_notes_file: "./.buildsystem/release_notes.txt",
+              testers_file: "./.buildsystem/testers.txt"
+              groups_file: "./.buildsystem/groups.txt"
           )
   end
 
