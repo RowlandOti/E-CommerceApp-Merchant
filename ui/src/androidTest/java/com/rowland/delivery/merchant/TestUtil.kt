@@ -17,10 +17,12 @@
 package com.rowland.delivery.merchant
 
 import android.app.Activity
-import androidx.test.ext.junit.rules.ActivityScenarioRule
+import android.os.Build
+import androidx.test.core.app.ActivityScenario
 import com.rowland.delivery.merchant.robots.auth.GoogleLoginRobot
 import com.rowland.delivery.merchant.robots.auth.LoginRobot
 import com.rowland.delivery.merchant.robots.auth.RegisterRobot
+import com.squareup.spoon.SpoonRule
 import java.util.concurrent.atomic.AtomicReference
 
 /**
@@ -28,17 +30,24 @@ import java.util.concurrent.atomic.AtomicReference
  *
  */
 
-fun login(func: LoginRobot.() -> Unit) = LoginRobot()
+inline fun login(func: LoginRobot.() -> Unit) = LoginRobot()
     .apply { func() }
 
-fun googleLogin(func: GoogleLoginRobot.() -> Unit) = GoogleLoginRobot()
+inline fun googleLogin(func: GoogleLoginRobot.() -> Unit) = GoogleLoginRobot()
     .apply { func() }
 
-fun register(func: RegisterRobot.() -> Unit) = RegisterRobot()
+inline fun register(func: RegisterRobot.() -> Unit) = RegisterRobot()
     .apply { func() }
 
-fun <T : Activity?> getActivity(activityScenarioRule: ActivityScenarioRule<T>): T {
+inline fun spoon(spoonRule: SpoonRule, activity: Activity, message: String, func: () -> Unit) {
+    func()
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        spoonRule.screenshot(activity, message)
+    }
+}
+
+fun <T : Activity?> ActivityScenario<T>.getActivity(): T {
     val activityRef: AtomicReference<T> = AtomicReference()
-    activityScenarioRule.scenario.onActivity(activityRef::set)
+    onActivity(activityRef::set)
     return activityRef.get()
 }

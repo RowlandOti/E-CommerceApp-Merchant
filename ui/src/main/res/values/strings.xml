@@ -83,5 +83,6 @@
     <string name="quantity_label">Quantity</string>
     <string name="create_category">Create Category</string>
     <string name="create_category_hint">e.g Fruits</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
 
 </resources>

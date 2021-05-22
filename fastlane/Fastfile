@@ -1,0 +1,88 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Builds the debug code"
+  lane :buildDebug do
+    gradle(task: "assembleDebug")
+  end
+
+  desc "Builds the release code"
+  lane :buildRelease do
+    gradle(task: "assembleRelease")
+  end
+
+  desc "Deploy a new Beta Build to Crashlytics Beta"
+  lane :beta do
+    gradle(task: "clean assembleRelease")
+    crashlytics
+  
+    # sh "your_script.sh"
+    # You can also use other beta testing services here
+  end
+
+  desc "Deploy a new Internal Build to Play Store"
+  lane :deployInternal do
+    # Build should occur in Circle CI config - gradle(task: "clean bundleRelease")
+    upload_to_play_store(track: 'internal', aab: 'ui/build/outputs/bundle/release/ui.aab')
+  end
+
+  desc "Deploy a new Alpha Build to Play Store"
+  lane :deployAlpha do
+    # Build should occur in Circle CI config - gradle(task: "clean bundleRelease")
+    upload_to_play_store(track: 'alpha', aab: 'ui/build/outputs/bundle/release/ui.aab')
+  end
+
+  desc "Deploy a new Production Build to the Play Store"
+  lane :deployProduction do
+    gradle(task: "clean bundleRelease")
+    upload_to_play_store(track: 'production', aab: 'ui/build/outputs/bundle/release/ui.aab', release_status: 'draft')
+  end
+
+  desc "Lane for distributing app using Firebase App Distributions"
+  lane :deployDistribute do
+    gradle(task: "clean assembleRelease")
+      firebase_app_distribution(
+              service_credentials_file: "firebase_credentials.json",
+              app: ENV['FIREBASE_APP_ID'],
+              release_notes_file: "FirebaseAppDistributionConfig/release_notes.txt",
+              groups_file: "FirebaseAppDistributionConfig/groups.txt"
+          )
+  end
+
+  desc "Promote Internal to Alpha"
+  lane :promoteInternalToAlpha do
+    upload_to_play_store(track: 'internal', track_promote_to: 'alpha')
+  end
+
+  desc "Promote Alpha to Beta"
+  lane :promoteAlphaToBeta do
+    upload_to_play_store(track: 'alpha', track_promote_to: 'beta')
+  end
+
+  desc "Promote Beta to Production"
+  lane :promoteBetaToProduction do
+    upload_to_play_store(track: 'beta', track_promote_to: 'production')
+  end
+
+end

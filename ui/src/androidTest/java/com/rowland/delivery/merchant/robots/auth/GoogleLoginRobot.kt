@@ -25,5 +25,9 @@ import com.rowland.delivery.merchant.robots.BaseScreenRobot
 
 class GoogleLoginRobot : BaseScreenRobot<GoogleLoginRobot>() {
 
-    fun clickGoogleLogin() = performClickOnView(R.id.btn_google_login)
+    fun clickGoogleLogin() {
+        dismissKeyboard()
+        swipeUpOnView(R.id.nc_view)
+        performClickOnView(R.id.btn_google_login)
+    }
 }

@@ -49,7 +49,8 @@ import javax.inject.Inject
 class DashActivity :
     AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener,
-    NavController.OnDestinationChangedListener {
+    NavController.OnDestinationChangedListener,
+    SessionManager.OnSignOutListener {
 
     @Inject
     lateinit var sessionManager: SessionManager
@@ -85,6 +86,8 @@ class DashActivity :
         setupDrawerWithToolbar()
         setupDrawerWithNavigator()
         binding.dashDrawerNavigation.setNavigationItemSelectedListener(this)
+
+        sessionManager.addOnSignOutListener(this)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -167,7 +170,6 @@ class DashActivity :
             R.id.action_logout -> {
                 sessionManager.logout()
                 binding.dashDrawerLayout.closeDrawer(GravityCompat.START)
-                SplashActivity.startActivity(this)
             }
             else -> binding.dashDrawerLayout.closeDrawer(GravityCompat.START)
         }
@@ -188,5 +190,9 @@ class DashActivity :
             }
         }
         binding.dashDrawerNavigation.menu.findItem(destination.id)?.isChecked = true
+    }
+
+    override fun onSignOut() {
+        SplashActivity.startActivity(this)
     }
 }

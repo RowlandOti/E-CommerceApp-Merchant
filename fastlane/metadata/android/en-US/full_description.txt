@@ -1,0 +1,1 @@
+The app allows merchants to manage the goods they sell. Merchants can create, edit and delete products. In addition, they can receive and manage orders and keep track of their existing stock.

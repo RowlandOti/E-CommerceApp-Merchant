@@ -25,13 +25,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.rowland.delivery.merchant.R
+import com.rowland.delivery.merchant.di.modules.ServicesModule
 import com.rowland.delivery.merchant.features.auth.Auth
 import com.rowland.delivery.merchant.features.auth.AuthConfig
 import com.rowland.delivery.merchant.features.auth.EmailAuth
 import com.rowland.delivery.merchant.features.auth.GoogleAuth
-import com.rowland.delivery.merchant.services.firebase.modules.FirebaseModule
 import com.rowland.delivery.merchant.services.session.SessionManager
-import com.rowland.delivery.merchant.services.session.di.modules.SessionModule
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,7 +42,7 @@ import javax.inject.Named
  * Created by Rowland on 5/1/2018.
  */
 
-@Module(includes = [SessionModule::class, FirebaseModule::class])
+@Module(includes = [ServicesModule::class])
 @InstallIn(ActivityComponent::class)
 class AuthModule {
 
