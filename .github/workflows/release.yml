@@ -22,7 +22,7 @@ jobs:
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ secrets.GA_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
@@ -32,6 +32,26 @@ jobs:
             - Second Change
           draft: false
           prerelease: false
+
+  generate-changelog:
+    name: Generate CHANGELOG.md
+    runs-on: ubuntu-latest
+    needs: [release]
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v2.3.1
+        with:
+          token: ${{secrets.GA_TOKEN}}
+          submodules: recursive
+          lfs: false
+          fetch-depth: 0
+      - uses: BobAnkh/auto-generate-changelog@master
+        with:
+          REPO_NAME: 'RowlandOti/E-CommerceApp-Merchant'
+          ACCESS_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          PATH: '/CHANGELOG.md'
+          COMMIT_MESSAGE: 'docs(CHANGELOG): update release notes'
+          TYPE: 'ci:Continuous Integration,test:Tests,feat:New Features,fix:Bug Fixes,lint:Code Style Fixes,docs:Documentation,refactor:Refactors,perf:Performance Improvements'
 
   deploy:
     runs-on: ubuntu-latest
@@ -71,12 +91,12 @@ jobs:
           bundle install --jobs 4 --retry 3
       - name: Configure Keystore
         run: |
-          echo "$ANDROID_KEYSTORE_FILE" > keystore.jks.b64
-          base64 -d -i keystore.jks.b64 > keystore.jks
-          echo "storeFile=keystore.jks" >> keystore.properties
-          echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> keystore.properties
-          echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> keystore.properties
-          echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> keystore.properties
+          echo "$ANDROID_KEYSTORE_FILE" > ./.buildsystem/keystore.jks.b64
+          base64 -d -i keystore.jks.b64 > ./.buildsystem/keystore.jks
+          echo "storeFile=./.buildsystem/keystore.jks" >> ./.buildsystem/keystore.properties
+          echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> ./.buildsystem/keystore.properties
+          echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> ./.buildsystem/keystore.properties
+          echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> ./.buildsystem/keystore.properties
         env:
           ANDROID_KEYSTORE_FILE: ${{ secrets.ANDROID_KEYSTORE_FILE }}
           KEYSTORE_KEY_ALIAS: ${{ secrets.ANDROID_KEYSTORE_KEY_ALIAS }}
@@ -85,8 +105,8 @@ jobs:
 
       - name: Create Google Play Config file
         run: |
-          echo "$PLAYSTORE_SERVICES_CONFIG" > playstore_services_config.json.b64
-          base64 -d -i playstore_services_config.json.b64 > ./.buildsystem/playstore_services_config.json
+          echo "$PLAYSTORE_SERVICES_CONFIG" > ./.buildsystem/playstore_services_config.json.b64
+          base64 -d -i ./.buildsystem/playstore_services_config.json.b64 > ./.buildsystem/playstore_services_config.json
         env:
           PLAYSTORE_SERVICES_CONFIG: ${{ secrets.PLAYSTORE_SERVICES_CONFIG }}
 
