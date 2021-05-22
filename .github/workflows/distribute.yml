@@ -2,7 +2,7 @@ name: Deploying to distribution lists
 on:
   push:
     branches:
-      - [master, main]
+      - [main]
 jobs:
   lint-check:
     name: Lint Check

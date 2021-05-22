@@ -2,7 +2,7 @@ name: Checking pull request gate pass
 on:
   pull_request:
     branches:
-      - [master, main]
+      - [main]
 jobs:
   lint-check:
     name: Lint Check
