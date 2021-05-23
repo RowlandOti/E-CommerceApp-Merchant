@@ -50,7 +50,7 @@ jobs:
         run: |
           echo "$ANDROID_KEYSTORE_FILE" > ./.buildsystem/keystore.jks.b64
           base64 -d -i keystore.jks.b64 > ./.buildsystem/keystore.jks
-          echo "storeFile=./.buildsystem/keystore.jks" >> ./.buildsystem/keystore.properties
+          echo "storeFile=../.buildsystem/keystore.jks" >> ./.buildsystem/keystore.properties
           echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> ./.buildsystem/keystore.properties
           echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> ./.buildsystem/keystore.properties
           echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> ./.buildsystem/keystore.properties
