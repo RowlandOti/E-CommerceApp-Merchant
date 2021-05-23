@@ -44,19 +44,19 @@ platform :android do
   desc "Deploy a new Internal Build to Play Store"
   lane :deployInternal do
     gradle(task: "clean assembleRelease bundleRelease")
-    upload_to_play_store(track: 'internal', aab: 'ui/build/outputs/bundle/release/ui-release.aab')
+    upload_to_play_store(track: 'internal', skip_upload_apk: true, aab: 'ui/build/outputs/bundle/release/ui-release.aab')
   end
 
   desc "Deploy a new Alpha Build to Play Store"
   lane :deployAlpha do
     gradle(task: "clean assembleRelease bundleRelease")
-    upload_to_play_store(track: 'alpha', aab: 'ui/build/outputs/bundle/release/ui-release.aab')
+    upload_to_play_store(track: 'alpha', skip_upload_apk: true, aab: 'ui/build/outputs/bundle/release/ui-release.aab')
   end
 
   desc "Deploy a new Production Build to the Play Store"
   lane :deployProduction do
     gradle(task: "clean assembleRelease bundleRelease")
-    upload_to_play_store(track: 'production', aab: 'ui/build/outputs/bundle/release/ui-release.aab', release_status: 'draft')
+    upload_to_play_store(track: 'production', skip_upload_apk: true, aab: 'ui/build/outputs/bundle/release/ui-release.aab', release_status: 'draft')
   end
 
   desc "Lane for distributing app using Firebase App Distributions"
