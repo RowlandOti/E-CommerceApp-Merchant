@@ -27,6 +27,9 @@ def keystorePropertiesFile = new File("${rootProject.rootDir}/.buildsystem/keyst
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
+def vCode = getVersionCode()
+def vName = getVersionName()
+
 android {
 	signingConfigs {
 		config {
@@ -42,8 +45,8 @@ android {
 		minSdkVersion miniSdkVersion as Integer
 		targetSdkVersion tarSdkVersion as Integer
 		multiDexEnabled true
-		versionCode 10
-		versionName getVersionName()
+		versionCode vCode
+		versionName vName
 		vectorDrawables.useSupportLibrary = true
 		testApplicationId 'com.rowland.delivery.merchant.test'
 		testInstrumentationRunner "com.rowland.delivery.merchant.HiltTestRunner"
