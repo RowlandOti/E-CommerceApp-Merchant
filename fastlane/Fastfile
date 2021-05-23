@@ -65,7 +65,7 @@ platform :android do
       firebase_app_distribution(
               android_artifact_path: "ui/build/outputs/bundle/release/ui-release.aab",
               android_artifact_type: "AAB",
-              service_credentials_file: "./.buildsystem/firebase_credentials.json",
+              service_credentials_file: "./.buildsystem/firebase_services_config.json",
               app: ENV['FIREBASE_APP_ID'],
               release_notes_file: "./.buildsystem/release_notes.txt",
               testers_file: "./.buildsystem/testers.txt",
