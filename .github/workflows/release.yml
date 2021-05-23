@@ -71,8 +71,8 @@ jobs:
         run: bundle exec fastlane deployAlpha
 
       - name: Generate CHANGELOG.md
-      - id: generate_change_log
-      - uses: BobAnkh/auto-generate-changelog@master
+        id: generate_change_log
+        uses: BobAnkh/auto-generate-changelog@master
         with:
           REPO_NAME: 'RowlandOti/E-CommerceApp-Merchant'
           ACCESS_TOKEN: ${{secrets.GITHUB_TOKEN}}
