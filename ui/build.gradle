@@ -42,7 +42,7 @@ android {
 		minSdkVersion miniSdkVersion as Integer
 		targetSdkVersion tarSdkVersion as Integer
 		multiDexEnabled true
-		versionCode getVersionCode()
+		versionCode 10
 		versionName getVersionName()
 		vectorDrawables.useSupportLibrary = true
 		testApplicationId 'com.rowland.delivery.merchant.test'
