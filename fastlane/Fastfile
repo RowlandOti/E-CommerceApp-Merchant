@@ -43,13 +43,13 @@ platform :android do
 
   desc "Deploy a new Internal Build to Play Store"
   lane :deployInternal do
-    # Build should occur in Circle CI config - gradle(task: "clean bundleRelease")
+    gradle(task: "clean assembleRelease bundleRelease")
     upload_to_play_store(track: 'internal', aab: 'ui/build/outputs/bundle/release/ui-release.aab')
   end
 
   desc "Deploy a new Alpha Build to Play Store"
   lane :deployAlpha do
-    # Build should occur in Circle CI config - gradle(task: "clean assembleRelease bundleRelease")
+    gradle(task: "clean assembleRelease bundleRelease")
     upload_to_play_store(track: 'alpha', aab: 'ui/build/outputs/bundle/release/ui-release.aab')
   end
 
