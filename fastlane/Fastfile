@@ -55,13 +55,13 @@ platform :android do
 
   desc "Deploy a new Production Build to the Play Store"
   lane :deployProduction do
-    gradle(task: "clean bundleRelease")
+    gradle(task: "clean assembleRelease bundleRelease")
     upload_to_play_store(track: 'production', aab: 'ui/build/outputs/bundle/release/ui-release.aab', release_status: 'draft')
   end
 
   desc "Lane for distributing app using Firebase App Distributions"
   lane :deployDistribute do
-    gradle(task: "clean bundleRelease")
+    gradle(task: "clean assembleRelease bundleRelease")
       firebase_app_distribution(
               android_artifact_path: "ui/build/outputs/bundle/release/ui-release.aab",
               android_artifact_type: "AAB",
