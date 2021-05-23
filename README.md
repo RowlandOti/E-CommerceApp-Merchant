@@ -1,5 +1,5 @@
 ### Status
-[![Build Status](https://travis-ci.com/RowlandOti/E-CommerceApp-Merchant.svg?branch=master)](https://travis-ci.com/RowlandOti/E-CommerceApp-Merchant)[![Build Status](https://app.bitrise.io/app/0d8abd8d05dbc070/status.svg?token=5ro-_L276b6r51QOeB6ckg)](https://app.bitrise.io/app/0d8abd8d05dbc070)
+[![Deploying to Playstore](https://github.com/RowlandOti/E-CommerceApp-Merchant/actions/workflows/release.yml/badge.svg)](https://github.com/RowlandOti/E-CommerceApp-Merchant/actions/workflows/release.yml) [![Deploying to distribution lists](https://github.com/RowlandOti/E-CommerceApp-Merchant/actions/workflows/distribute.yml/badge.svg)](https://github.com/RowlandOti/E-CommerceApp-Merchant/actions/workflows/distribute.yml)
 
 
 # E-CommerceApp-Merchant
