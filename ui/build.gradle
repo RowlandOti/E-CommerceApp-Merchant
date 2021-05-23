@@ -30,6 +30,8 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 def vCode = getVersionCode()
 def vName = getVersionName()
 
+println("VersionCode:$vCode - VersionName:$vName")
+
 android {
 	signingConfigs {
 		config {
