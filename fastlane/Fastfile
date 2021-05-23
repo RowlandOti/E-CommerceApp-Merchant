@@ -49,7 +49,7 @@ platform :android do
 
   desc "Deploy a new Alpha Build to Play Store"
   lane :deployAlpha do
-    # Build should occur in Circle CI config - gradle(task: "clean bundleRelease")
+    # Build should occur in Circle CI config - gradle(task: "clean assembleRelease bundleRelease")
     upload_to_play_store(track: 'alpha', aab: 'ui/build/outputs/bundle/release/ui-release.aab')
   end
 
@@ -61,7 +61,7 @@ platform :android do
 
   desc "Lane for distributing app using Firebase App Distributions"
   lane :deployDistribute do
-    gradle(task: "clean assembleRelease bundleRelease")
+    gradle(task: "clean bundleRelease")
       firebase_app_distribution(
               android_artifact_path: "ui/build/outputs/bundle/release/ui-release.aab",
               android_artifact_type: "AAB",
