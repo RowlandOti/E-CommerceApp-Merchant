@@ -49,8 +49,12 @@ platform :android do
 
   desc "Deploy a new Alpha Build to Play Store"
   lane :deployAlpha do
+    version_code = android_get_version_code(gradle_file_path: "/ui/build.gradle")
+    version_name = android_get_version_name(gradle_file_path: "/ui/build.gradle")
     gradle(task: "clean assembleRelease bundleRelease")
-    upload_to_play_store(track: 'alpha', skip_upload_apk: true, aab: 'ui/build/outputs/bundle/release/ui-release.aab')
+    upload_to_play_store(track: 'alpha', skip_upload_apk: true,
+        aab: 'ui/build/outputs/bundle/release/ui-release.aab',
+        version_code: version_code, version_name: version_name)
   end
 
   desc "Deploy a new Production Build to the Play Store"
