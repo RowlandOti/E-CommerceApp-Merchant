@@ -90,7 +90,7 @@ GEM
       xcpretty (~> 0.3.0)
       xcpretty-travis-formatter (>= 0.0.3)
     fastlane-plugin-firebase_app_distribution (0.2.9)
-    fastlane-plugin-versioning_android (0.1.0)
+    fastlane-plugin-semantic_release (1.13.1)
     gh_inspector (1.1.3)
     google-apis-androidpublisher_v3 (0.3.0)
       google-apis-core (~> 0.1)
@@ -199,7 +199,7 @@ PLATFORMS
 DEPENDENCIES
   fastlane
   fastlane-plugin-firebase_app_distribution
-  fastlane-plugin-versioning_android
+  fastlane-plugin-semantic_release
 
 BUNDLED WITH
    2.2.17
