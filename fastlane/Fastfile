@@ -19,6 +19,7 @@ platform :android do
 
   before_all do
      is_releasable = analyze_commits(match: '*')
+     change_log_notes  = conventional_changelog()
      version_name = lane_context[SharedValues::RELEASE_NEXT_VERSION]
      version_code = number_of_commits(all: true)
    end
@@ -76,7 +77,7 @@ platform :android do
               android_artifact_type: "AAB",
               service_credentials_file: "./.buildsystem/firebase_services_config.json",
               app: ENV['FIREBASE_APP_ID'],
-              release_notes_file: "./.buildsystem/release_notes.txt",
+              release_notes: change_log_notes,
               testers_file: "./.buildsystem/testers.txt",
               groups_file: "./.buildsystem/groups.txt"
           )
