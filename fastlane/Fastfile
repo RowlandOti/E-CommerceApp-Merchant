@@ -18,7 +18,7 @@ default_platform(:android)
 platform :android do
 
   before_all do
-     ENV["IS_RELEASABLE"] = analyze_commits(match: '*')
+     analyze_commits(match: '*')
      ENV["VERSION_NAME"] = lane_context[SharedValues::RELEASE_NEXT_VERSION]
      ENV["VERSION_CODE"] = number_of_commits(all: true)
    end
