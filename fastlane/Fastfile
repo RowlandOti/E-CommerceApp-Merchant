@@ -19,9 +19,6 @@ platform :android do
 
   before_all do
      is_releasable = analyze_commits(match: '*')
-     change_log_notes  = conventional_changelog()
-     version_name = lane_context[SharedValues::RELEASE_NEXT_VERSION]
-     version_code = number_of_commits(all: true)
    end
 
   desc "Runs all the tests"
@@ -56,11 +53,12 @@ platform :android do
 
   desc "Deploy a new Alpha Build to Play Store"
   lane :deployAlpha do
+    change_log_notes  = conventional_changelog(order: ["feat", "fix", "perf"])
     gradle(task: "clean assembleRelease bundleRelease")
     upload_to_play_store(track: 'alpha', skip_upload_apk: true,
         aab: 'ui/build/outputs/bundle/release/ui-release.aab',
-        version_code: version_name,
-        version_name: version_code)
+        version_code: lane_context[SharedValues::RELEASE_NEXT_VERSION],
+        version_name: number_of_commits(all: true))
   end
 
   desc "Deploy a new Production Build to the Play Store"
@@ -71,6 +69,7 @@ platform :android do
 
   desc "Lane for distributing app using Firebase App Distributions"
   lane :deployDistribute do
+    change_log_notes  = conventional_changelog()
     gradle(task: "clean bundleRelease")
       firebase_app_distribution(
               android_artifact_path: "ui/build/outputs/bundle/release/ui-release.aab",
