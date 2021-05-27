@@ -1,8 +1,8 @@
 name: Deploying to Playstore
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - release
 jobs:
   release:
     runs-on: ubuntu-latest
