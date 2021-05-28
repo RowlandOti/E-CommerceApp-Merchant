@@ -57,8 +57,8 @@ platform :android do
     gradle(task: "clean assembleRelease bundleRelease")
     upload_to_play_store(track: 'alpha', skip_upload_apk: true,
         aab: 'ui/build/outputs/bundle/release/ui-release.aab',
-        version_code: lane_context[SharedValues::RELEASE_NEXT_VERSION],
-        version_name: number_of_commits(all: true))
+        version_code: number_of_commits(all: true),
+        version_name: lane_context[SharedValues::RELEASE_NEXT_VERSION])
   end
 
   desc "Deploy a new Production Build to the Play Store"
