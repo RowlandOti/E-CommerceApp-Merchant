@@ -67,6 +67,9 @@ jobs:
         env:
           PLAYSTORE_SERVICES_CONFIG: ${{ secrets.PLAYSTORE_SERVICES_CONFIG }}
 
+      - name: Build Release APK and Bundle 🚀
+        run: ./gradlew clean assembleRelease bundleRelease
+
       - name: Distribute app to Alpha track 🚀
         run: bundle exec fastlane deployAlpha
 

@@ -54,7 +54,6 @@ platform :android do
   desc "Deploy a new Alpha Build to Play Store"
   lane :deployAlpha do
     change_log_notes  = conventional_changelog()
-    gradle(task: "clean assembleRelease bundleRelease")
     upload_to_play_store(track: 'alpha', skip_upload_apk: true,
         aab: 'ui/build/outputs/bundle/release/ui-release.aab',
         version_code: number_of_commits(all: true),
