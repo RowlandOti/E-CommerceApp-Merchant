@@ -12,6 +12,7 @@ jobs:
           token: ${{secrets.GA_TOKEN}}
           submodules: recursive
           lfs: false
+          fetch-depth: 0
 
       - uses: gradle/wrapper-validation-action@v1
 
