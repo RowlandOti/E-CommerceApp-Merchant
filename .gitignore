@@ -115,11 +115,13 @@ obj/
 .idea/scopes/scope_settings.xml
 .idea/vcs.xml
 .idea/jsLibraryMappings.xml
+.idea/runConfigurations.xml
 .idea/datasources.xml
 .idea/dataSources.ids
 .idea/sqlDataSources.xml
 .idea/dynamic.xml
 .idea/uiDesigner.xml
+
 
 # OS-specific files
 .DS_Store
@@ -179,3 +181,4 @@ fabric.properties
 /.buildsystem/firebase_services_config.json
 /.buildsystem/firebase_services_config.json.b64
 /package.json
+/gradle/wrapper/gradle-wrapper.properties
