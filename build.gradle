@@ -9,7 +9,7 @@ buildscript {
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$androidPluginVersion"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinPluginVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30"
         classpath "com.google.gms:google-services:$googleServicePluginVersion"
         classpath "com.jaredsburrows:gradle-spoon-plugin:$spoonPluginVersion"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$daggerHiltPluginVersion"
