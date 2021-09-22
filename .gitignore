@@ -172,7 +172,7 @@ fabric.properties
 # End of https://www.gitignore.io/api/android,androidstudio
 /.idea/assetWizardSettings.xml
 /.idea/codeStyles/Project.xml
-/.buildsystem/keystore.jks
+/.buildsystem/debug-keystore.jks
 /.buildsystem/keystore.jks.b64
 /.buildsystem/keystore.properties
 /.buildsystem/playstore_services_config.json
