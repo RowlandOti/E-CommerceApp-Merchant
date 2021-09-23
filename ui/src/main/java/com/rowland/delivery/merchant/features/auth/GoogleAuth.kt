@@ -52,7 +52,7 @@ constructor(
     }
 
     override fun logout(context: Context): Boolean {
-        try {
+        return try {
             mAuthConfig.getGoogleSignClient()?.let {
                 it.signOut()
                     .addOnCompleteListener(mAuthConfig.activity) {
@@ -60,10 +60,10 @@ constructor(
                     }
             }
 
-            return true
+            true
         } catch (e: Exception) {
             e.message?.let { Log.e("Logout Failed", it) }
-            return false
+            false
         }
     }
 
