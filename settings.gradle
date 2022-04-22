@@ -14,3 +14,4 @@ project(':cache').projectDir = new File("duka-merchant-sdk/cache")
 
 rootProject.name = "Duka Merchant"
 include ':watch-ui'
+include ':sharedcore'

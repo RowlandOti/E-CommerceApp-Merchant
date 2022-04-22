@@ -19,8 +19,10 @@ package com.rowland.delivery.merchant
 import android.util.Log
 import androidx.multidex.MultiDexApplication
 import com.google.firebase.firestore.FirebaseFirestore
+import com.rowland.delivery.sharedcore.AppCenterManager
 import dagger.hilt.android.HiltAndroidApp
 import io.reactivex.plugins.RxJavaPlugins
+import javax.inject.Inject
 
 /**
  * Created by Rowland on 4/30/2018.
@@ -29,9 +31,13 @@ import io.reactivex.plugins.RxJavaPlugins
 @HiltAndroidApp
 class MerchantApplication : MultiDexApplication() {
 
+    @Inject
+    internal lateinit var appCenterManager: AppCenterManager
+
     override fun onCreate() {
         super.onCreate()
         RxJavaPlugins.setErrorHandler { e -> Log.d(MerchantApplication::class.java.simpleName, e.toString()) }
         FirebaseFirestore.setLoggingEnabled(BuildConfig.DEBUG)
+        appCenterManager.initialize(this)
     }
 }

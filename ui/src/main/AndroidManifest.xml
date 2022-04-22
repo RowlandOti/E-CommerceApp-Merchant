@@ -43,5 +43,9 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
+        <meta-data
+            android:name="io.sentry.dsn"
+            android:value="https://a7c81dbf7b17405a934aae470b319d70@o1212163.ingest.sentry.io/6350073" />
+
     </application>
 </manifest>
