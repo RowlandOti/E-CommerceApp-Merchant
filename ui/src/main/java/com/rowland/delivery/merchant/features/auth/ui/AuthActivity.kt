@@ -21,6 +21,7 @@ import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -75,8 +76,9 @@ class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks {
         DashActivity.startActivity(this)
     }
 
-    override fun onLoginFailure(e: AuthException) {
+    override fun onLoginFailure(exception: AuthException) {
         Toast.makeText(this, getString(R.string.login_unsuccessful), Toast.LENGTH_SHORT).show()
+        Log.e(AuthActivity::class.java.simpleName, "Login Unsuccessful", exception)
     }
 
     override fun doEmailLogin(): Map<String, String> {
@@ -98,13 +100,9 @@ class AuthActivity : AppCompatActivity(), Auth.AuthLoginCallbacks {
         fun startActivity(context: Context) {
             val intent = Intent(context, AuthActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                val bundle = ActivityOptions.makeSceneTransitionAnimation(context as Activity).toBundle()
-                context.startActivity(intent, bundle)
-            } else {
-                context.startActivity(intent)
-            }
-            (context as Activity).finish()
+            val bundle = ActivityOptions.makeSceneTransitionAnimation(context as Activity).toBundle()
+            context.startActivity(intent, bundle)
+            context.finish()
         }
     }
 }

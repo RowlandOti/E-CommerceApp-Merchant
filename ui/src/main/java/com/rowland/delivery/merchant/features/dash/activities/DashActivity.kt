@@ -64,13 +64,9 @@ class DashActivity :
 
         fun startActivity(context: Context) {
             val intent = Intent(context, DashActivity::class.java)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                val bundle = ActivityOptions.makeSceneTransitionAnimation(context as Activity).toBundle()
-                context.startActivity(intent, bundle)
-            } else {
-                context.startActivity(intent)
-            }
-            (context as Activity).finish()
+            val bundle = ActivityOptions.makeSceneTransitionAnimation(context as Activity).toBundle()
+            context.startActivity(intent, bundle)
+            context.finish()
         }
     }
 
@@ -118,11 +114,9 @@ class DashActivity :
                 super.onDrawerSlide(drawerView, slideOffset)
                 this.syncState()
                 try {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                        window.statusBarColor = resources.getColor(R.color.colorPrimaryDarkTransparent)
-                    }
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                    window.statusBarColor = resources.getColor(R.color.colorPrimaryDarkTransparent)
                 } catch (e: Exception) {
                     Log.e(OverviewFragment::class.java.simpleName, ":" + e.fillInStackTrace().toString())
                 }
@@ -138,11 +132,9 @@ class DashActivity :
                 this.syncState()
 
                 try {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                        window.statusBarColor = resources.getColor(R.color.colorPrimaryDark)
-                    }
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                    window.statusBarColor = resources.getColor(R.color.colorPrimaryDark)
                 } catch (e: Exception) {
                     Log.e(DashActivity::class.java.simpleName, ":" + e.fillInStackTrace().toString())
                 }
