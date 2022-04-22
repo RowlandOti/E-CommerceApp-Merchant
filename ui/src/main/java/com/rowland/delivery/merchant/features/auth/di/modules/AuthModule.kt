@@ -19,6 +19,7 @@ package com.rowland.delivery.merchant.features.auth.di.modules
 import android.app.Activity
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -76,13 +77,15 @@ class AuthModule {
     @Provides
     fun providesSocialAuthConfig(
         @ActivityContext context: Context,
-        googleSignInClient: GoogleSignInClient
+        googleSignInClient: GoogleSignInClient,
+        beginSignInRequestBuilder: BeginSignInRequest.Builder
     ): AuthConfig {
         return AuthConfig(
             context as Activity,
             context as Auth.AuthLoginCallbacks
         )
             .setGoogleSignInClient(googleSignInClient)
+            .setBeginSignInRequestBuilder(beginSignInRequestBuilder)
     }
 
     @Provides
@@ -100,5 +103,37 @@ class AuthModule {
             .requestEmail()
             .requestProfile()
             .build()
+    }
+
+    @Provides
+    fun providesGoogleIdTokenRequestOptions(
+        @ActivityContext context: Context
+    ): BeginSignInRequest.GoogleIdTokenRequestOptions {
+        return BeginSignInRequest.GoogleIdTokenRequestOptions
+            .builder()
+            .setSupported(true)
+            .setServerClientId(context.getString(R.string.default_web_client_id))
+            .setFilterByAuthorizedAccounts(false)
+            .build()
+    }
+
+    @Provides
+    fun providesGooglePasswordRequestOptions(
+    ): BeginSignInRequest.PasswordRequestOptions {
+        return BeginSignInRequest.PasswordRequestOptions
+            .builder()
+            .setSupported(true)
+            .build()
+    }
+
+    @Provides
+    fun providesBeginSignInRequestBuilder(
+        googleIdTokenRequestOptions: BeginSignInRequest.GoogleIdTokenRequestOptions,
+        passwordRequestOptions: BeginSignInRequest.PasswordRequestOptions
+    ): BeginSignInRequest.Builder {
+        return BeginSignInRequest.builder()
+            .setGoogleIdTokenRequestOptions(googleIdTokenRequestOptions)
+            .setPasswordRequestOptions(passwordRequestOptions)
+            .setAutoSelectEnabled(true)
     }
 }

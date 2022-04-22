@@ -16,6 +16,7 @@
 
 package com.rowland.delivery.merchant.features.auth.models.utils
 
+import com.google.android.gms.auth.api.identity.SignInCredential
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.rowland.delivery.merchant.features.auth.models.GoogleUser
 
@@ -38,6 +39,20 @@ object UserUtils {
         if (account.account != null) {
             googleUser.username = account.account!!.name
         }
+
+        return googleUser
+    }
+
+    fun populateGoogleUserFromSignInCredentials(result: SignInCredential): GoogleUser {
+        val googleUser = GoogleUser()
+
+        googleUser.displayName = result.displayName
+        googleUser.photoUrl = result.profilePictureUri?.toString()
+
+        googleUser.email = result.id
+        googleUser.idToken = result.googleIdToken
+        googleUser.userId = result.id
+        googleUser.username = result.givenName
 
         return googleUser
     }

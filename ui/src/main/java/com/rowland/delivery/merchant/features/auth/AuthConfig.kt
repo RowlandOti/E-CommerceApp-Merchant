@@ -17,6 +17,7 @@
 package com.rowland.delivery.merchant.features.auth
 
 import android.app.Activity
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 
 /**
@@ -27,12 +28,23 @@ class AuthConfig(val activity: Activity, val callback: Auth.AuthLoginCallbacks) 
 
     private var googleSignInClient: GoogleSignInClient? = null
 
+    private var beginSignInRequestBuilder: BeginSignInRequest.Builder? = null
+
     fun getGoogleSignClient(): GoogleSignInClient? {
         return this.googleSignInClient
     }
 
     fun setGoogleSignInClient(googleSignInClient: GoogleSignInClient): AuthConfig {
         this.googleSignInClient = googleSignInClient
+        return this
+    }
+
+    fun getBeginSignInRequestBuilder(): BeginSignInRequest.Builder? {
+        return this.beginSignInRequestBuilder
+    }
+
+    fun setBeginSignInRequestBuilder(beginSignInRequestBuilder: BeginSignInRequest.Builder): AuthConfig {
+        this.beginSignInRequestBuilder = beginSignInRequestBuilder
         return this
     }
 }

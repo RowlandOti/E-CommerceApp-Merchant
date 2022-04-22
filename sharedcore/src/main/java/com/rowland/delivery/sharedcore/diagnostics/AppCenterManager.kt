@@ -1,4 +1,4 @@
-package com.rowland.delivery.sharedcore
+package com.rowland.delivery.sharedcore.diagnostics
 
 import android.app.Application
 import android.util.Log
@@ -13,7 +13,6 @@ import io.sentry.UserFeedback
 import io.sentry.protocol.SentryId
 import java.util.*
 import javax.inject.Inject
-
 
 class AppCenterManager @Inject constructor() {
 

@@ -19,7 +19,7 @@ package com.rowland.delivery.merchant
 import android.util.Log
 import androidx.multidex.MultiDexApplication
 import com.google.firebase.firestore.FirebaseFirestore
-import com.rowland.delivery.sharedcore.AppCenterManager
+import com.rowland.delivery.sharedcore.diagnostics.AppCenterManager
 import dagger.hilt.android.HiltAndroidApp
 import io.reactivex.plugins.RxJavaPlugins
 import javax.inject.Inject
