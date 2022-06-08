@@ -118,8 +118,7 @@ class AuthModule {
     }
 
     @Provides
-    fun providesGooglePasswordRequestOptions(
-    ): BeginSignInRequest.PasswordRequestOptions {
+    fun providesGooglePasswordRequestOptions(): BeginSignInRequest.PasswordRequestOptions {
         return BeginSignInRequest.PasswordRequestOptions
             .builder()
             .setSupported(true)
