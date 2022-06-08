@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) Otieno Rowland,  2021. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
@@ -15,47 +31,47 @@ println("VersionCode:$vCode - VersionName:$vName")
 
 android {
 
-    signingConfigs {
-        config {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-        }
-    }
+	signingConfigs {
+		config {
+			keyAlias keystoreProperties['keyAlias']
+			keyPassword keystoreProperties['keyPassword']
+			storeFile file(keystoreProperties['storeFile'])
+			storePassword keystoreProperties['storePassword']
+		}
+	}
 
-    defaultConfig {
-        applicationId "com.rowland.delivery.merchant"
-        compileSdkVersion comSdkVersion as Integer
-        minSdkVersion miniSdkVersion as Integer
-        targetSdkVersion tarSdkVersion as Integer
-        versionCode vCode
-        versionName vName
-    }
+	defaultConfig {
+		applicationId "com.rowland.delivery.merchant"
+		compileSdkVersion comSdkVersion as Integer
+		minSdkVersion miniSdkVersion as Integer
+		targetSdkVersion tarSdkVersion as Integer
+		versionCode vCode
+		versionName vName
+	}
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            signingConfig signingConfigs.config
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
+	buildTypes {
+		release {
+			minifyEnabled false
+			signingConfig signingConfigs.config
+			proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+		}
+	}
 
-    compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
-    }
+	compileOptions {
+		sourceCompatibility = 1.8
+		targetCompatibility = 1.8
+	}
 }
 
 dependencies {
 
-    implementation "androidx.core:core-ktx:$androidXCoreVersion"
-    implementation "com.google.android.gms:play-services-wearable:$googlePlayServicesWearableVersion"
-    implementation "androidx.percentlayout:percentlayout:$androidXPercentageLayoutVersion"
-    implementation "androidx.legacy:legacy-support-v4:$androidXLegacySupportVersion"
-    implementation "androidx.recyclerview:recyclerview:$androidXRecyclerViewVersion"
-    implementation "com.google.android.support:wearable:$googleWearableVersion"
-    implementation "com.google.android.gms:play-services-base:$googlePlayServicesBaseVersion"
-    implementation "androidx.palette:palette-ktx:$androidXPalleteVersion"
-    compileOnly "com.google.android.wearable:wearable:$googleWearableVersion"
+	implementation "androidx.core:core-ktx:$androidXCoreVersion"
+	implementation "com.google.android.gms:play-services-wearable:$googlePlayServicesWearableVersion"
+	implementation "androidx.percentlayout:percentlayout:$androidXPercentageLayoutVersion"
+	implementation "androidx.legacy:legacy-support-v4:$androidXLegacySupportVersion"
+	implementation "androidx.recyclerview:recyclerview:$androidXRecyclerViewVersion"
+	implementation "com.google.android.support:wearable:$googleWearableVersion"
+	implementation "com.google.android.gms:play-services-base:$googlePlayServicesBaseVersion"
+	implementation "androidx.palette:palette-ktx:$androidXPalleteVersion"
+	compileOnly "com.google.android.wearable:wearable:$googleWearableVersion"
 }
