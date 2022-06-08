@@ -2,7 +2,7 @@ name: Deploying to Playstore
 on:
   push:
     branches:
-      - release
+      - release/*
 jobs:
   release:
     runs-on: ubuntu-latest
