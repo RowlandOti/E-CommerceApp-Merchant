@@ -18,7 +18,7 @@ default_platform(:android)
 platform :android do
 
   before_all do
-     is_releasable = analyze_commits(match: '*')
+     is_releasable = analyze_commits(match: 'v*')
    end
 
   desc "Runs all the tests"
