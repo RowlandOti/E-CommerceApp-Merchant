@@ -37,7 +37,6 @@ import durdinapps.rxfirebase2.RxFirebaseAuth
 import durdinapps.rxfirebase2.RxFirestore
 import javax.inject.Inject
 
-
 /**
  * Created by Rowland on 5/1/2018.
  */
