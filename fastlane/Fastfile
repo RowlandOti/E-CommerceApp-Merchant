@@ -84,8 +84,6 @@ platform :android do
   desc "Generates and publishes release notes for release and creates the next tag"
   lane :postDeployPublishRelease do |options|
     next_version = lane_context[SharedValues::RELEASE_NEXT_VERSION]
-
-    flavor = options[:flavor]
     date = Time.new.strftime("%Y-%m-%d")
     order = ["feat", "fix", "docs"]
     sections = {ci:"Continuous Integration",test:"Tests",feat:"New Features",fix:"Bug Fixes",lint:"Code Style Fixes",docs:"Documentation",refactor:"Refactors",perf:"Performance Improvements"}
