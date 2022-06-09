@@ -74,8 +74,8 @@ jobs:
       - name: Build Release APK and Bundle 🚀
         run: ./gradlew clean assembleRelease bundleRelease
 
-#      - name: Distribute app to Alpha track 🚀
-#        run: bundle exec fastlane deployAlpha
+##      - name: Distribute app to Alpha track 🚀
+##        run: bundle exec fastlane deployAlpha
 
       - name: Generate CHANGELOG.md
         id: generate_change_log
