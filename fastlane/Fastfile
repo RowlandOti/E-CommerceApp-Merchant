@@ -125,7 +125,7 @@ platform :android do
 
   desc "Promote Beta to Production"
   lane :promoteBetaToProduction do
-    upload_to_play_store(track: 'beta', track_promote_to: 'production')
+    upload_to_play_store(track: 'beta', track_promote_to: 'production', rollout: '0.1')
   end
 
 end
