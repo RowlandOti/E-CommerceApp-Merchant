@@ -88,7 +88,7 @@ platform :android do
     order = ["feat", "fix", "docs"]
     sections = {ci:"Continuous Integration",test:"Tests",feat:"New Features",fix:"Bug Fixes",lint:"Code Style Fixes",docs:"Documentation",refactor:"Refactors",perf:"Performance Improvements"}
 
-    UI.message("Next version: android/#{date}/#{next_version}")
+    UI.message("Next version: #{next_version}-#{date}")
 
     # Get release notes since last version
     notes = conventional_changelog(format: 'markdown', order: order, sections: sections)
@@ -96,7 +96,7 @@ platform :android do
     UI.message("Release notes: #{notes}")
 
     # Create tag to recognize future "last version" (the current version)
-    tag = "android/#{date}/#{next_version}"
+    tag = "#{next_version}-#{date}"
     add_git_tag(tag: tag)
     push_git_tags
 
