@@ -91,4 +91,4 @@ jobs:
           TYPE: 'ci:Continuous Integration,test:Tests,feat:New Features,fix:Bug Fixes,lint:Code Style Fixes,docs:Documentation,refactor:Refactors,perf:Performance Improvements'
 
       - name: Create Release
-      - run: bundle exec fastlane postDeployPublishRelease
+        run: bundle exec fastlane postDeployPublishRelease
