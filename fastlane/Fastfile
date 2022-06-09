@@ -68,7 +68,7 @@ platform :android do
 
   desc "Lane for distributing app using Firebase App Distributions"
   lane :deployDistribute do
-    change_log_notes  = conventional_changelog()
+    change_log_notes  = conventional_changelog(format: 'plain')
     gradle(task: "clean bundleRelease")
       firebase_app_distribution(
               android_artifact_path: "ui/build/outputs/bundle/release/ui-release.aab",
