@@ -93,7 +93,7 @@ platform :android do
     # Get release notes since last version
     notes = conventional_changelog(format: 'markdown', order: order, sections: sections)
 
-    UI.message('Release notes:#{notes}')
+    UI.message("Release notes: #{notes}")
 
     # Create tag to recognize future "last version" (the current version)
     tag = "android/#{date}/#{next_version}"
