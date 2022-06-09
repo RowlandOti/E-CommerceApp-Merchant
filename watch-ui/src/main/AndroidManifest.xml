@@ -23,7 +23,8 @@
         <service
             android:name=".DukaWatchFace"
             android:label="@string/my_analog_name"
-            android:permission="android.permission.BIND_WALLPAPER">
+            android:permission="android.permission.BIND_WALLPAPER"
+            android:exported="true">
 
             <!--
             By default, Watchfaces on rectangular devices will be run in a emulation mode where they
