@@ -91,32 +91,4 @@ jobs:
           TYPE: 'ci:Continuous Integration,test:Tests,feat:New Features,fix:Bug Fixes,lint:Code Style Fixes,docs:Documentation,refactor:Refactors,perf:Performance Improvements'
 
       - name: Create Release
-        id: create_release
-        uses: actions/create-release@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GA_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-
-      - name: Upload Release Bundle
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: 'ui/build/outputs/bundle/release/ui-release.aab'
-          asset_name: ${{ github.ref }}.aab
-          asset_content_type: application/zip
-
-      - name: Upload Release APK
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: 'ui/build/outputs/apk/release/ui-release.apk'
-          asset_name: ${{ github.ref }}.apk
-          asset_content_type: application/zip
+      - run: bundle exec fastlane postDeployPublishRelease

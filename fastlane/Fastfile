@@ -81,6 +81,38 @@ platform :android do
           )
   end
 
+  desc "Generates and publishes release notes for release and creates the next tag"
+  lane :postDeployPublishRelease do |options|
+    next_version = lane_context[SharedValues::RELEASE_NEXT_VERSION]
+
+    flavor = options[:flavor]
+    date = Time.new.strftime("%Y-%m-%d")
+    order: ["feat", "fix", "docs"]
+    sections = ci:"Continuous Integration",test:"Tests",feat:"New Features",fix:"Bug Fixes",lint:"Code Style Fixes",docs:"Documentation",refactor:"Refactors",perf:"Performance Improvements"
+
+    UI.message('Next version: android/#{date}/#{flavor}/#{next_version}')
+
+    # Get release notes since last version
+    notes = conventional_changelog(title: flavour, format: 'markdown', order: order, sections: {sections})
+
+    UI.message('Release notes:#{notes}')
+
+    # Create tag to recognize future "last version" (the current version)
+    tag = "android/#{date}/#{flavor}/#{next_version}"
+    add_git_tag(tag: tag)
+    push_git_tags
+
+    set_github_release(
+      repository_name: "RowlandOti/E-CommerceApp-Merchant",
+      api_token: ENV["GA_TOKEN"],
+      name: next_version,
+      tag_name: tag,
+      description: notes,
+      commitish: "main",
+      upload_assets: ["ui/build/outputs/bundle/release/ui-release.aab", "ui/build/outputs/apk/release/ui-release.apk"]
+    )
+  end
+
   desc "Promote Internal to Alpha"
   lane :promoteInternalToAlpha do
     upload_to_play_store(track: 'internal', track_promote_to: 'alpha')
