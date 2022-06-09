@@ -44,6 +44,11 @@ jobs:
       - name: Grant Permission to Execute
         run: chmod +x gradlew
 
+      - name: Set Git Identity
+        run: |
+          git config --global user.email "fastlane@rowlandoti.com"
+          git config --global user.name "fastrobot"
+
       - name: Install bundle
         run: |
           gem update bundler
