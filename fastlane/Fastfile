@@ -102,7 +102,7 @@ platform :android do
 
     set_github_release(
       repository_name: "RowlandOti/E-CommerceApp-Merchant"
-      api_token: ENV["GA_TOKEN"],
+      api_token: ENV['GA_TOKEN'],
       name: next_version,
       tag_name: tag,
       description: notes,
