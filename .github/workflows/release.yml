@@ -85,7 +85,7 @@ jobs:
           BRANCH: 'docs/changelog'
           PULL_REQUEST: 'main'
           ACCESS_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          PATH: '/CHANGELOG.md'
+          PATH: 'CHANGELOG.md'
           COMMIT_MESSAGE: 'docs(CHANGELOG): update release notes'
           TYPE: 'ci:Continuous Integration,test:Tests,feat:New Features,fix:Bug Fixes,lint:Code Style Fixes,docs:Documentation,refactor:Refactors,perf:Performance Improvements'
 
