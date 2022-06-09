@@ -96,7 +96,7 @@ platform :android do
     UI.message("Release notes: #{notes}")
 
     # Create tag to recognize future "last version" (the current version)
-    tag = "#{next_version}-#{date}"
+    tag = "v#{next_version}-#{date}"
     add_git_tag(tag: tag)
     push_git_tags
 
