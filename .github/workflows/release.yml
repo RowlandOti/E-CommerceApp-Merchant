@@ -74,8 +74,8 @@ jobs:
       - name: Build Release APK and Bundle 🚀
         run: ./gradlew clean assembleRelease bundleRelease
 
-#      - name: Distribute app to Alpha track 🚀
-#        run: bundle exec fastlane deployAlpha
+      - name: Distribute app to Alpha track 🚀
+        run: bundle exec fastlane deployAlpha
 
       - name: Generate CHANGELOG.md
         id: generate_change_log
@@ -84,7 +84,7 @@ jobs:
           REPO_NAME: 'RowlandOti/E-CommerceApp-Merchant'
           BRANCH: 'docs/changelog'
           PULL_REQUEST: 'main'
-          ACCESS_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          ACCESS_TOKEN: ${{secrets.GA_TOKEN}}
           PATH: 'CHANGELOG.md'
           COMMIT_MESSAGE: 'docs(CHANGELOG): update release notes'
           TYPE: 'ci:Continuous Integration,test:Tests,feat:New Features,fix:Bug Fixes,lint:Code Style Fixes,docs:Documentation,refactor:Refactors,perf:Performance Improvements'
