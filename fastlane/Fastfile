@@ -88,7 +88,7 @@ platform :android do
     order = ["feat", "fix", "docs"]
     sections = {ci:"Continuous Integration",test:"Tests",feat:"New Features",fix:"Bug Fixes",lint:"Code Style Fixes",docs:"Documentation",refactor:"Refactors",perf:"Performance Improvements"}
 
-    UI.message("Next version: #{next_version}-#{date}")
+    UI.message("Next version: v#{next_version}-#{date}")
 
     # Get release notes since last version
     notes = conventional_changelog(format: 'markdown', order: order, sections: sections)
@@ -101,7 +101,6 @@ platform :android do
     push_git_tags
 
     set_github_release(
-      repository_name: "RowlandOti/E-CommerceApp-Merchant",
       api_token: ENV["GA_TOKEN"],
       name: next_version,
       tag_name: tag,
