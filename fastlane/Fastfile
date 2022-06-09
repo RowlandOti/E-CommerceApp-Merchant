@@ -101,7 +101,6 @@ platform :android do
     push_git_tags
 
     set_github_release(
-      repository_name: "RowlandOti/E-CommerceApp-Merchant",
       api_token: ENV["GA_TOKEN"],
       name: next_version,
       tag_name: tag,
