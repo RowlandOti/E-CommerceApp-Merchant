@@ -96,14 +96,22 @@ platform :android do
     UI.message("Release notes: #{notes}")
 
     # Create tag to recognize future "last version" (the current version)
+    name = "#{next_version}-#{date}"
     tag = "v#{next_version}-#{date}"
     add_git_tag(tag: tag)
     push_git_tags
 
+     UI.message(lane_context[SharedValues::BUILD_NUMBER])
+     UI.message(lane_context[SharedValues::VERSION_NUMBER])
+     UI.message(lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH])
+     UI.message(lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS])
+     UI.message(lane_context[SharedValues::GRADLE_FLAVOR])
+     UI.message(lane_context[SharedValues::GRADLE_BUILD_TYPE])
+
     set_github_release(
       repository_name: "RowlandOti/E-CommerceApp-Merchant",
       api_token: ENV['GA_TOKEN'],
-      name: next_version,
+      name: name,
       tag_name: tag,
       description: notes,
       commitish: "main",

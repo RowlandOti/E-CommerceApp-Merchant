@@ -45,8 +45,6 @@ jobs:
         run: chmod +x gradlew
 
       - name: Set Environment and Git Identity
-        env:
-          GA_TOKEN: ${{secrets.GA_TOKEN}}
         run: |
           git config --global user.email "fastlane@rowlandoti.com"
           git config --global user.name "fastrobot"
@@ -98,4 +96,6 @@ jobs:
           TYPE: 'ci:Continuous Integration,test:Tests,feat:New Features,fix:Bug Fixes,lint:Code Style Fixes,docs:Documentation,refactor:Refactors,perf:Performance Improvements'
 
       - name: Create Release
+        env:
+          GA_TOKEN: ${{secrets.GA_TOKEN}}
         run: bundle exec fastlane postDeployPublishRelease
