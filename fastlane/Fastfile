@@ -68,7 +68,7 @@ platform :android do
 
   desc "Lane for distributing app using Firebase App Distributions"
   lane :deployDistribute do
-    change_log_notes  = conventional_changelog()
+    change_log_notes  = conventional_changelog(format: 'plain')
     gradle(task: "clean bundleRelease")
       firebase_app_distribution(
               android_artifact_path: "ui/build/outputs/bundle/release/ui-release.aab",
@@ -79,6 +79,44 @@ platform :android do
               testers_file: "./.buildsystem/testers.txt",
               groups_file: "./.buildsystem/groups.txt"
           )
+  end
+
+  desc "Generates and publishes release notes for release and creates the next tag"
+  lane :postDeployPublishRelease do |options|
+    next_version = lane_context[SharedValues::RELEASE_NEXT_VERSION]
+    date = Time.new.strftime("%Y-%m-%d")
+    order = ["feat", "fix", "docs"]
+    sections = {ci:"Continuous Integration",test:"Tests",feat:"New Features",fix:"Bug Fixes",lint:"Code Style Fixes",docs:"Documentation",refactor:"Refactors",perf:"Performance Improvements"}
+
+    UI.message("Next version: v#{next_version}-#{date}")
+
+    # Get release notes since last version
+    notes = conventional_changelog(format: 'markdown', order: order, sections: sections)
+
+    UI.message("Release notes: #{notes}")
+
+    # Create tag to recognize future "last version" (the current version)
+    name = "#{next_version}-#{date}"
+    tag = "v#{next_version}-#{date}"
+    add_git_tag(tag: tag)
+    push_git_tags
+
+     UI.message(lane_context[SharedValues::BUILD_NUMBER])
+     UI.message(lane_context[SharedValues::VERSION_NUMBER])
+     UI.message(lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH])
+     UI.message(lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS])
+     UI.message(lane_context[SharedValues::GRADLE_FLAVOR])
+     UI.message(lane_context[SharedValues::GRADLE_BUILD_TYPE])
+
+    set_github_release(
+      repository_name: "RowlandOti/E-CommerceApp-Merchant",
+      api_token: ENV['GA_TOKEN'],
+      name: name,
+      tag_name: tag,
+      description: notes,
+      commitish: "main",
+      upload_assets: ["ui/build/outputs/bundle/release/ui-release.aab", "ui/build/outputs/apk/release/ui-release.apk"]
+    )
   end
 
   desc "Promote Internal to Alpha"
@@ -93,7 +131,7 @@ platform :android do
 
   desc "Promote Beta to Production"
   lane :promoteBetaToProduction do
-    upload_to_play_store(track: 'beta', track_promote_to: 'production')
+    upload_to_play_store(track: 'beta', track_promote_to: 'production', rollout: '0.1')
   end
 
 end
