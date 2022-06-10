@@ -101,13 +101,6 @@ platform :android do
     add_git_tag(tag: tag)
     push_git_tags
 
-     UI.message(lane_context[SharedValues::BUILD_NUMBER])
-     UI.message(lane_context[SharedValues::VERSION_NUMBER])
-     UI.message(lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH])
-     UI.message(lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS])
-     UI.message(lane_context[SharedValues::GRADLE_FLAVOR])
-     UI.message(lane_context[SharedValues::GRADLE_BUILD_TYPE])
-
     set_github_release(
       repository_name: "RowlandOti/E-CommerceApp-Merchant",
       api_token: ENV['GA_TOKEN'],
