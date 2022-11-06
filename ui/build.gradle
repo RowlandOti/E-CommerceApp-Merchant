@@ -33,145 +33,143 @@ def vName = getVersionName()
 println("VersionCode:$vCode - VersionName:$vName")
 
 android {
-	signingConfigs {
-		config {
-			keyAlias keystoreProperties['keyAlias']
-			keyPassword keystoreProperties['keyPassword']
-			storeFile file(keystoreProperties['storeFile'])
-			storePassword keystoreProperties['storePassword']
-		}
-	}
-	defaultConfig {
-		applicationId "com.rowland.delivery.merchant"
-		compileSdkVersion comSdkVersion as Integer
-		minSdkVersion miniSdkVersion as Integer
-		targetSdkVersion tarSdkVersion as Integer
-		multiDexEnabled true
-		versionCode vCode
-		versionName vName
-		vectorDrawables.useSupportLibrary = true
-		testApplicationId 'com.rowland.delivery.merchant.test'
-		testInstrumentationRunner "com.rowland.delivery.merchant.HiltTestRunner"
-	}
-	buildTypes {
-		release {
-			minifyEnabled false
-			signingConfig signingConfigs.config
-			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-		}
-
-		debug {
-			minifyEnabled false
-			signingConfig signingConfigs.config
-		}
-	}
-	buildFeatures {
-		viewBinding true
-	}
-	compileOptions {
-		sourceCompatibility JavaVersion.VERSION_11
-		targetCompatibility JavaVersion.VERSION_11
-	}
-	kotlinOptions {
-		jvmTarget = JavaVersion.VERSION_11.toString()
-	}
-	kapt {
-		generateStubs = true
-		correctErrorTypes = true
-	}
-	lintOptions {
-		abortOnError false
-	}
-	testOptions {
-		unitTests.returnDefaultValues = true
-	}
+    signingConfigs {
+        config {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+    defaultConfig {
+        applicationId "com.rowland.delivery.merchant"
+        compileSdkVersion comSdkVersion as Integer
+        minSdkVersion miniSdkVersion as Integer
+        targetSdkVersion tarSdkVersion as Integer
+        multiDexEnabled true
+        versionCode vCode
+        versionName vName
+        vectorDrawables.useSupportLibrary = true
+        testApplicationId 'com.rowland.delivery.merchant.test'
+        testInstrumentationRunner "com.rowland.delivery.merchant.HiltTestRunner"
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.config
+        }
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.config
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
+    }
+    kapt {
+        generateStubs = true
+        correctErrorTypes = true
+    }
+    lintOptions {
+        abortOnError false
+    }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
-	implementation fileTree(include: ['*.jar'], dir: 'libs')
-	implementation project(':libraries:rxgallery')
-	implementation project(':libraries:shuffle')
-	implementation project(':libraries:swipereveallayout:swipe-reveal-layout')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':libraries:rxgallery')
+    implementation project(':libraries:shuffle')
+    implementation project(':libraries:swipereveallayout:swipe-reveal-layout')
 
-	// Hexagonal modules
-	implementation project(':sharedcore')
-	implementation project(':domain')
-	implementation project(':data')
-	implementation project(':presentation')
-	implementation project(':remote')
-	implementation project(':cache')
+    // Hexagonal modules
+    implementation project(':sharedcore')
+    implementation project(':domain')
+    implementation project(':data')
+    implementation project(':presentation')
+    implementation project(':remote')
+    implementation project(':cache')
 
-	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
-	implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$kotlinPlayServicesVersion"
-	implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
-	implementation "androidx.constraintlayout:constraintlayout:$contraintLayoutVersion"
-	implementation "com.google.android.material:material:$googleMaterialVersion"
-	implementation "androidx.palette:palette-ktx:$androidXPalleteVersion"
-	implementation "androidx.core:core-ktx:$androidXCoreVersion"
-	implementation "androidx.appcompat:appcompat:$androidXAppcompatVersion"
-	implementation "androidx.multidex:multidex:$multiDexVersion"
-	implementation "androidx.activity:activity-ktx:$activityKtxVersion"
-	implementation "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
-	implementation "androidx.viewpager2:viewpager2:$viewpagerVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$kotlinPlayServicesVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$contraintLayoutVersion"
+    implementation "com.google.android.material:material:$googleMaterialVersion"
+    implementation "androidx.palette:palette-ktx:$androidXPalleteVersion"
+    implementation "androidx.core:core-ktx:$androidXCoreVersion"
+    implementation "androidx.appcompat:appcompat:$androidXAppcompatVersion"
+    implementation "androidx.multidex:multidex:$multiDexVersion"
+    implementation "androidx.activity:activity-ktx:$activityKtxVersion"
+    implementation "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
+    implementation "androidx.viewpager2:viewpager2:$viewpagerVersion"
 
-	// Android Architecture components
-	implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleViewModelKtxVersion"
-	implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleExtVersion"
-	implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleCommonJ8Version"
-	// Firebase and Google services
-	implementation platform("com.google.firebase:firebase-bom:$firebaseBomVersion")
-	implementation 'com.google.firebase:firebase-core'
-	implementation 'com.google.firebase:firebase-firestore-ktx'
-	implementation 'com.google.firebase:firebase-storage-ktx'
-	implementation 'com.google.firebase:firebase-auth-ktx'
-	implementation 'com.google.firebase:firebase-messaging'
-	implementation 'com.google.firebase:firebase-analytics'
-	implementation "com.firebaseui:firebase-ui-auth:$firebaseUiAuthVersion"
-	implementation "com.google.android.gms:play-services-auth:$googlePlayServicesAuthVersion"
-	//If you are using Firestore in your project
-	implementation 'com.github.FrangSierra:RxFirebase:1.5.7'
-	// Miscellaneous
-	implementation "com.github.bumptech.glide:glide:$glideVersion"
-	kapt "com.github.bumptech.glide:compiler:$glideVersion"
-	implementation 'com.github.florent37:glidepalette:2.1.2'
-	implementation 'com.github.abdularis:androidbuttonprogress:1.0.2'
-	//implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
-	implementation 'me.himanshusoni.quantityview:quantity-view:1.2.0'
-	//implementation 'com.meetic.shuffle:shuffle:1.0.8'
-	implementation 'com.meetic.dragueur:dragueur:1.0.3'
-	implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
-	implementation 'com.github.dekoservidoni:omfm:1.1.1'
-	implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5'
-	implementation 'com.github.etiennelenhart:eiffel:3.0.0'
-	implementation 'com.github.ybq:Android-SpinKit:1.2.0'
-	implementation 'com.jude:easyrecyclerview:4.4.2'
-	// Dependency injection-  Dagger Hilt - DI
-	implementation "com.google.dagger:hilt-android:$daggerHiltVersion"
-	kapt "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
-	implementation "androidx.hilt:hilt-lifecycle-viewmodel:$androidXHiltLifecycleViewModelVersion"
-	kapt "androidx.hilt:hilt-compiler:$androidHiltCompilerVersion"
+    // Android Architecture components
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleViewModelKtxVersion"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleExtVersion"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleCommonJ8Version"
+    // Firebase and Google services
+    implementation platform("com.google.firebase:firebase-bom:$firebaseBomVersion")
+    implementation 'com.google.firebase:firebase-core'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation 'com.google.firebase:firebase-storage-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation "com.firebaseui:firebase-ui-auth:$firebaseUiAuthVersion"
+    implementation "com.google.android.gms:play-services-auth:$googlePlayServicesAuthVersion"
+    //If you are using Firestore in your project
+    implementation 'com.github.FrangSierra:RxFirebase:1.5.7'
+    // Miscellaneous
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+    implementation 'com.github.florent37:glidepalette:2.1.2'
+    implementation 'com.github.abdularis:androidbuttonprogress:1.0.2'
+    //implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
+    implementation 'me.himanshusoni.quantityview:quantity-view:1.2.0'
+    //implementation 'com.meetic.shuffle:shuffle:1.0.8'
+    implementation 'com.meetic.dragueur:dragueur:1.0.3'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    implementation 'com.github.dekoservidoni:omfm:1.1.1'
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5'
+    implementation 'com.github.etiennelenhart:eiffel:3.0.0'
+    implementation 'com.github.ybq:Android-SpinKit:1.2.0'
+    implementation 'com.jude:easyrecyclerview:4.4.2'
+    // Dependency injection-  Dagger Hilt - DI
+    implementation "com.google.dagger:hilt-android:$daggerHiltVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
+    kapt "androidx.hilt:hilt-compiler:$androidHiltCompilerVersion"
 
-	implementation "androidx.navigation:navigation-fragment-ktx:$navSafeArgsVersion"
-	implementation "androidx.navigation:navigation-ui-ktx:$navSafeArgsVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navSafeArgsVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navSafeArgsVersion"
 
-	testImplementation "junit:junit:$jUnitVersion"
-	testImplementation "com.google.dagger:hilt-android-testing:$daggerHiltVersion"
-	testImplementation "io.mockk:mockk-android:$mockkAndroidVersion"
-	kaptTest "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
+    testImplementation "junit:junit:$jUnitVersion"
+    testImplementation "com.google.dagger:hilt-android-testing:$daggerHiltVersion"
+    testImplementation "io.mockk:mockk-android:$mockkAndroidVersion"
+    kaptTest "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
 
-	androidTestImplementation "com.google.dagger:hilt-android-testing:$daggerHiltVersion"
-	kaptAndroidTest "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$daggerHiltVersion"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
 
-	androidTestImplementation "io.mockk:mockk-android:$mockkAndroidVersion"
-	androidTestImplementation "androidx.test:runner:$androidXTestRunner"
-	androidTestImplementation "androidx.test:rules:$androidXTestRules"
-	androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
-	androidTestImplementation "junit:junit:$jUnitVersion"
-	androidTestImplementation "androidx.test.ext:junit-ktx:$androidXTestJUnitKtx"
-	androidTestImplementation "com.squareup.spoon:spoon-client:$spoonClientVersion"
-	androidTestImplementation "com.jraska:falcon:$falconVersion"
-	androidTestImplementation "com.jraska:falcon-spoon-compat:$falconSpoonCompatVersion"
-	androidTestImplementation "androidx.navigation:navigation-testing:$navSafeArgsVersion"
+    androidTestImplementation "io.mockk:mockk-android:$mockkAndroidVersion"
+    androidTestImplementation "androidx.test:runner:$androidXTestRunner"
+    androidTestImplementation "androidx.test:rules:$androidXTestRules"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
+    androidTestImplementation "junit:junit:$jUnitVersion"
+    androidTestImplementation "androidx.test.ext:junit-ktx:$androidXTestJUnitKtx"
+    androidTestImplementation "com.squareup.spoon:spoon-client:$spoonClientVersion"
+    androidTestImplementation "com.jraska:falcon:$falconVersion"
+    androidTestImplementation "com.jraska:falcon-spoon-compat:$falconSpoonCompatVersion"
+    androidTestImplementation "androidx.navigation:navigation-testing:$navSafeArgsVersion"
 }
 
 apply plugin: 'com.google.gms.google-services'
