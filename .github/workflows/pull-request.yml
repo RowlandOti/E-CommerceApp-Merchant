@@ -5,8 +5,8 @@ on:
       - main
 jobs:
   open-ai-review:
-    runs-on: macOS-10.15
-    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
