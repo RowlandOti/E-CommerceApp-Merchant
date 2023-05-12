@@ -24,7 +24,7 @@ jobs:
           distribution: 'adopt-hotspot'
           java-version: 11
 
-      - uses: actions/setup-ruby@v1
+      - uses: actions/setup-ruby@v1.1.3
         with:
           ruby-version: '2.6'
 
