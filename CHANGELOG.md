@@ -1,14 +1,5 @@
 # CHANGELOG
 
-## Unreleased
-
-Changes unreleased.
-
-### Bug Fixes
-
-- general:
-  - resolve crashes and bug ([1c8f366](https://github.com/RowlandOti/E-CommerceApp-Merchant/commit/1c8f3661cbb8e30fb1d5cf05d939d08a35012f49))
-
 ## [refs/heads/release](https://github.com/RowlandOti/E-CommerceApp-Merchant/releases/tag/refs/heads/release) - 2021-05-31 21:12:54
 
 *No description*
