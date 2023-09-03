@@ -1,9 +1,9 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 30
-
     defaultConfig {
+        namespace = "com.meetic.shuffle"
+        compileSdkVersion 30
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 2

@@ -4,6 +4,8 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
+        namespace = "com.chauthai.swipereveallayout"
+        compileSdkVersion 30
         minSdkVersion 9
         targetSdkVersion 30
         versionCode 8

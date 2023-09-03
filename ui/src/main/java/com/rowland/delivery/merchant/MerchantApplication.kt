@@ -37,7 +37,7 @@ class MerchantApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         RxJavaPlugins.setErrorHandler { e -> Log.d(MerchantApplication::class.java.simpleName, e.toString()) }
-        FirebaseFirestore.setLoggingEnabled(BuildConfig.DEBUG)
+        //FirebaseFirestore.setLoggingEnabled(BuildConfig.DEBUG)
         appCenterManager.initialize(this)
     }
 }

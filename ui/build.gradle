@@ -17,7 +17,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
 apply plugin: 'com.jaredsburrows.spoon'
 apply from: "${rootProject.rootDir}/.buildsystem/misc.gradle"
 apply plugin: 'dagger.hilt.android.plugin'
@@ -42,6 +42,7 @@ android {
 		}
 	}
 	defaultConfig {
+		namespace = "com.rowland.delivery.merchant"
 		applicationId "com.rowland.delivery.merchant"
 		compileSdkVersion comSdkVersion as Integer
 		minSdkVersion miniSdkVersion as Integer
@@ -69,15 +70,18 @@ android {
 		viewBinding true
 	}
 	compileOptions {
-		sourceCompatibility JavaVersion.VERSION_11
-		targetCompatibility JavaVersion.VERSION_11
+		sourceCompatibility JavaVersion.VERSION_17
+		targetCompatibility JavaVersion.VERSION_17
 	}
 	kotlinOptions {
-		jvmTarget = JavaVersion.VERSION_11.toString()
+		jvmTarget = JavaVersion.VERSION_17.toString()
 	}
 	kapt {
 		generateStubs = true
 		correctErrorTypes = true
+	}
+	hilt {
+		enableAggregatingTask = true
 	}
 	lintOptions {
 		abortOnError false
@@ -148,7 +152,6 @@ dependencies {
 	// Dependency injection-  Dagger Hilt - DI
 	implementation "com.google.dagger:hilt-android:$daggerHiltVersion"
 	kapt "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
-	implementation "androidx.hilt:hilt-lifecycle-viewmodel:$androidXHiltLifecycleViewModelVersion"
 	kapt "androidx.hilt:hilt-compiler:$androidHiltCompilerVersion"
 
 	implementation "androidx.navigation:navigation-fragment-ktx:$navSafeArgsVersion"

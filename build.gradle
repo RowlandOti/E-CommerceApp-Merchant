@@ -15,7 +15,7 @@ buildscript {
         classpath "com.google.dagger:hilt-android-gradle-plugin:$daggerHiltPluginVersion"
         classpath "com.diffplug.spotless:spotless-plugin-gradle:$spotlessPluginVersion"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navSafeArgsPluginVersion"
-        classpath "me.moallemi.gradle:advanced-build-version:$advancedBuildVversion"
+        //classpath "me.moallemi.gradle:advanced-build-version:$advancedBuildVversion"
     }
 }
 
