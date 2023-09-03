@@ -22,6 +22,7 @@ apply plugin: 'com.jaredsburrows.spoon'
 apply from: "${rootProject.rootDir}/.buildsystem/misc.gradle"
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'com.google.devtools.ksp'
 
 def keystorePropertiesFile = new File("${rootProject.rootDir}/.buildsystem/keystore.properties")
 def keystoreProperties = new Properties()
@@ -136,7 +137,7 @@ dependencies {
 	implementation 'com.github.FrangSierra:RxFirebase:1.5.7'
 	// Miscellaneous
 	implementation "com.github.bumptech.glide:glide:$glideVersion"
-	kapt "com.github.bumptech.glide:compiler:$glideVersion"
+	ksp "com.github.bumptech.glide:compiler:$glideVersion"
 	implementation 'com.github.florent37:glidepalette:2.1.2'
 	implementation 'com.github.abdularis:androidbuttonprogress:1.0.2'
 	//implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
@@ -151,8 +152,8 @@ dependencies {
 	implementation 'com.jude:easyrecyclerview:4.4.2'
 	// Dependency injection-  Dagger Hilt - DI
 	implementation "com.google.dagger:hilt-android:$daggerHiltVersion"
-	kapt "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
-	kapt "androidx.hilt:hilt-compiler:$androidHiltCompilerVersion"
+	ksp "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
+	ksp "androidx.hilt:hilt-compiler:$androidHiltCompilerVersion"
 
 	implementation "androidx.navigation:navigation-fragment-ktx:$navSafeArgsVersion"
 	implementation "androidx.navigation:navigation-ui-ktx:$navSafeArgsVersion"
