@@ -1,7 +1,7 @@
 - name: FILE_WILDCARD_IMPORTS
   enabled: true
   configuration:
-    allowedWildcards: "org.junit.Assert.*, org.junit.*, org.hamcrest.*"
+    allowedWildcards: "org.junit.Assert.*, org.junit.*, org.hamcrest.*,io.mockk.*"
     useRecommendedImportsOrder: true
 - name: WRONG_NEWLINES
   enabled: true
