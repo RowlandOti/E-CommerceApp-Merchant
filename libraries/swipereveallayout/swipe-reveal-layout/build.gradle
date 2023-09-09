@@ -1,13 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     defaultConfig {
         namespace = "com.chauthai.swipereveallayout"
         compileSdkVersion 30
         minSdkVersion 9
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 8
         versionName "1.4.1"
     }
