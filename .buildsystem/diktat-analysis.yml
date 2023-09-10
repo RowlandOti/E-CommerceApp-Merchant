@@ -26,3 +26,5 @@
   enabled: false
   configuration:
     lineLength: '120'
+- name: MAGIC_NUMBER
+  enabled: false

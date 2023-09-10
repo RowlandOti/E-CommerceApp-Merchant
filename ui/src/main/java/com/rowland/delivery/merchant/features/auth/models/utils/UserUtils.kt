@@ -26,7 +26,6 @@ import com.rowland.delivery.merchant.features.auth.models.GoogleUser
 
 object UserUtils {
     fun populateGoogleUser(account: GoogleSignInAccount): GoogleUser {
-
         val googleUser = GoogleUser()
 
         googleUser.displayName = account.displayName

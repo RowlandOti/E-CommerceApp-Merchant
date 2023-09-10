@@ -109,7 +109,8 @@ class EditProductFragment : Fragment() {
                     .subscribe { granted ->
                         if (!granted) {
                             Toast.makeText(
-                                activity, getString(string.grant_permissions_gallery_msg),
+                                activity,
+                                getString(string.grant_permissions_gallery_msg),
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
@@ -136,7 +137,6 @@ class EditProductFragment : Fragment() {
         }
 
         binding.editBtnUpdate.setOnClickListener {
-
             val productUpdateFields = HashMap<String, Any>()
             productUpdateFields["price"] = Integer.valueOf(binding.inputEditPriceView.quantity.toString())
             productUpdateFields["name"] = binding.inputEditProductName.text!!.toString()

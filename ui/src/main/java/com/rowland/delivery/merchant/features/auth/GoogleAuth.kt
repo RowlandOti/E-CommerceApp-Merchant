@@ -69,8 +69,13 @@ constructor(
                         try {
                             startIntentSenderForResult(
                                 it,
-                                result.pendingIntent.intentSender, REQ_ONE_TAP,
-                                null, 0, 0, 0, null
+                                result.pendingIntent.intentSender,
+                                REQ_ONE_TAP,
+                                null,
+                                0,
+                                0,
+                                0,
+                                null
                             )
                         } catch (e: IntentSender.SendIntentException) {
                             Log.e(
