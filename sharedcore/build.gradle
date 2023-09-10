@@ -6,7 +6,7 @@ plugins {
 android {
     defaultConfig {
         namespace = "com.rowland.delivery.sharedcore"
-        compileSdkVersion comSdkVersion as Integer
+        compileSdk comSdkVersion as Integer
         minSdkVersion miniSdkVersion as Integer
         targetSdkVersion tarSdkVersion as Integer
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

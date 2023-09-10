@@ -1,11 +1,9 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 30
-
     defaultConfig {
         namespace = "com.chauthai.swipereveallayout"
-        compileSdkVersion 30
+        compileSdk 30
         minSdkVersion 9
         targetSdkVersion 30
         versionCode 8
@@ -16,6 +14,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 }
 

@@ -45,7 +45,7 @@ android {
 	defaultConfig {
 		namespace = "com.rowland.delivery.merchant"
 		applicationId "com.rowland.delivery.merchant"
-		compileSdkVersion comSdkVersion as Integer
+		compileSdk comSdkVersion as Integer
 		minSdkVersion miniSdkVersion as Integer
 		targetSdkVersion tarSdkVersion as Integer
 		multiDexEnabled true
