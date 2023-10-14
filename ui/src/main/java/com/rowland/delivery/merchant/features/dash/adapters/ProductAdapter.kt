@@ -152,8 +152,7 @@ class ProductAdapter(data: List<ProductModel>?, withHeader: Boolean, withFooter:
             itemViewBinding.contentSingleProduct.productDescription.text = productModel.description
             itemViewBinding.contentSingleProduct.productPrice.apply {
                 text = this.context.getString(
-                    R.string.ksh_label_with_value_num,
-                    productModel.price!!
+                    R.string.ksh_label_with_value_num, productModel.price!!
                 )
             }
 

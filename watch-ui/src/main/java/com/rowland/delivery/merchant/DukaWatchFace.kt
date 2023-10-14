@@ -31,12 +31,13 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import androidx.palette.graphics.Palette
 import android.support.wearable.watchface.CanvasWatchFaceService
 import android.support.wearable.watchface.WatchFaceService
 import android.support.wearable.watchface.WatchFaceStyle
 import android.view.SurfaceHolder
 import android.widget.Toast
-import androidx.palette.graphics.Palette
+
 import java.lang.ref.WeakReference
 import java.util.Calendar
 import java.util.TimeZone
@@ -178,10 +179,7 @@ class DukaWatchFace : CanvasWatchFaceService() {
                 isAntiAlias = true
                 strokeCap = Paint.Cap.ROUND
                 setShadowLayer(
-                    SHADOW_RADIUS,
-                    0f,
-                    0f,
-                    mWatchHandShadowColor
+                    SHADOW_RADIUS, 0f, 0f, mWatchHandShadowColor
                 )
             }
 
@@ -191,10 +189,7 @@ class DukaWatchFace : CanvasWatchFaceService() {
                 isAntiAlias = true
                 strokeCap = Paint.Cap.ROUND
                 setShadowLayer(
-                    SHADOW_RADIUS,
-                    0f,
-                    0f,
-                    mWatchHandShadowColor
+                    SHADOW_RADIUS, 0f, 0f, mWatchHandShadowColor
                 )
             }
 
@@ -204,10 +199,7 @@ class DukaWatchFace : CanvasWatchFaceService() {
                 isAntiAlias = true
                 strokeCap = Paint.Cap.ROUND
                 setShadowLayer(
-                    SHADOW_RADIUS,
-                    0f,
-                    0f,
-                    mWatchHandShadowColor
+                    SHADOW_RADIUS, 0f, 0f, mWatchHandShadowColor
                 )
             }
 
@@ -217,10 +209,7 @@ class DukaWatchFace : CanvasWatchFaceService() {
                 isAntiAlias = true
                 style = Paint.Style.STROKE
                 setShadowLayer(
-                    SHADOW_RADIUS,
-                    0f,
-                    0f,
-                    mWatchHandShadowColor
+                    SHADOW_RADIUS, 0f, 0f, mWatchHandShadowColor
                 )
             }
         }
@@ -233,12 +222,10 @@ class DukaWatchFace : CanvasWatchFaceService() {
         override fun onPropertiesChanged(properties: Bundle) {
             super.onPropertiesChanged(properties)
             mLowBitAmbient = properties.getBoolean(
-                WatchFaceService.PROPERTY_LOW_BIT_AMBIENT,
-                false
+                WatchFaceService.PROPERTY_LOW_BIT_AMBIENT, false
             )
             mBurnInProtection = properties.getBoolean(
-                WatchFaceService.PROPERTY_BURN_IN_PROTECTION,
-                false
+                WatchFaceService.PROPERTY_BURN_IN_PROTECTION, false
             )
         }
 
@@ -286,28 +273,16 @@ class DukaWatchFace : CanvasWatchFaceService() {
                 mTickAndCirclePaint.isAntiAlias = true
 
                 mHourPaint.setShadowLayer(
-                    SHADOW_RADIUS,
-                    0f,
-                    0f,
-                    mWatchHandShadowColor
+                    SHADOW_RADIUS, 0f, 0f, mWatchHandShadowColor
                 )
                 mMinutePaint.setShadowLayer(
-                    SHADOW_RADIUS,
-                    0f,
-                    0f,
-                    mWatchHandShadowColor
+                    SHADOW_RADIUS, 0f, 0f, mWatchHandShadowColor
                 )
                 mSecondPaint.setShadowLayer(
-                    SHADOW_RADIUS,
-                    0f,
-                    0f,
-                    mWatchHandShadowColor
+                    SHADOW_RADIUS, 0f, 0f, mWatchHandShadowColor
                 )
                 mTickAndCirclePaint.setShadowLayer(
-                    SHADOW_RADIUS,
-                    0f,
-                    0f,
-                    mWatchHandShadowColor
+                    SHADOW_RADIUS, 0f, 0f, mWatchHandShadowColor
                 )
             }
         }
@@ -350,8 +325,7 @@ class DukaWatchFace : CanvasWatchFaceService() {
             mBackgroundBitmap = Bitmap.createScaledBitmap(
                 mBackgroundBitmap,
                 (mBackgroundBitmap.width * scale).toInt(),
-                (mBackgroundBitmap.height * scale).toInt(),
-                true
+                (mBackgroundBitmap.height * scale).toInt(), true
             )
 
             /*
@@ -414,6 +388,7 @@ class DukaWatchFace : CanvasWatchFaceService() {
         }
 
         private fun drawBackground(canvas: Canvas) {
+
             if (mAmbient && (mLowBitAmbient || mBurnInProtection)) {
                 canvas.drawColor(Color.BLACK)
             } else if (mAmbient) {
@@ -424,6 +399,7 @@ class DukaWatchFace : CanvasWatchFaceService() {
         }
 
         private fun drawWatchFace(canvas: Canvas) {
+
             /*
              * Draw ticks. Usually you will want to bake this directly into the photo, but in
              * cases where you want to allow users to select their own photos, this dynamically
@@ -438,11 +414,8 @@ class DukaWatchFace : CanvasWatchFaceService() {
                 val outerX = Math.sin(tickRot.toDouble()).toFloat() * outerTickRadius
                 val outerY = (-Math.cos(tickRot.toDouble())).toFloat() * outerTickRadius
                 canvas.drawLine(
-                    mCenterX + innerX,
-                    mCenterY + innerY,
-                    mCenterX + outerX,
-                    mCenterY + outerY,
-                    mTickAndCirclePaint
+                    mCenterX + innerX, mCenterY + innerY,
+                    mCenterX + outerX, mCenterY + outerY, mTickAndCirclePaint
                 )
             }
 

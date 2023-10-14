@@ -149,6 +149,7 @@ class DashActivity :
     }
 
     private fun itemSelection(mSelectedId: Int) {
+
         when (mSelectedId) {
             R.id.action_my_business -> {
                 navController.navigate(R.id.overviewFragment)

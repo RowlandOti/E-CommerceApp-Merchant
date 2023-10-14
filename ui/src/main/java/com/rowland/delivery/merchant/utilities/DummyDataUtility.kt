@@ -47,6 +47,7 @@ object DummyDataUtility {
     }
 
     fun createOrderData(): OrderDataModel {
+
         val data = OrderDataModel()
         data.address = "River Side Drive 44"
         data.createdAt = Date().toString()
@@ -95,13 +96,7 @@ object DummyDataUtility {
 
     fun randomStatus(): String {
         val status = arrayOf(
-            "pending",
-            "completed",
-            "in_progress",
-            "cancelled",
-            "active",
-            "failed",
-            "delivered",
+            "pending", "completed", "in_progress", "cancelled", "active", "failed", "delivered",
             "missed"
         )
         return status[Random().nextInt(status.size - 1)]

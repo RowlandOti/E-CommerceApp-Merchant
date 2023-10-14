@@ -14,15 +14,20 @@
  * limitations under the License.
  */
 
-package com.rowland.delivery.merchant.di.scope.order
+package com.rowland.delivery.merchant
 
-import javax.inject.Scope
+import org.junit.Test
+
+import org.junit.Assert.*
 
 /**
- * Created by Rowland on 5/9/2018.
+ * Example local unit test, which will execute on the development machine (host).
+ *
+ * @see [Testing documentation](http://d.android.com/tools/testing)
  */
-
-@Scope
-@MustBeDocumented
-@Retention(AnnotationRetention.RUNTIME)
-annotation class OrderScope
+class ExampleUnitTest {
+    @Test
+    fun addition_isCorrect() {
+        assertEquals(4, (2 + 2).toLong())
+    }
+}

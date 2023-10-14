@@ -74,14 +74,13 @@ object FakeAuthModule {
             val password = credentials[EmailAuth.CRED_PASSWORD_KEY]
 
             if ((email.isNullOrEmpty() || password.isNullOrEmpty()) || (
-                    email.contains(
+                email.contains(
                         WRONG_USER_EMAIL,
                         true
                     ) || password.contains(
-                        WRONG_USER_PASS,
-                        true
+                        WRONG_USER_PASS, true
                     )
-                    )
+                )
             ) {
                 authConfig.callback.onLoginFailure(
                     AuthException(

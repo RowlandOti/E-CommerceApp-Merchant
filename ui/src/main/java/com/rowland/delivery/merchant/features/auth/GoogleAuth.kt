@@ -69,13 +69,8 @@ constructor(
                         try {
                             startIntentSenderForResult(
                                 it,
-                                result.pendingIntent.intentSender,
-                                REQ_ONE_TAP,
-                                null,
-                                0,
-                                0,
-                                0,
-                                null
+                                result.pendingIntent.intentSender, REQ_ONE_TAP,
+                                null, 0, 0, 0, null
                             )
                         } catch (e: IntentSender.SendIntentException) {
                             Log.e(
@@ -88,9 +83,6 @@ constructor(
                         // No saved credentials found. Launch the One Tap sign-up flow, or
                         // do nothing and continue presenting the signed-out UI.
                         Log.d(GoogleAuth::class.java.simpleName, e.localizedMessage)
-                        mAuthConfig.getGoogleSignClient()?.let {
-                            mAuthConfig.activity.startActivityForResult(it.signInIntent, RC_SIGN_IN)
-                        }
                     }
             }
         }
