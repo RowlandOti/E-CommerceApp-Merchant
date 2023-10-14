@@ -15,11 +15,51 @@
       },
       "oauth_client": [
         {
-          "client_id": "965672508646-7tltbij9f46043khqkn1t0dr355ulmn8.apps.googleusercontent.com",
+          "client_id": "965672508646-l9tpn6i2tn61opu76itjfs2t61d2irdj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rowland.delivery.merchant",
+            "certificate_hash": "46ad73e2b529abd189f435cfca8bc1e4fb21c435"
+          }
+        },
+        {
+          "client_id": "965672508646-pf4omm0psm03j1igs7sggatb0htg2lcb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rowland.delivery.merchant",
+            "certificate_hash": "2d3fd06cfcd865d058aff162beffbfce71f65a35"
+          }
+        },
+        {
+          "client_id": "965672508646-pk76ce5sp6vqqu9fdookbueu2a3dra02.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rowland.delivery.merchant",
+            "certificate_hash": "7cf727a03fc9de5209486557c11c7d139d7be4dd"
+          }
+        },
+        {
+          "client_id": "965672508646-r4fdn236ot2tvdh3lcr86idcls4549bv.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.rowland.delivery.merchant",
             "certificate_hash": "76fdec27264e8fc8e4773493d23cd742f0d72ecf"
+          }
+        },
+        {
+          "client_id": "965672508646-s1t00q846shia8kajosrvdvsurch703r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rowland.delivery.merchant",
+            "certificate_hash": "61b37c220b52457caa38fc55524048cecf5094d5"
+          }
+        },
+        {
+          "client_id": "965672508646-s4p3ofu9qtq5srsde1scp4a2a65399dm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rowland.delivery.merchant",
+            "certificate_hash": "9a9373e473b28c42ef32c92c33de79db8b10497e"
           }
         },
         {
@@ -33,20 +73,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "965672508646-kqasfah6o58n5hom9alfflgc355h3eci.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

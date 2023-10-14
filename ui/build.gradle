@@ -125,7 +125,7 @@ dependencies {
 	implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleCommonJ8Version"
 	// Firebase and Google services
 	implementation platform("com.google.firebase:firebase-bom:$firebaseBomVersion")
-	implementation 'com.google.firebase:firebase-core'
+	//implementation 'com.google.firebase:firebase-core'
 	implementation 'com.google.firebase:firebase-firestore-ktx'
 	implementation 'com.google.firebase:firebase-storage-ktx'
 	implementation 'com.google.firebase:firebase-auth-ktx'
