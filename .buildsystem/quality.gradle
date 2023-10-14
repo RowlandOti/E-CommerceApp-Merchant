@@ -1,7 +1,7 @@
 apply plugin: "com.diffplug.spotless"
 
 ext {
-    ktlintVersion = "0.40.0"
+    ktlintVersion = "0.48.0"
 }
 
 spotless {
@@ -9,8 +9,11 @@ spotless {
     //ratchetFrom 'origin/master'
 
     kotlin {
-        target("**/*.kt")
-        ktlint(ktlintVersion).userData([max_line_length : '120', "disabled_rules" : "import-ordering, no-wildcard-imports"])
+        target("**/*.kt", "**/*.kts")
+        ktlint(ktlintVersion)
+                .userData(["ktlint_disabled_rules" : "import-ordering, no-wildcard-imports"])
+                .setEditorConfigPath(rootProject.file("./.buildsystem/.editorconfig"))
+                .editorConfigOverride(["max_line_length" : 140])
         //diktat().configFile(rootProject.file("./.buildsystem/diktat-analysis.yml"))
         licenseHeaderFile(rootProject.file("./.buildsystem/license.kt"), "^(package|plugins|import//startfile)")
     }
@@ -37,8 +40,8 @@ spotless {
     }
 }
 
-tasks.whenTaskAdded {
-    if (name == "preBuild") {
+tasks.configureEach {
+    if (it.name == "preBuild") {
         mustRunAfter("spotlessCheck")
     }
 }
