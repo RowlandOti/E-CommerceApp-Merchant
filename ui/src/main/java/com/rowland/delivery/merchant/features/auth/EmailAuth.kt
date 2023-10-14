@@ -28,7 +28,6 @@ import com.rowland.delivery.merchant.services.session.SessionManager
 import durdinapps.rxfirebase2.RxFirebaseAuth
 import durdinapps.rxfirebase2.RxFirebaseUser
 import durdinapps.rxfirebase2.RxFirestore
-import java.util.*
 import javax.inject.Inject
 
 /**
@@ -88,7 +87,6 @@ constructor(
     }
 
     private fun configureUserAccount(firebaseUser: FirebaseUser) {
-
         val batch = mFirebaseFirestone.batch()
 
         val usersCollectionRef = mFirebaseFirestone.collection("users")
