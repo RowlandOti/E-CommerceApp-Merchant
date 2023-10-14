@@ -6,7 +6,7 @@ object Features {
         /**
          * Enables one type sign for google accounts
          */
-        GOOGLE_ONE_TAP_SIGN_IN(false),
+        GOOGLE_ONE_TAP_SIGN_IN(true),
     }
 
     /**
