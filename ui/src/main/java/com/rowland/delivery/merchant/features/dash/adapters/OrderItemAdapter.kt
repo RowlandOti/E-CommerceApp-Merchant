@@ -37,8 +37,7 @@ class OrderItemAdapter : HFRecyclerView<OrderItemModel> {
     constructor(withHeader: Boolean, withFooter: Boolean) : super(null, withHeader, withFooter) {}
 
     constructor(data: List<OrderItemModel>, withHeader: Boolean, withFooter: Boolean) : super(
-        data,
-        withHeader,
+        data, withHeader,
         withFooter
     ) {}
 

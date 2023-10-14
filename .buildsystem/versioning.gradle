@@ -1,15 +1,15 @@
-//apply plugin: 'me.moallemi.advanced-build-version'
+apply plugin: 'me.moallemi.advanced-build-version'
 // http://12rockets.com/journal/versioning-system-with-git-and-gradle/
 
-//advancedVersioning {
-//    codeOptions {
-//        versionCodeType 'GIT_COMMIT_COUNT'
-//    }
-//}
+advancedVersioning {
+    codeOptions {
+        versionCodeType 'GIT_COMMIT_COUNT'
+    }
+}
 
 ext.getVersionCode = { ->
     try {
-        return 1
+        return advancedVersioning.versionCode
     }
     catch (ignored) {
         return -1;
