@@ -19,7 +19,6 @@ package com.rowland.delivery.merchant.executor
 import com.rowland.delivery.domain.executor.IPostExecutionThread
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
-
 import javax.inject.Inject
 
 /**

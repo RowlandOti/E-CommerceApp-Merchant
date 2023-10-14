@@ -17,11 +17,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
 apply plugin: 'com.jaredsburrows.spoon'
 apply from: "${rootProject.rootDir}/.buildsystem/misc.gradle"
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'com.google.devtools.ksp'
 
 def keystorePropertiesFile = new File("${rootProject.rootDir}/.buildsystem/keystore.properties")
 def keystoreProperties = new Properties()
@@ -42,8 +43,9 @@ android {
 		}
 	}
 	defaultConfig {
+		namespace = "com.rowland.delivery.merchant"
 		applicationId "com.rowland.delivery.merchant"
-		compileSdkVersion comSdkVersion as Integer
+		compileSdk comSdkVersion as Integer
 		minSdkVersion miniSdkVersion as Integer
 		targetSdkVersion tarSdkVersion as Integer
 		multiDexEnabled true
@@ -69,15 +71,18 @@ android {
 		viewBinding true
 	}
 	compileOptions {
-		sourceCompatibility JavaVersion.VERSION_11
-		targetCompatibility JavaVersion.VERSION_11
+		sourceCompatibility JavaVersion.VERSION_17
+		targetCompatibility JavaVersion.VERSION_17
 	}
 	kotlinOptions {
-		jvmTarget = JavaVersion.VERSION_11.toString()
+		jvmTarget = JavaVersion.VERSION_17.toString()
 	}
 	kapt {
 		generateStubs = true
 		correctErrorTypes = true
+	}
+	hilt {
+		enableAggregatingTask = true
 	}
 	lintOptions {
 		abortOnError false
@@ -120,7 +125,7 @@ dependencies {
 	implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycleCommonJ8Version"
 	// Firebase and Google services
 	implementation platform("com.google.firebase:firebase-bom:$firebaseBomVersion")
-	implementation 'com.google.firebase:firebase-core'
+	//implementation 'com.google.firebase:firebase-core'
 	implementation 'com.google.firebase:firebase-firestore-ktx'
 	implementation 'com.google.firebase:firebase-storage-ktx'
 	implementation 'com.google.firebase:firebase-auth-ktx'
@@ -132,7 +137,7 @@ dependencies {
 	implementation 'com.github.FrangSierra:RxFirebase:1.5.7'
 	// Miscellaneous
 	implementation "com.github.bumptech.glide:glide:$glideVersion"
-	kapt "com.github.bumptech.glide:compiler:$glideVersion"
+	ksp "com.github.bumptech.glide:compiler:$glideVersion"
 	implementation 'com.github.florent37:glidepalette:2.1.2'
 	implementation 'com.github.abdularis:androidbuttonprogress:1.0.2'
 	//implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
@@ -147,13 +152,13 @@ dependencies {
 	implementation 'com.jude:easyrecyclerview:4.4.2'
 	// Dependency injection-  Dagger Hilt - DI
 	implementation "com.google.dagger:hilt-android:$daggerHiltVersion"
-	kapt "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
-	implementation "androidx.hilt:hilt-lifecycle-viewmodel:$androidXHiltLifecycleViewModelVersion"
-	kapt "androidx.hilt:hilt-compiler:$androidHiltCompilerVersion"
+	ksp "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
+	ksp "androidx.hilt:hilt-compiler:$androidHiltCompilerVersion"
 
 	implementation "androidx.navigation:navigation-fragment-ktx:$navSafeArgsVersion"
 	implementation "androidx.navigation:navigation-ui-ktx:$navSafeArgsVersion"
 
+	testImplementation "com.lemonappdev:konsist:$konsistVersion"
 	testImplementation "junit:junit:$jUnitVersion"
 	testImplementation "com.google.dagger:hilt-android-testing:$daggerHiltVersion"
 	testImplementation "io.mockk:mockk-android:$mockkAndroidVersion"

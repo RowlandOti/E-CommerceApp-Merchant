@@ -151,8 +151,9 @@ class CategoryFragment : Fragment() {
             ResourceState.LOADING -> binding.catRecyclerview.showProgress()
             ResourceState.SUCCESS -> {
                 binding.catRecyclerview.showRecycler()
-                if (data != null)
+                if (data != null) {
                     categoryAdapter.setList(data)
+                }
             }
             ResourceState.ERROR -> {
                 binding.catRecyclerview.showError()

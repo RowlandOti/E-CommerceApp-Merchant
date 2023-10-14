@@ -32,7 +32,7 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           distribution: 'adopt-hotspot'
-          java-version: 11
+          java-version: 17
       - uses: actions/cache@v1
         with:
           path: ~/.gradle/caches
@@ -68,7 +68,7 @@ jobs:
       - uses: gradle/wrapper-validation-action@v1
       - uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 17
       - uses: actions/cache@v1
         with:
           path: ~/.gradle/caches
@@ -104,7 +104,7 @@ jobs:
       - uses: gradle/wrapper-validation-action@v1
       - uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 17
       - uses: actions/cache@v1
         with:
           path: ~/.gradle/caches
@@ -145,7 +145,7 @@ jobs:
       - uses: gradle/wrapper-validation-action@v1
       - uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 17
       # Restore the cache.
       # Intentionally don't set 'restore-keys' so the cache never contains redundant dependencies.
       - uses: actions/cache@v1
