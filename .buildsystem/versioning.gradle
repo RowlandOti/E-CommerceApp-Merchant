@@ -9,7 +9,7 @@
 
 ext.getVersionCode = { ->
     try {
-        return 3
+        return 2
     }
     catch (ignored) {
         return -1;
