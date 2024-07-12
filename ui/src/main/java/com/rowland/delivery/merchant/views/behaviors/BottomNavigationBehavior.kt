@@ -34,14 +34,14 @@ import kotlin.math.min
  * Created by rowlandoti on 08/03/2021
  *
  */
-class BottomNavigationBehavior(@NonNull context: Context?, @NonNull attrs: AttributeSet?) :
+class BottomNavigationBehavior(context: Context?, attrs: AttributeSet?) :
     CoordinatorLayout.Behavior<BottomNavigationView?>(context, attrs) {
 
     override fun onStartNestedScroll(
-        @NonNull coordinatorLayout: CoordinatorLayout,
-        @NonNull child: BottomNavigationView,
-        @NonNull directTargetChild: View,
-        @NonNull target: View,
+        coordinatorLayout: CoordinatorLayout,
+        child: BottomNavigationView,
+        directTargetChild: View,
+        target: View,
         axes: Int,
         type: Int
     ): Boolean {
@@ -49,12 +49,12 @@ class BottomNavigationBehavior(@NonNull context: Context?, @NonNull attrs: Attri
     }
 
     override fun onNestedPreScroll(
-        @NonNull coordinatorLayout: CoordinatorLayout,
-        @NonNull child: BottomNavigationView,
-        @NonNull target: View,
+        coordinatorLayout: CoordinatorLayout,
+        child: BottomNavigationView,
+        target: View,
         dx: Int,
         dy: Int,
-        @NonNull consumed: IntArray,
+        consumed: IntArray,
         type: Int
     ) {
         super.onNestedPreScroll(coordinatorLayout, child, target, dx, dy, consumed, type)
@@ -62,9 +62,9 @@ class BottomNavigationBehavior(@NonNull context: Context?, @NonNull attrs: Attri
     }
 
     override fun layoutDependsOn(
-        @Nullable parent: CoordinatorLayout,
+        parent: CoordinatorLayout,
         child: BottomNavigationView,
-        @Nullable dependency: View
+        dependency: View
     ): Boolean {
         if (dependency is SnackbarLayout) {
             this.updateSnackbar(child, dependency)
